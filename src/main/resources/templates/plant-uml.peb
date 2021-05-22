@@ -1,0 +1,16 @@
+@startuml
+
+{% for include in includes %}
+  !include <{{include}}>
+{% endfor %}
+
+{% for participant in participants %}
+  {{participant}}
+{% endfor %}
+
+{% for interaction in interactions %}
+  {{interaction}}
+
+{% endfor %}
+
+@enduml

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>{{report.title}}</title>
+    <style>
+        .overlay {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            transition: opacity 500ms;
+            visibility: hidden;
+            opacity: 0;
+        }
+
+        .overlay:target {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .popup {
+            margin: 70px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 5px;
+            max-width: 70%;
+            position: relative;
+            transition: all 5s ease-in-out;
+        }
+
+        h1, h2, h3 {
+            margin-top: 0;
+            color: #333;
+            font-family: Tahoma, Arial, sans-serif;
+        }
+
+        .popup .close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            transition: all 200ms;
+            font-size: 30px;
+            font-weight: bold;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .popup .close:hover {
+            color: #06D85F;
+        }
+
+        .popup .content {
+            overflow: auto;
+        }
+
+        /*    Make Facts look like table*/
+        .factTable {
+            display: table;
+        }
+
+        .factRow {
+            display: table-row;
+        }
+
+        .factRowHead {
+            display: table-header-group;
+            font-weight: bold;
+        }
+
+        .factCell, .factRowHead {
+            display: table-cell;
+            padding: 3px 10px;
+            border: 1px solid #999999;
+        }
+    </style>
+</head>
+<body>
+<main role="main">
+    <h1>{{ report.title }}</h1>
+    {% for scenario in report.scenarios %}
+    <article>
+        <h2>{{scenario.title}}</h2>
+        <section class="description">
+            <h3>Description</h3>
+            {{ scenario.description | raw }}
+        </section>
+        <section class="diagram">
+            <h3>Sequence Diagram</h3>
+            {{ scenario.sequenceDiagram | raw }}
+        </section>
+        {% if scenario.facts is not null %}
+        <section class="facts">
+            <h3>Key Facts</h3>
+            <div class="factTable">
+                <div class="factRow">
+                    <div class="factRowHead">Key</div>
+                    <div class="factRowHead">Value</div>
+                </div>
+                {% for fact in scenario.facts %}
+                <div class="factRow">
+                    <div class="factCell">{{fact.key}}</div>
+                    <div class="factCell">{{fact.value}}</div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+        {% for interaction in scenario.interactions %}
+        <section class="data">
+            <div id="{{interaction.id}}" class="overlay">
+                <div class="popup">
+                    <h2>{{interaction.label}}</h2>
+                    <a class="close" href="#">&times;</a>
+                    <div class="content">
+                        <pre>{{ interaction.data | raw }}</pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+        {% endfor %}
+    </article>
+    {% endfor %}
+</main>
+</body>
+</html>
