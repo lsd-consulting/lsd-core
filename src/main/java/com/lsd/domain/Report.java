@@ -1,5 +1,6 @@
 package com.lsd.domain;
 
+import com.lsd.domain.scenario.Scenario;
 import lombok.Builder;
 import lombok.Value;
 

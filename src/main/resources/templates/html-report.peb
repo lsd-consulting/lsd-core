@@ -86,10 +86,6 @@
             <h3>Description</h3>
             {{ scenario.description | raw }}
         </section>
-        <section class="diagram">
-            <h3>Sequence Diagram</h3>
-            {{ scenario.sequenceDiagram | raw }}
-        </section>
         {% if scenario.facts is not null %}
         <section class="facts">
             <h3>Key Facts</h3>
@@ -107,7 +103,12 @@
             </div>
         </section>
         {% endif %}
-        {% for interaction in scenario.interactions %}
+        <section class="sequence diagram svg">
+            <h3>Sequence Diagram</h3>
+            {{ scenario.sequenceDiagram.toSvg | raw }}
+        </section>
+        {% for interaction in scenario.sequenceDiagram.interactions %}
+        <!-- Section containing data for sequence diagram popups -->
         <section class="data">
             <div id="{{interaction.id}}" class="overlay">
                 <div class="popup">

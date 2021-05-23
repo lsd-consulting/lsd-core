@@ -1,5 +1,7 @@
 @startuml
 
+hide unlinked
+
 
 
   A -> B:[[#1 Sending a request]]

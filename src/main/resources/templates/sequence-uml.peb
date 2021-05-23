@@ -1,5 +1,7 @@
 @startuml
 
+hide unlinked
+
 {% for include in includes %}
   !include <{{include}}>
 {% endfor %}
@@ -8,8 +10,8 @@
   {{participant}}
 {% endfor %}
 
-{% for interaction in interactions %}
-  {{interaction}}
+{% for event in events %}
+  {{event}}
 
 {% endfor %}
 

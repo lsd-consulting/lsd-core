@@ -1,4 +1,4 @@
-package com.lsd.domain;
+package com.lsd.domain.scenario;
 
 import lombok.Builder;
 import lombok.Value;

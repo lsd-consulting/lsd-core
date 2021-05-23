@@ -87,12 +87,25 @@
 And a dog
 When the dog barks
 Then the cat hisses</pre>        </section>
-        <section class="diagram">
+                <section class="facts">
+            <h3>Key Facts</h3>
+            <div class="factTable">
+                <div class="factRow">
+                    <div class="factRowHead">Key</div>
+                    <div class="factRowHead">Value</div>
+                </div>
+                                <div class="factRow">
+                    <div class="factCell">Greeting</div>
+                    <div class="factCell">Hi</div>
+                </div>
+                            </div>
+        </section>
+                <section class="sequence diagram svg">
             <h3>Sequence Diagram</h3>
             <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="162px" preserveAspectRatio="none" style="width:188px;height:162px;" version="1.1" viewBox="0 0 188 162" width="188px" zoomAndPan="magnify">
   <defs>
-    <filter height="300%" id="f3mx28k1faq1j" width="300%" x="-1" y="-1">
+    <filter height="300%" id="fl8owrb5nuv7x" width="300%" x="-1" y="-1">
       <feGaussianBlur result="blurOut" stdDeviation="2.0" />
       <feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0" />
       <feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3" />
@@ -102,13 +115,13 @@ Then the cat hisses</pre>        </section>
   <g>
     <line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="19" x2="19" y1="40.4883" y2="119.1094" />
     <line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="165" x2="165" y1="40.4883" y2="119.1094" />
-    <rect fill="#FEFECE" filter="url(#f3mx28k1faq1j)" height="30.4883" style="stroke:#A80036;stroke-width:1.5;" width="24" x="5" y="5" />
+    <rect fill="#FEFECE" filter="url(#fl8owrb5nuv7x)" height="30.4883" style="stroke:#A80036;stroke-width:1.5;" width="24" x="5" y="5" />
     <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="10" x="12" y="25.5352">A</text>
-    <rect fill="#FEFECE" filter="url(#f3mx28k1faq1j)" height="30.4883" style="stroke:#A80036;stroke-width:1.5;" width="24" x="5" y="118.1094" />
+    <rect fill="#FEFECE" filter="url(#fl8owrb5nuv7x)" height="30.4883" style="stroke:#A80036;stroke-width:1.5;" width="24" x="5" y="118.1094" />
     <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="10" x="12" y="138.6445">A</text>
-    <rect fill="#FEFECE" filter="url(#f3mx28k1faq1j)" height="30.4883" style="stroke:#A80036;stroke-width:1.5;" width="22" x="152" y="5" />
+    <rect fill="#FEFECE" filter="url(#fl8owrb5nuv7x)" height="30.4883" style="stroke:#A80036;stroke-width:1.5;" width="22" x="152" y="5" />
     <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="8" x="159" y="25.5352">B</text>
-    <rect fill="#FEFECE" filter="url(#f3mx28k1faq1j)" height="30.4883" style="stroke:#A80036;stroke-width:1.5;" width="22" x="152" y="118.1094" />
+    <rect fill="#FEFECE" filter="url(#fl8owrb5nuv7x)" height="30.4883" style="stroke:#A80036;stroke-width:1.5;" width="22" x="152" y="118.1094" />
     <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="8" x="159" y="138.6445">B</text>
     <polygon fill="#A80036" points="153,67.7988,163,71.7988,153,75.7988,157,71.7988" style="stroke:#A80036;stroke-width:1.0;" />
     <line style="stroke:#A80036;stroke-width:1.0;" x1="19" x2="159" y1="71.7988" y2="71.7988" />
@@ -124,20 +137,8 @@ Then the cat hisses</pre>        </section>
 </svg>
 
         </section>
-                <section class="facts">
-            <h3>Key Facts</h3>
-            <div class="factTable">
-                <div class="factRow">
-                    <div class="factRowHead">Key</div>
-                    <div class="factRowHead">Value</div>
-                </div>
-                                <div class="factRow">
-                    <div class="factCell">Greeting</div>
-                    <div class="factCell">Hi</div>
-                </div>
-                            </div>
-        </section>
-                        <section class="data">
+                <!-- Section containing data for sequence diagram popups -->
+        <section class="data">
             <div id="111" class="overlay">
                 <div class="popup">
                     <h2>Sending a greeting</h2>
@@ -148,7 +149,8 @@ Then the cat hisses</pre>        </section>
                 </div>
             </div>
         </section>
-                <section class="data">
+                <!-- Section containing data for sequence diagram popups -->
+        <section class="data">
             <div id="222" class="overlay">
                 <div class="popup">
                     <h2>Sending a response</h2>
@@ -165,12 +167,12 @@ Then the cat hisses</pre>        </section>
         <section class="description">
             <h3>Description</h3>
             <p><ul><li>Some details</li><li>Some more details</li></ul></p>        </section>
-        <section class="diagram">
+                <section class="sequence diagram svg">
             <h3>Sequence Diagram</h3>
             <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="191px" preserveAspectRatio="none" style="width:409px;height:191px;" version="1.1" viewBox="0 0 409 191" width="409px" zoomAndPan="magnify">
   <defs>
-    <filter height="300%" id="fy7ec1pvv0f1g" width="300%" x="-1" y="-1">
+    <filter height="300%" id="f145zwv19czbk0" width="300%" x="-1" y="-1">
       <feGaussianBlur result="blurOut" stdDeviation="2.0" />
       <feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0" />
       <feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3" />
@@ -182,21 +184,21 @@ Then the cat hisses</pre>        </section>
     <line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="146.5" x2="146.5" y1="40.4883" y2="148.4199" />
     <line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="260" x2="260" y1="40.4883" y2="148.4199" />
     <line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="372.5" x2="372.5" y1="40.4883" y2="148.4199" />
-    <rect fill="#FEFECE" filter="url(#fy7ec1pvv0f1g)" height="30.4883" style="stroke:#A80036;stroke-width:1.5;" width="54" x="5" y="5" />
+    <rect fill="#FEFECE" filter="url(#f145zwv19czbk0)" height="30.4883" style="stroke:#A80036;stroke-width:1.5;" width="54" x="5" y="5" />
     <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="40" x="12" y="25.5352">Alpha</text>
-    <rect fill="#FEFECE" filter="url(#fy7ec1pvv0f1g)" height="30.4883" style="stroke:#A80036;stroke-width:1.5;" width="54" x="5" y="147.4199" />
+    <rect fill="#FEFECE" filter="url(#f145zwv19czbk0)" height="30.4883" style="stroke:#A80036;stroke-width:1.5;" width="54" x="5" y="147.4199" />
     <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="40" x="12" y="167.9551">Alpha</text>
-    <rect fill="#FEFECE" filter="url(#fy7ec1pvv0f1g)" height="30.4883" style="stroke:#A80036;stroke-width:1.5;" width="43" x="123.5" y="5" />
+    <rect fill="#FEFECE" filter="url(#f145zwv19czbk0)" height="30.4883" style="stroke:#A80036;stroke-width:1.5;" width="43" x="123.5" y="5" />
     <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="29" x="130.5" y="25.5352">Beta</text>
-    <rect fill="#FEFECE" filter="url(#fy7ec1pvv0f1g)" height="30.4883" style="stroke:#A80036;stroke-width:1.5;" width="43" x="123.5" y="147.4199" />
+    <rect fill="#FEFECE" filter="url(#f145zwv19czbk0)" height="30.4883" style="stroke:#A80036;stroke-width:1.5;" width="43" x="123.5" y="147.4199" />
     <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="29" x="130.5" y="167.9551">Beta</text>
-    <rect fill="#FEFECE" filter="url(#fy7ec1pvv0f1g)" height="30.4883" style="stroke:#A80036;stroke-width:1.5;" width="66" x="225" y="5" />
+    <rect fill="#FEFECE" filter="url(#f145zwv19czbk0)" height="30.4883" style="stroke:#A80036;stroke-width:1.5;" width="66" x="225" y="5" />
     <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="52" x="232" y="25.5352">Gamma</text>
-    <rect fill="#FEFECE" filter="url(#fy7ec1pvv0f1g)" height="30.4883" style="stroke:#A80036;stroke-width:1.5;" width="66" x="225" y="147.4199" />
+    <rect fill="#FEFECE" filter="url(#f145zwv19czbk0)" height="30.4883" style="stroke:#A80036;stroke-width:1.5;" width="66" x="225" y="147.4199" />
     <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="52" x="232" y="167.9551">Gamma</text>
-    <rect fill="#FEFECE" filter="url(#fy7ec1pvv0f1g)" height="30.4883" style="stroke:#A80036;stroke-width:1.5;" width="49" x="346.5" y="5" />
+    <rect fill="#FEFECE" filter="url(#f145zwv19czbk0)" height="30.4883" style="stroke:#A80036;stroke-width:1.5;" width="49" x="346.5" y="5" />
     <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="35" x="353.5" y="25.5352">Delta</text>
-    <rect fill="#FEFECE" filter="url(#fy7ec1pvv0f1g)" height="30.4883" style="stroke:#A80036;stroke-width:1.5;" width="49" x="346.5" y="147.4199" />
+    <rect fill="#FEFECE" filter="url(#f145zwv19czbk0)" height="30.4883" style="stroke:#A80036;stroke-width:1.5;" width="49" x="346.5" y="147.4199" />
     <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="35" x="353.5" y="167.9551">Delta</text>
     <polygon fill="#A80036" points="135,67.7988,145,71.7988,135,75.7988,139,71.7988" style="stroke:#A80036;stroke-width:1.0;" />
     <line style="stroke:#A80036;stroke-width:1.0;" x1="34" x2="141" y1="71.7988" y2="71.7988" />
@@ -217,7 +219,8 @@ Then the cat hisses</pre>        </section>
 </svg>
 
         </section>
-                        <section class="data">
+                <!-- Section containing data for sequence diagram popups -->
+        <section class="data">
             <div id="333" class="overlay">
                 <div class="popup">
                     <h2>An interaction</h2>
@@ -228,7 +231,8 @@ Then the cat hisses</pre>        </section>
                 </div>
             </div>
         </section>
-                <section class="data">
+                <!-- Section containing data for sequence diagram popups -->
+        <section class="data">
             <div id="444" class="overlay">
                 <div class="popup">
                     <h2>An interaction</h2>
@@ -239,7 +243,8 @@ Then the cat hisses</pre>        </section>
                 </div>
             </div>
         </section>
-                <section class="data">
+                <!-- Section containing data for sequence diagram popups -->
+        <section class="data">
             <div id="555" class="overlay">
                 <div class="popup">
                     <h2>An interaction</h2>
