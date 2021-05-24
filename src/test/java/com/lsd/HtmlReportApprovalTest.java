@@ -14,6 +14,8 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.Set;
 
+import static com.lsd.domain.ParticipantType.*;
+
 class HtmlReportApprovalTest {
     private final HtmlReportRenderer htmlReportRenderer = new HtmlReportRenderer();
 
@@ -33,7 +35,12 @@ class HtmlReportApprovalTest {
                                 )
                                 .sequenceDiagram(DiagramGenerator.builder()
                                         .includes(Set.of())
-                                        .participants(List.of())
+                                        .participants(List.of(
+                                                ACTOR.called("A", "Arnie"),
+                                                BOUNDARY.called("Unused participant"),
+                                                BOUNDARY.called("Another Unused participant", "G"),
+                                                DATABASE.called("B", "Badboy \\nDB")
+                                        ))
                                         .events(List.of(
                                                 Message.builder()
                                                         .id("111")

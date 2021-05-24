@@ -1,5 +1,6 @@
 package com.lsd.domain.scenario.diagram;
 
+import com.lsd.domain.Participant;
 import com.lsd.domain.scenario.events.Event;
 import com.lsd.domain.scenario.events.Interaction;
 import com.mitchellbosecke.pebble.PebbleEngine;
@@ -21,7 +22,7 @@ public class DiagramGenerator {
     private final PebbleTemplate compiledTemplate = engine.getTemplate("templates/sequence-uml.peb");
 
     private final Set<String> includes;
-    private final List<String> participants;
+    private final List<Participant> participants;
     private final List<Event> events;
 
     public SequenceDiagram sequenceDiagram() {

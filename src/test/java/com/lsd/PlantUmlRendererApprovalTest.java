@@ -9,11 +9,22 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.Set;
 
+import static com.lsd.domain.ParticipantType.*;
+
 class PlantUmlRendererApprovalTest {
 
     private DiagramGenerator diagramGenerator = DiagramGenerator.builder()
-            .participants(List.of())
             .includes(Set.of())
+            .participants(List.of(
+                    ACTOR.called("Arnold", "Arnie"),
+                    BOUNDARY.called("Nick"),
+                    CONTROL.called("A control"),
+                    COLLECTIONS.called("some collection"),
+                    ENTITY.called("Entity"),
+                    PARTICIPANT.called("Party"),
+                    QUEUE.called("Party"),
+                    DATABASE.called("Derek", "D for danger")
+            ))
             .events(List.of(
                     Message.builder()
                             .id("1")

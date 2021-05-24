@@ -10,7 +10,8 @@ dependencies {
     implementation 'io.pebbletemplates:pebble:3.1.4'
     implementation "net.sourceforge.plantuml:plantuml:1.2021.3"
     implementation "org.jdom:jdom:1.1"
-    
+    implementation 'org.apache.commons:commons-text:1.9'
+
     compileOnly 'org.projectlombok:lombok:1.18.16'
     annotationProcessor 'org.projectlombok:lombok:1.18.16'
 

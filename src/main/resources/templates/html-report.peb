@@ -107,6 +107,10 @@
             <h3>Sequence Diagram</h3>
             {{ scenario.sequenceDiagram.toSvg | raw }}
         </section>
+        <section class="sequence diagram uml">
+            <h3>Sequence Diagram UML</h3>
+            <pre>{{- scenario.sequenceDiagram.uml | raw -}}</pre>
+        </section>
         {% for interaction in scenario.sequenceDiagram.interactions %}
         <!-- Section containing data for sequence diagram popups -->
         <section class="data">

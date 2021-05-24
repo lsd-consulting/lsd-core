@@ -7,7 +7,8 @@ hide unlinked
 {% endfor %}
 
 {% for participant in participants %}
-  {{participant}}
+  {{ participant.markup }}
+
 {% endfor %}
 
 {% for event in events %}
