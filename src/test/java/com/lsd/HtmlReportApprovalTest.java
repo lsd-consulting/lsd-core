@@ -4,7 +4,10 @@ import com.lsd.domain.scenario.Fact;
 import com.lsd.domain.Report;
 import com.lsd.domain.scenario.Scenario;
 import com.lsd.domain.scenario.diagram.DiagramGenerator;
-import com.lsd.domain.scenario.events.SimpleInteraction;
+import com.lsd.domain.scenario.events.Message;
+import com.lsd.domain.scenario.events.NoteLeft;
+import com.lsd.domain.scenario.events.Markup;
+import com.lsd.domain.scenario.events.ResponseMessage;
 import org.approvaltests.Approvals;
 import org.junit.jupiter.api.Test;
 
@@ -32,20 +35,22 @@ class HtmlReportApprovalTest {
                                         .includes(Set.of())
                                         .participants(List.of())
                                         .events(List.of(
-                                                SimpleInteraction.builder()
+                                                Message.builder()
                                                         .id("111")
                                                         .label("Sending a greeting")
                                                         .from("A")
                                                         .to("B")
                                                         .data("Hi")
                                                         .build(),
-                                                SimpleInteraction.builder()
+                                                new Markup("..."),
+                                                ResponseMessage.builder()
                                                         .id("222")
                                                         .label("Sending a response")
                                                         .from("B")
                                                         .to("A")
                                                         .data("Yo")
-                                                        .build()
+                                                        .build(),
+                                                new NoteLeft("Informal")
                                         ))
                                         .build()
                                         .sequenceDiagram())
@@ -57,21 +62,21 @@ class HtmlReportApprovalTest {
                                         .includes(Set.of())
                                         .participants(List.of())
                                         .events(List.of(
-                                                SimpleInteraction.builder()
+                                                Message.builder()
                                                         .id("333")
                                                         .label("An interaction")
                                                         .from("Alpha")
                                                         .to("Beta")
                                                         .data("{\"name\": \"alpha\", \"description\":\"Something long to see how the popup window will respond to text that is wider than the initial box size\"}")
                                                         .build(),
-                                                SimpleInteraction.builder()
+                                                Message.builder()
                                                         .id("444")
                                                         .label("An interaction")
                                                         .from("Beta")
                                                         .to("Gamma")
                                                         .data("β")
                                                         .build(),
-                                                SimpleInteraction.builder()
+                                                Message.builder()
                                                         .id("555")
                                                         .label("An interaction")
                                                         .from("Gamma")

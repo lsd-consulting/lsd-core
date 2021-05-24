@@ -7,7 +7,7 @@ import static java.lang.String.format;
 
 @Value
 @Builder
-public class SimpleInteraction implements Interaction {
+public class ResponseMessage implements Interaction {
     String id;
     String label;
     String from;
@@ -15,7 +15,7 @@ public class SimpleInteraction implements Interaction {
     Object data;
 
     public String toMarkup() {
-        return format("%s -> %s:[[#%s %s]]",
+        return format("%s -->> %s:[[#%s %s]]",
                 getFrom(), getTo(), getId(), getLabel());
     }
 }
