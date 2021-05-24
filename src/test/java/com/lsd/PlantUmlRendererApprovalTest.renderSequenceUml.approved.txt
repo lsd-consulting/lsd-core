@@ -1,0 +1,18 @@
+@startuml
+
+hide unlinked
+
+
+  actor Arnold as "Arnie"
+  boundary Nick
+  control AControl
+  collections SomeCollection
+  entity Entity
+  participant Party
+  queue Party
+  database Derek as "D for danger"
+
+  A -> B:[[#1 Sending a request]]
+  B -->> A:[[#2 Sending a response]]
+
+@enduml

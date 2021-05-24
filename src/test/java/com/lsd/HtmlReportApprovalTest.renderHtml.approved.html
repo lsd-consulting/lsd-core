@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>LSD</title>
+    <style>
+        .overlay {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            transition: opacity 500ms;
+            visibility: hidden;
+            opacity: 0;
+        }
+
+        .overlay:target {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .popup {
+            margin: 70px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 5px;
+            max-width: 70%;
+            position: relative;
+            transition: all 5s ease-in-out;
+        }
+
+        h1, h2, h3 {
+            margin-top: 0;
+            color: #333;
+            font-family: Tahoma, Arial, sans-serif;
+        }
+
+        .popup .close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            transition: all 200ms;
+            font-size: 30px;
+            font-weight: bold;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .popup .close:hover {
+            color: #06D85F;
+        }
+
+        .popup .content {
+            overflow: auto;
+        }
+
+        /*    Make Facts look like table*/
+        .factTable {
+            display: table;
+        }
+
+        .factRow {
+            display: table-row;
+        }
+
+        .factRowHead {
+            display: table-header-group;
+            font-weight: bold;
+        }
+
+        .factCell, .factRowHead {
+            display: table-cell;
+            padding: 3px 10px;
+            border: 1px solid #999999;
+        }
+    </style>
+</head>
+<body>
+<main role="main">
+    <h1>LSD</h1>
+        <article>
+        <h2>First Scenario</h2>
+        <section class="description">
+            <h3>Description</h3>
+            <pre>Given a Cat
+And a dog
+When the dog barks
+Then the cat hisses</pre>        </section>
+                <section class="facts">
+            <h3>Key Facts</h3>
+            <div class="factTable">
+                <div class="factRow">
+                    <div class="factRowHead">Key</div>
+                    <div class="factRowHead">Value</div>
+                </div>
+                                <div class="factRow">
+                    <div class="factCell">Greeting</div>
+                    <div class="factCell">Hi</div>
+                </div>
+                            </div>
+        </section>
+                <section class="sequence diagram svg">
+            <h3>Sequence Diagram</h3>
+            <?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="290px" preserveAspectRatio="none" style="width:264px;height:290px;" version="1.1" viewBox="0 0 264 290" width="264px" zoomAndPan="magnify">
+  <defs>
+    <filter height="300%" id="f17yhcyrs3t3uu" width="300%" x="-1" y="-1">
+      <feGaussianBlur result="blurOut" stdDeviation="2.0" />
+      <feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0" />
+      <feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3" />
+      <feBlend in="SourceGraphic" in2="blurOut3" mode="normal" />
+    </filter>
+  </defs>
+  <g>
+    <line style="stroke:#A80036;stroke-width:1.0;" x1="87" x2="87" y1="88.4883" y2="127.7988" />
+    <line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:1.0,4.0;" x1="87" x2="87" y1="127.7988" y2="155.7988" />
+    <line style="stroke:#A80036;stroke-width:1.0;" x1="87" x2="87" y1="155.7988" y2="205.1094" />
+    <line style="stroke:#A80036;stroke-width:1.0;" x1="233.5" x2="233.5" y1="88.4883" y2="127.7988" />
+    <line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:1.0,4.0;" x1="233.5" x2="233.5" y1="127.7988" y2="155.7988" />
+    <line style="stroke:#A80036;stroke-width:1.0;" x1="233.5" x2="233.5" y1="155.7988" y2="205.1094" />
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="37" x="66" y="85.5352">Arnie</text>
+    <ellipse cx="87.5" cy="15" fill="#FEFECE" filter="url(#f17yhcyrs3t3uu)" rx="8" ry="8" style="stroke:#A80036;stroke-width:2.0;" />
+    <path d="M87.5,23 L87.5,50 M74.5,31 L100.5,31 M87.5,50 L74.5,65 M87.5,50 L100.5,65 " fill="none" filter="url(#f17yhcyrs3t3uu)" style="stroke:#A80036;stroke-width:2.0;" />
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="37" x="66" y="217.6445">Arnie</text>
+    <ellipse cx="87.5" cy="230.5977" fill="#FEFECE" filter="url(#f17yhcyrs3t3uu)" rx="8" ry="8" style="stroke:#A80036;stroke-width:2.0;" />
+    <path d="M87.5,238.5977 L87.5,265.5977 M74.5,246.5977 L100.5,246.5977 M87.5,265.5977 L74.5,280.5977 M87.5,265.5977 L100.5,280.5977 " fill="none" filter="url(#f17yhcyrs3t3uu)" style="stroke:#A80036;stroke-width:2.0;" />
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="50" x="203.5" y="69.0469">Badboy</text>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="18" x="221.5" y="85.5352">DB</text>
+    <path d="M215.5,19.5117 C215.5,9.5117 233.5,9.5117 233.5,9.5117 C233.5,9.5117 251.5,9.5117 251.5,19.5117 L251.5,45.5117 C251.5,55.5117 233.5,55.5117 233.5,55.5117 C233.5,55.5117 215.5,55.5117 215.5,45.5117 L215.5,19.5117 " fill="#FEFECE" filter="url(#f17yhcyrs3t3uu)" style="stroke:#000000;stroke-width:1.5;" />
+    <path d="M215.5,19.5117 C215.5,29.5117 233.5,29.5117 233.5,29.5117 C233.5,29.5117 251.5,29.5117 251.5,19.5117 " fill="none" style="stroke:#000000;stroke-width:1.5;" />
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="50" x="203.5" y="217.6445">Badboy</text>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="18" x="221.5" y="234.1328">DB</text>
+    <path d="M215.5,247.0859 C215.5,237.0859 233.5,237.0859 233.5,237.0859 C233.5,237.0859 251.5,237.0859 251.5,247.0859 L251.5,273.0859 C251.5,283.0859 233.5,283.0859 233.5,283.0859 C233.5,283.0859 215.5,283.0859 215.5,273.0859 L215.5,247.0859 " fill="#FEFECE" filter="url(#f17yhcyrs3t3uu)" style="stroke:#000000;stroke-width:1.5;" />
+    <path d="M215.5,247.0859 C215.5,257.0859 233.5,257.0859 233.5,257.0859 C233.5,257.0859 251.5,257.0859 251.5,247.0859 " fill="none" style="stroke:#000000;stroke-width:1.5;" />
+    <polygon fill="#A80036" points="221.5,115.7988,231.5,119.7988,221.5,123.7988,225.5,119.7988" style="stroke:#A80036;stroke-width:1.0;" />
+    <line style="stroke:#A80036;stroke-width:1.0;" x1="87.5" x2="227.5" y1="119.7988" y2="119.7988" />
+    <a href="#111" target="_top" title="#111" xlink:actuate="onRequest" xlink:href="#111" xlink:show="new" xlink:title="#111" xlink:type="simple">
+      <text fill="#0000FF" font-family="sans-serif" font-size="13" lengthAdjust="spacing" text-decoration="underline" textLength="117" x="94.5" y="115.0566">Sending a greeting</text>
+    </a>
+    <line style="stroke:#A80036;stroke-width:1.0;" x1="87.5" x2="97.5" y1="182.1094" y2="178.1094" />
+    <line style="stroke:#A80036;stroke-width:1.0;" x1="87.5" x2="97.5" y1="182.1094" y2="186.1094" />
+    <line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="87.5" x2="232.5" y1="182.1094" y2="182.1094" />
+    <a href="#222" target="_top" title="#222" xlink:actuate="onRequest" xlink:href="#222" xlink:show="new" xlink:title="#222" xlink:type="simple">
+      <text fill="#0000FF" font-family="sans-serif" font-size="13" lengthAdjust="spacing" text-decoration="underline" textLength="122" x="104.5" y="177.3672">Sending a response</text>
+    </a>
+    <path d="M5,160.7988 L5,185.7988 L79,185.7988 L79,170.7988 L69,160.7988 L5,160.7988 " fill="#FBFB77" filter="url(#f17yhcyrs3t3uu)" style="stroke:#A80036;stroke-width:1.0;" />
+    <path d="M69,160.7988 L69,170.7988 L79,170.7988 L69,160.7988 " fill="#FBFB77" style="stroke:#A80036;stroke-width:1.0;" />
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="53" x="11" y="178.3672">Informal</text>
+  </g>
+</svg>
+
+        </section>
+        <section class="sequence diagram uml">
+            <h3>Sequence Diagram UML</h3>
+            <pre>@startuml
+
+hide unlinked
+
+
+  actor A as "Arnie"
+  boundary UnusedParticipant
+  boundary AnotherUnusedParticipant as "G"
+  database B as "Badboy \nDB"
+
+  A -> B:[[#111 Sending a greeting]]
+  ...
+  B -->> A:[[#222 Sending a response]]
+  note left: Informal
+
+@enduml</pre>
+        </section>
+                <!-- Section containing data for sequence diagram popups -->
+        <section class="data">
+            <div id="111" class="overlay">
+                <div class="popup">
+                    <h2>Sending a greeting</h2>
+                    <a class="close" href="#">&times;</a>
+                    <div class="content">
+                        <pre>Hi</pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+                <!-- Section containing data for sequence diagram popups -->
+        <section class="data">
+            <div id="222" class="overlay">
+                <div class="popup">
+                    <h2>Sending a response</h2>
+                    <a class="close" href="#">&times;</a>
+                    <div class="content">
+                        <pre>Yo</pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+            </article>
+        <article>
+        <h2>Second Scenario</h2>
+        <section class="description">
+            <h3>Description</h3>
+            <p><ul><li>Some details</li><li>Some more details</li></ul></p>        </section>
+                <section class="sequence diagram svg">
+            <h3>Sequence Diagram</h3>
+            <?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="191px" preserveAspectRatio="none" style="width:409px;height:191px;" version="1.1" viewBox="0 0 409 191" width="409px" zoomAndPan="magnify">
+  <defs>
+    <filter height="300%" id="f145zwv19czbk0" width="300%" x="-1" y="-1">
+      <feGaussianBlur result="blurOut" stdDeviation="2.0" />
+      <feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0" />
+      <feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3" />
+      <feBlend in="SourceGraphic" in2="blurOut3" mode="normal" />
+    </filter>
+  </defs>
+  <g>
+    <line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="34" x2="34" y1="40.4883" y2="148.4199" />
+    <line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="146.5" x2="146.5" y1="40.4883" y2="148.4199" />
+    <line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="260" x2="260" y1="40.4883" y2="148.4199" />
+    <line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="372.5" x2="372.5" y1="40.4883" y2="148.4199" />
+    <rect fill="#FEFECE" filter="url(#f145zwv19czbk0)" height="30.4883" style="stroke:#A80036;stroke-width:1.5;" width="54" x="5" y="5" />
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="40" x="12" y="25.5352">Alpha</text>
+    <rect fill="#FEFECE" filter="url(#f145zwv19czbk0)" height="30.4883" style="stroke:#A80036;stroke-width:1.5;" width="54" x="5" y="147.4199" />
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="40" x="12" y="167.9551">Alpha</text>
+    <rect fill="#FEFECE" filter="url(#f145zwv19czbk0)" height="30.4883" style="stroke:#A80036;stroke-width:1.5;" width="43" x="123.5" y="5" />
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="29" x="130.5" y="25.5352">Beta</text>
+    <rect fill="#FEFECE" filter="url(#f145zwv19czbk0)" height="30.4883" style="stroke:#A80036;stroke-width:1.5;" width="43" x="123.5" y="147.4199" />
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="29" x="130.5" y="167.9551">Beta</text>
+    <rect fill="#FEFECE" filter="url(#f145zwv19czbk0)" height="30.4883" style="stroke:#A80036;stroke-width:1.5;" width="66" x="225" y="5" />
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="52" x="232" y="25.5352">Gamma</text>
+    <rect fill="#FEFECE" filter="url(#f145zwv19czbk0)" height="30.4883" style="stroke:#A80036;stroke-width:1.5;" width="66" x="225" y="147.4199" />
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="52" x="232" y="167.9551">Gamma</text>
+    <rect fill="#FEFECE" filter="url(#f145zwv19czbk0)" height="30.4883" style="stroke:#A80036;stroke-width:1.5;" width="49" x="346.5" y="5" />
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="35" x="353.5" y="25.5352">Delta</text>
+    <rect fill="#FEFECE" filter="url(#f145zwv19czbk0)" height="30.4883" style="stroke:#A80036;stroke-width:1.5;" width="49" x="346.5" y="147.4199" />
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="35" x="353.5" y="167.9551">Delta</text>
+    <polygon fill="#A80036" points="135,67.7988,145,71.7988,135,75.7988,139,71.7988" style="stroke:#A80036;stroke-width:1.0;" />
+    <line style="stroke:#A80036;stroke-width:1.0;" x1="34" x2="141" y1="71.7988" y2="71.7988" />
+    <a href="#333" target="_top" title="#333" xlink:actuate="onRequest" xlink:href="#333" xlink:show="new" xlink:title="#333" xlink:type="simple">
+      <text fill="#0000FF" font-family="sans-serif" font-size="13" lengthAdjust="spacing" text-decoration="underline" textLength="89" x="41" y="67.0566">An interaction</text>
+    </a>
+    <polygon fill="#A80036" points="248,97.1094,258,101.1094,248,105.1094,252,101.1094" style="stroke:#A80036;stroke-width:1.0;" />
+    <line style="stroke:#A80036;stroke-width:1.0;" x1="147" x2="254" y1="101.1094" y2="101.1094" />
+    <a href="#444" target="_top" title="#444" xlink:actuate="onRequest" xlink:href="#444" xlink:show="new" xlink:title="#444" xlink:type="simple">
+      <text fill="#0000FF" font-family="sans-serif" font-size="13" lengthAdjust="spacing" text-decoration="underline" textLength="89" x="154" y="96.3672">An interaction</text>
+    </a>
+    <polygon fill="#A80036" points="361,126.4199,371,130.4199,361,134.4199,365,130.4199" style="stroke:#A80036;stroke-width:1.0;" />
+    <line style="stroke:#A80036;stroke-width:1.0;" x1="260" x2="367" y1="130.4199" y2="130.4199" />
+    <a href="#555" target="_top" title="#555" xlink:actuate="onRequest" xlink:href="#555" xlink:show="new" xlink:title="#555" xlink:type="simple">
+      <text fill="#0000FF" font-family="sans-serif" font-size="13" lengthAdjust="spacing" text-decoration="underline" textLength="89" x="267" y="125.6777">An interaction</text>
+    </a>
+  </g>
+</svg>
+
+        </section>
+        <section class="sequence diagram uml">
+            <h3>Sequence Diagram UML</h3>
+            <pre>@startuml
+
+hide unlinked
+
+
+
+  Alpha -> Beta:[[#333 An interaction]]
+  Beta -> Gamma:[[#444 An interaction]]
+  Gamma -> Delta:[[#555 An interaction]]
+
+@enduml</pre>
+        </section>
+                <!-- Section containing data for sequence diagram popups -->
+        <section class="data">
+            <div id="333" class="overlay">
+                <div class="popup">
+                    <h2>An interaction</h2>
+                    <a class="close" href="#">&times;</a>
+                    <div class="content">
+                        <pre>{"name": "alpha", "description":"Something long to see how the popup window will respond to text that is wider than the initial box size"}</pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+                <!-- Section containing data for sequence diagram popups -->
+        <section class="data">
+            <div id="444" class="overlay">
+                <div class="popup">
+                    <h2>An interaction</h2>
+                    <a class="close" href="#">&times;</a>
+                    <div class="content">
+                        <pre>β</pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+                <!-- Section containing data for sequence diagram popups -->
+        <section class="data">
+            <div id="555" class="overlay">
+                <div class="popup">
+                    <h2>An interaction</h2>
+                    <a class="close" href="#">&times;</a>
+                    <div class="content">
+                        <pre>γ</pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+            </article>
+    </main>
+</body>
+</html>
