@@ -74,6 +74,13 @@
             padding: 3px 10px;
             border: 1px solid #999999;
         }
+
+        /* Some basic spacing for now  */
+        section {
+            border: 15px solid skyblue;
+            padding: 50px;
+            margin: 20px;
+        }
     </style>
 </head>
 <body>
@@ -108,22 +115,20 @@
             {{ scenario.sequenceDiagram.toSvg | raw }}
         </section>
         <section class="sequence diagram uml">
-            <h3>Sequence Diagram UML</h3>
-            <pre>{{- scenario.sequenceDiagram.uml | raw -}}</pre>
+            <h3>Sequence Diagram Markup</h3>
+            <pre>{{- scenario.sequenceDiagram.uml -}}</pre>
         </section>
         {% for interaction in scenario.sequenceDiagram.interactions %}
         <!-- Section containing data for sequence diagram popups -->
-        <section class="data">
-            <div id="{{interaction.id}}" class="overlay">
-                <div class="popup">
-                    <h2>{{interaction.label}}</h2>
-                    <a class="close" href="#">&times;</a>
-                    <div class="content">
-                        <pre>{{ interaction.data | raw }}</pre>
-                    </div>
+        <div id="{{interaction.id}}" class="overlay">
+            <div class="popup">
+                <h2>{{ interaction.sanitisedLabel }}</h2>
+                <a class="close" href="#!">&times;</a>
+                <div class="content">
+                    <pre>{{ interaction.data | raw }}</pre>
                 </div>
             </div>
-        </section>
+        </div>
         {% endfor %}
     </article>
     {% endfor %}

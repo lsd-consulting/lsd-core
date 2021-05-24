@@ -2,6 +2,8 @@
 
 hide unlinked
 
+  !include <tupadr3/font-awesome-5/database>
+  !include <tupadr3/font-awesome-5/clock>
 
   actor Arnold as "Arnie"
   boundary Nick

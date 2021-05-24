@@ -14,7 +14,10 @@ import static com.lsd.domain.ParticipantType.*;
 class PlantUmlRendererApprovalTest {
 
     private DiagramGenerator diagramGenerator = DiagramGenerator.builder()
-            .includes(Set.of())
+            .includes(Set.of(
+                    "tupadr3/font-awesome-5/database",
+                    "tupadr3/font-awesome-5/clock"
+            ))
             .participants(List.of(
                     ACTOR.called("Arnold", "Arnie"),
                     BOUNDARY.called("Nick"),

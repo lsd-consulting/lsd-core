@@ -21,7 +21,13 @@ class HtmlReportApprovalTest {
 
     @Test
     void renderHtml() {
-        String report = htmlReportRenderer.render(Report.builder()
+        String report = htmlReportRenderer.render(buildSampleReport());
+
+        Approvals.verifyHtml(report);
+    }
+
+    private Report buildSampleReport() {
+        return Report.builder()
                 .title("LSD")
                 .scenarios(List.of(
                         Scenario.builder()
@@ -34,7 +40,10 @@ class HtmlReportApprovalTest {
                                                 .build())
                                 )
                                 .sequenceDiagram(DiagramGenerator.builder()
-                                        .includes(Set.of())
+                                        .includes(Set.of(
+                                                "tupadr3/font-awesome-5/heart",
+                                                "tupadr3/font-awesome-5/hamburger"
+                                        ))
                                         .participants(List.of(
                                                 ACTOR.called("A", "Arnie"),
                                                 BOUNDARY.called("Unused participant"),
@@ -44,7 +53,7 @@ class HtmlReportApprovalTest {
                                         .events(List.of(
                                                 Message.builder()
                                                         .id("111")
-                                                        .label("Sending a greeting")
+                                                        .label("Sending food <$hamburger{scale=0.4}>")
                                                         .from("A")
                                                         .to("B")
                                                         .data("Hi")
@@ -55,9 +64,9 @@ class HtmlReportApprovalTest {
                                                         .label("Sending a response")
                                                         .from("B")
                                                         .to("A")
-                                                        .data("Yo")
+                                                        .data("Thank You!")
                                                         .build(),
-                                                new NoteLeft("Informal")
+                                                new NoteLeft("Friends <$heart{scale=0.4}>")
                                         ))
                                         .build()
                                         .sequenceDiagram())
@@ -92,8 +101,6 @@ class HtmlReportApprovalTest {
                                                         .build()))
                                         .build().sequenceDiagram())
                                 .build()))
-                .build());
-
-        Approvals.verifyHtml(report);
+                .build();
     }
 }

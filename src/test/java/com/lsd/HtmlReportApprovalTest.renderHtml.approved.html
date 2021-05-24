@@ -74,6 +74,13 @@
             padding: 3px 10px;
             border: 1px solid #999999;
         }
+
+        /* Some basic spacing for now  */
+        section {
+            border: 15px solid skyblue;
+            padding: 50px;
+            margin: 20px;
+        }
     </style>
 </head>
 <body>
@@ -103,9 +110,9 @@ Then the cat hisses</pre>        </section>
                 <section class="sequence diagram svg">
             <h3>Sequence Diagram</h3>
             <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="290px" preserveAspectRatio="none" style="width:264px;height:290px;" version="1.1" viewBox="0 0 264 290" width="264px" zoomAndPan="magnify">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="297px" preserveAspectRatio="none" style="width:280px;height:297px;" version="1.1" viewBox="0 0 280 297" width="280px" zoomAndPan="magnify">
   <defs>
-    <filter height="300%" id="f17yhcyrs3t3uu" width="300%" x="-1" y="-1">
+    <filter height="300%" id="f1ag2z6790r5m8" width="300%" x="-1" y="-1">
       <feGaussianBlur result="blurOut" stdDeviation="2.0" />
       <feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0" />
       <feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3" />
@@ -113,87 +120,89 @@ Then the cat hisses</pre>        </section>
     </filter>
   </defs>
   <g>
-    <line style="stroke:#A80036;stroke-width:1.0;" x1="87" x2="87" y1="88.4883" y2="127.7988" />
-    <line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:1.0,4.0;" x1="87" x2="87" y1="127.7988" y2="155.7988" />
-    <line style="stroke:#A80036;stroke-width:1.0;" x1="87" x2="87" y1="155.7988" y2="205.1094" />
-    <line style="stroke:#A80036;stroke-width:1.0;" x1="233.5" x2="233.5" y1="88.4883" y2="127.7988" />
-    <line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:1.0,4.0;" x1="233.5" x2="233.5" y1="127.7988" y2="155.7988" />
-    <line style="stroke:#A80036;stroke-width:1.0;" x1="233.5" x2="233.5" y1="155.7988" y2="205.1094" />
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="37" x="66" y="85.5352">Arnie</text>
-    <ellipse cx="87.5" cy="15" fill="#FEFECE" filter="url(#f17yhcyrs3t3uu)" rx="8" ry="8" style="stroke:#A80036;stroke-width:2.0;" />
-    <path d="M87.5,23 L87.5,50 M74.5,31 L100.5,31 M87.5,50 L74.5,65 M87.5,50 L100.5,65 " fill="none" filter="url(#f17yhcyrs3t3uu)" style="stroke:#A80036;stroke-width:2.0;" />
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="37" x="66" y="217.6445">Arnie</text>
-    <ellipse cx="87.5" cy="230.5977" fill="#FEFECE" filter="url(#f17yhcyrs3t3uu)" rx="8" ry="8" style="stroke:#A80036;stroke-width:2.0;" />
-    <path d="M87.5,238.5977 L87.5,265.5977 M74.5,246.5977 L100.5,246.5977 M87.5,265.5977 L74.5,280.5977 M87.5,265.5977 L100.5,280.5977 " fill="none" filter="url(#f17yhcyrs3t3uu)" style="stroke:#A80036;stroke-width:2.0;" />
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="50" x="203.5" y="69.0469">Badboy</text>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="18" x="221.5" y="85.5352">DB</text>
-    <path d="M215.5,19.5117 C215.5,9.5117 233.5,9.5117 233.5,9.5117 C233.5,9.5117 251.5,9.5117 251.5,19.5117 L251.5,45.5117 C251.5,55.5117 233.5,55.5117 233.5,55.5117 C233.5,55.5117 215.5,55.5117 215.5,45.5117 L215.5,19.5117 " fill="#FEFECE" filter="url(#f17yhcyrs3t3uu)" style="stroke:#000000;stroke-width:1.5;" />
-    <path d="M215.5,19.5117 C215.5,29.5117 233.5,29.5117 233.5,29.5117 C233.5,29.5117 251.5,29.5117 251.5,19.5117 " fill="none" style="stroke:#000000;stroke-width:1.5;" />
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="50" x="203.5" y="217.6445">Badboy</text>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="18" x="221.5" y="234.1328">DB</text>
-    <path d="M215.5,247.0859 C215.5,237.0859 233.5,237.0859 233.5,237.0859 C233.5,237.0859 251.5,237.0859 251.5,247.0859 L251.5,273.0859 C251.5,283.0859 233.5,283.0859 233.5,283.0859 C233.5,283.0859 215.5,283.0859 215.5,273.0859 L215.5,247.0859 " fill="#FEFECE" filter="url(#f17yhcyrs3t3uu)" style="stroke:#000000;stroke-width:1.5;" />
-    <path d="M215.5,247.0859 C215.5,257.0859 233.5,257.0859 233.5,257.0859 C233.5,257.0859 251.5,257.0859 251.5,247.0859 " fill="none" style="stroke:#000000;stroke-width:1.5;" />
-    <polygon fill="#A80036" points="221.5,115.7988,231.5,119.7988,221.5,123.7988,225.5,119.7988" style="stroke:#A80036;stroke-width:1.0;" />
-    <line style="stroke:#A80036;stroke-width:1.0;" x1="87.5" x2="227.5" y1="119.7988" y2="119.7988" />
+    <line style="stroke:#A80036;stroke-width:1.0;" x1="103" x2="103" y1="88.4883" y2="131.6883" />
+    <line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:1.0,4.0;" x1="103" x2="103" y1="131.6883" y2="159.6883" />
+    <line style="stroke:#A80036;stroke-width:1.0;" x1="103" x2="103" y1="159.6883" y2="212.8883" />
+    <line style="stroke:#A80036;stroke-width:1.0;" x1="249.5" x2="249.5" y1="88.4883" y2="131.6883" />
+    <line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:1.0,4.0;" x1="249.5" x2="249.5" y1="131.6883" y2="159.6883" />
+    <line style="stroke:#A80036;stroke-width:1.0;" x1="249.5" x2="249.5" y1="159.6883" y2="212.8883" />
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="37" x="82" y="85.5352">Arnie</text>
+    <ellipse cx="103.5" cy="15" fill="#FEFECE" filter="url(#f1ag2z6790r5m8)" rx="8" ry="8" style="stroke:#A80036;stroke-width:2.0;" />
+    <path d="M103.5,23 L103.5,50 M90.5,31 L116.5,31 M103.5,50 L90.5,65 M103.5,50 L116.5,65 " fill="none" filter="url(#f1ag2z6790r5m8)" style="stroke:#A80036;stroke-width:2.0;" />
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="37" x="82" y="225.4234">Arnie</text>
+    <ellipse cx="103.5" cy="238.3766" fill="#FEFECE" filter="url(#f1ag2z6790r5m8)" rx="8" ry="8" style="stroke:#A80036;stroke-width:2.0;" />
+    <path d="M103.5,246.3766 L103.5,273.3766 M90.5,254.3766 L116.5,254.3766 M103.5,273.3766 L90.5,288.3766 M103.5,273.3766 L116.5,288.3766 " fill="none" filter="url(#f1ag2z6790r5m8)" style="stroke:#A80036;stroke-width:2.0;" />
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="50" x="219.5" y="69.0469">Badboy</text>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="18" x="237.5" y="85.5352">DB</text>
+    <path d="M231.5,19.5117 C231.5,9.5117 249.5,9.5117 249.5,9.5117 C249.5,9.5117 267.5,9.5117 267.5,19.5117 L267.5,45.5117 C267.5,55.5117 249.5,55.5117 249.5,55.5117 C249.5,55.5117 231.5,55.5117 231.5,45.5117 L231.5,19.5117 " fill="#FEFECE" filter="url(#f1ag2z6790r5m8)" style="stroke:#000000;stroke-width:1.5;" />
+    <path d="M231.5,19.5117 C231.5,29.5117 249.5,29.5117 249.5,29.5117 C249.5,29.5117 267.5,29.5117 267.5,19.5117 " fill="none" style="stroke:#000000;stroke-width:1.5;" />
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="50" x="219.5" y="225.4234">Badboy</text>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="18" x="237.5" y="241.9117">DB</text>
+    <path d="M231.5,254.8648 C231.5,244.8648 249.5,244.8648 249.5,244.8648 C249.5,244.8648 267.5,244.8648 267.5,254.8648 L267.5,280.8648 C267.5,290.8648 249.5,290.8648 249.5,290.8648 C249.5,290.8648 231.5,290.8648 231.5,280.8648 L231.5,254.8648 " fill="#FEFECE" filter="url(#f1ag2z6790r5m8)" style="stroke:#000000;stroke-width:1.5;" />
+    <path d="M231.5,254.8648 C231.5,264.8648 249.5,264.8648 249.5,264.8648 C249.5,264.8648 267.5,264.8648 267.5,254.8648 " fill="none" style="stroke:#000000;stroke-width:1.5;" />
+    <polygon fill="#A80036" points="237.5,119.6883,247.5,123.6883,237.5,127.6883,241.5,123.6883" style="stroke:#A80036;stroke-width:1.0;" />
+    <line style="stroke:#A80036;stroke-width:1.0;" x1="103.5" x2="243.5" y1="123.6883" y2="123.6883" />
     <a href="#111" target="_top" title="#111" xlink:actuate="onRequest" xlink:href="#111" xlink:show="new" xlink:title="#111" xlink:type="simple">
-      <text fill="#0000FF" font-family="sans-serif" font-size="13" lengthAdjust="spacing" text-decoration="underline" textLength="117" x="94.5" y="115.0566">Sending a greeting</text>
+      <text fill="#0000FF" font-family="sans-serif" font-size="13" lengthAdjust="spacing" text-decoration="underline" textLength="83" x="110.5" y="115.0566">Sending food</text>
     </a>
-    <line style="stroke:#A80036;stroke-width:1.0;" x1="87.5" x2="97.5" y1="182.1094" y2="178.1094" />
-    <line style="stroke:#A80036;stroke-width:1.0;" x1="87.5" x2="97.5" y1="182.1094" y2="186.1094" />
-    <line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="87.5" x2="232.5" y1="182.1094" y2="182.1094" />
+    <a href="#111" target="_top" title="#111" xlink:actuate="onRequest" xlink:href="#111" xlink:show="new" xlink:title="#111" xlink:type="simple">
+      <image height="19" width="19" x="197.5" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAIAAAD9MqGbAAAA9ElEQVR4Xp2TMQqDMBSGU0S6dquCnQrewsnByYMIbt6idCgUurk7uXiH3qHgIoJ0KCiCYKXwmlSD6SuE1J9v0OT/4hsigaUheEFI3+MVMdh8PMDzYLuF1QoIYRgGWylLVBTMuobdbmqPOM7Xq22zc7F5u4GmsW1RjuP5ebNhBV2HPBfMppk1sS1yOMB+Pz13HTejCPfk+D43kwTvyTkeuUlzvUKWKUGbY5h5v8P5zE5S4XKBquLm7zxy1mt4vRaZ9JK07cek01sWmKYqacqnHQYoij94PrkZBHgeOa7LzdMJ78kJQ27Sr6O7LoE2x+C/TD3LzTeit8koBlhA2AAAAABJRU5ErkJggg==" y="102.4883" />
+    </a>
+    <line style="stroke:#A80036;stroke-width:1.0;" x1="103.5" x2="113.5" y1="187.9436" y2="183.9436" />
+    <line style="stroke:#A80036;stroke-width:1.0;" x1="103.5" x2="113.5" y1="187.9436" y2="191.9436" />
+    <line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="103.5" x2="248.5" y1="187.9436" y2="187.9436" />
     <a href="#222" target="_top" title="#222" xlink:actuate="onRequest" xlink:href="#222" xlink:show="new" xlink:title="#222" xlink:type="simple">
-      <text fill="#0000FF" font-family="sans-serif" font-size="13" lengthAdjust="spacing" text-decoration="underline" textLength="122" x="104.5" y="177.3672">Sending a response</text>
+      <text fill="#0000FF" font-family="sans-serif" font-size="13" lengthAdjust="spacing" text-decoration="underline" textLength="122" x="120.5" y="183.2014">Sending a response</text>
     </a>
-    <path d="M5,160.7988 L5,185.7988 L79,185.7988 L79,170.7988 L69,160.7988 L5,160.7988 " fill="#FBFB77" filter="url(#f17yhcyrs3t3uu)" style="stroke:#A80036;stroke-width:1.0;" />
-    <path d="M69,160.7988 L69,170.7988 L79,170.7988 L69,160.7988 " fill="#FBFB77" style="stroke:#A80036;stroke-width:1.0;" />
-    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="53" x="11" y="178.3672">Informal</text>
+    <path d="M5,164.6883 L5,193.6883 L95,193.6883 L95,174.6883 L85,164.6883 L5,164.6883 " fill="#FBFB77" filter="url(#f1ag2z6790r5m8)" style="stroke:#A80036;stroke-width:1.0;" />
+    <path d="M85,164.6883 L85,174.6883 L95,174.6883 L85,164.6883 " fill="#FBFB77" style="stroke:#A80036;stroke-width:1.0;" />
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="46" x="11" y="186.1461">Friends</text>
+    <image height="19" width="19" x="61" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAIAAAD9MqGbAAABCUlEQVR4XmP4/bucPMSAxv/+vRRTERB9+VKCJoLQ6eyswMLCxMDAwMfHnppqABdPTtYHigDF2dmZ3dwUf/woQ+j8/LlYQICDARWIiHB+/FgkKcmDJg4EEM0gnf7+auiSYMDMDHICJnB1VYTqRJchBIAm/vpFlk4geP48j0ydX7+WgHTKyvKhy+AFGhrCUH/ev5+FKzCwAqB6qE4gOnkyHl0eB9i7NxIRnxC0a1ckIyMjukJUsHy5P1w9SurbsCEEXS0SWLs2CFkxerpdvNgPXQcYTJnihqYSXScQzZjhgaZt+nQPTGVYdAJRX58LXFt1tTWmApw6gai52Q6obeJEV0wpAjoJIvJ1AgCBF8EtYqXtzAAAAABJRU5ErkJggg==" y="169.6883" />
   </g>
 </svg>
 
         </section>
         <section class="sequence diagram uml">
-            <h3>Sequence Diagram UML</h3>
+            <h3>Sequence Diagram Markup</h3>
             <pre>@startuml
 
 hide unlinked
 
+  !include &lt;tupadr3/font-awesome-5/heart&gt;
+  !include &lt;tupadr3/font-awesome-5/hamburger&gt;
 
-  actor A as "Arnie"
+  actor A as &quot;Arnie&quot;
   boundary UnusedParticipant
-  boundary AnotherUnusedParticipant as "G"
-  database B as "Badboy \nDB"
+  boundary AnotherUnusedParticipant as &quot;G&quot;
+  database B as &quot;Badboy \nDB&quot;
 
-  A -> B:[[#111 Sending a greeting]]
+  A -&gt; B:[[#111 Sending food &lt;$hamburger{scale=0.4}&gt;]]
   ...
-  B -->> A:[[#222 Sending a response]]
-  note left: Informal
+  B --&gt;&gt; A:[[#222 Sending a response]]
+  note left: Friends &lt;$heart{scale=0.4}&gt;
 
 @enduml</pre>
         </section>
                 <!-- Section containing data for sequence diagram popups -->
-        <section class="data">
-            <div id="111" class="overlay">
-                <div class="popup">
-                    <h2>Sending a greeting</h2>
-                    <a class="close" href="#">&times;</a>
-                    <div class="content">
-                        <pre>Hi</pre>
-                    </div>
+        <div id="111" class="overlay">
+            <div class="popup">
+                <h2>Sending food </h2>
+                <a class="close" href="#!">&times;</a>
+                <div class="content">
+                    <pre>Hi</pre>
                 </div>
             </div>
-        </section>
+        </div>
                 <!-- Section containing data for sequence diagram popups -->
-        <section class="data">
-            <div id="222" class="overlay">
-                <div class="popup">
-                    <h2>Sending a response</h2>
-                    <a class="close" href="#">&times;</a>
-                    <div class="content">
-                        <pre>Yo</pre>
-                    </div>
+        <div id="222" class="overlay">
+            <div class="popup">
+                <h2>Sending a response</h2>
+                <a class="close" href="#!">&times;</a>
+                <div class="content">
+                    <pre>Thank You!</pre>
                 </div>
             </div>
-        </section>
+        </div>
             </article>
         <article>
         <h2>Second Scenario</h2>
@@ -253,55 +262,49 @@ hide unlinked
 
         </section>
         <section class="sequence diagram uml">
-            <h3>Sequence Diagram UML</h3>
+            <h3>Sequence Diagram Markup</h3>
             <pre>@startuml
 
 hide unlinked
 
 
 
-  Alpha -> Beta:[[#333 An interaction]]
-  Beta -> Gamma:[[#444 An interaction]]
-  Gamma -> Delta:[[#555 An interaction]]
+  Alpha -&gt; Beta:[[#333 An interaction]]
+  Beta -&gt; Gamma:[[#444 An interaction]]
+  Gamma -&gt; Delta:[[#555 An interaction]]
 
 @enduml</pre>
         </section>
                 <!-- Section containing data for sequence diagram popups -->
-        <section class="data">
-            <div id="333" class="overlay">
-                <div class="popup">
-                    <h2>An interaction</h2>
-                    <a class="close" href="#">&times;</a>
-                    <div class="content">
-                        <pre>{"name": "alpha", "description":"Something long to see how the popup window will respond to text that is wider than the initial box size"}</pre>
-                    </div>
+        <div id="333" class="overlay">
+            <div class="popup">
+                <h2>An interaction</h2>
+                <a class="close" href="#!">&times;</a>
+                <div class="content">
+                    <pre>{"name": "alpha", "description":"Something long to see how the popup window will respond to text that is wider than the initial box size"}</pre>
                 </div>
             </div>
-        </section>
+        </div>
                 <!-- Section containing data for sequence diagram popups -->
-        <section class="data">
-            <div id="444" class="overlay">
-                <div class="popup">
-                    <h2>An interaction</h2>
-                    <a class="close" href="#">&times;</a>
-                    <div class="content">
-                        <pre>β</pre>
-                    </div>
+        <div id="444" class="overlay">
+            <div class="popup">
+                <h2>An interaction</h2>
+                <a class="close" href="#!">&times;</a>
+                <div class="content">
+                    <pre>β</pre>
                 </div>
             </div>
-        </section>
+        </div>
                 <!-- Section containing data for sequence diagram popups -->
-        <section class="data">
-            <div id="555" class="overlay">
-                <div class="popup">
-                    <h2>An interaction</h2>
-                    <a class="close" href="#">&times;</a>
-                    <div class="content">
-                        <pre>γ</pre>
-                    </div>
+        <div id="555" class="overlay">
+            <div class="popup">
+                <h2>An interaction</h2>
+                <a class="close" href="#!">&times;</a>
+                <div class="content">
+                    <pre>γ</pre>
                 </div>
             </div>
-        </section>
+        </div>
             </article>
     </main>
 </body>
