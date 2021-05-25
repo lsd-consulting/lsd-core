@@ -14,4 +14,5 @@ application.
 | Name        | Default     | Description |
 | ----------- | ----------- |------------ |
 | lsd.core.label.max-width | 200 | The width in number of characters for the labels that appear on the arrows for the sequence diagrams before being abbreviated. |
+| lsd.core.diagram.theme | plain | The plantUml theme to apply to the diagrams. See the [available themes](https://plantuml.com/theme). |
 

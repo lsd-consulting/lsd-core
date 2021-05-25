@@ -1,18 +1,20 @@
 @startuml
 
+!theme {{theme}}
+
 hide unlinked
 
 {% for include in includes %}
-  !include <{{include}}>
+!include <{{include}}>
 {% endfor %}
 
 {% for participant in participants %}
-  {{ participant.markup }}
+{{ participant.markup }}
 
 {% endfor %}
 
 {% for event in events %}
-  {{event}}
+{{event}}
 
 {% endfor %}
 

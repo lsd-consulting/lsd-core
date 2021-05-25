@@ -20,7 +20,7 @@ public class PropertiesFileLoader {
         this.defaults = defaults;
     }
 
-    public Properties loadFromFile() {
+    public Properties load() {
         InputStream inputStream = getClass().getResourceAsStream("/" + fileName);
         Properties properties = new Properties(defaults);
         ofNullable(inputStream).ifPresent(loadInto(properties));

@@ -2,7 +2,7 @@ package com.lsd.domain.scenario.events;
 
 import com.lsd.properties.LsdProperties;
 
-import static com.lsd.properties.DefaultProperties.LABEL_MAX_WIDTH;
+import static com.lsd.properties.LsdProperties.LABEL_MAX_WIDTH;
 import static org.apache.commons.lang3.StringUtils.abbreviate;
 
 public interface Interaction extends Event {

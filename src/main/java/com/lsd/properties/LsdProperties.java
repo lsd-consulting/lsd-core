@@ -9,8 +9,10 @@ import static java.lang.Integer.parseInt;
  * Convenience class to load up all the properties (defaults and user provided) at the start and make available globally
  */
 public class LsdProperties {
-    private static final String PROPERTIES_FILE_NAME = "lsd.properties";
-    private static final Properties PROPERTIES = new PropertiesFileLoader(PROPERTIES_FILE_NAME, defaultProperties()).loadFromFile();
+    public static final String LABEL_MAX_WIDTH = "lsd.core.label.max-width";
+    public static final String DIAGRAM_THEME = "lsd.core.diagram.theme";
+
+    private static final Properties PROPERTIES = new PropertiesFileLoader("lsd.properties", defaultProperties()).load();
 
     public static String get(String key) {
         return PROPERTIES.getProperty(key);
