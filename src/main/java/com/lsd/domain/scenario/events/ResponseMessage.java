@@ -2,8 +2,9 @@ package com.lsd.domain.scenario.events;
 
 import lombok.Builder;
 import lombok.Value;
+import org.apache.commons.text.StringSubstitutor;
 
-import static java.lang.String.format;
+import java.util.Map;
 
 @Value
 @Builder
@@ -15,7 +16,10 @@ public class ResponseMessage implements Interaction {
     Object data;
 
     public String toMarkup() {
-        return format("%s -->> %s:[[#%s %s]]",
-                getFrom(), getTo(), getId(), getLabel());
+        return StringSubstitutor.replace("${from} -->> ${to}:[[#${id} ${label}]]", Map.of(
+                "from", getFrom(),
+                "to", getTo(),
+                "id", getId(),
+                "label", abbreviatedLabel()));
     }
 }

@@ -1,6 +1,9 @@
 package com.lsd.domain.scenario.events;
 
-import java.util.Optional;
+import com.lsd.properties.LsdProperties;
+
+import static com.lsd.properties.DefaultProperties.LABEL_MAX_WIDTH;
+import static org.apache.commons.lang3.StringUtils.abbreviate;
 
 public interface Interaction extends Event {
     String getId();
@@ -11,12 +14,9 @@ public interface Interaction extends Event {
     Object getData();
 
     /**
-     * The label minus any plantUml placeholders (for images/icons etc.) that render nicely in plantUml but not in html.
+     * @return An abbreviation of the label if the length exceeds the configured maximum width.
      */
-    @SuppressWarnings("unused")
-    default String sanitisedLabel() {
-        return Optional.ofNullable(getLabel())
-                .map(label -> label.replaceAll("<\\$.*?>", ""))
-                .orElse("");
+    default String abbreviatedLabel() {
+        return abbreviate(getLabel(), "...", LsdProperties.getInt(LABEL_MAX_WIDTH));
     }
 }

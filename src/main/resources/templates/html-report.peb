@@ -122,7 +122,7 @@
         <!-- Section containing data for sequence diagram popups -->
         <div id="{{interaction.id}}" class="overlay">
             <div class="popup">
-                <h2>{{ interaction.sanitisedLabel }}</h2>
+                <h2>{{ interaction.abbreviatedLabel | sanitise }}</h2>
                 <a class="close" href="#!">&times;</a>
                 <div class="content">
                     <pre>{{ interaction.data | raw }}</pre>

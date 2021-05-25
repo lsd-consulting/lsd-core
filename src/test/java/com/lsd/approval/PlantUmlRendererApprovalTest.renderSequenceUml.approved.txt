@@ -2,8 +2,8 @@
 
 hide unlinked
 
-  !include <tupadr3/font-awesome-5/database>
   !include <tupadr3/font-awesome-5/clock>
+  !include <tupadr3/font-awesome-5/database>
 
   actor Arnold as "Arnie"
   boundary Nick
@@ -15,6 +15,6 @@ hide unlinked
   database Derek as "D for danger"
 
   A -> B:[[#1 Sending a request]]
-  B -->> A:[[#2 Sending a response]]
+  B -->> A:[[#2 Sending a response with a long label that shoul...]]
 
 @enduml

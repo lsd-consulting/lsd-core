@@ -1,6 +1,7 @@
 package com.lsd;
 
 import com.lsd.domain.Report;
+import com.lsd.pebble.LsdPebbleExtension;
 import com.mitchellbosecke.pebble.PebbleEngine;
 import com.mitchellbosecke.pebble.template.PebbleTemplate;
 import lombok.SneakyThrows;
@@ -11,7 +12,10 @@ import java.util.Map;
 
 public class HtmlReportRenderer {
 
-    private final PebbleEngine engine = new PebbleEngine.Builder().build();
+    private final PebbleEngine engine = new PebbleEngine.Builder()
+            .extension(new LsdPebbleExtension())
+            .build();
+    
     private final PebbleTemplate compiledTemplate = engine.getTemplate("templates/html-report.peb");
 
     @SneakyThrows
