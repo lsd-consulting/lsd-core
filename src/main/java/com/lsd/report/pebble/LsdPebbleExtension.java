@@ -1,6 +1,6 @@
-package com.lsd.pebble;
+package com.lsd.report.pebble;
 
-import com.lsd.pebble.filter.Sanitise;
+import com.lsd.report.pebble.filter.Sanitiser;
 import com.mitchellbosecke.pebble.extension.AbstractExtension;
 import com.mitchellbosecke.pebble.extension.Filter;
 
@@ -10,7 +10,7 @@ public class LsdPebbleExtension extends AbstractExtension {
     @Override
     public Map<String, Filter> getFilters() {
         return Map.of(
-                "sanitise", new Sanitise()
+                "sanitise", new Sanitiser()
         );
     }
 }

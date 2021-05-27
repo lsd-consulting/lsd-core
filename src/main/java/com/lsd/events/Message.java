@@ -1,5 +1,6 @@
-package com.lsd.domain.scenario.events;
+package com.lsd.events;
 
+import com.lsd.report.model.DataHolder;
 import lombok.Builder;
 import lombok.Value;
 import org.apache.commons.text.StringSubstitutor;
@@ -8,7 +9,7 @@ import java.util.Map;
 
 @Value
 @Builder
-public class ResponseMessage implements Interaction {
+public class Message implements DataHolder {
     String id;
     String label;
     String from;
@@ -16,10 +17,11 @@ public class ResponseMessage implements Interaction {
     Object data;
 
     public String toMarkup() {
-        return StringSubstitutor.replace("${from} -->> ${to}:[[#${id} ${label}]]", Map.of(
+        return StringSubstitutor.replace("${from} -> ${to}:[[#${id} ${label}]]", Map.of(
                 "from", getFrom(),
                 "to", getTo(),
                 "id", getId(),
-                "label", abbreviatedLabel()));
+                "label", abbreviatedLabel()
+        ));
     }
 }

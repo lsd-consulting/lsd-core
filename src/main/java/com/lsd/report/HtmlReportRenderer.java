@@ -1,7 +1,7 @@
-package com.lsd;
+package com.lsd.report;
 
-import com.lsd.domain.Report;
-import com.lsd.pebble.LsdPebbleExtension;
+import com.lsd.report.model.Report;
+import com.lsd.report.pebble.LsdPebbleExtension;
 import com.mitchellbosecke.pebble.PebbleEngine;
 import com.mitchellbosecke.pebble.template.PebbleTemplate;
 import lombok.SneakyThrows;

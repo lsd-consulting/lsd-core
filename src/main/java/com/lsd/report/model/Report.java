@@ -1,6 +1,5 @@
-package com.lsd.domain;
+package com.lsd.report.model;
 
-import com.lsd.domain.scenario.Scenario;
 import lombok.Builder;
 import lombok.Value;
 

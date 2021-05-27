@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Properties;
 
-import static com.lsd.properties.LsdProperties.LABEL_MAX_WIDTH;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PropertiesFileLoaderTest {
@@ -13,7 +12,7 @@ class PropertiesFileLoaderTest {
 
     @BeforeAll
     public static void loadDefaultProperties() {
-        defaultProperties.setProperty(LABEL_MAX_WIDTH, "30");
+        defaultProperties.setProperty(LsdProperties.LABEL_MAX_WIDTH, "30");
         defaultProperties.setProperty("some-property-not-in-file", "ABC");
     }
 
@@ -23,7 +22,7 @@ class PropertiesFileLoaderTest {
 
         Properties loadedProperties = propertiesFileLoader.load();
 
-        assertThat(loadedProperties.getProperty(LABEL_MAX_WIDTH)).isEqualTo("50");
+        assertThat(loadedProperties.getProperty(LsdProperties.LABEL_MAX_WIDTH)).isEqualTo("50");
     }
 
     @Test
@@ -43,8 +42,8 @@ class PropertiesFileLoaderTest {
 
         Properties loadedProperties = propertiesFileLoader.load();
 
-        assertThat(loadedProperties.getProperty(LABEL_MAX_WIDTH))
+        assertThat(loadedProperties.getProperty(LsdProperties.LABEL_MAX_WIDTH))
                 .isNotEmpty()
-                .isEqualTo(defaultProperties.get(LABEL_MAX_WIDTH));
+                .isEqualTo(defaultProperties.get(LsdProperties.LABEL_MAX_WIDTH));
     }
 }

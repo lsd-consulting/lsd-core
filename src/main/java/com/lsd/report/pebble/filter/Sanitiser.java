@@ -1,4 +1,4 @@
-package com.lsd.pebble.filter;
+package com.lsd.report.pebble.filter;
 
 import com.mitchellbosecke.pebble.error.PebbleException;
 import com.mitchellbosecke.pebble.extension.Filter;
@@ -17,7 +17,7 @@ import java.util.Map;
  * </pre>
  * being displayed on the html.
  */
-public class Sanitise implements Filter {
+public class Sanitiser implements Filter {
 
     @Override
     public Object apply(Object input, Map<String, Object> args, PebbleTemplate self, EvaluationContext context, int lineNumber) throws PebbleException {

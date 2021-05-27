@@ -2,8 +2,8 @@ package com.lsd.properties;
 
 import java.util.Properties;
 
-import static com.lsd.properties.LsdProperties.DIAGRAM_THEME;
-import static com.lsd.properties.LsdProperties.LABEL_MAX_WIDTH;
+import static com.lsd.properties.LsdProperties.*;
+import static java.lang.System.getProperty;
 
 public class DefaultProperties {
 
@@ -11,6 +11,7 @@ public class DefaultProperties {
         Properties properties = new Properties();
         properties.setProperty(LABEL_MAX_WIDTH, "200");
         properties.setProperty(DIAGRAM_THEME, "plain");
+        properties.setProperty(OUTPUT_DIR, getProperty("java.io.tmpdir"));
         return properties;
     }
 }

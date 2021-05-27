@@ -1,4 +1,4 @@
-package com.lsd;
+package com.lsd.diagram;
 
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.SourceStringReader;

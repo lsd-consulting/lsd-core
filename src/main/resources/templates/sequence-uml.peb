@@ -13,8 +13,8 @@ hide unlinked
 
 {% endfor %}
 
-{% for event in events %}
-{{event}}
+{% for sequenceEvent in events %}
+{{sequenceEvent}}
 
 {% endfor %}
 

@@ -112,20 +112,20 @@
         {% endif %}
         <section class="sequence diagram svg">
             <h3>Sequence Diagram</h3>
-            {{ scenario.sequenceDiagram.toSvg | raw }}
+            {{ scenario.sequenceDiagram.svg | raw }}
         </section>
         <section class="sequence diagram uml">
             <h3>Sequence Diagram Markup</h3>
             <pre>{{- scenario.sequenceDiagram.uml -}}</pre>
         </section>
-        {% for interaction in scenario.sequenceDiagram.interactions %}
+        {% for dataHolder in scenario.dataHolders %}
         <!-- Section containing data for sequence diagram popups -->
-        <div id="{{interaction.id}}" class="overlay">
+        <div id="{{dataHolder.id}}" class="overlay">
             <div class="popup">
-                <h2>{{ interaction.abbreviatedLabel | sanitise }}</h2>
+                <h2>{{ dataHolder.abbreviatedLabel | sanitise }}</h2>
                 <a class="close" href="#!">&times;</a>
                 <div class="content">
-                    <pre>{{ interaction.data | raw }}</pre>
+                    <pre>{{ dataHolder.data | raw }}</pre>
                 </div>
             </div>
         </div>

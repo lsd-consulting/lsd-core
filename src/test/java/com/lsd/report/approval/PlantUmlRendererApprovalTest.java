@@ -1,15 +1,14 @@
-package com.lsd.approval;
+package com.lsd.report.approval;
 
-import com.lsd.domain.scenario.diagram.DiagramGenerator;
-import com.lsd.domain.scenario.events.Message;
-import com.lsd.domain.scenario.events.ResponseMessage;
+import com.lsd.diagram.DiagramGenerator;
+import com.lsd.events.Message;
+import com.lsd.events.ResponseMessage;
+import com.lsd.ParticipantType;
 import org.approvaltests.Approvals;
 import org.junit.jupiter.api.Test;
 
 import java.util.LinkedHashSet;
 import java.util.List;
-
-import static com.lsd.domain.ParticipantType.*;
 
 class PlantUmlRendererApprovalTest {
 
@@ -25,14 +24,14 @@ class PlantUmlRendererApprovalTest {
                         "tupadr3/font-awesome-5/database"
                 )))
                 .participants(List.of(
-                        ACTOR.called("Arnold", "Arnie"),
-                        BOUNDARY.called("Nick"),
-                        CONTROL.called("A control"),
-                        COLLECTIONS.called("some collection"),
-                        ENTITY.called("Entity"),
-                        PARTICIPANT.called("Party"),
-                        QUEUE.called("Party"),
-                        DATABASE.called("Derek", "D for danger")
+                        ParticipantType.ACTOR.called("Arnold", "Arnie"),
+                        ParticipantType.BOUNDARY.called("Nick"),
+                        ParticipantType.CONTROL.called("A control"),
+                        ParticipantType.COLLECTIONS.called("some collection"),
+                        ParticipantType.ENTITY.called("Entity"),
+                        ParticipantType.PARTICIPANT.called("Party"),
+                        ParticipantType.QUEUE.called("Party"),
+                        ParticipantType.DATABASE.called("Derek", "D for danger")
                 ))
                 .events(List.of(
                         Message.builder()

@@ -1,4 +1,4 @@
-package com.lsd.domain.scenario.events;
+package com.lsd.events;
 
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
@@ -7,7 +7,7 @@ import static java.lang.String.format;
 
 @Value
 @RequiredArgsConstructor
-public class NoteLeft implements Event {
+public class NoteLeft implements SequenceEvent {
     String value;
 
     public String toMarkup() {

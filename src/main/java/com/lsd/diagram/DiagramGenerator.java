@@ -1,9 +1,9 @@
-package com.lsd.domain.scenario.diagram;
+package com.lsd.diagram;
 
-import com.lsd.domain.Participant;
-import com.lsd.domain.scenario.events.Event;
-import com.lsd.domain.scenario.events.Interaction;
 import com.lsd.properties.LsdProperties;
+import com.lsd.report.model.Participant;
+import com.lsd.report.model.SequenceDiagram;
+import com.lsd.events.SequenceEvent;
 import com.mitchellbosecke.pebble.PebbleEngine;
 import com.mitchellbosecke.pebble.template.PebbleTemplate;
 import lombok.Builder;
@@ -25,16 +25,21 @@ public class DiagramGenerator {
 
     private final Set<String> includes;
     private final List<Participant> participants;
-    private final List<Event> events;
+    private final List<SequenceEvent> events;
 
     public SequenceDiagram sequenceDiagram() {
+        String uml = generateSequenceUml();
+        String svg = generateSequenceSvg(uml);
         return SequenceDiagram.builder()
-                .uml(generateSequenceUml())
-                .interactions(events.stream()
-                        .filter(Interaction.class::isInstance)
-                        .map(Interaction.class::cast)
-                        .collect(toList()))
+                .uml(uml)
+                .svg(svg)
                 .build();
+    }
+
+    private String generateSequenceSvg(String markup) {
+        SvgConverter svgConverter = new SvgConverter();
+
+        return svgConverter.convert(markup);
     }
 
     @SneakyThrows
@@ -45,7 +50,7 @@ public class DiagramGenerator {
                 "includes", includes,
                 "participants", participants,
                 "events", events.stream()
-                        .map(Event::toMarkup)
+                        .map(SequenceEvent::toMarkup)
                         .collect(toList())
         ));
         return writer.toString();

@@ -1,5 +1,6 @@
-package com.lsd.domain;
+package com.lsd;
 
+import com.lsd.report.model.Participant;
 import org.apache.commons.text.WordUtils;
 
 public enum ParticipantType {

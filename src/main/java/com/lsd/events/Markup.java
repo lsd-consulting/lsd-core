@@ -1,11 +1,11 @@
-package com.lsd.domain.scenario.events;
+package com.lsd.events;
 
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 
 @Value
 @RequiredArgsConstructor
-public class Markup implements Event {
+public class Markup implements SequenceEvent {
     String value;
 
     public String toMarkup() {

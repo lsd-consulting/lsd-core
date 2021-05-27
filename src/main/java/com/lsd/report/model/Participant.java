@@ -1,4 +1,4 @@
-package com.lsd.domain;
+package com.lsd.report.model;
 
 import lombok.Value;
 
