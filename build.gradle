@@ -1,6 +1,15 @@
 plugins {
     id 'java-library'
+    id 'maven-publish'
+    id 'signing'
+    id 'io.github.gradle-nexus.publish-plugin' version '1.1.0'
+    id 'pl.allegro.tech.build.axion-release' version '1.13.2'
 }
+
+group = 'com.github.nickmcdowall'
+version = scmVersion.version
+
+sourceCompatibility = '11'
 
 repositories {
     mavenCentral()
@@ -23,6 +32,76 @@ dependencies {
 }
 
 test {
-    // Use junit platform for unit tests
     useJUnitPlatform()
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    archiveClassifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar) {
+    archiveClassifier = 'javadoc'
+    from javadoc
+}
+
+artifacts {
+    archives jar
+    archives javadocJar
+    archives sourcesJar
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId = "$group"
+            artifactId = 'lsd-core'
+            version = "${scmVersion.version}"
+
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+            pom {
+                name = 'lsd-core'
+                description = 'A library used to generate living sequence diagrams'
+                url = 'https://github.com/nickmcdowall/lsd-core.git'
+                licenses {
+                    license {
+                        name = "MIT License"
+                        url = "https://raw.githubusercontent.com/nickmcdowall/lsd-core/main/LICENSE.txt"
+                        distribution = "repo"
+                    }
+                }
+                developers {
+                    developer {
+                        name = "Nick"
+                        email = "nicholas.mcdowall@gmail.com"
+                        organization = 'NKM IT Solutions'
+                        organizationUrl = 'https://github.com/nickmcdowall'
+                    }
+                }
+                scm {
+                    url = "https://github.com/nickmcdowall/lsd-core.git"
+                }
+            }
+            repositories {
+                maven {
+                    name = 'sonatype'
+                    url = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+                    credentials(PasswordCredentials)
+                }
+            }
+        }
+    }
+}
+
+nexusPublishing {
+    repositories {
+        sonatype {
+        }
+    }
+}
+
+signing {
+    sign publishing.publications.mavenJava
 }
