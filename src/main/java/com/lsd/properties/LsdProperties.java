@@ -10,8 +10,8 @@ import static java.lang.Integer.parseInt;
  */
 public class LsdProperties {
     public static final String DIAGRAM_THEME = "lsd.core.diagram.theme";
-    public static final String LABEL_MAX_WIDTH = "lsd.core.label.max-width";
-    public static final String OUTPUT_DIR = "lsd.core.report.output-dir";
+    public static final String LABEL_MAX_WIDTH = "lsd.core.label.maxWidth";
+    public static final String OUTPUT_DIR = "lsd.core.report.outputDir";
 
     private static final Properties PROPERTIES = new PropertiesFileLoader("lsd.properties", defaultProperties()).load();
 
