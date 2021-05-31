@@ -1,12 +1,9 @@
 package com.lsd;
 
 import com.lsd.diagram.DiagramGenerator;
-import com.lsd.report.model.DataHolder;
+import com.lsd.report.model.*;
 import com.lsd.events.SequenceEvent;
 import com.lsd.report.HtmlReportWriter;
-import com.lsd.report.model.Participant;
-import com.lsd.report.model.Report;
-import com.lsd.report.model.Scenario;
 
 import java.nio.file.Path;
 import java.util.ArrayList;

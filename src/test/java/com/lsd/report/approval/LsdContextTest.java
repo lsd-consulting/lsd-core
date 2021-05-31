@@ -6,6 +6,7 @@ import com.lsd.events.Message;
 import com.lsd.events.NoteLeft;
 import com.lsd.events.ResponseMessage;
 import com.lsd.report.model.Participant;
+import com.lsd.report.model.PopupContent;
 import org.approvaltests.Approvals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,6 +15,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 
 import static com.lsd.ParticipantType.*;
+import static j2html.TagCreator.*;
 
 class LsdContextTest {
 
@@ -50,12 +52,20 @@ class LsdContextTest {
         lsdContext.capture(new Markup("..."));
         lsdContext.capture(ResponseMessage.builder().id(incrementId()).label("Sending a response").from("B").to("A").data("Thank You!").build());
         lsdContext.capture(new NoteLeft("Friends <$heart{scale=0.4}>"));
-        lsdContext.completeScenario("Second scenario", "Second scenario description");
+        lsdContext.completeScenario("Second scenario", p(
+                text("A description with data: "),
+                a().withHref("#" + incrementId()).withText("click me!"),
+                PopupContent.popupDiv(currentId(), "I am popup", "Some useful info for you..")
+        ).render());
 
         Approvals.verify(lsdContext.completeReport("Report 1").toFile());
     }
 
     private String incrementId() {
-        return String.valueOf(counter++);
+        return String.valueOf(++counter);
+    }
+    
+    private String currentId() {
+        return String.valueOf(counter);
     }
 }
