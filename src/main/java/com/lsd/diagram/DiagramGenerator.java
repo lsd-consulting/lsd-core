@@ -31,6 +31,7 @@ public class DiagramGenerator {
         String uml = generateSequenceUml();
         String svg = generateSequenceSvg(uml);
         return SequenceDiagram.builder()
+                .id(String.valueOf(uml.hashCode()))
                 .uml(uml)
                 .svg(svg)
                 .build();

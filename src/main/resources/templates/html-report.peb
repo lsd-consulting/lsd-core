@@ -112,12 +112,17 @@
         </section>
         {% endif %}
         <section class="sequence diagram svg">
-            <h3>Sequence Diagram</h3>
-            {{ scenario.sequenceDiagram.svg | raw }}
-        </section>
-        <section class="sequence diagram uml">
-            <h3>Sequence Diagram Markup</h3>
-            <pre>{{- scenario.sequenceDiagram.uml -}}</pre>
+            <h3>Sequence Diagram <sup><a href="#{{scenario.sequenceDiagram.id}}">[source]</a></sup></h3>
+            <pre>{{ scenario.sequenceDiagram.svg | raw }}</pre>
+            <div id="{{scenario.sequenceDiagram.id}}" class="overlay">
+                <div class="popup">
+                    <h2>PlantUml markup</h2>
+                    <a class="close" href="#!">&times;</a>
+                    <div class="content">
+                        <pre>{{- scenario.sequenceDiagram.uml -}}</pre>
+                    </div>
+                </div>
+            </div>
         </section>
         {% for dataHolder in scenario.dataHolders %}
         <!-- Section containing data for sequence diagram popups -->
