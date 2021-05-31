@@ -1,7 +1,6 @@
 package com.lsd.report;
 
 import com.lsd.properties.LsdProperties;
-import com.lsd.report.HtmlReportRenderer;
 import com.lsd.report.model.Report;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -18,11 +17,11 @@ public class HtmlReportWriter {
 
     @SneakyThrows //TODO handle gracefully instead of propagating?
     public static Path writeToFile(Report report) {
-        File outputDir = outputDir();
+        var outputDir = new File(LsdProperties.get(OUTPUT_DIR));
         outputDir.mkdir();
         Path path = new File(outputDir, createFileName(report.getTitle())).toPath();
         Files.write(path, new HtmlReportRenderer().render(report).getBytes());
-        System.out.println("LSD Report:\nfile://" + path);
+        System.out.println("LSD Report:\nfile://" + path.toAbsolutePath());
         return path;
     }
 
@@ -32,7 +31,4 @@ public class HtmlReportWriter {
                 .concat(".html");
     }
 
-    private static File outputDir() {
-        return new File(LsdProperties.get(OUTPUT_DIR));
-    }
 }
