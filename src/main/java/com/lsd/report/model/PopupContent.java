@@ -1,6 +1,7 @@
 package com.lsd.report.model;
 
 import j2html.tags.ContainerTag;
+import j2html.tags.UnescapedText;
 
 import static j2html.TagCreator.*;
 
@@ -10,10 +11,10 @@ import static j2html.TagCreator.*;
 public class PopupContent {
 
     public static ContainerTag popupDiv(String id, String title, String content) {
-        return div().withId(id).withClass("overlay").with(
+        return div().withId(id).withClass("overlay").attr("onclick", "location.href='#!';").with(
                 div().withClass("popup").with(
                         h2(title),
-                        a().withClass("close").withHref("#!").withText("x"),
+                        a().withClass("close").withHref("#!").with(new UnescapedText("&times;")),
                         div().withClass("content").with(
                                 pre(content)
                         )
