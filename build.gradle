@@ -34,6 +34,10 @@ dependencies {
 
 test {
     useJUnitPlatform()
+    testLogging {
+        events "failed"
+        exceptionFormat "full"
+    }
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
