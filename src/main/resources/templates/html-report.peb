@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html" xml:lang="en" lang="en">
 <head>
     <title>{{report.title}}</title>
     <style>
@@ -115,20 +115,20 @@
             <h3>Sequence Diagram</h3>
             <pre>{{ scenario.sequenceDiagram.svg | raw }}</pre>
             <div onclick="location.href='#!';" id="{{scenario.sequenceDiagram.id}}" class="overlay">
-                <div class="popup">
+                <div class="popup"  onclick="event.stopPropagation();">
                     <h2>PlantUml markup</h2>
                     <a class="close" href="#!">&times;</a>
                     <div class="content">
-                        <pre>{{- scenario.sequenceDiagram.uml -}}</pre>
+                        <pre><code>{{- scenario.sequenceDiagram.uml -}}</code></pre>
                     </div>
                 </div>
             </div>
             <sub><a href="#{{scenario.sequenceDiagram.id}}">[source]</a></sub>
         </section>
-        {% for dataHolder in scenario.dataHolders %}
         <!-- Section containing data for sequence diagram popups -->
+        {% for dataHolder in scenario.dataHolders %}
         <div onclick="location.href='#!';" id="{{dataHolder.id}}" class="overlay">
-            <div class="popup">
+            <div class="popup" onclick="event.stopPropagation();">
                 <h2>{{ dataHolder.abbreviatedLabel | sanitise }}</h2>
                 <a class="close" href="#!">&times;</a>
                 <div class="content">
