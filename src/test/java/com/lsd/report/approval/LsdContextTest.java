@@ -56,7 +56,7 @@ class LsdContextTest {
         lsdContext.completeScenario("Second scenario", p(
                 text("A popup with a large amount of data that needs scrolling: "),
                 a().withHref("#" + incrementId()).withText("click me!"),
-                PopupContent.popupDiv(currentId(), "I am popup", ExceptionUtils.readStackTrace(new RuntimeException("Some useful info for you..")))
+                PopupContent.popupDiv(currentId(), "I am popup", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.")
         ).render());
 
         Approvals.verify(lsdContext.completeReport("Report 1").toFile());
