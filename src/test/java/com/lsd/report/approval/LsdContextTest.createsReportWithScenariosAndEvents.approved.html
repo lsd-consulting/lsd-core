@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html" xml:lang="en" lang="en">
 <head>
     <title>Report 1</title>
     <style>
@@ -76,6 +76,10 @@
             border: 1px solid #999999;
         }
 
+        a, svg a text {
+            text-decoration: none;
+        }
+
         /* Some basic spacing for now  */
         section {
             border: 15px solid skyblue;
@@ -124,26 +128,28 @@
     <text fill="#000000" font-family="Verdana" font-size="14" lengthAdjust="spacing" textLength="55" x="518" y="74.0898">Gamma</text>
     <rect fill="#FFFFFF" height="31.0146" style="stroke:#000000;stroke-width:1.0;" width="69" x="511" y="163.6279" />
     <text fill="#000000" font-family="Verdana" font-size="14" lengthAdjust="spacing" textLength="55" x="518" y="184.7031">Gamma</text>
+    <polygon fill="#000000" points="42.5,112.8286,32.5,116.8286,42.5,120.8286,38.5,116.8286" style="stroke:#000000;stroke-width:1.0;" />
     <polygon fill="#000000" points="113.5,112.8286,123.5,116.8286,113.5,120.8286,117.5,116.8286" style="stroke:#000000;stroke-width:1.0;" />
-    <line style="stroke:#000000;stroke-width:1.0;" x1="31.5" x2="119.5" y1="116.8286" y2="116.8286" />
+    <line style="stroke:#000000;stroke-width:1.0;" x1="36.5" x2="119.5" y1="116.8286" y2="116.8286" />
     <a href="#1" target="_top" title="#1" xlink:actuate="onRequest" xlink:href="#1" xlink:show="new" xlink:title="#1" xlink:type="simple">
-      <text fill="#0000FF" font-family="Verdana" font-size="13" lengthAdjust="spacing" text-decoration="underline" textLength="70" x="38.5" y="112.0991">Message 1</text>
+      <text fill="" font-family="Verdana" font-size="13" lengthAdjust="spacing" text-decoration="underline" textLength="70" x="48.5" y="112.0991">Message 1</text>
     </a>
-    <polygon fill="#000000" points="533.5,142.6279,543.5,146.6279,533.5,150.6279,537.5,146.6279" style="stroke:#000000;stroke-width:1.0;" />
-    <line style="stroke:#000000;stroke-width:1.0;" x1="197.5" x2="539.5" y1="146.6279" y2="146.6279" />
+    <line style="stroke:#000000;stroke-width:2.0;" x1="527.5" x2="537.5" y1="141.6279" y2="151.6279" />
+    <line style="stroke:#000000;stroke-width:2.0;" x1="527.5" x2="537.5" y1="151.6279" y2="141.6279" />
+    <line style="stroke:#000000;stroke-width:1.0;" x1="197.5" x2="532.5" y1="146.6279" y2="146.6279" />
     <a href="#2" target="_top" title="#2" xlink:actuate="onRequest" xlink:href="#2" xlink:show="new" xlink:title="#2" xlink:type="simple">
-      <text fill="#0000FF" font-family="Verdana" font-size="13" lengthAdjust="spacing" text-decoration="underline" textLength="324" x="204.5" y="141.8984">An interaction description that is long enough ...</text>
+      <text fill="" font-family="Verdana" font-size="13" lengthAdjust="spacing" text-decoration="underline" textLength="324" x="204.5" y="141.8984">An interaction description that is long enough ...</text>
     </a>
   </g>
 </svg>
 
 </pre>
-            <div onclick="location.href='#!';" id="-87895479" class="overlay">
-                <div class="popup">
+            <div onclick="location.href='#!';" id="1999771357" class="overlay">
+                <div class="popup"  onclick="event.stopPropagation();">
                     <h2>PlantUml markup</h2>
                     <a class="close" href="#!">&times;</a>
                     <div class="content">
-                        <pre>@startuml
+                        <pre><code>@startuml
 
 !theme plain
 hide unlinked
@@ -155,18 +161,18 @@ actor A as &quot;Arnie&quot;
 boundary UnusedParticipant
 database B as &quot;Badboy\nDB&quot;
 
-A -&gt; B:[[#1 Message 1]]
-Beta -&gt; Gamma:[[#2 An interaction description that is long enough ...]]
+A &lt;-&gt; B: &lt;text fill=&quot;&quot;&gt;[[#1 Message 1]]&lt;/text&gt;
+Beta -&gt;x Gamma: &lt;text fill=&quot;&quot;&gt;[[#2 An interaction description that is long enough ...]]&lt;/text&gt;
 
-@enduml</pre>
+@enduml</code></pre>
                     </div>
                 </div>
             </div>
-            <sub><a href="#-87895479">[source]</a></sub>
+            <sub><a href="#1999771357">[source]</a></sub>
         </section>
-                <!-- Section containing data for sequence diagram popups -->
-        <div onclick="location.href='#!';" id="1" class="overlay">
-            <div class="popup">
+        <!-- Section containing data for sequence diagram popups -->
+                <div onclick="location.href='#!';" id="1" class="overlay">
+            <div class="popup" onclick="event.stopPropagation();">
                 <h2>Message 1</h2>
                 <a class="close" href="#!">&times;</a>
                 <div class="content">
@@ -174,9 +180,8 @@ Beta -&gt; Gamma:[[#2 An interaction description that is long enough ...]]
                 </div>
             </div>
         </div>
-                <!-- Section containing data for sequence diagram popups -->
-        <div onclick="location.href='#!';" id="2" class="overlay">
-            <div class="popup">
+                <div onclick="location.href='#!';" id="2" class="overlay">
+            <div class="popup" onclick="event.stopPropagation();">
                 <h2>An interaction description that is long enough ...</h2>
                 <a class="close" href="#!">&times;</a>
                 <div class="content">
@@ -189,7 +194,7 @@ Beta -&gt; Gamma:[[#2 An interaction description that is long enough ...]]
         <h2>Second scenario</h2>
         <section class="description">
             <h3>Description</h3>
-            <p>A popup with a large amount of data that needs scrolling: <a href="#5">click me!</a><div id="5" class="overlay" onclick="location.href=&#x27;#!&#x27;;"><div class="popup"><h2>I am popup</h2><a class="close" href="#!">&times;</a><div class="content"><pre>java.lang.RuntimeException: Some useful info for you..
+            <p>A popup with a large amount of data that needs scrolling: <a href="#5">click me!</a><div id="5" class="overlay" onclick="location.href=&#x27;#!&#x27;;"><div class="popup" onclick="event.stopPropagation();"><h2>I am popup</h2><a class="close" href="#!">&times;</a><div class="content"><pre>java.lang.RuntimeException: Some useful info for you..
 	at com.lsd.report.approval.LsdContextTest.createsReportWithScenariosAndEvents(LsdContextTest.java:59)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -308,34 +313,34 @@ Beta -&gt; Gamma:[[#2 An interaction description that is long enough ...]]
     <text fill="#000000" font-family="Verdana" font-size="14" lengthAdjust="spacing" textLength="21" x="249" y="235.5191">DB</text>
     <path d="M244.5,248.4586 C244.5,238.4586 262.5,238.4586 262.5,238.4586 C262.5,238.4586 280.5,238.4586 280.5,248.4586 L280.5,274.4586 C280.5,284.4586 262.5,284.4586 262.5,284.4586 C262.5,284.4586 244.5,284.4586 244.5,274.4586 L244.5,248.4586 " fill="#FFFFFF" style="stroke:#000000;stroke-width:1.5;" />
     <path d="M244.5,248.4586 C244.5,258.4586 262.5,258.4586 262.5,258.4586 C262.5,258.4586 280.5,258.4586 280.5,248.4586 " fill="none" style="stroke:#000000;stroke-width:1.5;" />
-    <polygon fill="#000000" points="250.5,116.2293,260.5,120.2293,250.5,124.2293,254.5,120.2293" style="stroke:#000000;stroke-width:1.0;" />
-    <line style="stroke:#000000;stroke-width:1.0;" x1="107.5" x2="256.5" y1="120.2293" y2="120.2293" />
+    <line style="stroke:#FFA500;stroke-width:1.0;" x1="260.5" x2="250.5" y1="120.2293" y2="116.2293" />
+    <line style="stroke:#FFA500;stroke-width:1.0;" x1="260.5" x2="250.5" y1="120.2293" y2="124.2293" />
+    <line style="stroke:#FFA500;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="107.5" x2="261.5" y1="120.2293" y2="120.2293" />
     <a href="#3" target="_top" title="#3" xlink:actuate="onRequest" xlink:href="#3" xlink:show="new" xlink:title="#3" xlink:type="simple">
-      <text fill="#0000FF" font-family="Verdana" font-size="13" lengthAdjust="spacing" text-decoration="underline" textLength="87" x="114.5" y="112.0991">Sending food</text>
+      <text fill="orange" font-family="Verdana" font-size="13" lengthAdjust="spacing" text-decoration="underline" textLength="87" x="114.5" y="112.0991">Sending food</text>
     </a>
     <a href="#3" target="_top" title="#3" xlink:actuate="onRequest" xlink:href="#3" xlink:show="new" xlink:title="#3" xlink:type="simple">
       <image height="19" width="19" x="206.5" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAIAAAD9MqGbAAAA9ElEQVR4Xp2TMQqDMBSGU0S6dquCnQrewsnByYMIbt6idCgUurk7uXiH3qHgIoJ0KCiCYKXwmlSD6SuE1J9v0OT/4hsigaUheEFI3+MVMdh8PMDzYLuF1QoIYRgGWylLVBTMuobdbmqPOM7Xq22zc7F5u4GmsW1RjuP5ebNhBV2HPBfMppk1sS1yOMB+Pz13HTejCPfk+D43kwTvyTkeuUlzvUKWKUGbY5h5v8P5zE5S4XKBquLm7zxy1mt4vRaZ9JK07cek01sWmKYqacqnHQYoij94PrkZBHgeOa7LzdMJ78kJQ27Sr6O7LoE2x+C/TD3LzTeit8koBlhA2AAAAABJRU5ErkJggg==" y="99.0293" />
     </a>
-    <line style="stroke:#000000;stroke-width:1.0;" x1="107.5" x2="117.5" y1="182.729" y2="178.729" />
-    <line style="stroke:#000000;stroke-width:1.0;" x1="107.5" x2="117.5" y1="182.729" y2="186.729" />
-    <line style="stroke:#000000;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="107.5" x2="261.5" y1="182.729" y2="182.729" />
+    <polygon fill="#FF0000" points="118.5,178.729,108.5,182.729,118.5,186.729,114.5,182.729" style="stroke:#FF0000;stroke-width:1.0;" />
+    <line style="stroke:#FF0000;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="112.5" x2="261.5" y1="182.729" y2="182.729" />
     <a href="#4" target="_top" title="#4" xlink:actuate="onRequest" xlink:href="#4" xlink:show="new" xlink:title="#4" xlink:type="simple">
-      <text fill="#0000FF" font-family="Verdana" font-size="13" lengthAdjust="spacing" text-decoration="underline" textLength="131" x="124.5" y="177.9995">Sending a response</text>
+      <text fill="red" font-family="Verdana" font-size="13" lengthAdjust="spacing" text-decoration="underline" textLength="131" x="124.5" y="177.9995">Sending a response</text>
     </a>
     <path d="M10,161.2293 L10,190.2293 L103,190.2293 L103,171.2293 L93,161.2293 L10,161.2293 " fill="#FFFFFF" style="stroke:#000000;stroke-width:1.0;" />
     <path d="M93,161.2293 L93,171.2293 L103,171.2293 L93,161.2293 " fill="#FFFFFF" style="stroke:#000000;stroke-width:1.0;" />
     <text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="48" x="16" y="182.6998">Friends</text>
-    <image height="19" width="19" x="69" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAIAAAD9MqGbAAAA+0lEQVR4Xp2Sz6pFUByFtygzGRgpD+A5lLGHUF7C1NhAKRkbGCkPwAN4C4bGQuTenz/XOVbHPeWbWWt9drTZz1MYPE/TBMnOMAyQvEzDMARBYIxJkuQ4zpnbtk0J5aIomqY5z/Oer2bf97IssyuKonRdp6oq5MQur6ZlWVhu8DyP0QadfJjYfIPeuCzLE5No2/ahOY7jamqahs2/6Lp+fGdd13c/4yNN0xwmUVUV9jeUZbkrr5tQFAXHcTi8kqbpub/cvjzPcftGlmXvY7y3SZKgsRGGISzRJOI4Bi2KIhx9NAnf90/NdV2sNz6bhOd5pAVBgMUft+ZXnpu/Yy0pOXekRvwAAAAASUVORK5CYII=" y="166.2293" />
+    <image height="19" width="19" x="69" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAIAAAD9MqGbAAAA6klEQVR4Xp2SQQqCYBSElYR24sKV0AE8h+DaQwRewm3rFkIgrl20EjyAHaBb5NJ1pBS+nv+f9TdqgcOsZuZTlKfRUmkY3O+YSDUNBArpeWQYpGlkmhSGn3y77RPO12vyfXo8ZCzI240sq+9U2zZdr+Q4mLMFLMggwE56tcJEmt/8Isfdb/MTu24Rya7rpWTbCnKzweK3XXf4zstl9mdMuqoGknU+Yz3n00kSyiWUJek67sDH43v+fX1FgVPVea5uR3ebZQhIHw4wHJGsNEUsSXAzTbL2+w8WRdgKzZCs3a7H4hjzQfPkPy0nn8DR2HKC9FpXAAAAAElFTkSuQmCC" y="166.2293" />
   </g>
 </svg>
 
 </pre>
-            <div onclick="location.href='#!';" id="-1318943707" class="overlay">
-                <div class="popup">
+            <div onclick="location.href='#!';" id="731485895" class="overlay">
+                <div class="popup"  onclick="event.stopPropagation();">
                     <h2>PlantUml markup</h2>
                     <a class="close" href="#!">&times;</a>
                     <div class="content">
-                        <pre>@startuml
+                        <pre><code>@startuml
 
 !theme plain
 hide unlinked
@@ -347,30 +352,29 @@ actor A as &quot;Arnie&quot;
 boundary UnusedParticipant
 database B as &quot;Badboy\nDB&quot;
 
-A -&gt; B:[[#3 Sending food &lt;$hamburger{scale=0.4}&gt;]]
+A --[#orange]&gt;&gt; B: &lt;text fill=&quot;orange&quot;&gt;[[#3 Sending food &lt;$hamburger{scale=0.4}&gt;]]&lt;/text&gt;
 ...
-B --&gt;&gt; A:[[#4 Sending a response]]
-note left: Friends &lt;$heart{scale=0.4}&gt;
+B --[#red]&gt; A: &lt;text fill=&quot;red&quot;&gt;[[#4 Sending a response]]&lt;/text&gt;
+note left: Friends &lt;$heart{scale=0.4,color=red}&gt;
 
-@enduml</pre>
+@enduml</code></pre>
                     </div>
                 </div>
             </div>
-            <sub><a href="#-1318943707">[source]</a></sub>
+            <sub><a href="#731485895">[source]</a></sub>
         </section>
-                <!-- Section containing data for sequence diagram popups -->
-        <div onclick="location.href='#!';" id="3" class="overlay">
-            <div class="popup">
+        <!-- Section containing data for sequence diagram popups -->
+                <div onclick="location.href='#!';" id="3" class="overlay">
+            <div class="popup" onclick="event.stopPropagation();">
                 <h2>Sending food </h2>
                 <a class="close" href="#!">&times;</a>
                 <div class="content">
-                    <pre>Hi</pre>
+                    <pre></pre>
                 </div>
             </div>
         </div>
-                <!-- Section containing data for sequence diagram popups -->
-        <div onclick="location.href='#!';" id="4" class="overlay">
-            <div class="popup">
+                <div onclick="location.href='#!';" id="4" class="overlay">
+            <div class="popup" onclick="event.stopPropagation();">
                 <h2>Sending a response</h2>
                 <a class="close" href="#!">&times;</a>
                 <div class="content">

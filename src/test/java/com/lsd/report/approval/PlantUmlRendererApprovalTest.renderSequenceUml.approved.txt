@@ -15,7 +15,8 @@ participant Party
 queue Party
 database Derek as "D for danger"
 
-A -> B:[[#1 Sending a request]]
-B -->> A:[[#2 Sending a response with a long label that shoul...]]
+A -> B: <text fill="">[[#1 Sending a request]]</text>
+B --> A: <text fill="">[[#2 Sending a response with a long label that shoul...]]</text>
+B <--> A: <text fill="">[[#3 On the phone]]</text>
 
 @enduml

@@ -1,14 +1,16 @@
 package com.lsd.report.approval;
 
+import com.lsd.ParticipantType;
 import com.lsd.diagram.DiagramGenerator;
 import com.lsd.events.Message;
-import com.lsd.events.ResponseMessage;
-import com.lsd.ParticipantType;
 import org.approvaltests.Approvals;
 import org.junit.jupiter.api.Test;
 
 import java.util.LinkedHashSet;
 import java.util.List;
+
+import static com.lsd.events.Message.ArrowType.BI_DIRECTIONAL_DOTTED;
+import static com.lsd.events.Message.ArrowType.DOTTED;
 
 class PlantUmlRendererApprovalTest {
 
@@ -41,12 +43,20 @@ class PlantUmlRendererApprovalTest {
                                 .to("B")
                                 .data("Please help?")
                                 .build(),
-                        ResponseMessage.builder()
+                        Message.builder()
                                 .id("2")
                                 .label("Sending a response with a long label that should be abbreviated if all goes well")
                                 .from("B")
                                 .to("A")
                                 .data("OK")
+                                .arrowType(DOTTED)
+                                .build(),
+                        Message.builder()
+                                .id("3")
+                                .label("On the phone")
+                                .from("B")
+                                .to("A")
+                                .arrowType(BI_DIRECTIONAL_DOTTED)
                                 .build()
                 )).build();
     }

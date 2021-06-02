@@ -4,7 +4,6 @@ import com.lsd.LsdContext;
 import com.lsd.events.Markup;
 import com.lsd.events.Message;
 import com.lsd.events.NoteLeft;
-import com.lsd.events.ResponseMessage;
 import com.lsd.report.model.Participant;
 import com.lsd.report.model.PopupContent;
 import org.approvaltests.Approvals;
@@ -16,6 +15,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 
 import static com.lsd.ParticipantType.*;
+import static com.lsd.events.Message.ArrowType.*;
 import static j2html.TagCreator.*;
 
 class LsdContextTest {
@@ -45,14 +45,14 @@ class LsdContextTest {
         lsdContext.addParticipants(participants);
         lsdContext.includeFiles(additionalIncludes);
 
-        lsdContext.capture(Message.builder().id(incrementId()).from("A").to("B").label("Message 1").data("some data 1").build());
-        lsdContext.capture(Message.builder().id(incrementId()).label("An interaction description that is long enough to need abbreviating").from("Beta").to("Gamma").data("β").build());
+        lsdContext.capture(Message.builder().id(incrementId()).from("A").to("B").label("Message 1").data("some data 1").arrowType(BI_DIRECTIONAL).build());
+        lsdContext.capture(Message.builder().id(incrementId()).label("An interaction description that is long enough to need abbreviating").from("Beta").to("Gamma").data("β").arrowType(LOST).build());
         lsdContext.completeScenario("First scenario", "First scenario description");
 
-        lsdContext.capture(Message.builder().id(incrementId()).label("Sending food <$hamburger{scale=0.4}>").from("A").to("B").data("Hi").build());
+        lsdContext.capture(Message.builder().id(incrementId()).label("Sending food <$hamburger{scale=0.4}>").from("A").to("B").colour("orange").arrowType(DOTTED_THIN).build());
         lsdContext.capture(new Markup("..."));
-        lsdContext.capture(ResponseMessage.builder().id(incrementId()).label("Sending a response").from("B").to("A").data("Thank You!").build());
-        lsdContext.capture(new NoteLeft("Friends <$heart{scale=0.4}>"));
+        lsdContext.capture(Message.builder().id(incrementId()).label("Sending a response").from("B").to("A").data("Thank You!").colour("red").arrowType(DOTTED).build());
+        lsdContext.capture(new NoteLeft("Friends <$heart{scale=0.4,color=red}>"));
         lsdContext.completeScenario("Second scenario", p(
                 text("A popup with a large amount of data that needs scrolling: "),
                 a().withHref("#" + incrementId()).withText("click me!"),
