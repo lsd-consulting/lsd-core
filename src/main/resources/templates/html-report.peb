@@ -76,6 +76,10 @@
             border: 1px solid #999999;
         }
 
+        a, svg a text {
+            text-decoration: none;
+        }
+
         /* Some basic spacing for now  */
         section {
             border: 15px solid skyblue;
