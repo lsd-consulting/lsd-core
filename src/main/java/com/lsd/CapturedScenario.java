@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.util.Objects.nonNull;
+
 @NoArgsConstructor
 @Data
 public class CapturedScenario {
@@ -16,6 +18,8 @@ public class CapturedScenario {
     private String description;
 
     public void add(SequenceEvent sequenceEvent) {
-        sequenceEvents.add(sequenceEvent);
+        if (nonNull(sequenceEvent)) {
+            sequenceEvents.add(sequenceEvent);
+        }
     }
 }

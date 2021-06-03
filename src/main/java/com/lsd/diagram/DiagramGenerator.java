@@ -1,9 +1,10 @@
 package com.lsd.diagram;
 
+import com.lsd.IdGenerator;
+import com.lsd.events.SequenceEvent;
 import com.lsd.properties.LsdProperties;
 import com.lsd.report.model.Participant;
 import com.lsd.report.model.SequenceDiagram;
-import com.lsd.events.SequenceEvent;
 import com.mitchellbosecke.pebble.PebbleEngine;
 import com.mitchellbosecke.pebble.template.PebbleTemplate;
 import lombok.Builder;
@@ -26,12 +27,13 @@ public class DiagramGenerator {
     private final Set<String> includes;
     private final List<Participant> participants;
     private final List<SequenceEvent> events;
+    private final IdGenerator idGenerator;
 
     public SequenceDiagram sequenceDiagram() {
         String uml = generateSequenceUml();
         String svg = generateSequenceSvg(uml);
         return SequenceDiagram.builder()
-                .id(String.valueOf(uml.hashCode()))
+                .id(idGenerator.next())
                 .uml(uml)
                 .svg(svg)
                 .build();

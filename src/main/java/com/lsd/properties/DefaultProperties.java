@@ -12,6 +12,7 @@ public class DefaultProperties {
         properties.setProperty(LABEL_MAX_WIDTH, "200");
         properties.setProperty(DIAGRAM_THEME, "plain");
         properties.setProperty(OUTPUT_DIR, getProperty("java.io.tmpdir"));
+        properties.setProperty(DETERMINISTIC_IDS, "false");
         return properties;
     }
 }

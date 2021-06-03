@@ -1,9 +1,14 @@
 package com.lsd;
 
 import com.lsd.diagram.DiagramGenerator;
-import com.lsd.report.model.*;
 import com.lsd.events.SequenceEvent;
+import com.lsd.events.SequenceEventInterpreter;
+import com.lsd.properties.LsdProperties;
 import com.lsd.report.HtmlReportWriter;
+import com.lsd.report.model.DataHolder;
+import com.lsd.report.model.Participant;
+import com.lsd.report.model.Report;
+import com.lsd.report.model.Scenario;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -11,6 +16,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import static com.lsd.properties.LsdProperties.DETERMINISTIC_IDS;
 import static java.util.stream.Collectors.toList;
 
 public class LsdContext {
@@ -20,6 +26,8 @@ public class LsdContext {
     private final List<CapturedScenario> capturedScenarios = new ArrayList<>();
     private final List<Participant> participants = new ArrayList<>();
     private final Set<String> includes = new LinkedHashSet<>();
+    private final IdGenerator idGenerator = new IdGenerator(LsdProperties.getBoolean(DETERMINISTIC_IDS));
+    private final SequenceEventInterpreter sequenceEventInterpreter = new SequenceEventInterpreter(idGenerator);
 
     private CapturedScenario currentScenario = new CapturedScenario();
 
@@ -40,6 +48,10 @@ public class LsdContext {
 
     public void capture(SequenceEvent event) {
         currentScenario.add(event);
+    }
+
+    public void capture(String pattern, String body) {
+        capture(sequenceEventInterpreter.interpret(pattern, body));
     }
 
     public void completeScenario(String title, String description) {
@@ -73,6 +85,7 @@ public class LsdContext {
                                         .map(DataHolder.class::cast)
                                         .collect(toList()))
                                 .sequenceDiagram(DiagramGenerator.builder()
+                                        .idGenerator(idGenerator)
                                         .events(capturedScenario.getSequenceEvents())
                                         .participants(participants)
                                         .includes(includes)
@@ -80,5 +93,9 @@ public class LsdContext {
                                 .build())
                         .collect(toList()))
                 .build();
+    }
+
+    public IdGenerator getIdGenerator() {
+        return idGenerator;
     }
 }

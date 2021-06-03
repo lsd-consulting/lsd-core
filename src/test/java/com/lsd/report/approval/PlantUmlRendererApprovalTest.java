@@ -1,5 +1,6 @@
 package com.lsd.report.approval;
 
+import com.lsd.IdGenerator;
 import com.lsd.ParticipantType;
 import com.lsd.diagram.DiagramGenerator;
 import com.lsd.events.Message;
@@ -9,8 +10,8 @@ import org.junit.jupiter.api.Test;
 import java.util.LinkedHashSet;
 import java.util.List;
 
-import static com.lsd.events.Message.ArrowType.BI_DIRECTIONAL_DOTTED;
-import static com.lsd.events.Message.ArrowType.DOTTED;
+import static com.lsd.events.ArrowType.BI_DIRECTIONAL_DOTTED;
+import static com.lsd.events.ArrowType.DOTTED;
 
 class PlantUmlRendererApprovalTest {
 
@@ -21,6 +22,7 @@ class PlantUmlRendererApprovalTest {
 
     private DiagramGenerator diagramGenerator() {
         return DiagramGenerator.builder()
+                .idGenerator(new IdGenerator(true))
                 .includes(new LinkedHashSet<>(List.of(
                         "tupadr3/font-awesome-5/clock",
                         "tupadr3/font-awesome-5/database"
