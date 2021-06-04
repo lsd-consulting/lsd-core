@@ -17,4 +17,5 @@ application.
 | lsd.core.label.maxWidth | 200 | The width in number of characters for the labels that appear on the diagrams before being abbreviated. |
 | lsd.core.diagram.theme | plain | The plantUml theme to apply to the diagrams. See the [available themes](https://plantuml.com/theme). |
 | lsd.core.report.outputDir | (temp directory) | The directory to write the report files. This can be a relative path e.g. `build/reports/lsd`.|
+| lsd.core.ids.deterministic | false | Determines how the html element ids are generated. Allowing deterministic ids is useful when testing (e.g. approval tests of html output since the generated ids won't be random. The default option which provides random ids should be preferred otherwise.|
 
