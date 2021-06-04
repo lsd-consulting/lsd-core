@@ -142,21 +142,30 @@
                 </div>
             </div>
             <sub><a href="#{{scenario.sequenceDiagram.id}}">[source]</a></sub>
+            <sub><a href="#{{scenario.componentDiagram.id}}">[component diagram]</a></sub>
         </section>
-        <section class="component diagram svg">
-            <h3>Component Diagram</h3>
-            <pre>{{ scenario.componentDiagram.svg | raw }}</pre>
-            <div onclick="location.href='#!';" id="{{scenario.componentDiagram.id}}" class="overlay">
-                <div class="popup" onclick="event.stopPropagation();">
-                    <h2>PlantUml markup</h2>
-                    <a class="close" href="#!">&times;</a>
-                    <div class="content">
-                        <pre><code>{{- scenario.componentDiagram.uml -}}</code></pre>
-                    </div>
+        <!-- Popup for component diagram -->
+        <div onclick="location.href='#!';" id="{{ scenario.componentDiagram.id }}" class="overlay">
+            <div class="popup" onclick="event.stopPropagation();">
+                <h2>Component Diagram</h2>
+                <a class="close" href="#!">&times;</a>
+                <div class="content">
+                    <sup>[Requires Graphviz to be installed]</sup>
+                    <pre>{{ scenario.componentDiagram.svg | raw }}</pre>
+                </div>
+                <sub><a href="#uml{{scenario.componentDiagram.id}}">[source]</a></sub>
+            </div>
+        </div>
+        <!-- Popup for component diagram UML via component diagram popup -->
+        <div onclick="location.href='#!';" id="uml{{scenario.componentDiagram.id}}" class="overlay">
+            <div class="popup" onclick="event.stopPropagation();">
+                <h2>PlantUml markup</h2>
+                <a class="close" href="#!">&times;</a>
+                <div class="content">
+                    <pre><code>{{- scenario.componentDiagram.uml -}}</code></pre>
                 </div>
             </div>
-            <sub><a href="#{{scenario.componentDiagram.id}}">[source]</a></sub>
-        </section>
+        </div>
         <!-- Section containing data for sequence diagram popups -->
         {% for dataHolder in scenario.dataHolders %}
         <div onclick="location.href='#!';" id="{{dataHolder.id}}" class="overlay">
