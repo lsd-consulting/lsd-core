@@ -15,7 +15,8 @@ public class Scenario {
     String title;
     String id;
     String description;
-    SequenceDiagram sequenceDiagram;
+    Diagram sequenceDiagram;
+    Diagram componentDiagram;
     List<DataHolder> dataHolders;
     MultiValuedMap<String, String> facts;
 }

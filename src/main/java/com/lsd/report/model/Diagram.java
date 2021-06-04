@@ -5,7 +5,7 @@ import lombok.Value;
 
 @Builder
 @Value
-public class SequenceDiagram {
+public class Diagram {
     String id;
     String uml;
     String svg;

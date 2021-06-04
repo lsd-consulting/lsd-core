@@ -4,7 +4,7 @@ import com.lsd.IdGenerator;
 import com.lsd.events.SequenceEvent;
 import com.lsd.properties.LsdProperties;
 import com.lsd.report.model.Participant;
-import com.lsd.report.model.SequenceDiagram;
+import com.lsd.report.model.Diagram;
 import com.mitchellbosecke.pebble.PebbleEngine;
 import com.mitchellbosecke.pebble.template.PebbleTemplate;
 import lombok.Builder;
@@ -20,7 +20,7 @@ import static com.lsd.properties.LsdProperties.DIAGRAM_THEME;
 import static java.util.stream.Collectors.toList;
 
 @Builder
-public class DiagramGenerator {
+public class SequenceDiagramGenerator {
     private final PebbleEngine engine = new PebbleEngine.Builder().autoEscaping(false).build();
     private final PebbleTemplate compiledTemplate = engine.getTemplate("templates/sequence-uml.peb");
 
@@ -29,10 +29,10 @@ public class DiagramGenerator {
     private final List<SequenceEvent> events;
     private final IdGenerator idGenerator;
 
-    public SequenceDiagram sequenceDiagram() {
+    public Diagram sequenceDiagram() {
         String uml = generateSequenceUml();
         String svg = generateSequenceSvg(uml);
-        return SequenceDiagram.builder()
+        return Diagram.builder()
                 .id(idGenerator.next())
                 .uml(uml)
                 .svg(svg)

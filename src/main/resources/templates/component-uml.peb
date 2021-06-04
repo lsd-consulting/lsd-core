@@ -1,0 +1,16 @@
+@startuml
+
+!theme {{theme}}
+
+{% for participant in participants %}
+{{ participant }}
+
+{% endfor %}
+
+{% for sequenceEvent in events %}
+{{sequenceEvent}}
+
+{% endfor %}
+
+hide @unlinked
+@enduml

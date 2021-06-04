@@ -2,7 +2,7 @@ package com.lsd.report.approval;
 
 import com.lsd.IdGenerator;
 import com.lsd.ParticipantType;
-import com.lsd.diagram.DiagramGenerator;
+import com.lsd.diagram.SequenceDiagramGenerator;
 import com.lsd.events.Message;
 import org.approvaltests.Approvals;
 import org.junit.jupiter.api.Test;
@@ -20,8 +20,8 @@ class PlantUmlRendererApprovalTest {
         Approvals.verify(diagramGenerator().sequenceDiagram().getUml());
     }
 
-    private DiagramGenerator diagramGenerator() {
-        return DiagramGenerator.builder()
+    private SequenceDiagramGenerator diagramGenerator() {
+        return SequenceDiagramGenerator.builder()
                 .idGenerator(new IdGenerator(true))
                 .includes(new LinkedHashSet<>(List.of(
                         "tupadr3/font-awesome-5/clock",

@@ -1,6 +1,7 @@
 package com.lsd;
 
-import com.lsd.diagram.DiagramGenerator;
+import com.lsd.diagram.ComponentDiagramGenerator;
+import com.lsd.diagram.SequenceDiagramGenerator;
 import com.lsd.events.SequenceEvent;
 import com.lsd.events.SequenceEventInterpreter;
 import com.lsd.properties.LsdProperties;
@@ -86,12 +87,17 @@ public class LsdContext {
                                         .filter(DataHolder.class::isInstance)
                                         .map(DataHolder.class::cast)
                                         .collect(toList()))
-                                .sequenceDiagram(DiagramGenerator.builder()
+                                .sequenceDiagram(SequenceDiagramGenerator.builder()
                                         .idGenerator(idGenerator)
                                         .events(capturedScenario.getSequenceEvents())
                                         .participants(participants)
                                         .includes(includes)
                                         .build().sequenceDiagram())
+                                .componentDiagram(ComponentDiagramGenerator.builder()
+                                        .idGenerator(idGenerator)
+                                        .events(capturedScenario.getSequenceEvents())
+                                        .participants(participants)
+                                        .build().diagram())
                                 .build())
                         .collect(toList()))
                 .build();
