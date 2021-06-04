@@ -82,16 +82,30 @@
 
         /* Some basic spacing for now  */
         section {
-            border: 15px solid skyblue;
+            border: 5px solid skyblue;
+            border-radius: 5px;
             padding: 50px;
             margin: 20px;
+        }
+
+        article:nth-of-type(even) > section {
+            border: 5px solid slategrey;
+        }
+
+        /* highlight key facts (generated at runtime) */
+        span.highlight {
+            border-radius: 25px;
+            padding: 5px;
+            color: black;
+            background-color: palegreen;
+            border: 1px solid blue;
         }
     </style>
 </head>
 <body>
 <main role="main">
     <h1>Report 1</h1>
-        <article>
+        <article id="5">
         <h2>First scenario</h2>
         <section class="description">
             <h3>Description</h3>
@@ -144,8 +158,8 @@
 </svg>
 
 </pre>
-            <div onclick="location.href='#!';" id="5" class="overlay">
-                <div class="popup"  onclick="event.stopPropagation();">
+            <div onclick="location.href='#!';" id="6" class="overlay">
+                <div class="popup" onclick="event.stopPropagation();">
                     <h2>PlantUml markup</h2>
                     <a class="close" href="#!">&times;</a>
                     <div class="content">
@@ -168,7 +182,7 @@ Beta -&gt;x Gamma: &lt;text fill=&quot;&quot;&gt;[[#2 An interaction description
                     </div>
                 </div>
             </div>
-            <sub><a href="#5">[source]</a></sub>
+            <sub><a href="#6">[source]</a></sub>
         </section>
         <!-- Section containing data for sequence diagram popups -->
                 <div onclick="location.href='#!';" id="1" class="overlay">
@@ -190,11 +204,36 @@ Beta -&gt;x Gamma: &lt;text fill=&quot;&quot;&gt;[[#2 An interaction description
             </div>
         </div>
             </article>
-        <article>
+        <article id="7">
         <h2>Second scenario</h2>
         <section class="description">
             <h3>Description</h3>
             <p>A popup with a large amount of data that needs scrolling: <a href="#kljasdlfj">click me!</a><div id="kljasdlfj" class="overlay" onclick="location.href=&#x27;#!&#x27;;"><div class="popup" onclick="event.stopPropagation();"><h2>I am popup</h2><a class="close" href="#!">&times;</a><div class="content"><pre>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</pre></div></div></div></p>        </section>
+                <section class="facts">
+            <h3>Key Facts</h3>
+            <div class="factTable">
+                <div class="factRow">
+                    <div class="factRowHead">Description</div>
+                    <div class="factRowHead">Value</div>
+                </div>
+                                <div class="factRow">
+                    <div class="factCell">Something to highlight</div>
+                    <div class="factCell">Lorem</div>
+                </div>
+                                <div class="factRow">
+                    <div class="factCell">Something else to highlight</div>
+                    <div class="factCell">amet</div>
+                </div>
+                                <div class="factRow">
+                    <div class="factCell">Something else to highlight</div>
+                    <div class="factCell">consectetur</div>
+                </div>
+                                <div class="factRow">
+                    <div class="factCell">Something else to highlight</div>
+                    <div class="factCell">Thank you!</div>
+                </div>
+                            </div>
+        </section>
                 <section class="sequence diagram svg">
             <h3>Sequence Diagram</h3>
             <pre><?xml version="1.0" encoding="UTF-8"?>
@@ -244,8 +283,8 @@ Beta -&gt;x Gamma: &lt;text fill=&quot;&quot;&gt;[[#2 An interaction description
 </svg>
 
 </pre>
-            <div onclick="location.href='#!';" id="6" class="overlay">
-                <div class="popup"  onclick="event.stopPropagation();">
+            <div onclick="location.href='#!';" id="8" class="overlay">
+                <div class="popup" onclick="event.stopPropagation();">
                     <h2>PlantUml markup</h2>
                     <a class="close" href="#!">&times;</a>
                     <div class="content">
@@ -270,7 +309,7 @@ note left: Friends &lt;$heart{scale=0.4,color=red}&gt;
                     </div>
                 </div>
             </div>
-            <sub><a href="#6">[source]</a></sub>
+            <sub><a href="#8">[source]</a></sub>
         </section>
         <!-- Section containing data for sequence diagram popups -->
                 <div onclick="location.href='#!';" id="3" class="overlay">
@@ -295,8 +334,30 @@ note left: Friends &lt;$heart{scale=0.4,color=red}&gt;
     </main>
 </body>
 <footer>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/default.min.css">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/default.min.css">
     <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/highlight.min.js"></script>
     <script>hljs.highlightAll();</script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"></script>
+    <script>
+        var options = { 
+                "element": "span", 
+                "className": "highlight", 
+                "separateWordSearch": false,
+                "acrossElements": true,
+                "accuracy": { 
+                    "value": "exactly", "limiters": [",", ".", ";", ":", "-"] 
+                } 
+        }
+                                                        var instance = new Mark(document.querySelector("article[id='7']")); 
+                                    instance.mark("Lorem", options);
+                                    instance.mark("amet", options);
+                                    instance.mark("consectetur", options);
+                                    instance.mark("Thank you!", options);
+                                            <!-- Remove highlights in svg (causes text to disappear) -->
+        instance = new Mark(document.querySelectorAll("svg"));
+        instance.unmark();
+    </script>
 </footer>
 </html>

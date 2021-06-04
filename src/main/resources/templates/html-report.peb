@@ -82,9 +82,23 @@
 
         /* Some basic spacing for now  */
         section {
-            border: 15px solid skyblue;
+            border: 5px solid skyblue;
+            border-radius: 5px;
             padding: 50px;
             margin: 20px;
+        }
+
+        article:nth-of-type(even) > section {
+            border: 5px solid slategrey;
+        }
+
+        /* highlight key facts (generated at runtime) */
+        span.highlight {
+            border-radius: 25px;
+            padding: 5px;
+            color: black;
+            background-color: palegreen;
+            border: 1px solid blue;
         }
     </style>
 </head>
@@ -92,21 +106,21 @@
 <main role="main">
     <h1>{{ report.title }}</h1>
     {% for scenario in report.scenarios %}
-    <article>
+    <article id="{{ scenario.id }}">
         <h2>{{scenario.title}}</h2>
         <section class="description">
             <h3>Description</h3>
             {{ scenario.description | raw }}
         </section>
-        {% if scenario.facts is not null %}
+        {% if scenario.facts.entries is not empty %}
         <section class="facts">
             <h3>Key Facts</h3>
             <div class="factTable">
                 <div class="factRow">
-                    <div class="factRowHead">Key</div>
+                    <div class="factRowHead">Description</div>
                     <div class="factRowHead">Value</div>
                 </div>
-                {% for fact in scenario.facts %}
+                {% for fact in scenario.facts.entries %}
                 <div class="factRow">
                     <div class="factCell">{{fact.key}}</div>
                     <div class="factCell">{{fact.value}}</div>
@@ -119,7 +133,7 @@
             <h3>Sequence Diagram</h3>
             <pre>{{ scenario.sequenceDiagram.svg | raw }}</pre>
             <div onclick="location.href='#!';" id="{{scenario.sequenceDiagram.id}}" class="overlay">
-                <div class="popup"  onclick="event.stopPropagation();">
+                <div class="popup" onclick="event.stopPropagation();">
                     <h2>PlantUml markup</h2>
                     <a class="close" href="#!">&times;</a>
                     <div class="content">
@@ -146,8 +160,33 @@
 </main>
 </body>
 <footer>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/default.min.css">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/default.min.css">
     <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/highlight.min.js"></script>
     <script>hljs.highlightAll();</script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"></script>
+    <script>
+        var options = { 
+                "element": "span", 
+                "className": "highlight", 
+                "separateWordSearch": false,
+                "acrossElements": true,
+                "accuracy": { 
+                    "value": "exactly", "limiters": [",", ".", ";", ":", "-"] 
+                } 
+        }
+        {% for scenario in report.scenarios %}
+            {% if scenario.facts.entries is not empty %}
+                var instance = new Mark(document.querySelector("article[id='{{scenario.id}}']")); 
+                {% for fact in scenario.facts.entries %}
+                    instance.mark("{{fact.value}}", options);
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+        <!-- Remove highlights in svg (causes text to disappear) -->
+        instance = new Mark(document.querySelectorAll("svg"));
+        instance.unmark();
+    </script>
 </footer>
 </html>

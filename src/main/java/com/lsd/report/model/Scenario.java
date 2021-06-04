@@ -2,8 +2,8 @@ package com.lsd.report.model;
 
 import lombok.Builder;
 import lombok.Value;
+import org.apache.commons.collections4.MultiValuedMap;
 
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -13,8 +13,9 @@ import java.util.List;
 @Builder
 public class Scenario {
     String title;
+    String id;
     String description;
     SequenceDiagram sequenceDiagram;
     List<DataHolder> dataHolders;
-    Collection<Fact> facts;
+    MultiValuedMap<String, String> facts;
 }

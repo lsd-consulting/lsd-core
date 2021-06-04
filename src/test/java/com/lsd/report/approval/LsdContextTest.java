@@ -52,6 +52,10 @@ class LsdContextTest {
         lsdContext.capture(new Markup("..."));
         lsdContext.capture("Sending a response from B to A [#red]", "Thank You!");
         lsdContext.capture(new NoteLeft("Friends <$heart{scale=0.4,color=red}>"));
+        lsdContext.addFact("Something to highlight", "Lorem");
+        lsdContext.addFact("Something else to highlight", "amet");
+        lsdContext.addFact("Something else to highlight", "consectetur");
+        lsdContext.addFact("Something else to highlight", "Thank you!");
         lsdContext.completeScenario("Second scenario", p(
                 text("A popup with a large amount of data that needs scrolling: "),
                 a().withHref("#" + "kljasdlfj").withText("click me!"),

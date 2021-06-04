@@ -79,7 +79,9 @@ public class LsdContext {
                 .scenarios(capturedScenarios.stream()
                         .map(capturedScenario -> Scenario.builder()
                                 .title(capturedScenario.getTitle())
+                                .id(idGenerator.next())
                                 .description(capturedScenario.getDescription())
+                                .facts(capturedScenario.getFacts())
                                 .dataHolders(capturedScenario.getSequenceEvents().stream()
                                         .filter(DataHolder.class::isInstance)
                                         .map(DataHolder.class::cast)
@@ -97,5 +99,9 @@ public class LsdContext {
 
     public IdGenerator getIdGenerator() {
         return idGenerator;
+    }
+
+    public void addFact(String key, String value) {
+        currentScenario.addFact(key, value);
     }
 }
