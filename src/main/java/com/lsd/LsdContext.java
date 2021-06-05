@@ -5,6 +5,7 @@ import com.lsd.diagram.SequenceDiagramGenerator;
 import com.lsd.events.SequenceEvent;
 import com.lsd.events.SequenceEventInterpreter;
 import com.lsd.properties.LsdProperties;
+import com.lsd.report.HtmlIndexWriter;
 import com.lsd.report.HtmlReportWriter;
 import com.lsd.report.model.DataHolder;
 import com.lsd.report.model.Participant;
@@ -25,6 +26,7 @@ public class LsdContext {
     private static final LsdContext INSTANCE = new LsdContext();
 
     private final List<CapturedScenario> capturedScenarios = new ArrayList<>();
+    private final List<CapturedReport> capturedReports = new ArrayList<>();
     private final List<Participant> participants = new ArrayList<>();
     private final Set<String> includes = new LinkedHashSet<>();
     private final IdGenerator idGenerator = new IdGenerator(LsdProperties.getBoolean(DETERMINISTIC_IDS));
@@ -63,10 +65,16 @@ public class LsdContext {
     }
 
     public Path completeReport(String title) {
-        Path path = HtmlReportWriter.writeToFile(buildReport(title));
+        Report report = buildReport(title);
+        Path path = HtmlReportWriter.writeToFile(report);
+        capturedReports.add(new CapturedReport(report.getTitle(), path));
         capturedScenarios.clear();
         currentScenario = new CapturedScenario();
         return path;
+    }
+
+    public Path createIndex() {
+        return HtmlIndexWriter.writeToFile(capturedReports);
     }
 
     public void clear() {

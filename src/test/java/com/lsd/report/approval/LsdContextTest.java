@@ -65,6 +65,16 @@ class LsdContextTest {
         Approvals.verify(lsdContext.completeReport("Report 1").toFile());
     }
 
+    @Test
+    void createsIndex() {
+        lsdContext.completeReport("First Report");
+        lsdContext.completeReport("Second Report");
+        lsdContext.completeReport("Third Report");
+        lsdContext.completeReport("Fourth Report");
+
+        Approvals.verify(lsdContext.createIndex().toFile());
+    }
+
     private String nextId() {
         return idGenerator.next();
     }
