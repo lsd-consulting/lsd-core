@@ -3,6 +3,7 @@ package com.lsd.diagram;
 import com.lsd.IdGenerator;
 import com.lsd.events.Message;
 import com.lsd.events.SequenceEvent;
+import com.lsd.events.SynchronousResponse;
 import com.lsd.properties.LsdProperties;
 import com.lsd.report.model.Diagram;
 import com.lsd.report.model.Participant;
@@ -24,6 +25,7 @@ import static java.util.stream.Collectors.toList;
 public class ComponentDiagramGenerator {
     private final PebbleEngine engine = new PebbleEngine.Builder().autoEscaping(false).build();
     private final PebbleTemplate compiledTemplate = engine.getTemplate("templates/component-uml.peb");
+    private final SvgConverter svgConverter = new SvgConverter();
 
     private final List<Participant> participants;
     private final List<SequenceEvent> events;
@@ -31,17 +33,14 @@ public class ComponentDiagramGenerator {
 
     public Diagram diagram() {
         String uml = generateUml();
-        String svg = generateSvg(uml);
         return Diagram.builder()
                 .id(idGenerator.next())
                 .uml(uml)
-                .svg(svg)
+                .svg(generateSvg(uml))
                 .build();
     }
 
     private String generateSvg(String markup) {
-        SvgConverter svgConverter = new SvgConverter();
-
         return svgConverter.convert(markup);
     }
 
@@ -56,8 +55,8 @@ public class ComponentDiagramGenerator {
                         .collect(toList()),
                 "events", events.stream()
                         .filter(event -> event instanceof Message)
+                        .filter(not(SynchronousResponse.class::isInstance))
                         .map(event -> (Message) event)
-                        .filter(not(message -> message.getLabel().contains("response"))) //TODO find better solution to remove synchronous resposes
                         .map(message -> String.format("[%s] -> %s", message.getFrom(), message.getTo()))
                         .collect(toList())
         ));

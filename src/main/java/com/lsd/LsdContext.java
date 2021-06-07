@@ -3,7 +3,9 @@ package com.lsd;
 import com.lsd.diagram.ComponentDiagramGenerator;
 import com.lsd.diagram.SequenceDiagramGenerator;
 import com.lsd.events.SequenceEvent;
-import com.lsd.events.SequenceEventInterpreter;
+import com.lsd.parse.Parser;
+import com.lsd.parse.MessageParser;
+import com.lsd.parse.SynchronousResponseParser;
 import com.lsd.properties.LsdProperties;
 import com.lsd.report.HtmlIndexWriter;
 import com.lsd.report.HtmlReportWriter;
@@ -13,10 +15,7 @@ import com.lsd.report.model.Report;
 import com.lsd.report.model.Scenario;
 
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static com.lsd.properties.LsdProperties.DETERMINISTIC_IDS;
 import static java.util.stream.Collectors.toList;
@@ -30,7 +29,7 @@ public class LsdContext {
     private final List<Participant> participants = new ArrayList<>();
     private final Set<String> includes = new LinkedHashSet<>();
     private final IdGenerator idGenerator = new IdGenerator(LsdProperties.getBoolean(DETERMINISTIC_IDS));
-    private final SequenceEventInterpreter sequenceEventInterpreter = new SequenceEventInterpreter(idGenerator);
+    private final List<Parser> parsers = parsers();
 
     private CapturedScenario currentScenario = new CapturedScenario();
 
@@ -49,12 +48,28 @@ public class LsdContext {
         includes.addAll(additionalIncludes);
     }
 
+    public void addFact(String key, String value) {
+        currentScenario.addFact(key, value);
+    }
+
     public void capture(SequenceEvent event) {
         currentScenario.add(event);
     }
 
+    /**
+     * Allow string representations of events to be interpreted. If none of the parsers match the pattern then nothing will be captured
+     *
+     * @param pattern The input string that represents some event to be captured on the sequence diagram
+     * @param body    The extra data associated with the event (may be null).
+     */
     public void capture(String pattern, String body) {
-        capture(sequenceEventInterpreter.interpret(pattern, body));
+        var event = parsers.stream()
+                .map(parser -> parser.parse(pattern, body))
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .findFirst();
+
+        event.ifPresent(this::capture);
     }
 
     public void completeScenario(String title, String description) {
@@ -115,7 +130,10 @@ public class LsdContext {
         return idGenerator;
     }
 
-    public void addFact(String key, String value) {
-        currentScenario.addFact(key, value);
+    private List<Parser> parsers() {
+        return List.of(
+                new MessageParser(idGenerator),
+                new SynchronousResponseParser(idGenerator)
+        );
     }
 }

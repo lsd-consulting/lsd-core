@@ -5,6 +5,7 @@ import com.lsd.LsdContext;
 import com.lsd.events.Markup;
 import com.lsd.events.Message;
 import com.lsd.events.NoteLeft;
+import com.lsd.events.SynchronousResponse;
 import com.lsd.report.model.Participant;
 import com.lsd.report.model.PopupContent;
 import org.approvaltests.Approvals;
@@ -46,6 +47,7 @@ class LsdContextTest {
 
         lsdContext.capture(Message.builder().id(nextId()).from("A").to("B").label("Message 1").data("some data 1").arrowType(BI_DIRECTIONAL).build());
         lsdContext.capture(Message.builder().id(nextId()).label("An interaction description that is long enough to need abbreviating").from("Beta").to("Gamma").data("β").arrowType(LOST).build());
+        lsdContext.capture(SynchronousResponse.builder().id(nextId()).label("A synchronous response").from("Gamma").to("Beta").data("200 OK").build());
         lsdContext.completeScenario("First scenario", "First scenario description");
 
         lsdContext.capture(Message.builder().id(nextId()).label("Sending food <$hamburger{scale=0.4}>").from("A").to("B").colour("orange").arrowType(DOTTED_THIN).build());

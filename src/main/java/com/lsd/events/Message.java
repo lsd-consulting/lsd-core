@@ -1,31 +1,31 @@
 package com.lsd.events;
 
 import com.lsd.report.model.DataHolder;
-import lombok.Builder;
 import lombok.Builder.Default;
-import lombok.Value;
+import lombok.Data;
+import lombok.experimental.SuperBuilder;
 import org.apache.commons.text.StringSubstitutor;
 
 import java.util.Map;
 
 import static com.lsd.events.ArrowType.SOLID;
 
-@Value
-@Builder
+@Data
+@SuperBuilder
 public class Message implements DataHolder {
-    String id;
-    String from;
-    String to;
-    String label;
+    private final String id;
+    private final String from;
+    private final String to;
+    private final String label;
 
     @Default
-    Object data = "";
+    private final Object data = "";
 
     @Default
-    String colour = "";
+    private final String colour = "";
 
     @Default
-    ArrowType arrowType = SOLID;
+    private final ArrowType arrowType = SOLID;
 
     public String toMarkup() {
         return StringSubstitutor.replace("${from} ${arrow} ${to}: <text fill=\"${colour}\">[[#${id} ${label}]]</text>", Map.of(
@@ -34,7 +34,7 @@ public class Message implements DataHolder {
                 "id", getId(),
                 "label", abbreviatedLabel(),
                 "colour", getColour(),
-                "arrow", arrowType.toMarkup(getColour())
+                "arrow", getArrowType().toMarkup(getColour())
         ));
     }
 
