@@ -72,9 +72,10 @@ public class LsdContext {
         event.ifPresent(this::capture);
     }
 
-    public void completeScenario(String title, String description) {
+    public void completeScenario(String title, String description, CapturedScenario.Status status) {
         currentScenario.setTitle(title);
         currentScenario.setDescription(description);
+        currentScenario.setStatus(status);
         capturedScenarios.add(currentScenario);
         currentScenario = new CapturedScenario();
     }
@@ -104,6 +105,7 @@ public class LsdContext {
                         .map(capturedScenario -> Scenario.builder()
                                 .title(capturedScenario.getTitle())
                                 .id(idGenerator.next())
+                                .status(capturedScenario.getStatus().name().toLowerCase())
                                 .description(capturedScenario.getDescription())
                                 .facts(capturedScenario.getFacts())
                                 .dataHolders(capturedScenario.getSequenceEvents().stream()

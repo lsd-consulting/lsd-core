@@ -15,10 +15,11 @@ import static java.util.Objects.nonNull;
 @Data
 public class CapturedScenario {
     private final List<SequenceEvent> sequenceEvents = new ArrayList<>();
-    private final MultiValuedMap<String,String> facts = new ArrayListValuedHashMap<>();
+    private final MultiValuedMap<String, String> facts = new ArrayListValuedHashMap<>();
 
     private String title;
     private String description;
+    private Status status;
 
     public void add(SequenceEvent sequenceEvent) {
         if (nonNull(sequenceEvent)) {
@@ -28,5 +29,11 @@ public class CapturedScenario {
 
     public void addFact(String key, String value) {
         facts.put(key, value);
+    }
+
+    public enum Status {
+        ERROR,
+        WARN,
+        SUCCESS
     }
 }

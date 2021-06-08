@@ -112,10 +112,18 @@
 
         /* Some basic spacing for now  */
         section, div.contents {
-            border: thin solid skyblue;
+            border: thin solid limegreen;
             border-radius: 65px;
             padding: 50px;
             margin: 20px;
+        }
+
+        section.warn {
+            border-color: orange;
+        }
+
+        section.error {
+            border-color: red;
         }
 
         div.contents {
@@ -127,21 +135,16 @@
             padding: 10px;
         }
 
-        article:nth-of-type(even) > section {
-            border: thin solid slategrey;
-        }
-
         /* highlight key facts (generated at runtime) */
         span.highlight {
             border-radius: 25px;
             padding: 5px;
             color: black;
-            background-color: palegreen;
+            background-color: yellow;
             border: 1px solid blue;
         }
 
         ul.contents li {
-            list-style-type: upper-roman;
             font-size: large;
         }
 
@@ -153,6 +156,35 @@
         ul.contents li::marker {
             color: limegreen;
         }
+
+        ul.contents li.warn::marker {
+            color: orange;
+        }
+
+        ul.contents li.error::marker {
+            color: red;
+        }
+
+        h2.success:before, h3.success:before {
+            content: "";
+            padding-right: 5px;
+            margin-right: 5px;
+            background-color: limegreen;
+        }
+
+        h2.warn:before, h3.warn:before {
+            content: "";
+            padding-right: 5px;
+            margin-right: 5px;
+            background-color: orange;
+        }
+
+        h2.error:before, h3.error:before {
+            content: "";
+            padding-right: 5px;
+            margin-right: 5px;
+            background-color: red;
+        }
     </style>
 </head>
 <body>
@@ -162,16 +194,16 @@
         <h3>Contents:</h3>
         <ul class="contents">
             {% for scenario in report.scenarios %}
-            <li><a href="#{{ scenario.id }}">{{scenario.title}}</a></li>
+            <li class="{{ scenario.status }}"><a href="#{{ scenario.id }}">{{scenario.title}}</a></li>
             {% endfor %}
         </ul>
         {% for scenario in report.scenarios %}
     </div>
 
     <article id="{{ scenario.id }}">
-        <h2>{{scenario.title}}</h2>
-        <section class="description">
-            <h3>Description</h3>
+        <h2 class="{{ scenario.status }}">{{scenario.title}}</h2>
+        <section class="description {{ scenario.status }}">
+            <h3 class="{{ scenario.status }}">Description</h3>
             {{ scenario.description | raw }}
         </section>
         {% if scenario.facts.entries is not empty %}
@@ -191,8 +223,8 @@
             </div>
         </aside>
         {% endif %}
-        <section class="sequence diagram svg">
-            <h3>Sequence Diagram</h3>
+        <section class="sequence diagram svg {{ scenario.status }}">
+            <h3 class="{{ scenario.status }}">Sequence Diagram</h3>
             <pre>{{ scenario.sequenceDiagram.svg | raw }}</pre>
             <div onclick="location.href='#!';" id="{{scenario.sequenceDiagram.id}}" class="overlay">
                 <div class="popup" onclick="event.stopPropagation();">
@@ -258,7 +290,7 @@
                 "separateWordSearch": false,
                 "acrossElements": true,
                 "accuracy": { 
-                    "value": "exactly", "limiters": [ ",", ".", ";", ":", "-"] 
+                    "value": "exactly", "limiters": [ ",", ".", ";", ":", "-", "(", ")"] 
                 } 
         }
         {% for scenario in report.scenarios %}

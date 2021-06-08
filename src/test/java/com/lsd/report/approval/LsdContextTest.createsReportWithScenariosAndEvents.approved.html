@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html" xml:lang="en" lang="en">
 <head>
-    <title>Report 1</title>
+    <title>Approval Report</title>
     <style>
         article {
             display: flex;
@@ -112,10 +112,18 @@
 
         /* Some basic spacing for now  */
         section, div.contents {
-            border: thin solid skyblue;
+            border: thin solid limegreen;
             border-radius: 65px;
             padding: 50px;
             margin: 20px;
+        }
+
+        section.warn {
+            border-color: orange;
+        }
+
+        section.error {
+            border-color: red;
         }
 
         div.contents {
@@ -127,21 +135,16 @@
             padding: 10px;
         }
 
-        article:nth-of-type(even) > section {
-            border: thin solid slategrey;
-        }
-
         /* highlight key facts (generated at runtime) */
         span.highlight {
             border-radius: 25px;
             padding: 5px;
             color: black;
-            background-color: palegreen;
+            background-color: yellow;
             border: 1px solid blue;
         }
 
         ul.contents li {
-            list-style-type: upper-roman;
             font-size: large;
         }
 
@@ -153,26 +156,56 @@
         ul.contents li::marker {
             color: limegreen;
         }
+
+        ul.contents li.warn::marker {
+            color: orange;
+        }
+
+        ul.contents li.error::marker {
+            color: red;
+        }
+
+        h2.success:before, h3.success:before {
+            content: "";
+            padding-right: 5px;
+            margin-right: 5px;
+            background-color: limegreen;
+        }
+
+        h2.warn:before, h3.warn:before {
+            content: "";
+            padding-right: 5px;
+            margin-right: 5px;
+            background-color: orange;
+        }
+
+        h2.error:before, h3.error:before {
+            content: "";
+            padding-right: 5px;
+            margin-right: 5px;
+            background-color: red;
+        }
     </style>
 </head>
 <body>
 <main role="main">
-    <h1>Report 1</h1>
+    <h1>Approval Report</h1>
     <div class="contents">
         <h3>Contents:</h3>
         <ul class="contents">
-                        <li><a href="#6">First scenario</a></li>
-                        <li><a href="#9">Second scenario</a></li>
+                        <li class="success"><a href="#8">A Success scenario</a></li>
+                        <li class="warn"><a href="#11">A Warning scenario</a></li>
+                        <li class="error"><a href="#14">An Error scenario</a></li>
                     </ul>
             </div>
 
-    <article id="6">
-        <h2>First scenario</h2>
-        <section class="description">
-            <h3>Description</h3>
+    <article id="8">
+        <h2 class="success">A Success scenario</h2>
+        <section class="description success">
+            <h3 class="success">Description</h3>
             First scenario description        </section>
-                <section class="sequence diagram svg">
-            <h3>Sequence Diagram</h3>
+                <section class="sequence diagram svg success">
+            <h3 class="success">Sequence Diagram</h3>
             <pre><?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="290px" preserveAspectRatio="none" style="width:586px;height:290px;background:#FFFFFF;" version="1.1" viewBox="0 0 586 290" width="586px" zoomAndPan="magnify">
   <defs />
@@ -225,7 +258,7 @@
 </svg>
 
 </pre>
-            <div onclick="location.href='#!';" id="7" class="overlay">
+            <div onclick="location.href='#!';" id="9" class="overlay">
                 <div class="popup" onclick="event.stopPropagation();">
                     <h2>PlantUml markup</h2>
                     <a class="close" href="#!">&times;</a>
@@ -250,11 +283,11 @@ Gamma --&gt;&gt; Beta: &lt;text fill=&quot;&quot;&gt;[[#3 A synchronous response
                     </div>
                 </div>
             </div>
-            <sub><a href="#7">[source]</a></sub>
-            <sub><a href="#8">[component diagram]</a></sub>
+            <sub><a href="#9">[source]</a></sub>
+            <sub><a href="#10">[component diagram]</a></sub>
         </section>
         <!-- Popup for component diagram -->
-        <div onclick="location.href='#!';" id="8" class="overlay">
+        <div onclick="location.href='#!';" id="10" class="overlay">
             <div class="popup" onclick="event.stopPropagation();">
                 <h2>Component Diagram</h2>
                 <a class="close" href="#!">&times;</a>
@@ -302,14 +335,14 @@ link Beta to Gamma-->
 
 </pre>
                 </div>
-                <sub><a href="#uml8">[source]</a></sub>
+                <sub><a href="#uml10">[source]</a></sub>
             </div>
         </div>
         <!-- Popup for component diagram UML via component diagram popup -->
-        <div onclick="location.href='#!';" id="uml8" class="overlay">
+        <div onclick="location.href='#!';" id="uml10" class="overlay">
             <div class="popup" onclick="event.stopPropagation();">
                 <h2>PlantUml markup</h2>
-                <a class="close" href="#8">&times;</a><!--show previous popup on close-->
+                <a class="close" href="#10">&times;</a><!--show previous popup on close-->
                 <div class="content">
                     <pre><code>@startuml
 
@@ -357,11 +390,11 @@ hide @unlinked
             </article>
         </div>
 
-    <article id="9">
-        <h2>Second scenario</h2>
-        <section class="description">
-            <h3>Description</h3>
-            <p>A popup with a large amount of data that needs scrolling: <a href="#kljasdlfj">click me!</a><div id="kljasdlfj" class="overlay" onclick="location.href=&#x27;#!&#x27;;"><div class="popup" onclick="event.stopPropagation();"><h2>I am popup</h2><a class="close" href="#!">&times;</a><div class="content"><pre>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</pre></div></div></div></p>        </section>
+    <article id="11">
+        <h2 class="warn">A Warning scenario</h2>
+        <section class="description warn">
+            <h3 class="warn">Description</h3>
+            <p>A popup with a long text that needs scrolling: <a href="#kljasdlfj">click me!</a><div id="kljasdlfj" class="overlay" onclick="location.href=&#x27;#!&#x27;;"><div class="popup" onclick="event.stopPropagation();"><h2>I am popup</h2><a class="close" href="#!">&times;</a><div class="content"><pre>.. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</pre></div></div></div></p>        </section>
                 <aside class="facts">
             <div class="factTable">
                 <h3>Key Facts</h3>
@@ -387,8 +420,8 @@ hide @unlinked
                 </div>
                             </div>
         </aside>
-                <section class="sequence diagram svg">
-            <h3>Sequence Diagram</h3>
+                <section class="sequence diagram svg warn">
+            <h3 class="warn">Sequence Diagram</h3>
             <pre><?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="301px" preserveAspectRatio="none" style="width:297px;height:301px;background:#FFFFFF;" version="1.1" viewBox="0 0 297 301" width="297px" zoomAndPan="magnify">
   <defs />
@@ -435,7 +468,7 @@ hide @unlinked
 </svg>
 
 </pre>
-            <div onclick="location.href='#!';" id="10" class="overlay">
+            <div onclick="location.href='#!';" id="12" class="overlay">
                 <div class="popup" onclick="event.stopPropagation();">
                     <h2>PlantUml markup</h2>
                     <a class="close" href="#!">&times;</a>
@@ -461,11 +494,11 @@ note left: Friends &lt;$heart{scale=0.4,color=red}&gt;
                     </div>
                 </div>
             </div>
-            <sub><a href="#10">[source]</a></sub>
-            <sub><a href="#11">[component diagram]</a></sub>
+            <sub><a href="#12">[source]</a></sub>
+            <sub><a href="#13">[component diagram]</a></sub>
         </section>
         <!-- Popup for component diagram -->
-        <div onclick="location.href='#!';" id="11" class="overlay">
+        <div onclick="location.href='#!';" id="13" class="overlay">
             <div class="popup" onclick="event.stopPropagation();">
                 <h2>Component Diagram</h2>
                 <a class="close" href="#!">&times;</a>
@@ -501,14 +534,14 @@ link B to A-->
 
 </pre>
                 </div>
-                <sub><a href="#uml11">[source]</a></sub>
+                <sub><a href="#uml13">[source]</a></sub>
             </div>
         </div>
         <!-- Popup for component diagram UML via component diagram popup -->
-        <div onclick="location.href='#!';" id="uml11" class="overlay">
+        <div onclick="location.href='#!';" id="uml13" class="overlay">
             <div class="popup" onclick="event.stopPropagation();">
                 <h2>PlantUml markup</h2>
-                <a class="close" href="#11">&times;</a><!--show previous popup on close-->
+                <a class="close" href="#13">&times;</a><!--show previous popup on close-->
                 <div class="content">
                     <pre><code>@startuml
 
@@ -545,6 +578,169 @@ hide @unlinked
             </div>
         </div>
             </article>
+        </div>
+
+    <article id="14">
+        <h2 class="error">An Error scenario</h2>
+        <section class="description error">
+            <h3 class="error">Description</h3>
+            <p>Failure! Expected value to be 123 but was 123456</p>        </section>
+                <aside class="facts">
+            <div class="factTable">
+                <h3>Key Facts</h3>
+                <div class="factRow">
+                    <div class="factRowHead">Description</div>
+                    <div class="factRowHead">Value</div>
+                </div>
+                                <div class="factRow">
+                    <div class="factCell">some important value</div>
+                    <div class="factCell">123456</div>
+                </div>
+                            </div>
+        </aside>
+                <section class="sequence diagram svg error">
+            <h3 class="error">Sequence Diagram</h3>
+            <pre><?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="152px" preserveAspectRatio="none" style="width:268px;height:152px;background:#FFFFFF;" version="1.1" viewBox="0 0 268 152" width="268px" zoomAndPan="magnify">
+  <defs />
+  <g>
+    <line style="stroke:#000000;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="43" x2="43" y1="37.0146" y2="116.6133" />
+    <line style="stroke:#000000;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="227.5" x2="227.5" y1="37.0146" y2="116.6133" />
+    <rect fill="#FFFFFF" height="31.0146" style="stroke:#000000;stroke-width:1.0;" width="46" x="20" y="5" />
+    <text fill="#000000" font-family="Verdana" font-size="14" lengthAdjust="spacing" textLength="32" x="27" y="26.0752">Beta</text>
+    <rect fill="#FFFFFF" height="31.0146" style="stroke:#000000;stroke-width:1.0;" width="46" x="20" y="115.6133" />
+    <text fill="#000000" font-family="Verdana" font-size="14" lengthAdjust="spacing" textLength="32" x="27" y="136.6885">Beta</text>
+    <rect fill="#FFFFFF" height="31.0146" style="stroke:#000000;stroke-width:1.0;" width="69" x="193.5" y="5" />
+    <text fill="#000000" font-family="Verdana" font-size="14" lengthAdjust="spacing" textLength="55" x="200.5" y="26.0752">Gamma</text>
+    <rect fill="#FFFFFF" height="31.0146" style="stroke:#000000;stroke-width:1.0;" width="69" x="193.5" y="115.6133" />
+    <text fill="#000000" font-family="Verdana" font-size="14" lengthAdjust="spacing" textLength="55" x="200.5" y="136.6885">Gamma</text>
+    <polygon fill="#000000" points="216,64.814,226,68.814,216,72.814,220,68.814" style="stroke:#000000;stroke-width:1.0;" />
+    <line style="stroke:#000000;stroke-width:1.0;" x1="43" x2="222" y1="68.814" y2="68.814" />
+    <a href="#6" target="_top" title="#6" xlink:actuate="onRequest" xlink:href="#6" xlink:show="new" xlink:title="#6" xlink:type="simple">
+      <text fill="" font-family="Verdana" font-size="13" lengthAdjust="spacing" text-decoration="underline" textLength="63" x="50" y="64.0845">a request</text>
+    </a>
+    <line style="stroke:#000000;stroke-width:1.0;" x1="43" x2="53" y1="98.6133" y2="94.6133" />
+    <line style="stroke:#000000;stroke-width:1.0;" x1="43" x2="53" y1="98.6133" y2="102.6133" />
+    <line style="stroke:#000000;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="43" x2="227" y1="98.6133" y2="98.6133" />
+    <a href="#7" target="_top" title="#7" xlink:actuate="onRequest" xlink:href="#7" xlink:show="new" xlink:title="#7" xlink:type="simple">
+      <text fill="" font-family="Verdana" font-size="13" lengthAdjust="spacing" text-decoration="underline" textLength="161" x="60" y="93.8838">a synchronous response</text>
+    </a>
+  </g>
+</svg>
+
+</pre>
+            <div onclick="location.href='#!';" id="15" class="overlay">
+                <div class="popup" onclick="event.stopPropagation();">
+                    <h2>PlantUml markup</h2>
+                    <a class="close" href="#!">&times;</a>
+                    <div class="content">
+                        <pre><code>@startuml
+
+!theme plain
+hide unlinked
+
+!include &lt;tupadr3/font-awesome-5/hamburger&gt;
+!include &lt;tupadr3/font-awesome-5/heart&gt;
+
+actor A as &quot;Arnie&quot;
+boundary UnusedParticipant
+database B as &quot;Badboy\nDB&quot;
+
+Beta -&gt; Gamma: &lt;text fill=&quot;&quot;&gt;[[#6 a request]]&lt;/text&gt;
+Gamma --&gt;&gt; Beta: &lt;text fill=&quot;&quot;&gt;[[#7 a synchronous response]]&lt;/text&gt;
+
+@enduml</code></pre>
+                    </div>
+                </div>
+            </div>
+            <sub><a href="#15">[source]</a></sub>
+            <sub><a href="#16">[component diagram]</a></sub>
+        </section>
+        <!-- Popup for component diagram -->
+        <div onclick="location.href='#!';" id="16" class="overlay">
+            <div class="popup" onclick="event.stopPropagation();">
+                <h2>Component Diagram</h2>
+                <a class="close" href="#!">&times;</a>
+                <div class="content">
+                    <sup>[Requires Graphviz to be installed]</sup>
+                    <pre><?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="228px" preserveAspectRatio="none" style="width:415px;height:228px;background:#FFFFFF;" version="1.1" viewBox="0 0 415 228" width="415px" zoomAndPan="magnify">
+  <defs />
+  <g>
+    <!--MD5=[770389ab9df153645bc6ef28055eb2b5]
+entity A-->
+    <!--MD5=[11436d03413a596fd34f129fa2a39195]
+entity UnusedParticipant-->
+    <!--MD5=[b2d39259b6aeabc16b394deeb0238426]
+entity B-->
+    <!--MD5=[c5bdbf269431fcbe08f23a2cc9e0fa0e]
+entity Beta-->
+    <rect fill="#FFFFFF" height="47.0146" style="stroke:#000000;stroke-width:1.0;" width="72" x="12" y="25.5" />
+    <rect fill="#FFFFFF" height="10" style="stroke:#000000;stroke-width:1.0;" width="15" x="64" y="30.5" />
+    <rect fill="#FFFFFF" height="2" style="stroke:#000000;stroke-width:1.0;" width="4" x="62" y="32.5" />
+    <rect fill="#FFFFFF" height="2" style="stroke:#000000;stroke-width:1.0;" width="4" x="62" y="36.5" />
+    <text fill="#000000" font-family="Verdana" font-size="14" lengthAdjust="spacing" textLength="32" x="27" y="59.5752">Beta</text>
+    <!--MD5=[44bcb140d634cc17b269275ddf80d2c7]
+entity Gamma-->
+    <ellipse cx="147" cy="19" fill="#FFFFFF" rx="8" ry="8" style="stroke:#000000;stroke-width:1.0;" />
+    <path d="M147,27 L147,54 M134,35 L160,35 M147,54 L134,69 M147,54 L160,69 " fill="none" style="stroke:#000000;stroke-width:1.0;" />
+    <text fill="#000000" font-family="Verdana" font-size="14" lengthAdjust="spacing" textLength="55" x="119.5" y="85.0752">Gamma</text>
+    <!--MD5=[6e425fb6b8b9080a9857e5ee88c53789]
+link Beta to Gamma-->
+    <path d="M84.35,49 C94.22,49 104.08,49 113.94,49 " fill="none" id="Beta-to-Gamma" style="stroke:#000000;stroke-width:1.0;" />
+    <polygon fill="#000000" points="119.1,49,110.1,45,114.1,49,110.1,53,119.1,49" style="stroke:#000000;stroke-width:1.0;" />
+    <!--MD5=[025f3ddbbaf66781305ec762afc55ba5]
+link A to UnusedParticipant-->
+    <!--MD5=[5e2eec62a50b26b6b0db6c12e4ee289c]
+link A to B-->
+  </g>
+</svg>
+
+</pre>
+                </div>
+                <sub><a href="#uml16">[source]</a></sub>
+            </div>
+        </div>
+        <!-- Popup for component diagram UML via component diagram popup -->
+        <div onclick="location.href='#!';" id="uml16" class="overlay">
+            <div class="popup" onclick="event.stopPropagation();">
+                <h2>PlantUml markup</h2>
+                <a class="close" href="#16">&times;</a><!--show previous popup on close-->
+                <div class="content">
+                    <pre><code>@startuml
+
+!theme plain
+actor A as &quot;Arnie&quot;
+boundary UnusedParticipant
+database B as &quot;Badboy\nDB&quot;
+
+[Beta] -&gt; Gamma
+
+hide @unlinked
+@enduml</code></pre>
+                </div>
+            </div>
+        </div>
+        <!-- Section containing data for sequence diagram popups -->
+                <div onclick="location.href='#!';" id="6" class="overlay">
+            <div class="popup" onclick="event.stopPropagation();">
+                <h2>a request</h2>
+                <a class="close" href="#!">&times;</a>
+                <div class="content">
+                    <pre>Please do something</pre>
+                </div>
+            </div>
+        </div>
+                <div onclick="location.href='#!';" id="7" class="overlay">
+            <div class="popup" onclick="event.stopPropagation();">
+                <h2>a synchronous response</h2>
+                <a class="close" href="#!">&times;</a>
+                <div class="content">
+                    <pre>Some Error (123456)</pre>
+                </div>
+            </div>
+        </div>
+            </article>
     </main>
 </body>
 <footer>
@@ -561,14 +757,16 @@ hide @unlinked
                 "separateWordSearch": false,
                 "acrossElements": true,
                 "accuracy": { 
-                    "value": "exactly", "limiters": [ ",", ".", ";", ":", "-"] 
+                    "value": "exactly", "limiters": [ ",", ".", ";", ":", "-", "(", ")"] 
                 } 
         }
-                                                        var instance = new Mark(document.querySelector("article[id='9']")); 
+                                                        var instance = new Mark(document.querySelector("article[id='11']")); 
                                     instance.mark("Lorem", options);
                                     instance.mark("amet", options);
                                     instance.mark("consectetur", options);
                                     instance.mark("Thank you!", options);
+                                                                var instance = new Mark(document.querySelector("article[id='14']")); 
+                                    instance.mark("123456", options);
                                             <!-- Remove highlights in svg (causes text to disappear) -->
         instance = new Mark(document.querySelectorAll("svg"));
         instance.unmark();

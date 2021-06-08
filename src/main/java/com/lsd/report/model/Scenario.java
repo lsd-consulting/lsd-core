@@ -15,6 +15,7 @@ public class Scenario {
     String title;
     String id;
     String description;
+    String status;
     Diagram sequenceDiagram;
     Diagram componentDiagram;
     List<DataHolder> dataHolders;
