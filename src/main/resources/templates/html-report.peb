@@ -3,6 +3,26 @@
 <head>
     <title>{{report.title}}</title>
     <style>
+        article {
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: space-around;
+        }
+
+        section.description {
+            flex: 50%;
+        }
+
+        aside {
+            flex: 30%;
+            margin: 10px;
+            padding: 20px;
+        }
+
+        section.diagram {
+            flex: 100%;
+        }
+
         .overlay {
             position: fixed;
             top: 0;
@@ -32,9 +52,18 @@
         }
 
         h1, h2, h3 {
+            flex: 100%;
             margin-top: 0;
+            margin-bottom: 0;
             color: #333;
             font-family: Tahoma, Arial, sans-serif;
+        }
+
+        h1 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100px;
         }
 
         .popup .close {
@@ -59,6 +88,7 @@
         /*    Make Facts look like table*/
         .factTable {
             display: table;
+            margin: auto;
         }
 
         .factRow {
@@ -82,14 +112,14 @@
 
         /* Some basic spacing for now  */
         section {
-            border: 5px solid skyblue;
-            border-radius: 5px;
+            border: thin solid skyblue;
+            border-radius: 65px;
             padding: 50px;
             margin: 20px;
         }
 
         article:nth-of-type(even) > section {
-            border: 5px solid slategrey;
+            border: thin solid slategrey;
         }
 
         /* highlight key facts (generated at runtime) */
@@ -113,9 +143,9 @@
             {{ scenario.description | raw }}
         </section>
         {% if scenario.facts.entries is not empty %}
-        <section class="facts">
-            <h3>Key Facts</h3>
+        <aside class="facts">
             <div class="factTable">
+                <h3>Key Facts</h3>
                 <div class="factRow">
                     <div class="factRowHead">Description</div>
                     <div class="factRowHead">Value</div>
@@ -127,7 +157,7 @@
                 </div>
                 {% endfor %}
             </div>
-        </section>
+        </aside>
         {% endif %}
         <section class="sequence diagram svg">
             <h3>Sequence Diagram</h3>
