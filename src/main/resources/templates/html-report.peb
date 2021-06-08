@@ -111,11 +111,20 @@
         }
 
         /* Some basic spacing for now  */
-        section {
+        section, div.contents {
             border: thin solid skyblue;
             border-radius: 65px;
             padding: 50px;
             margin: 20px;
+        }
+
+        div.contents {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+            align-items: center;
+            padding: 10px;
         }
 
         article:nth-of-type(even) > section {
@@ -130,12 +139,35 @@
             background-color: palegreen;
             border: 1px solid blue;
         }
+
+        ul.contents li {
+            list-style-type: upper-roman;
+            font-size: large;
+        }
+
+        ul.contents li a {
+            text-decoration: none;
+            color: slategray;
+        }
+
+        ul.contents li::marker {
+            color: limegreen;
+        }
     </style>
 </head>
 <body>
 <main role="main">
     <h1>{{ report.title }}</h1>
-    {% for scenario in report.scenarios %}
+    <div class="contents">
+        <h3>Contents:</h3>
+        <ul class="contents">
+            {% for scenario in report.scenarios %}
+            <li><a href="#{{ scenario.id }}">{{scenario.title}}</a></li>
+            {% endfor %}
+        </ul>
+        {% for scenario in report.scenarios %}
+    </div>
+
     <article id="{{ scenario.id }}">
         <h2>{{scenario.title}}</h2>
         <section class="description">
@@ -226,7 +258,7 @@
                 "separateWordSearch": false,
                 "acrossElements": true,
                 "accuracy": { 
-                    "value": "exactly", "limiters": [",", ".", ";", ":", "-"] 
+                    "value": "exactly", "limiters": [ ",", ".", ";", ":", "-"] 
                 } 
         }
         {% for scenario in report.scenarios %}
