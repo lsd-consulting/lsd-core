@@ -2,193 +2,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html" xml:lang="en" lang="en">
 <head>
     <title>{{report.title}}</title>
-    <style>
-        article {
-            display: flex;
-            flex-flow: row wrap;
-            justify-content: space-around;
-        }
-
-        section.description {
-            flex: 50%;
-        }
-
-        aside {
-            flex: 30%;
-            margin: 10px;
-            padding: 20px;
-        }
-
-        section.diagram {
-            flex: 100%;
-        }
-
-        .overlay {
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(0, 0, 0, 0.7);
-            transition: opacity 500ms;
-            visibility: hidden;
-            opacity: 0;
-        }
-
-        .overlay:target {
-            visibility: visible;
-            opacity: 1;
-            overflow: scroll;
-        }
-
-        .popup {
-            margin: 70px auto;
-            padding: 20px;
-            background: #fff;
-            border-radius: 5px;
-            max-width: 70%;
-            position: relative;
-            transition: all 5s ease-in-out;
-        }
-
-        h1, h2, h3 {
-            flex: 100%;
-            margin-top: 0;
-            margin-bottom: 0;
-            color: #333;
-            font-family: Tahoma, Arial, sans-serif;
-        }
-
-        h1 {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100px;
-        }
-
-        .popup .close {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            transition: all 200ms;
-            font-size: 30px;
-            font-weight: bold;
-            text-decoration: none;
-            color: #333;
-        }
-
-        .popup .close:hover {
-            color: #06D85F;
-        }
-
-        .popup .content {
-            overflow: auto;
-        }
-
-        /*    Make Facts look like table*/
-        .factTable {
-            display: table;
-            margin: auto;
-        }
-
-        .factRow {
-            display: table-row;
-        }
-
-        .factRowHead {
-            display: table-header-group;
-            font-weight: bold;
-        }
-
-        .factCell, .factRowHead {
-            display: table-cell;
-            padding: 3px 10px;
-            border: 1px solid #999999;
-        }
-
-        a, svg a text {
-            text-decoration: none;
-        }
-
-        /* Some basic spacing for now  */
-        section, div.contents {
-            border: thin solid limegreen;
-            border-radius: 65px;
-            padding: 50px;
-            margin: 20px;
-        }
-
-        section.warn {
-            border-color: orange;
-        }
-
-        section.error {
-            border-color: red;
-        }
-
-        div.contents {
-            display: flex;
-            flex-direction: column;
-            flex-wrap: wrap;
-            justify-content: space-evenly;
-            align-items: center;
-            padding: 10px;
-        }
-
-        /* highlight key facts (generated at runtime) */
-        span.highlight {
-            border-radius: 25px;
-            padding: 5px;
-            color: black;
-            background-color: yellow;
-            border: 1px solid blue;
-        }
-
-        ul.contents li {
-            font-size: large;
-        }
-
-        ul.contents li a {
-            text-decoration: none;
-            color: slategray;
-        }
-
-        ul.contents li::marker {
-            color: limegreen;
-        }
-
-        ul.contents li.warn::marker {
-            color: orange;
-        }
-
-        ul.contents li.error::marker {
-            color: red;
-        }
-
-        h2.success:before, h3.success:before {
-            content: "";
-            padding-right: 5px;
-            margin-right: 5px;
-            background-color: limegreen;
-        }
-
-        h2.warn:before, h3.warn:before {
-            content: "";
-            padding-right: 5px;
-            margin-right: 5px;
-            background-color: orange;
-        }
-
-        h2.error:before, h3.error:before {
-            content: "";
-            padding-right: 5px;
-            margin-right: 5px;
-            background-color: red;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <main role="main">
+    <h1 class="logo">LSD</h1>
     <h1>{{ report.title }}</h1>
     <div class="contents">
         <h3>Contents:</h3>
@@ -197,8 +15,8 @@
             <li class="{{ scenario.status }}"><a href="#{{ scenario.id }}">{{scenario.title}}</a></li>
             {% endfor %}
         </ul>
-        {% for scenario in report.scenarios %}
     </div>
+    {% for scenario in report.scenarios %}
 
     <article id="{{ scenario.id }}">
         <h2 class="{{ scenario.status }}">{{scenario.title}}</h2>

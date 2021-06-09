@@ -2,32 +2,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html" xml:lang="en" lang="en">
 <head>
     <title>{{report.title}}</title>
-    <style>
-        body {
-            margin-top: 0;
-            font-family: Tahoma, Arial, sans-serif;
-        }
-
-        li a {
-            text-decoration: none;
-            list-style-position: inside;
-            font-size: large;
-            color: slategray;
-        }
-
-        li::marker {
-            color: limegreen;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <main role="main">
-    <h1>LSD Reports</h1>
-    <ul>
-        {% for report in capturedReports %}
-        <li><a href="{{report.path.fileName}}">{{report.title}}</a></li>
-        {% endfor %}
-    </ul>
+    <h1 class="logo">LSD</h1>
+    <h1>Reports</h1>
+    <div class="contents">
+        <ul class="contents">
+            {% for report in capturedReports %}
+            <li><a href="{{report.path.fileName}}">{{report.title}}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
 </main>
 </body>
 </html>

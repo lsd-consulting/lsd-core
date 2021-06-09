@@ -1,0 +1,247 @@
+article {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+}
+
+section.description {
+    flex: 50%;
+}
+
+aside {
+    flex: 30%;
+    margin: 10px;
+    padding: 20px;
+}
+
+section.diagram {
+    flex: 100%;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    transition: opacity 500ms;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.overlay:target {
+    visibility: visible;
+    opacity: 1;
+    overflow: scroll;
+}
+
+.popup {
+    margin: 70px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 5px;
+    max-width: 70%;
+    position: relative;
+    transition: all 5s ease-in-out;
+}
+
+h1, h2, h3 {
+    flex: 100%;
+    margin-top: 0;
+    margin-bottom: 0;
+    color: #333;
+    font-family: Tahoma, Arial, sans-serif;
+}
+
+h1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100px;
+}
+
+.popup .close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    transition: all 200ms;
+    font-size: 30px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #333;
+}
+
+.popup .close:hover {
+    color: #06D85F;
+}
+
+.popup .content {
+    overflow: auto;
+}
+
+/*    Make Facts look like table*/
+.factTable {
+    display: table;
+    margin: auto;
+}
+
+.factRow {
+    display: table-row;
+}
+
+.factRowHead {
+    display: table-header-group;
+    font-weight: bold;
+}
+
+.factCell, .factRowHead {
+    display: table-cell;
+    padding: 3px 10px;
+    border: 1px solid #999999;
+}
+
+a, svg a text {
+    text-decoration: none;
+}
+
+/* Some basic spacing for now  */
+section, div.contents {
+    border: thin solid limegreen;
+    border-radius: 65px;
+    padding: 50px;
+    margin: 20px;
+}
+
+section.warn {
+    border-color: orange;
+}
+
+section.error {
+    border-color: red;
+}
+
+/* highlight key facts (generated at runtime) */
+span.highlight {
+    border-radius: 25px;
+    padding: 5px;
+    color: black;
+    background-color: yellow;
+    border: 1px solid blue;
+}
+
+div.contents {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 10px;
+}
+
+ul.contents li {
+    font-size: large;
+}
+
+ul.contents li a {
+    text-decoration: none;
+    color: slategray;
+}
+
+ul.contents li::marker {
+    color: limegreen;
+}
+
+ul.contents li.warn::marker {
+    color: orange;
+}
+
+ul.contents li.error::marker {
+    color: red;
+}
+
+h2.success:before, h3.success:before {
+    content: "";
+    padding-right: 5px;
+    margin-right: 5px;
+    background-color: limegreen;
+}
+
+h2.warn:before, h3.warn:before {
+    content: "";
+    padding-right: 5px;
+    margin-right: 5px;
+    background-color: orange;
+}
+
+h2.error:before, h3.error:before {
+    content: "";
+    padding-right: 5px;
+    margin-right: 5px;
+    background-color: red;
+}
+
+/* Logo section - inspired by https://codepen.io/fossheim/pen/PooBwRa */
+h1.logo {
+    font-family: "Work Sans", sans-serif;
+    font-weight: 800;
+    font-size: 6em;
+    width: 2em;
+    line-height: 0.9em;
+    margin-left: auto;
+    margin-right: auto;
+    background: #CA4246;
+    background-color: #CA4246;
+    background: conic-gradient(
+            #CA4246 16.666%,
+            #E16541 16.666%,
+            #E16541 33.333%,
+            #F18F43 33.333%,
+            #F18F43 50%,
+            #8B9862 50%,
+            #8B9862 66.666%,
+            #476098 66.666%,
+            #476098 83.333%,
+            #A7489B 83.333%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: logo-animation-rev 0.5s ease forwards;
+    cursor: pointer;
+}
+
+/* Add animation on hover. */
+.logo:hover {
+    animation: logo-animation 0.5s ease forwards;
+}
+
+/* Animation shown when hovering over the text. */
+@keyframes logo-animation {
+    0% {
+        background-size: 57%;
+        background-position: 0 0;
+    }
+    20% {
+        background-size: 57%;
+        background-position: 0 1em;
+    }
+    100% {
+        background-size: 300%;
+        background-position: -9em 1em;
+    }
+}
+
+/* Animation shown when entering the page and after the hover animation. */
+@keyframes logo-animation-rev {
+    0% {
+        background-size: 300%;
+        background-position: -9em 1em;
+    }
+    20% {
+        background-size: 57%;
+        background-position: 0 1em;
+    }
+    100% {
+        background-size: 57%;
+        background-position: 0 0;
+    }
+}
