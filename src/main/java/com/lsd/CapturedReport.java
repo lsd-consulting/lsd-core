@@ -8,4 +8,5 @@ import java.nio.file.Path;
 public class CapturedReport {
     String title;
     Path path;
+    String status;
 }

@@ -22,4 +22,11 @@ public class IdGenerator {
     public String next() {
         return idSupplier.get();
     }
+
+    /**
+     * Restarts the counter - only works when in deterministic mode
+     */
+    public void reset() {
+        counter.set(0);
+    }
 }

@@ -10,4 +10,5 @@ import java.util.Collection;
 public class Report {
     String title;
     Collection<Scenario> scenarios;
+    String status;
 }

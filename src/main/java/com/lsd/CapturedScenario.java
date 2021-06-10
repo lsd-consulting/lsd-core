@@ -19,7 +19,7 @@ public class CapturedScenario {
 
     private String title;
     private String description;
-    private Status status;
+    private OutcomeStatus outcomeStatus;
 
     public void add(SequenceEvent sequenceEvent) {
         if (nonNull(sequenceEvent)) {
@@ -31,9 +31,4 @@ public class CapturedScenario {
         facts.put(key, value);
     }
 
-    public enum Status {
-        ERROR,
-        WARN,
-        SUCCESS
-    }
 }

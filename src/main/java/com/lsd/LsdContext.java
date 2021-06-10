@@ -74,10 +74,10 @@ public class LsdContext {
         event.ifPresent(this::capture);
     }
 
-    public void completeScenario(String title, String description, CapturedScenario.Status status) {
+    public void completeScenario(String title, String description, OutcomeStatus status) {
         currentScenario.setTitle(title);
         currentScenario.setDescription(description);
-        currentScenario.setStatus(status);
+        currentScenario.setOutcomeStatus(status);
         capturedScenarios.add(currentScenario);
         currentScenario = new CapturedScenario();
     }
@@ -85,7 +85,7 @@ public class LsdContext {
     public Path completeReport(String title) {
         Report report = buildReport(title);
         Path path = htmlReportWriter.writeToFile(report);
-        capturedReports.add(new CapturedReport(report.getTitle(), path));
+        capturedReports.add(new CapturedReport(report.getTitle(), path, report.getStatus()));
         capturedScenarios.clear();
         currentScenario = new CapturedScenario();
         return path;
@@ -96,7 +96,9 @@ public class LsdContext {
     }
 
     public void clear() {
+        idGenerator.reset();
         capturedScenarios.clear();
+        capturedReports.clear();
         currentScenario = new CapturedScenario();
     }
 
@@ -107,11 +109,12 @@ public class LsdContext {
     private Report buildReport(String title) {
         return Report.builder()
                 .title(title)
+                .status(determineOverallStatus(capturedScenarios))
                 .scenarios(capturedScenarios.stream()
                         .map(capturedScenario -> Scenario.builder()
                                 .title(capturedScenario.getTitle())
                                 .id(idGenerator.next())
-                                .status(capturedScenario.getStatus().name().toLowerCase())
+                                .status(capturedScenario.getOutcomeStatus().getCssClass())
                                 .description(capturedScenario.getDescription())
                                 .facts(capturedScenario.getFacts())
                                 .dataHolders(capturedScenario.getSequenceEvents().stream()
@@ -132,6 +135,15 @@ public class LsdContext {
                                 .build())
                         .collect(toList()))
                 .build();
+    }
+
+    private String determineOverallStatus(List<CapturedScenario> capturedScenarios) {
+        return capturedScenarios.stream()
+                .map(CapturedScenario::getOutcomeStatus)
+                .sorted()
+                .findFirst()
+                .map(OutcomeStatus::getCssClass)
+                .orElse("");
     }
 
     private List<Parser> parsers() {

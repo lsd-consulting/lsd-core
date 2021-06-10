@@ -11,7 +11,7 @@
     <div class="contents">
         <ul class="contents">
             {% for report in capturedReports %}
-            <li><a href="{{report.path.fileName}}">{{report.title}}</a></li>
+            <li class="{{ report.status }}"><a href="{{report.path.fileName}}">{{ report.title }}</a></li>
             {% endfor %}
         </ul>
     </div>
