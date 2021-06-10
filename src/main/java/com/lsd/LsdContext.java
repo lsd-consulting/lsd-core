@@ -3,11 +3,12 @@ package com.lsd;
 import com.lsd.diagram.ComponentDiagramGenerator;
 import com.lsd.diagram.SequenceDiagramGenerator;
 import com.lsd.events.SequenceEvent;
-import com.lsd.parse.Parser;
 import com.lsd.parse.MessageParser;
+import com.lsd.parse.Parser;
 import com.lsd.parse.SynchronousResponseParser;
 import com.lsd.properties.LsdProperties;
 import com.lsd.report.HtmlIndexWriter;
+import com.lsd.report.HtmlReportRenderer;
 import com.lsd.report.HtmlReportWriter;
 import com.lsd.report.model.DataHolder;
 import com.lsd.report.model.Participant;
@@ -30,6 +31,7 @@ public class LsdContext {
     private final Set<String> includes = new LinkedHashSet<>();
     private final IdGenerator idGenerator = new IdGenerator(LsdProperties.getBoolean(DETERMINISTIC_IDS));
     private final List<Parser> parsers = parsers();
+    private final HtmlReportWriter htmlReportWriter = new HtmlReportWriter(new HtmlReportRenderer());
 
     private CapturedScenario currentScenario = new CapturedScenario();
 
@@ -82,7 +84,7 @@ public class LsdContext {
 
     public Path completeReport(String title) {
         Report report = buildReport(title);
-        Path path = HtmlReportWriter.writeToFile(report);
+        Path path = htmlReportWriter.writeToFile(report);
         capturedReports.add(new CapturedReport(report.getTitle(), path));
         capturedScenarios.clear();
         currentScenario = new CapturedScenario();
@@ -96,6 +98,10 @@ public class LsdContext {
     public void clear() {
         capturedScenarios.clear();
         currentScenario = new CapturedScenario();
+    }
+
+    public IdGenerator getIdGenerator() {
+        return idGenerator;
     }
 
     private Report buildReport(String title) {
@@ -126,10 +132,6 @@ public class LsdContext {
                                 .build())
                         .collect(toList()))
                 .build();
-    }
-
-    public IdGenerator getIdGenerator() {
-        return idGenerator;
     }
 
     private List<Parser> parsers() {

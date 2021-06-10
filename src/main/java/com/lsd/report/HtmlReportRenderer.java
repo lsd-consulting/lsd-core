@@ -10,15 +10,16 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Map;
 
-public class HtmlReportRenderer {
+public class HtmlReportRenderer implements ReportRenderer {
 
     private final PebbleEngine engine = new PebbleEngine.Builder()
             .extension(new LsdPebbleExtension())
             .build();
-    
+
     private final PebbleTemplate compiledTemplate = engine.getTemplate("templates/html-report.peb");
 
     @SneakyThrows
+    @Override
     public String render(Report report) {
         Writer writer = new StringWriter();
         compiledTemplate.evaluate(writer, Map.of("report", report));
