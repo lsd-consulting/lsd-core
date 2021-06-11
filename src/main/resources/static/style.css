@@ -2,6 +2,7 @@ article {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-around;
+    margin-bottom: 90px;
 }
 
 section.description {

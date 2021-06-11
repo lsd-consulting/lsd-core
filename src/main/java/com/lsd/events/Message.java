@@ -28,10 +28,11 @@ public class Message implements DataHolder {
     private final ArrowType arrowType = SOLID;
 
     public String toMarkup() {
-        return StringSubstitutor.replace("${from} ${arrow} ${to}: <text fill=\"${colour}\">[[#${id} ${label}]]</text>", Map.of(
+        return StringSubstitutor.replace("${from} ${arrow} ${to}: <text fill=\"${colour}\">[[#${id} {${tooltip}} ${label}]]</text>", Map.of(
                 "from", getFrom(),
                 "to", getTo(),
                 "id", getId(),
+                "tooltip", getLabel().replaceAll("<\\$.*?>", ""),
                 "label", abbreviatedLabel(),
                 "colour", getColour(),
                 "arrow", getArrowType().toMarkup(getColour())

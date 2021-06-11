@@ -57,19 +57,19 @@
     <polygon fill="#000000" points="42.5,112.8286,32.5,116.8286,42.5,120.8286,38.5,116.8286" style="stroke:#000000;stroke-width:1.0;" />
     <polygon fill="#000000" points="113.5,112.8286,123.5,116.8286,113.5,120.8286,117.5,116.8286" style="stroke:#000000;stroke-width:1.0;" />
     <line style="stroke:#000000;stroke-width:1.0;" x1="36.5" x2="119.5" y1="116.8286" y2="116.8286" />
-    <a href="#1" target="_top" title="#1" xlink:actuate="onRequest" xlink:href="#1" xlink:show="new" xlink:title="#1" xlink:type="simple">
+    <a href="#1" target="_top" title="Message 1" xlink:actuate="onRequest" xlink:href="#1" xlink:show="new" xlink:title="Message 1" xlink:type="simple">
       <text fill="" font-family="Verdana" font-size="13" lengthAdjust="spacing" text-decoration="underline" textLength="70" x="48.5" y="112.0991">Message 1</text>
     </a>
     <line style="stroke:#000000;stroke-width:2.0;" x1="527.5" x2="537.5" y1="141.6279" y2="151.6279" />
     <line style="stroke:#000000;stroke-width:2.0;" x1="527.5" x2="537.5" y1="151.6279" y2="141.6279" />
     <line style="stroke:#000000;stroke-width:1.0;" x1="197.5" x2="532.5" y1="146.6279" y2="146.6279" />
-    <a href="#2" target="_top" title="#2" xlink:actuate="onRequest" xlink:href="#2" xlink:show="new" xlink:title="#2" xlink:type="simple">
+    <a href="#2" target="_top" title="An interaction description that is long enough to need abbreviating" xlink:actuate="onRequest" xlink:href="#2" xlink:show="new" xlink:title="An interaction description that is long enough to need abbreviating" xlink:type="simple">
       <text fill="" font-family="Verdana" font-size="13" lengthAdjust="spacing" text-decoration="underline" textLength="324" x="204.5" y="141.8984">An interaction description that is long enough ...</text>
     </a>
     <line style="stroke:#000000;stroke-width:1.0;" x1="197.5" x2="207.5" y1="176.4272" y2="172.4272" />
     <line style="stroke:#000000;stroke-width:1.0;" x1="197.5" x2="207.5" y1="176.4272" y2="180.4272" />
     <line style="stroke:#000000;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="197.5" x2="544.5" y1="176.4272" y2="176.4272" />
-    <a href="#3" target="_top" title="#3" xlink:actuate="onRequest" xlink:href="#3" xlink:show="new" xlink:title="#3" xlink:type="simple">
+    <a href="#3" target="_top" title="A synchronous response" xlink:actuate="onRequest" xlink:href="#3" xlink:show="new" xlink:title="A synchronous response" xlink:type="simple">
       <text fill="" font-family="Verdana" font-size="13" lengthAdjust="spacing" text-decoration="underline" textLength="162" x="214.5" y="171.6978">A synchronous response</text>
     </a>
   </g>
@@ -93,9 +93,9 @@ actor A as &quot;Arnie&quot;
 boundary UnusedParticipant
 database B as &quot;Badboy\nDB&quot;
 
-A &lt;-&gt; B: &lt;text fill=&quot;&quot;&gt;[[#1 Message 1]]&lt;/text&gt;
-Beta -&gt;x Gamma: &lt;text fill=&quot;&quot;&gt;[[#2 An interaction description that is long enough ...]]&lt;/text&gt;
-Gamma --&gt;&gt; Beta: &lt;text fill=&quot;&quot;&gt;[[#3 A synchronous response]]&lt;/text&gt;
+A &lt;-&gt; B: &lt;text fill=&quot;&quot;&gt;[[#1 {Message 1} Message 1]]&lt;/text&gt;
+Beta -&gt;x Gamma: &lt;text fill=&quot;&quot;&gt;[[#2 {An interaction description that is long enough to need abbreviating} An interaction description that is long enough ...]]&lt;/text&gt;
+Gamma --&gt;&gt; Beta: &lt;text fill=&quot;&quot;&gt;[[#3 {A synchronous response} A synchronous response]]&lt;/text&gt;
 
 @enduml</code></pre>
                     </div>
@@ -266,15 +266,15 @@ hide @unlinked
     <line style="stroke:#FFA500;stroke-width:1.0;" x1="260.5" x2="250.5" y1="120.2293" y2="116.2293" />
     <line style="stroke:#FFA500;stroke-width:1.0;" x1="260.5" x2="250.5" y1="120.2293" y2="124.2293" />
     <line style="stroke:#FFA500;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="107.5" x2="261.5" y1="120.2293" y2="120.2293" />
-    <a href="#4" target="_top" title="#4" xlink:actuate="onRequest" xlink:href="#4" xlink:show="new" xlink:title="#4" xlink:type="simple">
+    <a href="#4" target="_top" title="Sending food " xlink:actuate="onRequest" xlink:href="#4" xlink:show="new" xlink:title="Sending food " xlink:type="simple">
       <text fill="orange" font-family="Verdana" font-size="13" lengthAdjust="spacing" text-decoration="underline" textLength="87" x="114.5" y="112.0991">Sending food</text>
     </a>
-    <a href="#4" target="_top" title="#4" xlink:actuate="onRequest" xlink:href="#4" xlink:show="new" xlink:title="#4" xlink:type="simple">
+    <a href="#4" target="_top" title="Sending food " xlink:actuate="onRequest" xlink:href="#4" xlink:show="new" xlink:title="Sending food " xlink:type="simple">
       <image height="19" width="19" x="206.5" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAIAAAD9MqGbAAAA9ElEQVR4Xp2TMQqDMBSGU0S6dquCnQrewsnByYMIbt6idCgUurk7uXiH3qHgIoJ0KCiCYKXwmlSD6SuE1J9v0OT/4hsigaUheEFI3+MVMdh8PMDzYLuF1QoIYRgGWylLVBTMuobdbmqPOM7Xq22zc7F5u4GmsW1RjuP5ebNhBV2HPBfMppk1sS1yOMB+Pz13HTejCPfk+D43kwTvyTkeuUlzvUKWKUGbY5h5v8P5zE5S4XKBquLm7zxy1mt4vRaZ9JK07cek01sWmKYqacqnHQYoij94PrkZBHgeOa7LzdMJ78kJQ27Sr6O7LoE2x+C/TD3LzTeit8koBlhA2AAAAABJRU5ErkJggg==" y="99.0293" />
     </a>
     <polygon fill="#FF0000" points="118.5,178.729,108.5,182.729,118.5,186.729,114.5,182.729" style="stroke:#FF0000;stroke-width:1.0;" />
     <line style="stroke:#FF0000;stroke-width:1.0;" x1="112.5" x2="261.5" y1="182.729" y2="182.729" />
-    <a href="#5" target="_top" title="#5" xlink:actuate="onRequest" xlink:href="#5" xlink:show="new" xlink:title="#5" xlink:type="simple">
+    <a href="#5" target="_top" title="Sending a response" xlink:actuate="onRequest" xlink:href="#5" xlink:show="new" xlink:title="Sending a response" xlink:type="simple">
       <text fill="red" font-family="Verdana" font-size="13" lengthAdjust="spacing" text-decoration="underline" textLength="131" x="124.5" y="177.9995">Sending a response</text>
     </a>
     <path d="M10,161.2293 L10,190.2293 L103,190.2293 L103,171.2293 L93,161.2293 L10,161.2293 " fill="#FFFFFF" style="stroke:#000000;stroke-width:1.0;" />
@@ -302,9 +302,9 @@ actor A as &quot;Arnie&quot;
 boundary UnusedParticipant
 database B as &quot;Badboy\nDB&quot;
 
-A --[#orange]&gt;&gt; B: &lt;text fill=&quot;orange&quot;&gt;[[#4 Sending food &lt;$hamburger{scale=0.4}&gt;]]&lt;/text&gt;
+A --[#orange]&gt;&gt; B: &lt;text fill=&quot;orange&quot;&gt;[[#4 {Sending food } Sending food &lt;$hamburger{scale=0.4}&gt;]]&lt;/text&gt;
 ...
-B -[#red]&gt; A: &lt;text fill=&quot;red&quot;&gt;[[#5 Sending a response]]&lt;/text&gt;
+B -[#red]&gt; A: &lt;text fill=&quot;red&quot;&gt;[[#5 {Sending a response} Sending a response]]&lt;/text&gt;
 note left: Friends &lt;$heart{scale=0.4,color=red}&gt;
 
 @enduml</code></pre>
@@ -432,13 +432,13 @@ hide @unlinked
     <text fill="#000000" font-family="Verdana" font-size="14" lengthAdjust="spacing" textLength="55" x="200.5" y="136.6885">Gamma</text>
     <polygon fill="#000000" points="216,64.814,226,68.814,216,72.814,220,68.814" style="stroke:#000000;stroke-width:1.0;" />
     <line style="stroke:#000000;stroke-width:1.0;" x1="43" x2="222" y1="68.814" y2="68.814" />
-    <a href="#6" target="_top" title="#6" xlink:actuate="onRequest" xlink:href="#6" xlink:show="new" xlink:title="#6" xlink:type="simple">
+    <a href="#6" target="_top" title="a request" xlink:actuate="onRequest" xlink:href="#6" xlink:show="new" xlink:title="a request" xlink:type="simple">
       <text fill="" font-family="Verdana" font-size="13" lengthAdjust="spacing" text-decoration="underline" textLength="63" x="50" y="64.0845">a request</text>
     </a>
     <line style="stroke:#000000;stroke-width:1.0;" x1="43" x2="53" y1="98.6133" y2="94.6133" />
     <line style="stroke:#000000;stroke-width:1.0;" x1="43" x2="53" y1="98.6133" y2="102.6133" />
     <line style="stroke:#000000;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="43" x2="227" y1="98.6133" y2="98.6133" />
-    <a href="#7" target="_top" title="#7" xlink:actuate="onRequest" xlink:href="#7" xlink:show="new" xlink:title="#7" xlink:type="simple">
+    <a href="#7" target="_top" title="a synchronous response" xlink:actuate="onRequest" xlink:href="#7" xlink:show="new" xlink:title="a synchronous response" xlink:type="simple">
       <text fill="" font-family="Verdana" font-size="13" lengthAdjust="spacing" text-decoration="underline" textLength="161" x="60" y="93.8838">a synchronous response</text>
     </a>
   </g>
@@ -462,8 +462,8 @@ actor A as &quot;Arnie&quot;
 boundary UnusedParticipant
 database B as &quot;Badboy\nDB&quot;
 
-Beta -&gt; Gamma: &lt;text fill=&quot;&quot;&gt;[[#6 a request]]&lt;/text&gt;
-Gamma --&gt;&gt; Beta: &lt;text fill=&quot;&quot;&gt;[[#7 a synchronous response]]&lt;/text&gt;
+Beta -&gt; Gamma: &lt;text fill=&quot;&quot;&gt;[[#6 {a request} a request]]&lt;/text&gt;
+Gamma --&gt;&gt; Beta: &lt;text fill=&quot;&quot;&gt;[[#7 {a synchronous response} a synchronous response]]&lt;/text&gt;
 
 @enduml</code></pre>
                     </div>
