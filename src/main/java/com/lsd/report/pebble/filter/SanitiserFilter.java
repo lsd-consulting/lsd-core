@@ -8,21 +8,17 @@ import com.mitchellbosecke.pebble.template.PebbleTemplate;
 import java.util.List;
 import java.util.Map;
 
+import static com.lsd.Sanitiser.sanitise;
+
 /**
- * Remove markup that doesn't render nicely outside of context (e.g. plantUml placeholders such as
- * <pre>
- * {@code
- * <$..>
- * }
- * </pre>
- * being displayed on the html.
+ * Makes the sanitiser available to the pebble templates as a filter. (See {@link com.lsd.Sanitiser}).
  */
-public class Sanitiser implements Filter {
+public class SanitiserFilter implements Filter {
 
     @Override
     public Object apply(Object input, Map<String, Object> args, PebbleTemplate self, EvaluationContext context, int lineNumber) throws PebbleException {
         if (input instanceof String) {
-            return ((String) input).replaceAll("<\\$.*?>", "");
+            return sanitise((String) input);
         }
         return input;
     }

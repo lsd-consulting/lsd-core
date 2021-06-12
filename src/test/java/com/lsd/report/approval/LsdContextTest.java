@@ -2,10 +2,7 @@ package com.lsd.report.approval;
 
 import com.lsd.IdGenerator;
 import com.lsd.LsdContext;
-import com.lsd.events.Markup;
-import com.lsd.events.Message;
-import com.lsd.events.NoteLeft;
-import com.lsd.events.SynchronousResponse;
+import com.lsd.events.*;
 import com.lsd.report.model.Participant;
 import com.lsd.report.model.PopupContent;
 import org.approvaltests.Approvals;
@@ -46,7 +43,9 @@ class LsdContextTest {
         lsdContext.addParticipants(participants);
         lsdContext.includeFiles(additionalIncludes);
 
+        lsdContext.capture(ShortMessageInbound.builder().id(nextId()).to("A").label("in").data("start some job").build());
         lsdContext.capture(Message.builder().id(nextId()).from("A").to("B").label("Message 1").data("some data 1").arrowType(BI_DIRECTIONAL).build());
+        lsdContext.capture(ShortMessageOutbound.builder().id(nextId()).from("B").label("out").data("some data 1").build());
         lsdContext.capture(Message.builder().id(nextId()).label("An interaction description that is long enough to need abbreviating").from("Beta").to("Gamma").data("β").arrowType(LOST).build());
         lsdContext.capture(SynchronousResponse.builder().id(nextId()).label("A synchronous response").from("Gamma").to("Beta").data("200 OK").build());
         lsdContext.completeScenario("A Success scenario", "First scenario description", SUCCESS);

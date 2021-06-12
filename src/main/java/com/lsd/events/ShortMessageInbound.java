@@ -13,9 +13,8 @@ import static com.lsd.events.ArrowType.SOLID;
 
 @Data
 @SuperBuilder
-public class Message implements DataHolder {
+public class ShortMessageInbound implements DataHolder {
     private final String id;
-    private final String from;
     private final String to;
     private final String label;
 
@@ -28,9 +27,9 @@ public class Message implements DataHolder {
     @Default
     private final ArrowType arrowType = SOLID;
 
+    @Override
     public String toMarkup() {
-        return StringSubstitutor.replace("${from} ${arrow} ${to}: <text fill=\"${colour}\">[[#${id} {${tooltip}} ${label}]]</text>", Map.of(
-                "from", getFrom(),
+        return StringSubstitutor.replace("?${arrow} ${to}: <text fill=\"${colour}\">[[#${id} {${tooltip}} ${label}]]</text>", Map.of(
                 "to", getTo(),
                 "id", getId(),
                 "tooltip", sanitise(getLabel()),
@@ -39,5 +38,4 @@ public class Message implements DataHolder {
                 "arrow", getArrowType().toMarkup(getColour())
         ));
     }
-
 }
