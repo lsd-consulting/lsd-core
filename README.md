@@ -19,3 +19,17 @@ application.
 | lsd.core.report.outputDir | (temp directory) | The directory to write the report files. This can be a relative path e.g. `build/reports/lsd`.|
 | lsd.core.ids.deterministic | false | Determines how the html element ids are generated. Allowing deterministic ids is useful when testing (e.g. approval tests of html output since the generated ids won't be random. The default option which provides random ids should be preferred otherwise.|
 
+## Building
+
+### Prerequisites
+
+* Graphviz is used to generate the component diagrams. Without having this installed the approval tests will fail because 
+the generated html file will not match the expected output. See [graphviz.org/download/](https://graphviz.org/download/) 
+for installation instructions.
+
+* Java 11 
+* IDE's will need to enable annotation processing (Lombok is used throughout the project to reduce the amount of boilerplate code).
+
+### Build
+
+    ./gradlew clean build
