@@ -1,0 +1,8 @@
+@startuml
+
+!theme plain
+actor Nick
+
+
+hide @unlinked
+@enduml

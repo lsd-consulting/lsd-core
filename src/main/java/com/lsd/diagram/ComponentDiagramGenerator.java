@@ -52,12 +52,14 @@ public class ComponentDiagramGenerator {
                 "participants", participants.stream()
                         .map(Participant::getMarkup)
                         .map(markup -> markup.replaceAll("participant", "component"))
+                        .distinct()
                         .collect(toList()),
                 "events", events.stream()
                         .filter(event -> event instanceof Message)
                         .filter(not(SynchronousResponse.class::isInstance))
                         .map(event -> (Message) event)
                         .map(message -> String.format("[%s] -> %s", message.getFrom(), message.getTo()))
+                        .distinct()
                         .collect(toList())
         ));
         return writer.toString();
