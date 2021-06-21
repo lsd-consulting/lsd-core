@@ -6,7 +6,7 @@ plugins {
     id 'pl.allegro.tech.build.axion-release' version '1.13.2'
 }
 
-group = 'com.lsd'
+group = 'io.github.lsd-consulting'
 version = scmVersion.version
 
 sourceCompatibility = '11'
@@ -72,11 +72,11 @@ publishing {
             pom {
                 name = 'lsd-core'
                 description = 'A library used to generate living sequence diagrams'
-                url = 'https://github.com/nickmcdowall/lsd-core.git'
+                url = 'https://github.com/lsd-consulting/lsd-core.git'
                 licenses {
                     license {
                         name = "MIT License"
-                        url = "https://raw.githubusercontent.com/nickmcdowall/lsd-core/main/LICENSE.txt"
+                        url = "https://github.com/lsd-consulting/lsd-core/blob/main/LICENSE.txt"
                         distribution = "repo"
                     }
                 }
@@ -87,15 +87,21 @@ publishing {
                         organization = 'NKM IT Solutions'
                         organizationUrl = 'https://github.com/nickmcdowall'
                     }
+                    developer {
+                        name = "Lukasz"
+                        email = "lukasz.gryzbon@gmail.com"
+                        organization = 'Integreety Ltd.'
+                        organizationUrl = 'https://github.com/integreety'
+                    }
                 }
                 scm {
-                    url = "https://github.com/nickmcdowall/lsd-core.git"
+                    url = "https://github.com/lsd-consulting/lsd-core.git"
                 }
             }
             repositories {
                 maven {
                     name = 'sonatype'
-                    url = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+                    url = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
                     credentials(PasswordCredentials)
                 }
             }
