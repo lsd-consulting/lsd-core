@@ -6,7 +6,7 @@ plugins {
     id 'pl.allegro.tech.build.axion-release' version '1.13.2'
 }
 
-group = 'com.github.nickmcdowall'
+group = 'com.lsd'
 version = scmVersion.version
 
 sourceCompatibility = '11'
