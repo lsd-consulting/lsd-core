@@ -10,6 +10,7 @@ public class DefaultProperties {
         Properties properties = new Properties();
         properties.setProperty(LABEL_MAX_WIDTH, "200");
         properties.setProperty(DIAGRAM_THEME, "plain");
+        properties.setProperty(OUTPUT_DIR, "build/reports/lsd");
         properties.setProperty(DETERMINISTIC_IDS, "false");
         properties.putAll(System.getProperties());
         return properties;
