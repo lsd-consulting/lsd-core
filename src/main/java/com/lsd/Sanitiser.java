@@ -18,7 +18,8 @@ public class Sanitiser {
      */
     public static String sanitise(String input) {
         return Optional.ofNullable(input)
-                .map(value -> value.replaceAll("<\\$.*?>", "")).
-                orElse("");
+                .map(value -> value.strip()
+                        .replaceAll("<\\$.*?>", "")
+                ).orElse("");
     }
 }

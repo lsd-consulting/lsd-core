@@ -12,8 +12,17 @@ class SanitiserTest {
     }
 
     @Test
-    void removesPlanuUmlMarkup() {
+    void removesPlantUmlMarkup() {
         assertThat(Sanitiser.sanitise("input <$something>")).isEqualTo("input ");
+    }
 
+    @Test
+    void trimLeadingWhitespace() {
+        assertThat(Sanitiser.sanitise(" abc")).isEqualTo("abc");
+    }
+
+    @Test
+    void trimTrailingWhitespace() {
+        assertThat(Sanitiser.sanitise("abc ")).isEqualTo("abc");
     }
 }
