@@ -12,7 +12,6 @@ public class DefaultProperties {
         properties.setProperty(DIAGRAM_THEME, "plain");
         properties.setProperty(OUTPUT_DIR, "build/reports/lsd");
         properties.setProperty(DETERMINISTIC_IDS, "false");
-        properties.putAll(System.getProperties());
         return properties;
     }
 }

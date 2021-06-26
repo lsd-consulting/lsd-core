@@ -10,7 +10,7 @@ descriptions for the various scenarios in the report.
 
 ## Properties
 The following properties can be overridden by adding a properties file called `lsd.properties` on the classpath of your 
-application.
+application or by setting a System property. Note that System properties override file properties.
 
 | Property Name        | Default     | Description |
 | ----------- | ----------- |------------ |

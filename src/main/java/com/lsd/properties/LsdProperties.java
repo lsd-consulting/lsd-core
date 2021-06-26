@@ -15,7 +15,7 @@ public class LsdProperties {
     public static final String OUTPUT_DIR = "lsd.core.report.outputDir";
     public static final String DETERMINISTIC_IDS = "lsd.core.ids.deterministic";
 
-    private static final Properties PROPERTIES = new PropertiesFileLoader("lsd.properties", defaultProperties()).load();
+    private static final Properties PROPERTIES = new PropertiesLoader("lsd.properties", defaultProperties()).load();
 
     public static String get(String key) {
         return PROPERTIES.getProperty(key);

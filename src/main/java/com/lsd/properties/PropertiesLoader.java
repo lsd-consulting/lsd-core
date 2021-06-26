@@ -10,20 +10,21 @@ import java.util.function.Consumer;
 import static java.util.Optional.ofNullable;
 
 @Slf4j
-public class PropertiesFileLoader {
+public class PropertiesLoader {
 
     private final String fileName;
     private final Properties defaults;
 
-    public PropertiesFileLoader(String fileName, Properties defaults) {
+    public PropertiesLoader(String fileName, Properties defaults) {
         this.fileName = fileName;
         this.defaults = defaults;
     }
 
     public Properties load() {
-        InputStream inputStream = getClass().getResourceAsStream("/" + fileName);
-        Properties properties = new Properties(defaults);
+        var inputStream = getClass().getResourceAsStream("/" + fileName);
+        var properties = new Properties(defaults);
         ofNullable(inputStream).ifPresent(loadInto(properties));
+        properties.putAll(System.getProperties());
 
         return properties;
     }
