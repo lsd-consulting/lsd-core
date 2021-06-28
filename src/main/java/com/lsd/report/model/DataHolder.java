@@ -3,6 +3,7 @@ package com.lsd.report.model;
 import com.lsd.events.SequenceEvent;
 import com.lsd.properties.LsdProperties;
 
+import static com.lsd.properties.LsdProperties.LABEL_MAX_WIDTH;
 import static org.apache.commons.lang3.StringUtils.abbreviate;
 
 /**
@@ -21,6 +22,6 @@ public interface DataHolder extends SequenceEvent {
      * @return An abbreviation of the label if the length exceeds the configured maximum width.
      */
     default String abbreviatedLabel() {
-        return abbreviate(getLabel(), "...", LsdProperties.getInt(LsdProperties.LABEL_MAX_WIDTH));
+        return abbreviate(getLabel().strip(), "...", LsdProperties.getInt(LABEL_MAX_WIDTH));
     }
 }

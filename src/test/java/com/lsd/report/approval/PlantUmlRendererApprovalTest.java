@@ -40,7 +40,7 @@ class PlantUmlRendererApprovalTest {
                 .events(List.of(
                         Message.builder()
                                 .id("1")
-                                .label("Sending a request")
+                                .label(" Sending a request ")
                                 .from("A")
                                 .to("B")
                                 .data("Please help?")
