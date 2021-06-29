@@ -1,0 +1,8 @@
+@startuml
+
+!theme plain
+component SomeService
+
+
+hide @unlinked
+@enduml
