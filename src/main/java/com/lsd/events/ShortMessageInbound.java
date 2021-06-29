@@ -1,6 +1,7 @@
 package com.lsd.events;
 
 import com.lsd.report.model.DataHolder;
+import com.lsd.diagram.ValidComponentName;
 import lombok.Builder.Default;
 import lombok.Data;
 import lombok.experimental.SuperBuilder;
@@ -30,7 +31,7 @@ public class ShortMessageInbound implements DataHolder {
     @Override
     public String toMarkup() {
         return StringSubstitutor.replace("?${arrow} ${to}: <text fill=\"${colour}\">[[#${id} {${tooltip}} ${label}]]</text>", Map.of(
-                "to", getTo(),
+                "to", ValidComponentName.of(getTo()),
                 "id", getId(),
                 "tooltip", sanitise(getLabel()),
                 "label", abbreviatedLabel(),

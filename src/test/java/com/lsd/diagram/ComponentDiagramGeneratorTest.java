@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static com.lsd.ParticipantType.ACTOR;
+import static com.lsd.ParticipantType.PARTICIPANT;
 
 class ComponentDiagramGeneratorTest {
 
@@ -25,6 +26,14 @@ class ComponentDiagramGeneratorTest {
     void removesDuplicateParticipants() {
         var sampleParticipant = ACTOR.called("Nick");
         var diagramGenerator = new ComponentDiagramGenerator(List.of(sampleParticipant, sampleParticipant), List.of(), idGenerator);
+
+        Approvals.verify(diagramGenerator.diagram().getUml());
+    }
+
+    @Test
+    void replacesParticipantKeywordWithComponent() {
+        var sampleParticipant = PARTICIPANT.called("SomeService");
+        var diagramGenerator = new ComponentDiagramGenerator(List.of(sampleParticipant), List.of(), idGenerator);
 
         Approvals.verify(diagramGenerator.diagram().getUml());
     }

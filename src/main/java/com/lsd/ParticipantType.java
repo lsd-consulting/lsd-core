@@ -1,7 +1,7 @@
 package com.lsd;
 
 import com.lsd.report.model.Participant;
-import org.apache.commons.text.WordUtils;
+import com.lsd.diagram.ValidComponentName;
 
 public enum ParticipantType {
     ACTOR("actor"),
@@ -20,15 +20,10 @@ public enum ParticipantType {
     }
 
     public Participant called(String name) {
-        return new Participant(String.format("%s %s", type, removeSpaces(name)));
+        return new Participant(String.format("%s %s", type, ValidComponentName.of(name)));
     }
 
     public Participant called(String name, String alias) {
-        return new Participant(String.format("%s %s as \"%s\"", type, removeSpaces(name), alias));
-    }
-
-    private String removeSpaces(String s) {
-        return WordUtils.capitalizeFully(s)
-                .replaceAll(" ", "");
+        return new Participant(String.format("%s %s as \"%s\"", type, ValidComponentName.of(name), alias));
     }
 }

@@ -51,7 +51,7 @@ public class ComponentDiagramGenerator {
                 "theme", LsdProperties.get(DIAGRAM_THEME),
                 "participants", participants.stream()
                         .map(Participant::getMarkup)
-                        .map(markup -> markup.replaceAll("participant", "component"))
+                        .map(markup -> markup.replaceAll("^participant ", "component "))
                         .distinct()
                         .collect(toList()),
                 "events", events.stream()
