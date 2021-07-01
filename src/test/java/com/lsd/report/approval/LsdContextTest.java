@@ -79,7 +79,7 @@ class LsdContextTest {
         lsdContext.addFact("Fact", "no diagrams");
         lsdContext.completeScenario("A scenario without events", "This has no diagrams", SUCCESS);
         
-        Approvals.verify(lsdContext.completeReport("Approval Report").toFile());
+        Approvals.verify(lsdContext.completeReport("No Diagrams Report").toFile());
     }
 
     @Test
