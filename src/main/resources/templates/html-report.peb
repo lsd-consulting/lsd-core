@@ -9,7 +9,7 @@
     <h1 class="logo">LSD</h1>
     <h1>{{ report.title }}</h1>
     <div class="contents">
-        <h3>Contents:</h3>
+        <h3>Contents</h3>
         <ul class="contents">
             {% for scenario in report.scenarios %}
             <li class="{{ scenario.status }}"><a href="#{{ scenario.id }}">{{scenario.title}}</a></li>
