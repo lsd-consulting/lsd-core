@@ -1,6 +1,8 @@
 @startuml
 
 !theme plain
+skinparam backgroundColor transparent
+
 
 [A] -> B
 

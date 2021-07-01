@@ -1,6 +1,8 @@
 @startuml
 
 !theme plain
+skinparam backgroundColor transparent
+
 hide unlinked
 
 !include <tupadr3/font-awesome-5/clock>
