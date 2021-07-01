@@ -3,6 +3,7 @@
 !theme plain
 actor Nick
 
+[A] -> B
 
 hide @unlinked
 @enduml

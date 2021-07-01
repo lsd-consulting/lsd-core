@@ -41,6 +41,7 @@
             </div>
         </aside>
         {% endif %}
+        {%- if scenario.sequenceDiagram is not empty -%}
         <section class="sequence diagram svg {{ scenario.status }}">
             <h3 class="{{ scenario.status }}">Sequence Diagram</h3>
             <pre>{{ scenario.sequenceDiagram.svg | raw }}</pre>
@@ -90,6 +91,7 @@
             </div>
         </div>
         {% endfor %}
+        {% endif %}
     </article>
     {% endfor %}
 </main>

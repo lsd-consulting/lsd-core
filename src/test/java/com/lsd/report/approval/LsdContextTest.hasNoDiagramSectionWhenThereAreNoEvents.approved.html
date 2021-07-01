@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html" xml:lang="en" lang="en">
+<head>
+    <title>Approval Report</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main role="main">
+    <h1 class="logo">LSD</h1>
+    <h1>Approval Report</h1>
+    <div class="contents">
+        <h3>Contents:</h3>
+        <ul class="contents">
+                        <li class="success"><a href="#1">A scenario without events</a></li>
+                    </ul>
+    </div>
+    
+    <article id="1">
+        <h2 class="success">A scenario without events</h2>
+        <section class="description success">
+            <h3 class="success">Description</h3>
+            This has no diagrams        </section>
+                <aside class="facts">
+            <div class="factTable">
+                <h3>Key Facts</h3>
+                <div class="factRow">
+                    <div class="factRowHead">Description</div>
+                    <div class="factRowHead">Value</div>
+                </div>
+                                <div class="factRow">
+                    <div class="factCell">Fact</div>
+                    <div class="factCell">no diagrams</div>
+                </div>
+                            </div>
+        </aside>
+            </article>
+    </main>
+</body>
+<footer>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/default.min.css">
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"></script>
+    <script>
+        var options = { 
+                "element": "span", 
+                "className": "highlight", 
+                "separateWordSearch": false,
+                "acrossElements": true,
+                "accuracy": { 
+                    "value": "exactly", "limiters": [ ",", ".", ";", ":", "-", "(", ")"] 
+                } 
+        }
+                                    var instance = new Mark(document.querySelector("article[id='1']")); 
+                                    instance.mark("no diagrams", options);
+                                            <!-- Remove highlights in svg (causes text to disappear) -->
+        instance = new Mark(document.querySelectorAll("svg"));
+        instance.unmark();
+    </script>
+</footer>
+</html>

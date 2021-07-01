@@ -73,6 +73,16 @@ class LsdContextTest {
     }
 
     @Test
+    void hasNoDiagramSectionWhenThereAreNoEvents() {
+        lsdContext.addParticipants(participants);
+        lsdContext.includeFiles(additionalIncludes);
+        lsdContext.addFact("Fact", "no diagrams");
+        lsdContext.completeScenario("A scenario without events", "This has no diagrams", SUCCESS);
+        
+        Approvals.verify(lsdContext.completeReport("Approval Report").toFile());
+    }
+
+    @Test
     void createsIndex() {
         lsdContext.completeScenario("Scenario 1", "Error", ERROR);
         lsdContext.completeScenario("Scenario 2", "Warn", WARN);

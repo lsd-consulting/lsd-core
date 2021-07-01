@@ -3,6 +3,7 @@
 !theme plain
 component SomeService
 
+[A] -> B
 
 hide @unlinked
 @enduml

@@ -3,8 +3,8 @@ package com.lsd.diagram;
 import com.lsd.IdGenerator;
 import com.lsd.events.SequenceEvent;
 import com.lsd.properties.LsdProperties;
-import com.lsd.report.model.Participant;
 import com.lsd.report.model.Diagram;
+import com.lsd.report.model.Participant;
 import com.mitchellbosecke.pebble.PebbleEngine;
 import com.mitchellbosecke.pebble.template.PebbleTemplate;
 import lombok.Builder;
@@ -14,6 +14,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import static com.lsd.properties.LsdProperties.DIAGRAM_THEME;
@@ -29,14 +30,17 @@ public class SequenceDiagramGenerator {
     private final List<SequenceEvent> events;
     private final IdGenerator idGenerator;
 
-    public Diagram sequenceDiagram() {
+    public Optional<Diagram> diagram() {
+        if (events.isEmpty()) {
+            return Optional.empty();
+        }
         String uml = generateSequenceUml();
         String svg = generateSequenceSvg(uml);
-        return Diagram.builder()
+        return Optional.of(Diagram.builder()
                 .id(idGenerator.next())
                 .uml(uml)
                 .svg(svg)
-                .build();
+                .build());
     }
 
     private String generateSequenceSvg(String markup) {

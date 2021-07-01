@@ -16,6 +16,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static com.lsd.properties.LsdProperties.DIAGRAM_THEME;
 import static java.util.function.Predicate.not;
@@ -31,13 +32,16 @@ public class ComponentDiagramGenerator {
     private final List<SequenceEvent> events;
     private final IdGenerator idGenerator;
 
-    public Diagram diagram() {
-        String uml = generateUml();
-        return Diagram.builder()
+    public Optional<Diagram> diagram() {
+        if (events.isEmpty()) {
+            return Optional.empty();
+        }
+        var uml = generateUml();
+        return Optional.of(Diagram.builder()
                 .id(idGenerator.next())
                 .uml(uml)
                 .svg(generateSvg(uml))
-                .build();
+                .build());
     }
 
     private String generateSvg(String markup) {

@@ -18,24 +18,27 @@ class ComponentDiagramGeneratorTest {
     void removesDuplicateInteractions() {
         var sampleMessage = sampleMessage();
         var diagramGenerator = new ComponentDiagramGenerator(List.of(), List.of(sampleMessage, sampleMessage, sampleMessage), idGenerator);
+        var diagram = diagramGenerator.diagram().orElseThrow();
 
-        Approvals.verify(diagramGenerator.diagram().getUml());
+        Approvals.verify(diagram.getUml());
     }
 
     @Test
     void removesDuplicateParticipants() {
         var sampleParticipant = ACTOR.called("Nick");
-        var diagramGenerator = new ComponentDiagramGenerator(List.of(sampleParticipant, sampleParticipant), List.of(), idGenerator);
+        var diagramGenerator = new ComponentDiagramGenerator(List.of(sampleParticipant, sampleParticipant), List.of(sampleMessage()), idGenerator);
+        var diagram = diagramGenerator.diagram().orElseThrow();
 
-        Approvals.verify(diagramGenerator.diagram().getUml());
+        Approvals.verify(diagram.getUml());
     }
 
     @Test
     void replacesParticipantKeywordWithComponent() {
         var sampleParticipant = PARTICIPANT.called("SomeService");
-        var diagramGenerator = new ComponentDiagramGenerator(List.of(sampleParticipant), List.of(), idGenerator);
+        var diagramGenerator = new ComponentDiagramGenerator(List.of(sampleParticipant), List.of(sampleMessage()), idGenerator);
+        var diagram = diagramGenerator.diagram().orElseThrow();
 
-        Approvals.verify(diagramGenerator.diagram().getUml());
+        Approvals.verify(diagram.getUml());
     }
 
     private Message sampleMessage() {

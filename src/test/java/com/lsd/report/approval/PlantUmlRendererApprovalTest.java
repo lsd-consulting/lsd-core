@@ -17,7 +17,9 @@ class PlantUmlRendererApprovalTest {
 
     @Test
     void renderSequenceUml() {
-        Approvals.verify(diagramGenerator().sequenceDiagram().getUml());
+        var diagram = diagramGenerator().diagram().orElseThrow();
+        
+        Approvals.verify(diagram.getUml());
     }
 
     private SequenceDiagramGenerator diagramGenerator() {
