@@ -2,6 +2,8 @@
 
 !theme {{theme}}
 
+skinparam backgroundColor transparent
+
 hide unlinked
 
 {% for include in includes %}

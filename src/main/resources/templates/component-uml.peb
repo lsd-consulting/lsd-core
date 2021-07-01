@@ -2,6 +2,8 @@
 
 !theme {{theme}}
 
+skinparam backgroundColor transparent
+
 {% for participant in participants %}
 {{ participant }}
 
