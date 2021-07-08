@@ -6,7 +6,7 @@
 </head>
 <body>
 <main role="main">
-    <span onclick="location.href='lsd-index.html';" id="index_link">&#8592;</span>
+    <span onclick="location.href='lsd-index.html';" class="back_to_index"></span>
     <h1 class="logo">LSD</h1>
     <h1>{{ report.title }}</h1>
     <div class="contents">
@@ -20,6 +20,7 @@
     {% for scenario in report.scenarios %}
 
     <article id="{{ scenario.id }}">
+        <span onclick="location.href='#top';" class="back_to_top"></span>
         <h2 class="{{ scenario.status }}">{{scenario.title}}</h2>
         <section class="description {{ scenario.status }}">
             <h3 class="{{ scenario.status }}">Description</h3>

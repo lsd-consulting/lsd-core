@@ -20,6 +20,16 @@ aside {
     padding: 20px;
 }
 
+span.back_to_top::after {
+    content: "\2191";
+    cursor: pointer;
+}
+
+span.back_to_index::after {
+    content: "\2190";
+    cursor: pointer;
+}
+
 section.diagram {
     flex: 100%;
 }
