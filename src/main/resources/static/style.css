@@ -76,6 +76,10 @@ h1 {
     min-height: 100px;
 }
 
+h2 {
+    margin-left: 20px;
+}
+
 h3 {
     margin-bottom: 10px;
 }
