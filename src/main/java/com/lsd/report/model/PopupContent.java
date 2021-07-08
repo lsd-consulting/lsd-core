@@ -15,9 +15,7 @@ public class PopupContent {
                 div().withClass("popup").attr("onclick", "event.stopPropagation();").with(
                         h2(title),
                         a().withClass("close").withHref("#!").with(new UnescapedText("&times;")),
-                        div().withClass("content").with(
-                                pre(content)
-                        )
+                        div().withClass("content").with(new UnescapedText(content))
                 )
         );
     }
