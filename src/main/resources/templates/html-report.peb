@@ -6,7 +6,7 @@
 </head>
 <body>
 <main role="main">
-    <span onclick="location.href='lsd-index.html';" class="back_to_index"></span>
+    <span onclick="location.href='lsd-index.html';" title="back to index page" class="back_to_index"></span>
     <h1 class="logo">LSD</h1>
     <h1>{{ report.title }}</h1>
     <div class="contents">
@@ -20,7 +20,7 @@
     {% for scenario in report.scenarios %}
 
     <article id="{{ scenario.id }}">
-        <span onclick="location.href='#top';" class="back_to_top"></span>
+        <span onclick="location.href='#top';" title="top of page" class="back_to_top"></span>
         <h2 class="{{ scenario.status }}">{{scenario.title}}</h2>
         <section class="description {{ scenario.status }}">
             <h3 class="{{ scenario.status }}">Description</h3>
@@ -50,9 +50,10 @@
             <div onclick="location.href='#!';" id="{{scenario.sequenceDiagram.id}}" class="overlay">
                 <div class="popup" onclick="event.stopPropagation();">
                     <h2>PlantUml markup</h2>
+                    <span class="copy" title="copy" onclick="copyToClipboard('sequence_uml_code{{scenario.sequenceDiagram.id}}')"></span>
                     <a class="close" href="#!">&times;</a>
                     <div class="content">
-                        <pre><code>{{- scenario.sequenceDiagram.uml -}}</code></pre>
+                        <pre><code id="sequence_uml_code{{scenario.sequenceDiagram.id}}">{{- scenario.sequenceDiagram.uml -}}</code></pre>
                     </div>
                 </div>
             </div>
@@ -75,9 +76,10 @@
         <div onclick="location.href='#!';" id="uml{{scenario.componentDiagram.id}}" class="overlay">
             <div class="popup" onclick="event.stopPropagation();">
                 <h2>PlantUml markup</h2>
+                <span class="copy" title="copy" onclick="copyToClipboard('component_uml_code{{scenario.componentDiagram.id}}')"></span>
                 <a class="close" href="#{{scenario.componentDiagram.id}}">&times;</a><!--show previous popup on close-->
                 <div class="content">
-                    <pre><code>{{- scenario.componentDiagram.uml -}}</code></pre>
+                    <pre><code id="component_uml_code{{scenario.componentDiagram.id}}">{{- scenario.componentDiagram.uml -}}</code></pre>
                 </div>
             </div>
         </div>
@@ -99,8 +101,8 @@
 </main>
 </body>
 <footer>
-    <link rel="stylesheet"
-          href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/default.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/default.min.css">
+    <script src="custom.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/highlight.min.js"></script>
     <script>hljs.highlightAll();</script>
 

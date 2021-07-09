@@ -6,7 +6,7 @@
 </head>
 <body>
 <main role="main">
-    <span onclick="location.href='lsd-index.html';" class="back_to_index"></span>
+    <span onclick="location.href='lsd-index.html';" title="back to index page" class="back_to_index"></span>
     <h1 class="logo">LSD</h1>
     <h1>Approval Report</h1>
     <div class="contents">
@@ -19,7 +19,7 @@
     </div>
     
     <article id="10">
-        <span onclick="location.href='#top';" class="back_to_top"></span>
+        <span onclick="location.href='#top';" title="top of page" class="back_to_top"></span>
         <h2 class="success">A Success scenario</h2>
         <section class="description success">
             <h3 class="success">Description</h3>
@@ -91,9 +91,10 @@
             <div onclick="location.href='#!';" id="11" class="overlay">
                 <div class="popup" onclick="event.stopPropagation();">
                     <h2>PlantUml markup</h2>
+                    <span class="copy" title="copy" onclick="copyToClipboard('sequence_uml_code11')"></span>
                     <a class="close" href="#!">&times;</a>
                     <div class="content">
-                        <pre><code>@startuml
+                        <pre><code id="sequence_uml_code11">@startuml
 
 !theme plain
 skinparam backgroundColor transparent
@@ -176,9 +177,10 @@ link Beta to Gamma-->
         <div onclick="location.href='#!';" id="uml12" class="overlay">
             <div class="popup" onclick="event.stopPropagation();">
                 <h2>PlantUml markup</h2>
+                <span class="copy" title="copy" onclick="copyToClipboard('component_uml_code12')"></span>
                 <a class="close" href="#12">&times;</a><!--show previous popup on close-->
                 <div class="content">
-                    <pre><code>@startuml
+                    <pre><code id="component_uml_code12">@startuml
 
 !theme plain
 skinparam backgroundColor transparent
@@ -244,7 +246,7 @@ hide @unlinked
                     </article>
     
     <article id="13">
-        <span onclick="location.href='#top';" class="back_to_top"></span>
+        <span onclick="location.href='#top';" title="top of page" class="back_to_top"></span>
         <h2 class="warn">A Warning scenario</h2>
         <section class="description warn">
             <h3 class="warn">Description</h3>
@@ -325,9 +327,10 @@ hide @unlinked
             <div onclick="location.href='#!';" id="14" class="overlay">
                 <div class="popup" onclick="event.stopPropagation();">
                     <h2>PlantUml markup</h2>
+                    <span class="copy" title="copy" onclick="copyToClipboard('sequence_uml_code14')"></span>
                     <a class="close" href="#!">&times;</a>
                     <div class="content">
-                        <pre><code>@startuml
+                        <pre><code id="sequence_uml_code14">@startuml
 
 !theme plain
 skinparam backgroundColor transparent
@@ -397,9 +400,10 @@ link B to A-->
         <div onclick="location.href='#!';" id="uml15" class="overlay">
             <div class="popup" onclick="event.stopPropagation();">
                 <h2>PlantUml markup</h2>
+                <span class="copy" title="copy" onclick="copyToClipboard('component_uml_code15')"></span>
                 <a class="close" href="#15">&times;</a><!--show previous popup on close-->
                 <div class="content">
-                    <pre><code>@startuml
+                    <pre><code id="component_uml_code15">@startuml
 
 !theme plain
 skinparam backgroundColor transparent
@@ -438,7 +442,7 @@ hide @unlinked
                     </article>
     
     <article id="16">
-        <span onclick="location.href='#top';" class="back_to_top"></span>
+        <span onclick="location.href='#top';" title="top of page" class="back_to_top"></span>
         <h2 class="error">An Error scenario</h2>
         <section class="description error">
             <h3 class="error">Description</h3>
@@ -490,9 +494,10 @@ hide @unlinked
             <div onclick="location.href='#!';" id="17" class="overlay">
                 <div class="popup" onclick="event.stopPropagation();">
                     <h2>PlantUml markup</h2>
+                    <span class="copy" title="copy" onclick="copyToClipboard('sequence_uml_code17')"></span>
                     <a class="close" href="#!">&times;</a>
                     <div class="content">
-                        <pre><code>@startuml
+                        <pre><code id="sequence_uml_code17">@startuml
 
 !theme plain
 skinparam backgroundColor transparent
@@ -565,9 +570,10 @@ link A to B-->
         <div onclick="location.href='#!';" id="uml18" class="overlay">
             <div class="popup" onclick="event.stopPropagation();">
                 <h2>PlantUml markup</h2>
+                <span class="copy" title="copy" onclick="copyToClipboard('component_uml_code18')"></span>
                 <a class="close" href="#18">&times;</a><!--show previous popup on close-->
                 <div class="content">
-                    <pre><code>@startuml
+                    <pre><code id="component_uml_code18">@startuml
 
 !theme plain
 skinparam backgroundColor transparent
@@ -606,8 +612,8 @@ hide @unlinked
     </main>
 </body>
 <footer>
-    <link rel="stylesheet"
-          href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/default.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/default.min.css">
+    <script src="custom.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/highlight.min.js"></script>
     <script>hljs.highlightAll();</script>
 

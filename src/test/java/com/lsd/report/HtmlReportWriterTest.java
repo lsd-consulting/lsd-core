@@ -37,7 +37,13 @@ class HtmlReportWriterTest {
     void addCssFileToOutputDirectory() {
         htmlReportWriter.writeToFile(aReport);
 
-        assertThat(new File(LsdProperties.get(OUTPUT_DIR), "style.css"))
-                .exists();
+        assertThat(new File(LsdProperties.get(OUTPUT_DIR), "style.css")).exists();
+    }
+    
+    @Test
+    void addJavaScriptFileToOutputDirectory() {
+        htmlReportWriter.writeToFile(aReport);
+
+        assertThat(new File(LsdProperties.get(OUTPUT_DIR), "custom.js")).exists();
     }
 }

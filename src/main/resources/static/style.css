@@ -1,6 +1,7 @@
 
 html {
     font-family: Tahoma, Arial, sans-serif;
+    line-height: 1.5;
 }
 
 article {
@@ -28,6 +29,25 @@ span.back_to_top::after {
 span.back_to_index::after {
     content: "\2190";
     cursor: pointer;
+}
+
+span.copy::after {
+    content: "\2702";
+    cursor: pointer;
+    margin-left: 20px;
+}
+
+span.copy:active::after {
+    cursor: grab;
+    content: "\2713";
+}
+
+code {
+    border-radius: 25px;
+}
+
+span.copy:active {
+    cursor: crosshair;
 }
 
 section.diagram {
@@ -155,6 +175,12 @@ span.highlight {
     background-color: yellow;
 }
 
+/* popup content sections */
+div.content {
+    margin-left: 20px;
+}
+
+/* content section of page*/
 div.contents {
     display: flex;
     flex-direction: column;

@@ -30,6 +30,7 @@ public class HtmlReportWriter {
 
         writeFileSafely(outputPath, reportContent);
         writeFileIfMissing("static/style.css", new File(outputDir, "style.css"));
+        writeFileIfMissing("static/custom.js", new File(outputDir, "custom.js"));
         return outputPath;
     }
 
