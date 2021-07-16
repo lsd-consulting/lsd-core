@@ -35,9 +35,13 @@ public class LsdContext {
 
     private CapturedScenario currentScenario = new CapturedScenario();
 
-    private LsdContext() {
-    }
-
+    /**
+     * Convenience method to create a singleton instance.
+     * If you prefer to use other means to share a single instance or
+     * want to create multiple instances then use the default constructor instead.
+     *
+     * @return A singleton instance of LsdContext
+     */
     public static LsdContext getInstance() {
         return INSTANCE;
     }
