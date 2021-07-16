@@ -101,11 +101,15 @@
 </main>
 </body>
 <footer>
+    <script type = "text/javascript" src = "https://d3js.org/d3.v4.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/default.min.css">
     <script src="custom.js"></script>
+    <script language = "javascript">
+        addSliderForSvgZoom();
+        highlightLifelinesWhenClicked();
+    </script>
     <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/highlight.min.js"></script>
     <script>hljs.highlightAll();</script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"></script>
     <script>
         var options = { 
@@ -114,7 +118,7 @@
                 "separateWordSearch": false,
                 "acrossElements": true,
                 "accuracy": { 
-                    "value": "exactly", "limiters": [ ",", ".", ";", ":", "-", "(", ")"] 
+                    "value": "exactly", "limiters": [ ",", ".", ";", ":", "-", "(", ")","<",">","/"] 
                 } 
         }
         {% for scenario in report.scenarios %}
