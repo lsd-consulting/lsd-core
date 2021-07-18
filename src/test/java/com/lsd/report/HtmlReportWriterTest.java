@@ -6,6 +6,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.io.StringWriter;
+import java.io.Writer;
 
 import static com.lsd.properties.LsdProperties.OUTPUT_DIR;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -16,17 +18,18 @@ import static org.mockito.Mockito.when;
 class HtmlReportWriterTest {
     private final String outputDirectory = LsdProperties.get(OUTPUT_DIR);
     private final ReportRenderer mockRenderer = mock(ReportRenderer.class);
-    private final HtmlReportWriter htmlReportWriter = new HtmlReportWriter(mockRenderer);
+    private final HtmlReportWriter underTest = new HtmlReportWriter(mockRenderer);
     private final Report aReport = Report.builder().title("report title").build();
 
     @BeforeEach
     public void setup() {
         when(mockRenderer.render(any())).thenReturn("report content");
+        when(mockRenderer.render(any(), any())).thenReturn("report content");
     }
 
     @Test
     void writesFileContainingRenderedContent() {
-        htmlReportWriter.writeToFile(aReport);
+        underTest.writeToFile(aReport);
 
         assertThat(new File(outputDirectory, "reportTitle.html"))
                 .exists()
@@ -35,15 +38,24 @@ class HtmlReportWriterTest {
 
     @Test
     void addCssFileToOutputDirectory() {
-        htmlReportWriter.writeToFile(aReport);
+        underTest.writeToFile(aReport);
 
         assertThat(new File(LsdProperties.get(OUTPUT_DIR), "style.css")).exists();
     }
     
     @Test
     void addJavaScriptFileToOutputDirectory() {
-        htmlReportWriter.writeToFile(aReport);
+        underTest.writeToFile(aReport);
 
         assertThat(new File(LsdProperties.get(OUTPUT_DIR), "custom.js")).exists();
+    }
+
+    @Test
+    void writeToAWriter() {
+        Writer writer = new StringWriter();
+
+        String result = underTest.writeTo(aReport, writer);
+
+        assertThat(result).contains("report content");
     }
 }
