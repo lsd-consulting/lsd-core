@@ -21,6 +21,7 @@ application or by setting a System property. Note that System properties overrid
 | lsd.core.diagram.theme | plain | The plantUml theme to apply to the diagrams. See the [available themes](https://plantuml.com/theme). |
 | lsd.core.report.outputDir | build/reports/lsd | The directory to write the report files. (This can be a relative path).|
 | lsd.core.ids.deterministic | false | Determines how the html element ids are generated. Allowing deterministic ids is useful when testing (e.g. approval tests of html output since the generated ids won't be random. The default option which provides random ids should be preferred otherwise.|
+| lsd.core.diagram.sequence.maxEventsPerDiagram | 50 | To help make really large diagrams easier to read this value is used to decide when to split a potentially large diagram into sub-diagrams. (Each sub diagram will remove any unused participants and include the participant headers and footers). |
 
 ## Framework Libraries
 | Name | Latest Version | Description |

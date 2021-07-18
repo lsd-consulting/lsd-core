@@ -14,6 +14,7 @@ public class LsdProperties {
     public static final String LABEL_MAX_WIDTH = "lsd.core.label.maxWidth";
     public static final String OUTPUT_DIR = "lsd.core.report.outputDir";
     public static final String DETERMINISTIC_IDS = "lsd.core.ids.deterministic";
+    public static final String MAX_EVENTS_PER_DIAGRAM = "lsd.core.diagram.sequence.maxEventsPerDiagram";
 
     private static final Properties PROPERTIES = new PropertiesLoader("lsd.properties", defaultProperties()).load();
 

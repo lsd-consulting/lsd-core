@@ -12,6 +12,7 @@ public class DefaultProperties {
         properties.setProperty(DIAGRAM_THEME, "plain");
         properties.setProperty(OUTPUT_DIR, "build/reports/lsd");
         properties.setProperty(DETERMINISTIC_IDS, "false");
+        properties.setProperty(MAX_EVENTS_PER_DIAGRAM, "50");
         return properties;
     }
 }

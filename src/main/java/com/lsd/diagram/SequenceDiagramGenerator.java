@@ -18,7 +18,9 @@ import java.util.Optional;
 import java.util.Set;
 
 import static com.lsd.properties.LsdProperties.DIAGRAM_THEME;
+import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
+import static org.apache.commons.collections4.ListUtils.partition;
 
 @Builder
 public class SequenceDiagramGenerator {
@@ -30,11 +32,14 @@ public class SequenceDiagramGenerator {
     private final List<SequenceEvent> events;
     private final IdGenerator idGenerator;
 
-    public Optional<Diagram> diagram() {
+    public Optional<Diagram> diagram(int maxEventsPerDiagram) {
         if (events.isEmpty()) {
             return Optional.empty();
         }
-        String uml = generateSequenceUml();
+        var uml = partition(events, maxEventsPerDiagram).stream()
+                .map(this::generateSequenceUml)
+                .collect(joining(System.lineSeparator()));
+
         String svg = generateSequenceSvg(uml);
         return Optional.of(Diagram.builder()
                 .id(idGenerator.next())
@@ -50,7 +55,7 @@ public class SequenceDiagramGenerator {
     }
 
     @SneakyThrows
-    private String generateSequenceUml() {
+    private String generateSequenceUml(List<SequenceEvent> events) {
         Writer writer = new StringWriter();
         compiledTemplate.evaluate(writer, Map.of(
                 "theme", LsdProperties.get(DIAGRAM_THEME),

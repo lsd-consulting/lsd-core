@@ -17,12 +17,12 @@ class PlantUmlRendererApprovalTest {
 
     @Test
     void renderSequenceUml() {
-        var diagram = diagramGenerator().diagram().orElseThrow();
+        var diagram = sequenceDiagramGenerator().diagram(2).orElseThrow();
         
         Approvals.verify(diagram.getUml());
     }
 
-    private SequenceDiagramGenerator diagramGenerator() {
+    private SequenceDiagramGenerator sequenceDiagramGenerator() {
         return SequenceDiagramGenerator.builder()
                 .idGenerator(new IdGenerator(true))
                 .includes(new LinkedHashSet<>(List.of(
