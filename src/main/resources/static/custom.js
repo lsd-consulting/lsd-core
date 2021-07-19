@@ -52,9 +52,8 @@ function highlightLifelinesWhenClicked() {
 }
 
 // WIP
-function animateLines(){
+function animateLines() {
     d3.selectAll("svg").each(function () {
-        let currentSvg = d3.select(this);
         d3.select(this).selectAll('line')
             .filter(function () {
                 let currentLine = d3.select(this);
@@ -63,19 +62,49 @@ function animateLines(){
             .each(function (p, j) {
                 let currentLine = d3.select(this);
                 let duration = 5000;
-                let x1 = currentLine.attr("x1");
-                let x2 = currentLine.attr("x2");
-                let y1 = currentLine.attr("y1");
-                currentSvg
-                    .append("circle")
-                    .attr("cx", x1)
-                    .attr("cy", y1)
-                    .attr('r','2px')
+                let originalStyle = currentLine.attr("style")
+                let animatedStyle = originalStyle + "stroke-width:4.0;"
+                currentLine
                     .transition()
+                    .ease(d3.easeElasticIn)
                     .duration(duration)
                     .delay(j * duration)
-                    .attr("cx", x2)
-                    .remove()
+                    .attr("style", animatedStyle)
+                    .transition()
+                    .attr("style", originalStyle)
             })
     });
+}
+
+const keywordOptions = {
+    "element": "span",
+    "className": "keyword"
+};
+
+// Add a span with class: "keyword" around matching keywords so that they can be styled
+function highlightKeywords() {
+    const patterns = [/Given/, /When/, /Then/, /And/];
+    let keywordMarker = new Mark(document.querySelectorAll("section.description"));
+    patterns.forEach(value => keywordMarker.markRegExp(value, keywordOptions));
+}
+
+const factOptions = {
+    "element": "span",
+    "className": "highlight",
+    "separateWordSearch": false,
+    "acrossElements": true,
+    "accuracy": {
+        "value": "exactly", "limiters": [",", ".", ";", ":", "-", "(", ")", "<", ">", "/"]
+    }
+}
+
+function highlightFact(id, word) {
+    let factMarker = new Mark(document.getElementById(id));
+    factMarker.mark(word, factOptions);
+}
+
+<!-- Remove highlights in svg (causes text to disappear) -->
+function unMarkSvg() {
+    let unmarker = new Mark(document.querySelectorAll("svg"));
+    unmarker.unmark();
 }

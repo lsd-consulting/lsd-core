@@ -23,7 +23,7 @@
         <h2 class="success">A Success scenario</h2>
         <section class="description success">
             <h3 class="success">Description</h3>
-            First scenario description        </section>
+            Given a first scenario description<br/>When something happens<br/>Then something else happens        </section>
         <section class="sequence diagram svg success">
             <h3 class="success">Sequence Diagram</h3>
             <pre><?xml version="1.0" encoding="UTF-8"?>
@@ -623,25 +623,13 @@ hide @unlinked
     <script>hljs.highlightAll();</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"></script>
     <script>
-        var options = { 
-                "element": "span", 
-                "className": "highlight", 
-                "separateWordSearch": false,
-                "acrossElements": true,
-                "accuracy": { 
-                    "value": "exactly", "limiters": [ ",", ".", ";", ":", "-", "(", ")","<",">","/"] 
-                } 
-        }
-                                                        var instance = new Mark(document.querySelector("article[id='13']")); 
-                                    instance.mark("Lorem", options);
-                                    instance.mark("amet", options);
-                                    instance.mark("consectetur", options);
-                                    instance.mark("Thank you!", options);
-                                                                var instance = new Mark(document.querySelector("article[id='16']")); 
-                                    instance.mark("123456", options);
-                                            <!-- Remove highlights in svg (causes text to disappear) -->
-        instance = new Mark(document.querySelectorAll("svg"));
-        instance.unmark();
+        highlightKeywords();
+                                highlightFact("13", "Lorem");
+                        highlightFact("13", "amet");
+                        highlightFact("13", "consectetur");
+                        highlightFact("13", "Thank you!");
+                                        highlightFact("16", "123456");
+                        unMarkSvg();
     </script>
 </footer>
 </html>
