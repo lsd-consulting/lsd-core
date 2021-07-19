@@ -33,7 +33,7 @@ application or by setting a System property. Note that System properties overrid
 | Name | Latest Version | Description |
 | ----------- | ----------- |------------ |
 | lsd-interceptors | [![Maven Central](https://img.shields.io/maven-central/v/io.github.lsd-consulting/lsd-interceptors.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.lsd-consulting%22%20AND%20a:%22lsd-interceptors%22) | Automate capturing interactions for component tests |
-| lsd-distributed-interceptors | [![Maven Central](https://img.shields.io/maven-central/v/io.github.lsd-consulting/lsd-distributed-interceptors.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.lsd-consulting%22%20AND%20a:%22lsd-distributed-interceptors%22) | Automate capturing interactions for black-box testing (E2E) |
+| lsd-distributed-interceptors |![Maven Central](https://img.shields.io/maven-central/v/io.github.lsd-consulting/lsd-distributed-interceptor-library) | Automate capturing interactions for black-box testing (E2E) |
 
 ## Building
 
