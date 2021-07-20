@@ -11,6 +11,10 @@ article {
     margin-bottom: 90px;
 }
 
+section {
+    overflow: scroll;
+}
+
 section.description {
     flex: 50%;
 }
