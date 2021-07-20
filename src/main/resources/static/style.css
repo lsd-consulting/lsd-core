@@ -50,6 +50,10 @@ span.copy:active {
     cursor: crosshair;
 }
 
+section {
+    overflow: scroll;
+}
+
 section.diagram {
     flex: 100%;
 }
