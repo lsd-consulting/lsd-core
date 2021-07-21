@@ -25,4 +25,11 @@ public class HtmlReportRenderer implements ReportRenderer {
         compiledTemplate.evaluate(writer, Map.of("report", report));
         return writer.toString();
     }
+
+    @SneakyThrows
+    @Override
+    public String render(Report report, Writer writer) {
+        compiledTemplate.evaluate(writer, Map.of("report", report));
+        return writer.toString();
+    }
 }

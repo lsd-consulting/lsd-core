@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Writer;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -32,6 +33,10 @@ public class HtmlReportWriter {
         writeFileIfMissing("static/style.css", new File(outputDir, "style.css"));
         writeFileIfMissing("static/custom.js", new File(outputDir, "custom.js"));
         return outputPath;
+    }
+
+    public String writeTo(Report report, Writer writer) {
+        return reportRenderer.render(report, writer);
     }
 
     private void writeFileSafely(Path outputPath, String reportContent) {
