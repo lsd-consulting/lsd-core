@@ -60,7 +60,7 @@ public class SequenceDiagramGenerator {
         compiledTemplate.evaluate(writer, Map.of(
                 "theme", LsdProperties.get(DIAGRAM_THEME),
                 "includes", includes,
-                "participants", participants,
+                "participants", participants.stream().distinct().collect(toList()),
                 "events", events.stream()
                         .map(SequenceEvent::toMarkup)
                         .collect(toList())

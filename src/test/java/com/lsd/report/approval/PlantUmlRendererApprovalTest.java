@@ -37,6 +37,7 @@ class PlantUmlRendererApprovalTest {
                         ParticipantType.ENTITY.called("Entity"),
                         ParticipantType.PARTICIPANT.called("Party"),
                         ParticipantType.QUEUE.called("Party"),
+                        ParticipantType.QUEUE.called("Party"), // Duplicate participant to test dropping duplicates
                         ParticipantType.DATABASE.called("Derek", "D for danger")
                 ))
                 .events(List.of(
