@@ -50,20 +50,9 @@
     <script>hljs.highlightAll();</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"></script>
     <script>
-        var options = { 
-                "element": "span", 
-                "className": "highlight", 
-                "separateWordSearch": false,
-                "acrossElements": true,
-                "accuracy": { 
-                    "value": "exactly", "limiters": [ ",", ".", ";", ":", "-", "(", ")","<",">","/"] 
-                } 
-        }
-                                    var instance = new Mark(document.querySelector("article[id='1']")); 
-                                    instance.mark("no diagrams", options);
-                                            <!-- Remove highlights in svg (causes text to disappear) -->
-        instance = new Mark(document.querySelectorAll("svg"));
-        instance.unmark();
+        highlightKeywords();
+                                highlightFact("1", "no diagrams");
+                        unMarkSvg();
     </script>
 </footer>
 </html>

@@ -19,6 +19,27 @@ database Derek as "D for danger"
 
 A -> B: <text fill="">[[#1 {Sending a request} Sending a request]]</text>
 B --> A: <text fill="">[[#2 {Sending a response with a long label that should be abbreviated if all goes well} Sending a response with a long label that shoul...]]</text>
+
+@enduml
+@startuml
+
+!theme plain
+skinparam backgroundColor transparent
+
+hide unlinked
+
+!include <tupadr3/font-awesome-5/clock>
+!include <tupadr3/font-awesome-5/database>
+
+actor Arnold as "Arnie"
+boundary Nick
+control AControl
+collections SomeCollection
+entity Entity
+participant Party
+queue Party
+database Derek as "D for danger"
+
 B <--> A: <text fill="">[[#3 {On the phone} On the phone]]</text>
 
 @enduml

@@ -50,7 +50,7 @@ class LsdContextTest {
         lsdContext.capture(ShortMessageOutbound.builder().id(nextId()).from("B").label("out").data("some data 1").build());
         lsdContext.capture(Message.builder().id(nextId()).label("An interaction description that is long enough to need abbreviating").from("Beta").to("Gamma").data("β").arrowType(LOST).build());
         lsdContext.capture(SynchronousResponse.builder().id(nextId()).label("A synchronous response").from("Gamma").to("Beta").data("200 OK").build());
-        lsdContext.completeScenario("A Success scenario", "First scenario description", SUCCESS);
+        lsdContext.completeScenario("A Success scenario", "Given a first scenario description<br/>When something happens<br/>Then something else happens", SUCCESS);
 
         lsdContext.capture(Message.builder().id(nextId()).label("Sending food <$hamburger{scale=0.4}>").from("A").to("B").colour("orange").arrowType(DOTTED_THIN).build());
         lsdContext.capture(new Markup("..."));

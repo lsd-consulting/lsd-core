@@ -20,6 +20,7 @@ import java.nio.file.Path;
 import java.util.*;
 
 import static com.lsd.properties.LsdProperties.DETERMINISTIC_IDS;
+import static com.lsd.properties.LsdProperties.MAX_EVENTS_PER_DIAGRAM;
 import static java.util.stream.Collectors.toList;
 
 public class LsdContext {
@@ -33,6 +34,7 @@ public class LsdContext {
     private final IdGenerator idGenerator = new IdGenerator(LsdProperties.getBoolean(DETERMINISTIC_IDS));
     private final List<Parser> parsers = parsers();
     private final HtmlReportWriter htmlReportWriter = new HtmlReportWriter(new HtmlReportRenderer());
+    private final int maxEventsPerDiagram = LsdProperties.getInt(MAX_EVENTS_PER_DIAGRAM);
 
     private CapturedScenario currentScenario = new CapturedScenario();
 
@@ -137,7 +139,7 @@ public class LsdContext {
                                         .participants(participants)
                                         .includes(includes)
                                         .build()
-                                        .diagram()
+                                        .diagram(maxEventsPerDiagram)
                                         .orElse(null))
                                 .componentDiagram(ComponentDiagramGenerator.builder()
                                         .idGenerator(idGenerator)

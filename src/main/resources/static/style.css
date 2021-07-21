@@ -11,6 +11,10 @@ article {
     margin-bottom: 90px;
 }
 
+section {
+    overflow: scroll;
+}
+
 section.description {
     flex: 50%;
 }
@@ -179,6 +183,17 @@ span.highlight {
     padding: 2px;
     color: black;
     background-color: yellow;
+}
+
+/* highlight keywords (inline-block to allow first-letter styling) */
+span.keyword {
+    display: inline-block;
+}
+
+span.keyword::first-letter {
+    font-family: cursive;
+    font-size: x-large;
+    color: darkslategrey;
 }
 
 /* popup content sections */

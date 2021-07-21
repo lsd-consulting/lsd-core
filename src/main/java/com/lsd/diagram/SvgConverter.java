@@ -14,17 +14,23 @@ import java.io.StringReader;
 import java.io.StringWriter;
 
 import static net.sourceforge.plantuml.FileFormat.SVG;
+import static org.apache.commons.lang3.StringUtils.countMatches;
 
 public class SvgConverter {
 
     public String convert(String markup) {
-        return prettyPrint(createSvg(markup));
+        var result = new StringBuilder();
+        var newmarkup = countMatches(markup, "@startuml");
+        for (int i = 0; i < newmarkup; i++) {
+            result.append(prettyPrint(createSvg(markup, i)));
+        }
+        return result.toString();
     }
 
-    private String createSvg(String plantUmlMarkup) {
-        SourceStringReader reader = new SourceStringReader(plantUmlMarkup);
-        try (final ByteArrayOutputStream os = new ByteArrayOutputStream()) {
-            reader.outputImage(os, new FileFormatOption(SVG, false));
+    private String createSvg(String plantUmlMarkup, int pageNumber) {
+        try (var os = new ByteArrayOutputStream()) {
+            var reader = new SourceStringReader(plantUmlMarkup);
+            reader.outputImage(os, pageNumber, new FileFormatOption(SVG, false));
             return os.toString();
         } catch (IOException e) {
             throw new RuntimeException(e);
