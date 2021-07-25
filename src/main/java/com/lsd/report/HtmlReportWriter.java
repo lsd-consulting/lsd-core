@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.Writer;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -35,8 +34,8 @@ public class HtmlReportWriter {
         return outputPath;
     }
 
-    public String writeTo(Report report, Writer writer) {
-        return reportRenderer.render(report, writer);
+    public String writeToString(Report report) {
+        return reportRenderer.render(report);
     }
 
     private void writeFileSafely(Path outputPath, String reportContent) {

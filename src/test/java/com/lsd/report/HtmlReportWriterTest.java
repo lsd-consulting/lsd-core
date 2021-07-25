@@ -6,8 +6,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
-import java.io.StringWriter;
-import java.io.Writer;
 
 import static com.lsd.properties.LsdProperties.OUTPUT_DIR;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -24,7 +22,6 @@ class HtmlReportWriterTest {
     @BeforeEach
     public void setup() {
         when(mockRenderer.render(any())).thenReturn("report content");
-        when(mockRenderer.render(any(), any())).thenReturn("report content");
     }
 
     @Test
@@ -52,9 +49,7 @@ class HtmlReportWriterTest {
 
     @Test
     void writeToAWriter() {
-        Writer writer = new StringWriter();
-
-        String result = underTest.writeTo(aReport, writer);
+        String result = underTest.writeToString(aReport);
 
         assertThat(result).contains("report content");
     }

@@ -9,8 +9,6 @@ import org.approvaltests.Approvals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.StringWriter;
-import java.io.Writer;
 import java.util.LinkedHashSet;
 import java.util.List;
 
@@ -105,9 +103,7 @@ class LsdContextTest {
 
     @Test
     void generateReport() {
-        Writer writer = new StringWriter();
-
-        String result = lsdContext.generateReport("Some title", writer);
+        String result = lsdContext.generateReport("Some title");
 
         Approvals.verify(result);
     }

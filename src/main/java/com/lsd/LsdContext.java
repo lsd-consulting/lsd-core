@@ -15,7 +15,6 @@ import com.lsd.report.model.Participant;
 import com.lsd.report.model.Report;
 import com.lsd.report.model.Scenario;
 
-import java.io.Writer;
 import java.nio.file.Path;
 import java.util.*;
 
@@ -98,9 +97,9 @@ public class LsdContext {
         return path;
     }
 
-    public String generateReport(String title, Writer writer) {
+    public String generateReport(String title) {
         Report report = buildReport(title);
-        return htmlReportWriter.writeTo(report, writer);
+        return htmlReportWriter.writeToString(report);
     }
 
     public Path createIndex() {
