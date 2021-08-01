@@ -25,6 +25,9 @@ function addSliderForSvgZoom() {
                     let newHeight = height / sliderValue;
                     let newViewBox = '0 0 ' + newWidth + ' ' + newHeight;
                     svg.attr("viewBox", newViewBox)
+                    svg.attr("style", "") // remove inline styling which overrides height and width
+                    svg.attr("width", width * sliderValue)
+                    svg.attr("height", height * sliderValue)
                 });
         });
 }
