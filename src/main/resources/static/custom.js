@@ -51,31 +51,6 @@ function highlightLifelinesWhenClicked() {
         });
 }
 
-// WIP
-function animateLines() {
-    d3.selectAll("svg").each(function () {
-        d3.select(this).selectAll('line')
-            .filter(function () {
-                let currentLine = d3.select(this);
-                return currentLine.attr("y1") === currentLine.attr("y2"); // horizontal section of arrows
-            })
-            .each(function (p, j) {
-                let currentLine = d3.select(this);
-                let duration = 5000;
-                let originalStyle = currentLine.attr("style")
-                let animatedStyle = originalStyle + "stroke-width:4.0;"
-                currentLine
-                    .transition()
-                    .ease(d3.easeElasticIn)
-                    .duration(duration)
-                    .delay(j * duration)
-                    .attr("style", animatedStyle)
-                    .transition()
-                    .attr("style", originalStyle)
-            })
-    });
-}
-
 const keywordOptions = {
     "element": "span",
     "className": "keyword"
