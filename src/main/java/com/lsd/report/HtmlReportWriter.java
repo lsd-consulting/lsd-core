@@ -49,7 +49,7 @@ public class HtmlReportWriter {
 
     private File prepareOutputDirectory(String dir) {
         var outputDir = new File(dir);
-        outputDir.mkdir();
+        outputDir.mkdirs();
         return outputDir;
     }
 

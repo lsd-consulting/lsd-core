@@ -4,6 +4,7 @@ import com.lsd.properties.LsdProperties;
 import com.lsd.report.model.Report;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junitpioneer.jupiter.SetSystemProperty;
 
 import java.io.File;
 
@@ -13,6 +14,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+@SetSystemProperty(key = "lsd.core.report.outputDir", value = "build/reports/lsd/deeply/nested/directory")
 class HtmlReportWriterTest {
     private final String outputDirectory = LsdProperties.get(OUTPUT_DIR);
     private final ReportRenderer mockRenderer = mock(ReportRenderer.class);
@@ -48,7 +50,7 @@ class HtmlReportWriterTest {
     }
 
     @Test
-    void writeToAWriter() {
+    void writeToString() {
         String result = underTest.writeToString(aReport);
 
         assertThat(result).contains("report content");
