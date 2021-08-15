@@ -3,6 +3,7 @@ package com.lsd.parse;
 import com.lsd.IdGenerator;
 import com.lsd.events.Message;
 import com.lsd.events.SequenceEvent;
+import lombok.AllArgsConstructor;
 
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -12,15 +13,12 @@ import static com.lsd.events.ArrowType.SOLID;
 import static java.util.Objects.isNull;
 import static java.util.regex.Pattern.compile;
 
+@AllArgsConstructor
 public class MessageParser implements Parser {
 
     private static final Pattern PATTERN = compile("^(?!sync)(.*?) from (.*?) to (.*?)(?: \\[#(.*)\\])?$");
 
     private final IdGenerator idGenerator;
-
-    public MessageParser(IdGenerator idGenerator) {
-        this.idGenerator = idGenerator;
-    }
 
     public Optional<SequenceEvent> parse(String message, String body) {
         Matcher matcher = PATTERN.matcher(message);

@@ -3,6 +3,7 @@ package com.lsd.parse;
 import com.lsd.IdGenerator;
 import com.lsd.events.SequenceEvent;
 import com.lsd.events.SynchronousResponse;
+import lombok.AllArgsConstructor;
 
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -12,15 +13,12 @@ import static com.lsd.events.ArrowType.DOTTED_THIN;
 import static java.util.Objects.isNull;
 import static java.util.regex.Pattern.compile;
 
+@AllArgsConstructor
 public class SynchronousResponseParser implements Parser {
 
     private static final Pattern PATTERN = compile("^sync ?(.*?) from (.*?) to (.*?)(?: \\[#(.*)\\])?$");
 
     private final IdGenerator idGenerator;
-
-    public SynchronousResponseParser(IdGenerator idGenerator) {
-        this.idGenerator = idGenerator;
-    }
 
     public Optional<SequenceEvent> parse(String message, String body) {
         Matcher matcher = PATTERN.matcher(message);
