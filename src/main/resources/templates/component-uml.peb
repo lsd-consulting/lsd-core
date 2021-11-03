@@ -1,5 +1,5 @@
 @startuml
-
+!pragma layout smetana
 !theme {{theme}}
 
 skinparam backgroundColor transparent

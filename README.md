@@ -38,11 +38,6 @@ application or by setting a System property. Note that System properties overrid
 ## Building
 
 ### Prerequisites
-
-* Graphviz is used to generate the component diagrams. Without having this installed the approval tests will fail because 
-the generated html file will not match the expected output. See [graphviz.org/download/](https://graphviz.org/download/) 
-for installation instructions.
-
 * Java 11 
 * IDE's will need to enable annotation processing (Lombok is used throughout the project to reduce the amount of boilerplate code).
 

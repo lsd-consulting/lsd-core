@@ -66,7 +66,6 @@
                 <h2>Component Diagram</h2>
                 <a class="close" href="#!">&times;</a>
                 <div class="content">
-                    <sup>[Requires Graphviz to be installed]</sup>
                     <pre>{{ scenario.componentDiagram.svg | raw }}</pre>
                 </div>
                 <sub><a href="#uml{{scenario.componentDiagram.id}}">[source]</a></sub>
