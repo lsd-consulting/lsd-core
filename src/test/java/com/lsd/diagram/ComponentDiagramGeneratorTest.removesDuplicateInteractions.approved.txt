@@ -4,7 +4,7 @@
 skinparam backgroundColor transparent
 
 
-[A] -> B
+[A] --> B
 
 remove @unlinked
 @enduml

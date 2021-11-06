@@ -5,7 +5,7 @@ skinparam backgroundColor transparent
 
 actor Nick
 
-[A] -> B
+[A] --> B
 
 remove @unlinked
 @enduml

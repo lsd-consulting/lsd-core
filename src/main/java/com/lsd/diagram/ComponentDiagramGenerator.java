@@ -62,7 +62,7 @@ public class ComponentDiagramGenerator {
                         .filter(event -> event instanceof Message)
                         .filter(not(SynchronousResponse.class::isInstance))
                         .map(event -> (Message) event)
-                        .map(message -> String.format("[%s] -> %s", message.getFrom(), message.getTo()))
+                        .map(message -> String.format("[%s] --> %s", message.getFrom(), message.getTo()))
                         .distinct()
                         .collect(toList())
         ));

@@ -5,7 +5,7 @@ skinparam backgroundColor transparent
 
 component SomeService
 
-[A] -> B
+[A] --> B
 
 remove @unlinked
 @enduml
