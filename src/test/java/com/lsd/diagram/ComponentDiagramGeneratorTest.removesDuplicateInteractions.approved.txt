@@ -6,5 +6,5 @@ skinparam backgroundColor transparent
 
 [A] -> B
 
-hide @unlinked
+remove @unlinked
 @enduml

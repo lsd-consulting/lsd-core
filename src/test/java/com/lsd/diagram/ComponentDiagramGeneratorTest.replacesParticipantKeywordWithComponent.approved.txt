@@ -7,5 +7,5 @@ component SomeService
 
 [A] -> B
 
-hide @unlinked
+remove @unlinked
 @enduml

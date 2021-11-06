@@ -14,5 +14,5 @@ skinparam backgroundColor transparent
 
 {% endfor %}
 
-hide @unlinked
+remove @unlinked
 @enduml

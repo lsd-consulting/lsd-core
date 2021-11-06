@@ -7,5 +7,5 @@ actor Nick
 
 [A] -> B
 
-hide @unlinked
+remove @unlinked
 @enduml
