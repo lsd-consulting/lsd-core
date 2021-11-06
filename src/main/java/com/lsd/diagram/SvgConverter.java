@@ -2,11 +2,10 @@ package com.lsd.diagram;
 
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.SourceStringReader;
-import org.jdom.Document;
-import org.jdom.JDOMException;
-import org.jdom.input.SAXBuilder;
-import org.jdom.output.Format;
-import org.jdom.output.XMLOutputter;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -39,12 +38,12 @@ public class SvgConverter {
 
     private String prettyPrint(String xml) {
         try {
-            SAXBuilder sb = new SAXBuilder();
-            Document doc = sb.build(new StringReader(xml));
-            StringWriter stringWriter = new StringWriter();
-            new XMLOutputter(Format.getPrettyFormat()).output(doc, stringWriter);
+            var saxBuilder = new SAXBuilder();
+            var document = saxBuilder.build(new StringReader(xml));
+            var stringWriter = new StringWriter();
+            new XMLOutputter(Format.getPrettyFormat()).output(document, stringWriter);
             return stringWriter.toString();
-        } catch (JDOMException | IOException e) {
+        } catch (IOException | JDOMException e) {
             throw new RuntimeException(e);
         }
     }
