@@ -1,0 +1,28 @@
+
+' relationships with lsd-core to help with the order of updates when lsd-core changes
+
+@startuml
+title Project Dependencies
+
+[lsd-core] --> [lsd-formatting-library]
+[lsd-cucumber] --> [lsd-core]
+[lsd-distributed-generator-ui] -> [lsd-core]
+[lsd-distributed-generator-ui] -> [lsd-distributed-generator]
+[lsd-distributed-generator] --> [lsd-core]
+[lsd-distributed-generator] --> [lsd-distributed-mongodb-access]
+[lsd-distributed-interceptors] --> [lsd-core]
+[lsd-distributed-interceptors] --> [lsd-distributed-generator]
+[lsd-distributed-interceptors] --> [lsd-distributed-mongodb-access]
+[lsd-distributed-interceptors] --> [lsd-junit5]: (test)
+[lsd-distributed-interceptors] -->[lsd-formatting-library]
+[lsd-distributed-mongodb-access] --> [lsd-core]
+[lsd-interceptors] --> [lsd-core]
+[lsd-interceptors] --> [lsd-junit5] : (test)
+[lsd-junit5] --> [lsd-core]
+[lsd-kotlin-cucumber-example] --> [lsd-cucumber]
+[lsd-kotlin-cucumber-example] --> [lsd-interceptors]
+[yatspec-example] --> [lsd-interceptors]
+
+hide unlinked
+
+@enduml
