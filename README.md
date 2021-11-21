@@ -45,6 +45,12 @@ application or by setting a System property. Note that System properties overrid
 * Java 11 
 * IDE's will need to enable annotation processing (Lombok is used throughout the project to reduce the amount of boilerplate code).
 
+### Git hooks
+
+Install the custom git hook to help validate you commit messages:
+```shell
+./gradlew installGitHooks
+```
 ### Build
 
     ./gradlew clean build
