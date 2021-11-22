@@ -6,6 +6,8 @@ plugins {
     id 'com.palantir.git-version' version '0.12.3'
 }
 
+apply from: 'hooks.gradle'
+
 group = 'io.github.lsd-consulting'
 version = gitVersion().replaceAll("^v", "")
 
@@ -132,17 +134,3 @@ signing {
     }
 }
 
-/**
- * Adds the custom git hooks to the default .git/hooks directory for this repository - it will need to be called once 
- * after cloning and additionally each time a new hook is added
- */
-task installGitHooks(type: Copy) {
-    from '.githooks'
-    include "*"
-    into '.git/hooks'
-    doLast {
-        project.exec {
-            commandLine('chmod', '-R', '+x', '.git/hooks')
-        }
-    }
-}

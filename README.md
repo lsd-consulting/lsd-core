@@ -47,10 +47,8 @@ application or by setting a System property. Note that System properties overrid
 
 ### Git hooks
 
-Install the custom git hook to help validate you commit messages:
-```shell
-./gradlew installGitHooks
-```
+Git hooks will be configured automatically (to use the hooks in `.githooks` directory when the `gradle clean` task is invoked).
+
 ### Build
 
     ./gradlew clean build

@@ -1,13 +1,12 @@
 #!/bin/bash
 
 #
-# This hook checks the commit message header only to ensure that the expected format is used
+# This hook checks the commit message (header only) to ensure that the expected format is used.
 #
-# Changes with breaking changes should include BREAKING CHANGE in the commit body (this is not validated by this hook since
-#  we can't know whether a change is breaking or not but rely on the user including the `BREAKING CHANGE` keywords.
+# Commits with breaking changes should include 'BREAKING CHANGE: <some description>' in the commit body with a description (Note: this is not validated by the hook).
 # 
  
-commit_regex='^((build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\([a-zA-Z0-9 /_,.-]+?\))?: .{1,79}\w|Merge branch .+|(fixup|squash)! .+)$'
+commit_regex='^((build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\([a-zA-Z0-9 /_,.-]+?\))?: .{1,79}\w|Merge .+|(fixup|squash)! .+)$'
 
 error_msg='
 ----------------------------------------------------
@@ -21,7 +20,9 @@ Examples:
 2.  
   feat: Enable awesome feature (#456)
 3. 
-  docs: Add instructions to README
+  chore: Cleanup code to reduce maintenance cost
+  
+  BREAKING CHANGE: Deprecated feature xyz finally removed
 ----------------------------------------------------
 Accepted Types:
   build     - for changes that affect the build or external dependencies
@@ -39,7 +40,7 @@ Accepted Types:
 Exceptions:
   fixup! ... 
   squash! ...
-  Merge branch ...
+  Merge ...
 '
 
 if ! grep -iqE "${commit_regex}" "$1"; then

@@ -1,0 +1,10 @@
+
+task installGitHooks() {
+    shouldRunAfter("clean")
+    println "-- Configuring git to use .githooks --"
+    doLast {
+        project.exec {
+            commandLine('git', 'config', 'core.hooksPath', '.githooks')
+        }
+    }
+}
