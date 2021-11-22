@@ -2,7 +2,7 @@
 #   https://github.com/semantic-release/semantic-release/blob/master/docs/usage/configuration.md#configuration
 #   https://github.com/marketplace/actions/action-for-semantic-release
 
-branches: [ "main" ]
+branches: ["master", "main"]
 plugins:
   - "@semantic-release/commit-analyzer"
   - "@semantic-release/release-notes-generator"
