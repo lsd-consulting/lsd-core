@@ -28,6 +28,10 @@ jobs:
         with:
           name: build-directory
           path: build
+      - uses: codecov/codecov-action@v1
+        with:
+          files: build/reports/jacoco/test/jacocoTestReport.xml
+          verbose: true
   release:
     needs: build
     runs-on: ubuntu-latest
