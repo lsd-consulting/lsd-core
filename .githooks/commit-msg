@@ -21,8 +21,10 @@ Examples:
   feat: Enable awesome feature (#456)
 3. 
   chore: Cleanup code to reduce maintenance cost
-  
+  <newline>
   BREAKING CHANGE: Deprecated feature xyz finally removed
+  <newline>
+  [optional footer]
 ----------------------------------------------------
 Accepted Types:
   build     - for changes that affect the build or external dependencies
