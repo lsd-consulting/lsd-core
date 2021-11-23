@@ -4,11 +4,7 @@
 #  https://github.com/marketplace/actions/action-for-semantic-release
 
 name: CI
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+on: [ push, pull_request ]
 jobs:
   build:
     runs-on: macos-latest
@@ -19,12 +15,9 @@ jobs:
         with:
           java-version: '11'
           distribution: 'adopt'
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
       - name: Build with Gradle
-        run: ./gradlew test
+        run: ./gradlew build
       - uses: actions/upload-artifact@v2
-        if: always()
         with:
           name: build-directory
           path: build
