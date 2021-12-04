@@ -35,4 +35,4 @@ jobs:
         uses: cycjimmy/semantic-release-action@v2
         id: semantic
         env:
-          GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
