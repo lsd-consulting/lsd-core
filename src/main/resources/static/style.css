@@ -108,6 +108,12 @@ h3 {
     margin-bottom: 10px;
 }
 
+p {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .popup .close {
     position: absolute;
     top: 20px;
