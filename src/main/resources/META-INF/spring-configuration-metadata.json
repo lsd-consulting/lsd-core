@@ -1,0 +1,24 @@
+{
+  "properties": [
+    {
+      "name": "lsd.core.label.maxWidth",
+      "type": "java.lang.String"
+    },
+    {
+      "name": "lsd.core.diagram.theme",
+      "type": "java.lang.String"
+    },
+    {
+      "name": "lsd.core.report.outputDir",
+      "type": "java.lang.String"
+    },
+    {
+      "name": "lsd.core.ids.deterministic",
+      "type": "java.lang.String"
+    },
+    {
+      "name": "lsd.core.diagram.sequence.maxEventsPerDiagram",
+      "type": "java.lang.String"
+    }
+  ]
+}
