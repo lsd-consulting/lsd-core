@@ -7,20 +7,66 @@
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.lsd-consulting/lsd-core.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.lsd-consulting%22%20AND%20a:%22lsd-core%22)
 
 ## Usage
-This core library is used by higher level libraries to create html reports containing sequence diagrams.
+This library generates html reports and each report contains one or more scenarios that may have captured events that 
+get displayed on sequence diagrams (a component diagram is generated too). 
 
-The core domain objects and reporting output is contained within this library but the higher level libraries are responsible for
-orchestrating and capturing the data that gets turned into reports.
+* Use the LsdContext singleton instance to capture the events for each scenario to be included in the repost. This is a singleton instance
+and can be accessed by calling the `getInstance()` static method:
 
-See below framework libraries for example libraries that make use of this core library.
+```java
+// Wherever required a reference to the lsdContext instance can be obtained like this
+LsdContext.getInstance();
+```
+
+* Use the lsdContext to capture interactions during the runtime of the application or test e.g.
+```java
+// There are various types of events that can be captured, here are a couple examples using the provided builders
+lsdContext.capture(ShortMessageInbound.builder().id(nextId()).to("A").label("in").data("start some job").build());
+   
+lsdContext.capture(Message.builder().id(nextId()).from("A").to("B").label("Message 1").data("some data 1").arrowType(BI_DIRECTIONAL).build());
+```
+
+* After the events have been captured for a particular scenario you should mark the scenario as complete and provide a name:
+```java
+lsdContext.completeScenario("A Scenario Title", "The sceenario description goes here and may contain html", SUCCESS);
+```
+
+* After one or more scenarios have been capture you can generate a report like so:
+```java
+// This returns a Path object for the generated file
+lsdContext.completeReport("My Report Title")
+```
+
+**Additional options**
+* Participants can be captured to provide aliases and control the appearance and order of the components on the sequence diagram e.g.
+```java
+lsdContext.addParticipants(List.of(
+    ACTOR.called("A", "Arnie"),
+    ACTOR.called("C"),
+    DATABASE.called("B", "Barny\\nBoy"))
+);
+```
+
+* To draw attention to some interesting details you can include a fact like so before the report is generated:
+```java
+// instances of the keyword Lorem will be highlighted on the report
+lsdContext.addFact("Something to highlight", "Lorem");
+```
 
 ## Framework Libraries
+
+A few libraries exist to automate some of the steps to capture scenarios and generate reports e.g. via JUnit or Cucumber 
+as plugins or extentions to the libraries.
+
 | Name | Latest Version | Description |
 | ----------- | ----------- |------------ |
 | [lsd-junit5](https://github.com/lsd-consulting/lsd-junit5) | [![Maven Central](https://img.shields.io/maven-central/v/io.github.lsd-consulting/lsd-junit5.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.lsd-consulting%22%20AND%20a:%22lsd-junit5%22) | JUnit5 extension to generate LSD reports for unit tests |
 | [lsd-cucumber](https://github.com/lsd-consulting/lsd-cucumber) |[![Maven Central](https://img.shields.io/maven-central/v/io.github.lsd-consulting/lsd-cucumber.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.lsd-consulting%22%20AND%20a:%22lsd-cucumber%22) | Cucumber plugin to generate LSD reports for specifications |
 
 ## Companion Libraries
+
+Some libraries have been created to automate the capturing of events e.g. within SpringBoot applications
+
 | Name | Latest Version | Description |
 | ----------- | ----------- |------------ |
 | [lsd-interceptors](https://github.com/lsd-consulting/lsd-interceptors) | [![Maven Central](https://img.shields.io/maven-central/v/io.github.lsd-consulting/lsd-interceptors.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.lsd-consulting%22%20AND%20a:%22lsd-interceptors%22) | Automates the collection of HTTP requests and AMQP messages within a springboot microservice for the sequence diagrams. Works well for acceptance or component tests. |
