@@ -71,6 +71,22 @@ class LsdContextTest {
 
         Approvals.verify(lsdContext.completeReport("Approval Report").toFile());
     }
+    
+    @Test
+    void diagramIsSplitOnNewPageEvents() {
+        lsdContext.addParticipants(participants);
+        lsdContext.includeFiles(additionalIncludes);
+
+        lsdContext.capture(PageTitle.titled("A title"));
+        lsdContext.capture(ShortMessageInbound.builder().id(nextId()).to("A").label("in").data("start some job").build());
+        lsdContext.capture(Newpage.titled("A second page"));
+        lsdContext.capture(ShortMessageOutbound.builder().id(nextId()).from("B").label("out").data("some data 1").build());
+        lsdContext.capture(Newpage.titled("A third page"));
+        lsdContext.capture(Message.builder().id(nextId()).label("An interaction description that is long enough to need abbreviating").from("Beta").to("Gamma").data("β").arrowType(LOST).build());
+        lsdContext.completeScenario("A Success scenario", "Given a first scenario description<br/>When something happens<br/>Then something else happens", SUCCESS);
+
+        Approvals.verify(lsdContext.completeReport("Split by NewPage Report").toFile());
+    }
 
     @Test
     void hasNoDiagramSectionWhenThereAreNoEvents() {

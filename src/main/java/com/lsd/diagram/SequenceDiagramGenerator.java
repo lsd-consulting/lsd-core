@@ -36,7 +36,9 @@ public class SequenceDiagramGenerator {
         if (events.isEmpty()) {
             return Optional.empty();
         }
-        var uml = partition(events, maxEventsPerDiagram).stream()
+        var uml = events.stream().collect(new GroupByNewPageEvents())
+                .stream()
+                .flatMap(sequenceEvents -> partition(sequenceEvents, maxEventsPerDiagram).stream())
                 .map(this::generateSequenceUml)
                 .collect(joining(System.lineSeparator()));
 
