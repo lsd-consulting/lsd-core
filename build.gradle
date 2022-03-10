@@ -23,6 +23,7 @@ dependencies {
 
     implementation 'org.projectlombok:lombok:1.18.22'
     implementation 'io.pebbletemplates:pebble:3.1.5'
+    implementation 'com.github.jknack:handlebars:4.1.2'
     implementation 'net.sourceforge.plantuml:plantuml:1.2022.1'
     implementation 'io.github.lsd-consulting:lsd-formatting-library:1.0.3'
     implementation 'org.apache.commons:commons-text:1.9'

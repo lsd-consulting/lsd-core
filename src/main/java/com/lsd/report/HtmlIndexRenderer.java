@@ -1,28 +1,24 @@
 package com.lsd.report;
 
+import com.github.jknack.handlebars.Handlebars;
+import com.github.jknack.handlebars.Template;
 import com.lsd.CapturedReport;
-import com.lsd.report.pebble.LsdPebbleExtension;
-import com.mitchellbosecke.pebble.PebbleEngine;
-import com.mitchellbosecke.pebble.template.PebbleTemplate;
 import lombok.SneakyThrows;
 
-import java.io.StringWriter;
-import java.io.Writer;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 public class HtmlIndexRenderer {
 
-    private final PebbleEngine engine = new PebbleEngine.Builder()
-            .extension(new LsdPebbleExtension())
-            .build();
+    private final Handlebars handlebars = new Handlebars();
+    private final Template template = handlebars.compile("templates/html-index");
 
-    private final PebbleTemplate compiledTemplate = engine.getTemplate("templates/html-index.peb");
+    public HtmlIndexRenderer() throws IOException {
+    }
 
     @SneakyThrows
     public String render(List<CapturedReport> capturedReports) {
-        Writer writer = new StringWriter();
-        compiledTemplate.evaluate(writer, Map.of("capturedReports", capturedReports));
-        return writer.toString();
+        return template.apply(Map.of("capturedReports", capturedReports));
     }
 }

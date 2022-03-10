@@ -10,9 +10,9 @@
     <h1>Reports</h1>
     <div class="contents">
         <ul class="contents">
-            {% for report in capturedReports %}
-            <li class="{{ report.status }}"><a href="{{report.path.fileName}}">{{ report.title }}</a></li>
-            {% endfor %}
+            {{# each capturedReports~}}
+                <li class="{{ status }}"><a href="{{path.fileName}}">{{ title }}</a></li>
+            {{/each}}
         </ul>
     </div>
 </main>
