@@ -1,5 +1,7 @@
 package com.lsd.diagram;
 
+import com.github.jknack.handlebars.Handlebars;
+import com.github.jknack.handlebars.Template;
 import com.lsd.IdGenerator;
 import com.lsd.events.Message;
 import com.lsd.events.SequenceEvent;
@@ -7,13 +9,9 @@ import com.lsd.events.SynchronousResponse;
 import com.lsd.properties.LsdProperties;
 import com.lsd.report.model.Diagram;
 import com.lsd.report.model.Participant;
-import com.mitchellbosecke.pebble.PebbleEngine;
-import com.mitchellbosecke.pebble.template.PebbleTemplate;
 import lombok.Builder;
 import lombok.SneakyThrows;
 
-import java.io.StringWriter;
-import java.io.Writer;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -24,8 +22,8 @@ import static java.util.stream.Collectors.toList;
 
 @Builder
 public class ComponentDiagramGenerator {
-    private final PebbleEngine engine = new PebbleEngine.Builder().autoEscaping(false).build();
-    private final PebbleTemplate compiledTemplate = engine.getTemplate("templates/component-uml.peb");
+    private final Handlebars handlebars = new Handlebars();
+    private final Template template = compileTemplate("templates/component-uml");
     private final SvgConverter svgConverter = new SvgConverter();
 
     private final List<Participant> participants;
@@ -50,8 +48,7 @@ public class ComponentDiagramGenerator {
 
     @SneakyThrows
     private String generateUml() {
-        Writer writer = new StringWriter();
-        compiledTemplate.evaluate(writer, Map.of(
+        return template.apply(Map.of(
                 "theme", LsdProperties.get(DIAGRAM_THEME),
                 "participants", participants.stream()
                         .map(Participant::getMarkup)
@@ -66,6 +63,10 @@ public class ComponentDiagramGenerator {
                         .distinct()
                         .collect(toList())
         ));
-        return writer.toString();
+    }
+
+    @SneakyThrows
+    private static Template compileTemplate(String location) {
+        return new Handlebars().compile(location);
     }
 }
