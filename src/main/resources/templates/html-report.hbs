@@ -86,7 +86,7 @@
         {{#each dataHolders }}
         <div onclick="location.href='#!';" id="{{id}}" class="overlay">
             <div class="popup" onclick="event.stopPropagation();">
-                <h2>{{ abbreviatedLabel }}</h2>
+                <h2>{{ sanitise abbreviatedLabel }}</h2>
                 <a class="close" href="#!">&times;</a>
                 <div class="content">
                     <pre>{{{ data }}}</pre>
