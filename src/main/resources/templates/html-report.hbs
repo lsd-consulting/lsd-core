@@ -26,7 +26,7 @@
             <h3 class="{{ status }}">Description</h3>
             {{{ description }}}
         </section>
-        {{#unless facts.empty }}
+        {{#if facts.entries }}
         <aside class="facts">
             <div class="factTable">
                 <h3>Key Facts</h3>
@@ -42,7 +42,7 @@
                 {{/each}}
             </div>
         </aside>
-        {{/unless}}
+        {{/if}}
         {{#if sequenceDiagram}}
         <section class="sequence diagram svg {{ status }}">
             <h3 class="{{ status }}">Sequence Diagram</h3>
@@ -53,7 +53,7 @@
                     <span class="copy" title="copy" onclick="copyToClipboard('sequence_uml_code{{sequenceDiagram.id}}')"></span>
                     <a class="close" href="#!">&times;</a>
                     <div class="content">
-                        <pre><code id="sequence_uml_code{{sequenceDiagram.id}}">{{{sequenceDiagram.uml}}}</code></pre>
+                        <pre><code id="sequence_uml_code{{sequenceDiagram.id}}">{{sequenceDiagram.uml}}</code></pre>
                     </div>
                 </div>
             </div>
@@ -78,7 +78,7 @@
                 <span class="copy" title="copy" onclick="copyToClipboard('component_uml_code{{componentDiagram.id}}')"></span>
                 <a class="close" href="#{{componentDiagram.id}}">&times;</a><!--show previous popup on close-->
                 <div class="content">
-                    <pre><code id="component_uml_code{{componentDiagram.id}}">{{{componentDiagram.uml}}}</code></pre>
+                    <pre><code id="component_uml_code{{componentDiagram.id}}">{{componentDiagram.uml}}</code></pre>
                 </div>
             </div>
         </div>
@@ -113,11 +113,11 @@
     <script>
         highlightKeywords();
         {{#each report.scenarios }}
-            {{#unless facts.empty }}
+            {{#if facts.entries }}
                 {{#each facts.entries }}
         highlightFact("{{../id}}", "{{value}}");
                 {{/each}}
-            {{/unless}}
+            {{/if}}
         {{/each}}
         unMarkSvg();
     </script>

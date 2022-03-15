@@ -23,10 +23,13 @@ public class HtmlReportRenderer implements ReportRenderer {
     @SneakyThrows
     @Override
     public String render(Report report) {
-        Context context = Context.newBuilder(Map.of("report", report))
-                .resolver(MapValueResolver.INSTANCE, JavaBeanValueResolver.INSTANCE, FieldValueResolver.INSTANCE, MethodValueResolver.INSTANCE)
-                .build();
-        return template.apply(context);
+        return template
+                .apply(Context.newBuilder(Map.of("report", report)).resolver(
+                        MapValueResolver.INSTANCE,
+                        JavaBeanValueResolver.INSTANCE,
+                        FieldValueResolver.INSTANCE,
+                        MethodValueResolver.INSTANCE
+                ).build());
     }
 
     @SneakyThrows
