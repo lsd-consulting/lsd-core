@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html" xml:lang="en" lang="en">
 <head>
-    <title>{{report.title}}</title>
+    <title>LSD</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,7 +11,7 @@
     <div class="contents">
         <ul class="contents">
             {{# each capturedReports~}}
-                <li class="{{ status }}"><a href="{{path.fileName}}">{{ title }}</a></li>
+                <li class="{{ status }}"><a href="{{ filename }}">{{ title }}</a></li>
             {{/each}}
         </ul>
     </div>
