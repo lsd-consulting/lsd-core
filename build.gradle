@@ -11,6 +11,7 @@ apply from: 'hooks.gradle'
 
 group = 'io.github.lsd-consulting'
 version = gitVersion().replaceAll("^v", "")
+logger.lifecycle("Version=$version")
 
 sourceCompatibility = '11'
 

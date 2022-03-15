@@ -91,7 +91,7 @@ public class LsdContext {
     public Path completeReport(String title) {
         Report report = buildReport(title);
         Path path = htmlReportWriter.writeToFile(report);
-        capturedReports.add(new CapturedReport(report.getTitle(), path, report.getStatus()));
+        capturedReports.add(new CapturedReport(report.getTitle(), path.getFileName().toString(), report.getStatus()));
         capturedScenarios.clear();
         currentScenario = new CapturedScenario();
         return path;
