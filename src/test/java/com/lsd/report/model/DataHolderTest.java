@@ -13,13 +13,13 @@ class DataHolderTest {
 
     @Test
     void stripsWhitespaceFromAbbreviatedLabel() {
-        assertThat(dataHolder.abbreviatedLabel()).isEqualTo("contains whitespace before and after");
+        assertThat(dataHolder.getAbbreviatedLabel()).isEqualTo("contains whitespace before and after");
     }
 
     @Test
     void abbreviatesLabelToMaxLength() {
         var messageWithLongLabel = Message.builder().label("a".repeat(1000)).build();
 
-        assertThat(messageWithLongLabel.abbreviatedLabel().length()).isEqualTo(abbreviationLength);
+        assertThat(messageWithLongLabel.getAbbreviatedLabel().length()).isEqualTo(abbreviationLength);
     }
 }

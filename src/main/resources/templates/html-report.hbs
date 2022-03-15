@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html" xml:lang="en" lang="en">
+<head>
+    <title>{{report.title}}</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main role="main">
+    <span onclick="location.href='lsd-index.html';" title="back to index page" class="back_to_index"></span>
+    <h1 class="logo">LSD</h1>
+    <h1>{{ report.title }}</h1>
+    <div class="contents">
+        <h3>Contents</h3>
+        <ul class="contents">
+            {{#each report.scenarios }}
+            <li class="{{ status }}"><a href="#{{ id }}">{{title}}</a></li>
+            {{/each}}
+        </ul>
+    </div>
+    {{#each report.scenarios }}
+
+    <article id="{{ id }}">
+        <span onclick="location.href='#top';" title="top of page" class="back_to_top"></span>
+        <h2 class="{{ status }}">{{title}}</h2>
+        <section class="description {{ status }}">
+            <h3 class="{{ status }}">Description</h3>
+            {{{ description }}}
+        </section>
+        {{#unless facts.empty }}
+        <aside class="facts">
+            <div class="factTable">
+                <h3>Key Facts</h3>
+                <div class="factRow">
+                    <div class="factRowHead">Description</div>
+                    <div class="factRowHead">Value</div>
+                </div>
+                {{#each facts.entries }}
+                <div class="factRow">
+                    <div class="factCell">{{key}}</div>
+                    <div class="factCell">{{value}}</div>
+                </div>
+                {{/each}}
+            </div>
+        </aside>
+        {{/unless}}
+        {{#if sequenceDiagram}}
+        <section class="sequence diagram svg {{ status }}">
+            <h3 class="{{ status }}">Sequence Diagram</h3>
+            <pre>{{{ sequenceDiagram.svg  }}}</pre>
+            <div onclick="location.href='#!';" id="{{sequenceDiagram.id}}" class="overlay">
+                <div class="popup" onclick="event.stopPropagation();">
+                    <h2>PlantUml markup</h2>
+                    <span class="copy" title="copy" onclick="copyToClipboard('sequence_uml_code{{sequenceDiagram.id}}')"></span>
+                    <a class="close" href="#!">&times;</a>
+                    <div class="content">
+                        <pre><code id="sequence_uml_code{{sequenceDiagram.id}}">{{{sequenceDiagram.uml}}}</code></pre>
+                    </div>
+                </div>
+            </div>
+            <sub><a href="#{{sequenceDiagram.id}}">[source]</a></sub>
+            <sub><a href="#{{componentDiagram.id}}">[component diagram]</a></sub>
+        </section>
+        <!-- Popup for component diagram -->
+        <div onclick="location.href='#!';" id="{{ componentDiagram.id }}" class="overlay">
+            <div class="popup" onclick="event.stopPropagation();">
+                <h2>Component Diagram</h2>
+                <a class="close" href="#!">&times;</a>
+                <div class="content">
+                    <pre>{{{ componentDiagram.svg }}}</pre>
+                </div>
+                <sub><a href="#uml{{componentDiagram.id}}">[source]</a></sub>
+            </div>
+        </div>
+        <!-- Popup for component diagram UML via component diagram popup -->
+        <div onclick="location.href='#!';" id="uml{{componentDiagram.id}}" class="overlay">
+            <div class="popup" onclick="event.stopPropagation();">
+                <h2>PlantUml markup</h2>
+                <span class="copy" title="copy" onclick="copyToClipboard('component_uml_code{{componentDiagram.id}}')"></span>
+                <a class="close" href="#{{componentDiagram.id}}">&times;</a><!--show previous popup on close-->
+                <div class="content">
+                    <pre><code id="component_uml_code{{componentDiagram.id}}">{{{componentDiagram.uml}}}</code></pre>
+                </div>
+            </div>
+        </div>
+        <!-- Section containing data for sequence diagram popups -->
+        {{#each dataHolders }}
+        <div onclick="location.href='#!';" id="{{id}}" class="overlay">
+            <div class="popup" onclick="event.stopPropagation();">
+                <h2>{{ abbreviatedLabel }}</h2>
+                <a class="close" href="#!">&times;</a>
+                <div class="content">
+                    <pre>{{{ data }}}</pre>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+        {{/if}}
+    </article>
+    {{/each}}
+</main>
+</body>
+<footer>
+    <script type = "text/javascript" src = "https://d3js.org/d3.v4.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/default.min.css">
+    <script src="custom.js"></script>
+    <script language = "javascript">
+        addSliderForSvgZoom();
+        highlightLifelinesWhenClicked();
+    </script>
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"></script>
+    <script>
+        highlightKeywords();
+        {{#each report.scenarios }}
+            {{#unless facts.empty }}
+                {{#each facts.entries }}
+        highlightFact("{{../id}}", "{{value}}");
+                {{/each}}
+            {{/unless}}
+        {{/each}}
+        unMarkSvg();
+    </script>
+</footer>
+</html>
