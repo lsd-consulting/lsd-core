@@ -97,22 +97,36 @@
                         <pre><code id="sequence_uml_code11">@startuml
 
 !theme plain
+
 skinparam backgroundColor transparent
 
 hide unlinked
 
+
 !include &lt;tupadr3/font-awesome-5/hamburger&gt;
+
 !include &lt;tupadr3/font-awesome-5/heart&gt;
 
+
+
 actor A as &quot;Arnie&quot;
+
 boundary UnusedParticipant
+
 database B as &quot;Badboy\nDB&quot;
 
+
+
 ?-&gt; A: &lt;text fill=&quot;&quot;&gt;[[#1 {in} in]]&lt;/text&gt;
+
 A &lt;-&gt; B: &lt;text fill=&quot;&quot;&gt;[[#2 {Message 1} Message 1]]&lt;/text&gt;
+
 B -&gt;?: &lt;text fill=&quot;&quot;&gt;[[#3 {out} out]]&lt;/text&gt;
+
 Beta -&gt;x Gamma: &lt;text fill=&quot;&quot;&gt;[[#4 {An interaction description that is long enough to need abbreviating} An interaction description that is long enough ...]]&lt;/text&gt;
+
 Gamma --&gt;&gt; Beta: &lt;text fill=&quot;&quot;&gt;[[#5 {A synchronous response} A synchronous response]]&lt;/text&gt;
+
 
 @enduml</code></pre>
                     </div>
@@ -320,21 +334,34 @@ remove @unlinked
                         <pre><code id="sequence_uml_code14">@startuml
 
 !theme plain
+
 skinparam backgroundColor transparent
 
 hide unlinked
 
+
 !include &lt;tupadr3/font-awesome-5/hamburger&gt;
+
 !include &lt;tupadr3/font-awesome-5/heart&gt;
 
+
+
 actor A as &quot;Arnie&quot;
+
 boundary UnusedParticipant
+
 database B as &quot;Badboy\nDB&quot;
 
+
+
 A --[#orange]&gt;&gt; B: &lt;text fill=&quot;orange&quot;&gt;[[#6 {Sending food } Sending food &lt;$hamburger{scale=0.4}&gt;]]&lt;/text&gt;
+
 ...
+
 B -[#red]&gt; A: &lt;text fill=&quot;red&quot;&gt;[[#7 {Sending a response} Sending a response]]&lt;/text&gt;
+
 note left: Friends &lt;$heart{scale=0.4,color=red}&gt;
+
 
 @enduml</code></pre>
                     </div>
@@ -478,19 +505,30 @@ remove @unlinked
                         <pre><code id="sequence_uml_code17">@startuml
 
 !theme plain
+
 skinparam backgroundColor transparent
 
 hide unlinked
 
+
 !include &lt;tupadr3/font-awesome-5/hamburger&gt;
+
 !include &lt;tupadr3/font-awesome-5/heart&gt;
 
+
+
 actor A as &quot;Arnie&quot;
+
 boundary UnusedParticipant
+
 database B as &quot;Badboy\nDB&quot;
 
+
+
 Beta -&gt; Gamma: &lt;text fill=&quot;&quot;&gt;[[#8 {a request} a request]]&lt;/text&gt;
+
 Gamma --&gt;&gt; Beta: &lt;text fill=&quot;&quot;&gt;[[#9 {a synchronous response} a synchronous response]]&lt;/text&gt;
+
 
 @enduml</code></pre>
                     </div>

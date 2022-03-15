@@ -103,61 +103,94 @@
                         <pre><code id="sequence_uml_code5">@startuml
 
 !theme plain
+
 skinparam backgroundColor transparent
 
 hide unlinked
 
+
 !include &lt;tupadr3/font-awesome-5/hamburger&gt;
+
 !include &lt;tupadr3/font-awesome-5/heart&gt;
 
+
+
 actor A as &quot;Arnie&quot;
+
 boundary UnusedParticipant
+
 database B as &quot;Badboy\nDB&quot;
+
+
 
 
 title A title
 
+
 ?-&gt; A: &lt;text fill=&quot;&quot;&gt;[[#1 {in} in]]&lt;/text&gt;
+
 
 @enduml
 @startuml
 
 !theme plain
+
 skinparam backgroundColor transparent
 
 hide unlinked
 
+
 !include &lt;tupadr3/font-awesome-5/hamburger&gt;
+
 !include &lt;tupadr3/font-awesome-5/heart&gt;
 
+
+
 actor A as &quot;Arnie&quot;
+
 boundary UnusedParticipant
+
 database B as &quot;Badboy\nDB&quot;
+
+
 
 
 title A second page
 
+
 B -&gt;?: &lt;text fill=&quot;&quot;&gt;[[#2 {out} out]]&lt;/text&gt;
+
 
 @enduml
 @startuml
 
 !theme plain
+
 skinparam backgroundColor transparent
 
 hide unlinked
 
+
 !include &lt;tupadr3/font-awesome-5/hamburger&gt;
+
 !include &lt;tupadr3/font-awesome-5/heart&gt;
 
+
+
 actor A as &quot;Arnie&quot;
+
 boundary UnusedParticipant
+
 database B as &quot;Badboy\nDB&quot;
+
+
 
 
 title A third page
 
+
 Beta -&gt;x Gamma: &lt;text fill=&quot;&quot;&gt;[[#3 {An interaction description that is long enough to need abbreviating} An interaction description that is long enough ...]]&lt;/text&gt;
+
 
 @enduml</code></pre>
                     </div>

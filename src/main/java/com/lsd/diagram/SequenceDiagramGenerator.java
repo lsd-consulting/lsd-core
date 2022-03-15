@@ -1,17 +1,15 @@
 package com.lsd.diagram;
 
+import com.github.jknack.handlebars.Handlebars;
+import com.github.jknack.handlebars.Template;
 import com.lsd.IdGenerator;
 import com.lsd.events.SequenceEvent;
 import com.lsd.properties.LsdProperties;
 import com.lsd.report.model.Diagram;
 import com.lsd.report.model.Participant;
-import com.mitchellbosecke.pebble.PebbleEngine;
-import com.mitchellbosecke.pebble.template.PebbleTemplate;
 import lombok.Builder;
 import lombok.SneakyThrows;
 
-import java.io.StringWriter;
-import java.io.Writer;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -24,8 +22,8 @@ import static org.apache.commons.collections4.ListUtils.partition;
 
 @Builder
 public class SequenceDiagramGenerator {
-    private final PebbleEngine engine = new PebbleEngine.Builder().autoEscaping(false).build();
-    private final PebbleTemplate compiledTemplate = engine.getTemplate("templates/sequence-uml.peb");
+    private final Handlebars handlebars = new Handlebars();
+    private final Template template = compileTemplate("templates/sequence-uml");
 
     private final Set<String> includes;
     private final List<Participant> participants;
@@ -58,8 +56,7 @@ public class SequenceDiagramGenerator {
 
     @SneakyThrows
     private String generateSequenceUml(List<SequenceEvent> events) {
-        Writer writer = new StringWriter();
-        compiledTemplate.evaluate(writer, Map.of(
+        return template.apply(Map.of(
                 "theme", LsdProperties.get(DIAGRAM_THEME),
                 "includes", includes,
                 "participants", participants.stream().distinct().collect(toList()),
@@ -67,6 +64,11 @@ public class SequenceDiagramGenerator {
                         .map(SequenceEvent::toMarkup)
                         .collect(toList())
         ));
-        return writer.toString();
     }
+
+    @SneakyThrows
+    private static Template compileTemplate(String location) {
+        return new Handlebars().compile(location);
+    }
+
 }

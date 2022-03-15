@@ -1,0 +1,21 @@
+@startuml
+
+!theme {{theme}}
+
+skinparam backgroundColor transparent
+
+hide unlinked
+
+{{#each includes}}
+!include <{{{ . }}}>
+{{/each}}
+
+{{#each participants}}
+{{{ markup }}}
+{{/each}}
+
+{{#each events }}
+{{{ . }}}
+{{/each}}
+
+@enduml
