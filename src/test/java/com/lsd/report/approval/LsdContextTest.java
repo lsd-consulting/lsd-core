@@ -22,7 +22,7 @@ class LsdContextTest {
     private final LsdContext lsdContext = LsdContext.getInstance();
     private final IdGenerator idGenerator = lsdContext.getIdGenerator();
 
-    private LinkedHashSet<String> additionalIncludes = new LinkedHashSet<>(List.of(
+    private final LinkedHashSet<String> additionalIncludes = new LinkedHashSet<>(List.of(
             "tupadr3/font-awesome-5/hamburger",
             "tupadr3/font-awesome-5/heart"
     ));
@@ -69,7 +69,7 @@ class LsdContextTest {
         lsdContext.addFact("some important value", "123456");
         lsdContext.completeScenario("An Error scenario", "<p>Failure! Expected value to be 123 but was 123456</p>", ERROR);
 
-        Approvals.verify(lsdContext.completeReport("Approval Report").toFile());
+        Approvals.verifyHtml(lsdContext.generateReport("Approval Report"));
     }
     
     @Test
@@ -85,7 +85,7 @@ class LsdContextTest {
         lsdContext.capture(Message.builder().id(nextId()).label("An interaction description that is long enough to need abbreviating").from("Beta").to("Gamma").data("β").arrowType(LOST).build());
         lsdContext.completeScenario("A Success scenario", "Given a first scenario description<br/>When something happens<br/>Then something else happens", SUCCESS);
 
-        Approvals.verify(lsdContext.completeReport("Split by NewPage Report").toFile());
+        Approvals.verifyHtml(lsdContext.generateReport("Split by NewPage Report"));
     }
 
     @Test
@@ -95,7 +95,7 @@ class LsdContextTest {
         lsdContext.addFact("Fact", "no diagrams");
         lsdContext.completeScenario("A scenario without events", "This has no diagrams", SUCCESS);
         
-        Approvals.verify(lsdContext.completeReport("No Diagrams Report").toFile());
+        Approvals.verifyHtml(lsdContext.generateReport("No Diagrams Report"));
     }
 
     @Test

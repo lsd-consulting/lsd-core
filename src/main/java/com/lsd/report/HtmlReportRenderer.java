@@ -1,28 +1,41 @@
 package com.lsd.report;
 
+import com.github.jknack.handlebars.Context;
+import com.github.jknack.handlebars.Handlebars;
+import com.github.jknack.handlebars.Helper;
+import com.github.jknack.handlebars.Template;
+import com.github.jknack.handlebars.context.FieldValueResolver;
+import com.github.jknack.handlebars.context.JavaBeanValueResolver;
+import com.github.jknack.handlebars.context.MapValueResolver;
+import com.github.jknack.handlebars.context.MethodValueResolver;
 import com.lsd.report.model.Report;
-import com.lsd.report.pebble.LsdPebbleExtension;
-import com.mitchellbosecke.pebble.PebbleEngine;
-import com.mitchellbosecke.pebble.template.PebbleTemplate;
 import lombok.SneakyThrows;
 
-import java.io.StringWriter;
-import java.io.Writer;
 import java.util.Map;
+
+import static com.lsd.Sanitiser.sanitise;
+
 
 public class HtmlReportRenderer implements ReportRenderer {
 
-    private final PebbleEngine engine = new PebbleEngine.Builder()
-            .extension(new LsdPebbleExtension())
-            .build();
-
-    private final PebbleTemplate compiledTemplate = engine.getTemplate("templates/html-report.peb");
+    private final Template template = compileTemplate("templates/html-report");
 
     @SneakyThrows
     @Override
     public String render(Report report) {
-        Writer writer = new StringWriter();
-        compiledTemplate.evaluate(writer, Map.of("report", report));
-        return writer.toString();
+        return template
+                .apply(Context.newBuilder(Map.of("report", report)).resolver(
+                        MapValueResolver.INSTANCE,
+                        JavaBeanValueResolver.INSTANCE,
+                        FieldValueResolver.INSTANCE,
+                        MethodValueResolver.INSTANCE
+                ).build());
+    }
+
+    @SneakyThrows
+    private static Template compileTemplate(String location) {
+        Handlebars handlebars = new Handlebars();
+        handlebars.registerHelper("sanitise", (Helper<String>) (input, options) -> sanitise(input));
+        return handlebars.compile(location);
     }
 }

@@ -21,7 +21,7 @@ public interface DataHolder extends SequenceEvent {
     /**
      * @return An abbreviation of the label if the length exceeds the configured maximum width.
      */
-    default String abbreviatedLabel() {
+    default String getAbbreviatedLabel() {
         return abbreviate(getLabel().strip(), "...", LsdProperties.getInt(LABEL_MAX_WIDTH));
     }
 }

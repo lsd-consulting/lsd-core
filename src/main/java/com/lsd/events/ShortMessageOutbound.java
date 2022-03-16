@@ -1,7 +1,7 @@
 package com.lsd.events;
 
-import com.lsd.report.model.DataHolder;
 import com.lsd.diagram.ValidComponentName;
+import com.lsd.report.model.DataHolder;
 import lombok.Builder.Default;
 import lombok.Data;
 import lombok.experimental.SuperBuilder;
@@ -34,7 +34,7 @@ public class ShortMessageOutbound implements DataHolder {
                 "from", ValidComponentName.of(getFrom()),
                 "id", getId(),
                 "tooltip", sanitise(getLabel()),
-                "label", abbreviatedLabel(),
+                "label", getAbbreviatedLabel(),
                 "colour", getColour(),
                 "arrow", getArrowType().toMarkup(getColour())
         ));
