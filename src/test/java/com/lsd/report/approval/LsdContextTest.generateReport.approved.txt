@@ -12,9 +12,11 @@
     <div class="contents">
         <h3>Contents</h3>
         <ul class="contents">
-                    </ul>
+            
+        </ul>
     </div>
-    </main>
+    
+</main>
 </body>
 <footer>
     <script type = "text/javascript" src = "https://d3js.org/d3.v4.min.js"></script>
@@ -29,7 +31,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"></script>
     <script>
         highlightKeywords();
-                unMarkSvg();
+        
+        unMarkSvg();
     </script>
 </footer>
 </html>

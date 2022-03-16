@@ -1,7 +1,7 @@
 package com.lsd.events;
 
-import com.lsd.report.model.DataHolder;
 import com.lsd.diagram.ValidComponentName;
+import com.lsd.report.model.DataHolder;
 import lombok.Builder.Default;
 import lombok.Data;
 import lombok.experimental.SuperBuilder;
@@ -35,7 +35,7 @@ public class Message implements DataHolder {
                 "to", ValidComponentName.of(getTo()),
                 "id", getId(),
                 "tooltip", sanitise(getLabel()),
-                "label", abbreviatedLabel(),
+                "label", getAbbreviatedLabel(),
                 "colour", getColour(),
                 "arrow", getArrowType().toMarkup(getColour())
         ));
