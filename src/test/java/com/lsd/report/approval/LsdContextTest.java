@@ -97,6 +97,18 @@ class LsdContextTest {
         
         Approvals.verifyHtml(lsdContext.generateReport("No Diagrams Report"));
     }
+    
+    @Test
+    void hasNoDiagramSectionWhenEventsAreCleared() {
+        lsdContext.addParticipants(participants);
+        lsdContext.capture(ShortMessageInbound.builder().id(nextId()).to("A").label("in").data("start some job").build());
+        lsdContext.capture(ShortMessageInbound.builder().id(nextId()).to("B").label("in").data("start another job").build());
+        
+        lsdContext.clearScenarioEvents();
+        lsdContext.completeScenario("A scenario without events (cleared down)", "This has no diagrams", SUCCESS);
+        
+        Approvals.verifyHtml(lsdContext.generateReport("No Diagrams Report (cleared down)"));
+    }
 
     @Test
     void createsIndex() {

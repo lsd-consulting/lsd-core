@@ -106,11 +106,23 @@ public class LsdContext {
         return HtmlIndexWriter.writeToFile(capturedReports);
     }
 
+    /**
+     * This clears down the context - all scenarios, reports, events and ids will be reset.
+     */
     public void clear() {
         idGenerator.reset();
         capturedScenarios.clear();
         capturedReports.clear();
         currentScenario = new CapturedScenario();
+    }
+
+    /**
+     * Clears the captured sequence events for the current scenario only.
+     * 
+     * This may be useful for removing events captured during test-setup for example. 
+     */
+    public void clearScenarioEvents() {
+        currentScenario.clearEvents();
     }
 
     public IdGenerator getIdGenerator() {

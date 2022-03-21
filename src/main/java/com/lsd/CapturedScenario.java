@@ -26,6 +26,10 @@ public class CapturedScenario {
             sequenceEvents.add(sequenceEvent);
         }
     }
+    
+    public void clearEvents() {
+        sequenceEvents.clear();
+    }
 
     public void addFact(String key, String value) {
         facts.put(key, value);
