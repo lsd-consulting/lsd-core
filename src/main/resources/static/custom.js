@@ -11,25 +11,33 @@ function addSliderForSvgZoom() {
             let svgParent = d3.select(this.parentNode);
             let viewBox = svg.attr("viewBox");
             let viewBoxDimensions = viewBox.split(" ");
-            let width = viewBoxDimensions[2];
-            let height = viewBoxDimensions[3];
+            let originalWidth = viewBoxDimensions[2];
+            let originalHeight = viewBoxDimensions[3];
             svgParent.insert('input', 'svg')
-                .attr("min", 0.1)
+                .attr("min", 0.01)
                 .attr("type", "range")
                 .attr("max", 1)
                 .attr("step", 0.01)
                 .attr("value", 1)
-                .on("input", function () {
-                    let sliderValue = this.value;
-                    let newWidth = width / sliderValue;
-                    let newHeight = height / sliderValue;
-                    let newViewBox = '0 0 ' + newWidth + ' ' + newHeight;
-                    svg.attr("viewBox", newViewBox)
-                    svg.attr("style", "") // remove inline styling which overrides height and width
-                    svg.attr("width", width * sliderValue)
-                    svg.attr("height", height * sliderValue)
-                });
+                .on("input", adjustSvgZoom(originalWidth, originalHeight, svg));
         });
+}
+
+function adjustSvgZoom(originalWidth, originalHeight, svg) {
+    return function () {
+        let sliderValue = this.value;
+        if (sliderValue < 0.1) {
+            svg.attr("style", "display:none;");
+        } else {
+            let newWidth = originalWidth / sliderValue;
+            let newHeight = originalHeight / sliderValue;
+            let newViewBox = '0 0 ' + newWidth + ' ' + newHeight;
+            svg.attr("viewBox", newViewBox)
+            svg.attr("style", "") // remove inline styling which overrides height and width
+            svg.attr("width", originalWidth * sliderValue)
+            svg.attr("height", originalHeight * sliderValue)
+        }
+    };
 }
 
 function highlightLifelinesWhenClicked() {
