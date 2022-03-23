@@ -33,7 +33,7 @@ function adjustSvgZoom(originalWidth, originalHeight, svg) {
             let newHeight = originalHeight / sliderValue;
             let newViewBox = '0 0 ' + newWidth + ' ' + newHeight;
             svg.attr("viewBox", newViewBox)
-            svg.attr("style", "") // remove inline styling which overrides height and width
+            svg.attr("style", "display:block;") // also removes inline styling of height and width
             svg.attr("width", originalWidth * sliderValue)
             svg.attr("height", originalHeight * sliderValue)
         }

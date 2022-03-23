@@ -46,7 +46,7 @@
         {{#if sequenceDiagram}}
         <section class="sequence diagram svg {{ status }}">
             <h3 class="{{ status }}">Sequence Diagram</h3>
-            <pre>{{{ sequenceDiagram.svg  }}}</pre>
+            <figure>{{{ sequenceDiagram.svg  }}}</figure>
             <div onclick="location.href='#!';" id="{{sequenceDiagram.id}}" class="overlay">
                 <div class="popup" onclick="event.stopPropagation();">
                     <h2>PlantUml markup</h2>
