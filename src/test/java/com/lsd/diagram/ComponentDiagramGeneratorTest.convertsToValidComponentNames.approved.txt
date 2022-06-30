@@ -1,0 +1,13 @@
+@startuml
+!pragma layout smetana
+!theme plain
+skinparam backgroundColor transparent
+
+component SomeServiceName
+
+
+[A] --> B
+
+
+remove @unlinked
+@enduml

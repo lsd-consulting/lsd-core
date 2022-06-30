@@ -40,6 +40,15 @@ class ComponentDiagramGeneratorTest {
 
         Approvals.verify(diagram.getUml());
     }
+    
+    @Test
+    void convertsToValidComponentNames() {
+        var sampleParticipant = PARTICIPANT.called("Some service / name");
+        var diagramGenerator = new ComponentDiagramGenerator(List.of(sampleParticipant), List.of(sampleMessage()), idGenerator);
+        var diagram = diagramGenerator.diagram().orElseThrow();
+
+        Approvals.verify(diagram.getUml());
+    }
 
     private Message sampleMessage() {
         return Message.builder()
