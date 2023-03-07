@@ -23,14 +23,14 @@ dependencies {
 
     implementation 'org.projectlombok:lombok:1.18.22'
     implementation 'com.github.jknack:handlebars:4.3.0'
-    implementation 'net.sourceforge.plantuml:plantuml:2022.6'
+    implementation 'net.sourceforge.plantuml:plantuml:1.2022.8'
     implementation 'io.github.lsd-consulting:lsd-formatting-library:1.0.6'
     implementation 'org.apache.commons:commons-text:1.10.0'
     implementation 'com.j2html:j2html:1.5.0'
     implementation 'org.apache.commons:commons-collections4:4.4'
 
     testImplementation 'org.assertj:assertj-core:3.23.1'
-    testImplementation 'com.approvaltests:approvaltests:15.8.0'
+    testImplementation 'com.approvaltests:approvaltests:18.5.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.2'
     testImplementation 'org.mockito:mockito-all:2.0.2-beta'
