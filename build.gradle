@@ -1,5 +1,6 @@
 plugins {
-    id 'java-library'
+    id 'org.jetbrains.kotlin.jvm' version '1.8.10'
+    id("org.jetbrains.dokka") version "1.8.10"
     id 'maven-publish'
     id 'signing'
     id 'io.github.gradle-nexus.publish-plugin' version '1.1.0'
@@ -12,16 +13,17 @@ apply from: 'hooks.gradle'
 group = 'io.github.lsd-consulting'
 version = gitVersion().replaceAll("^v", "")
 
-sourceCompatibility = '11'
 
 repositories {
     mavenCentral()
+    mavenLocal()
+}
+
+kotlin {
+    jvmToolchain(11)
 }
 
 dependencies {
-    annotationProcessor 'org.projectlombok:lombok:1.18.22'
-
-    implementation 'org.projectlombok:lombok:1.18.22'
     implementation 'com.github.jknack:handlebars:4.3.0'
     implementation 'net.sourceforge.plantuml:plantuml:1.2023.2'
     implementation 'io.github.lsd-consulting:lsd-formatting-library:1.0.6'
@@ -56,14 +58,14 @@ test {
     finalizedBy jacocoTestReport
 }
 
-task sourcesJar(type: Jar, dependsOn: classes) {
-    archiveClassifier = 'sources'
-    from sourceSets.main.allSource
+java {
+    withSourcesJar()
 }
 
-task javadocJar(type: Jar) {
+tasks.register('javadocJar', Jar) {
+    dependsOn(dokkaJavadoc)
     archiveClassifier = 'javadoc'
-    from javadoc
+    from dokkaHtml.outputDirectory
 }
 
 artifacts {
@@ -79,7 +81,7 @@ publishing {
             artifactId = 'lsd-core'
             version = "${version}"
 
-            from components.java
+            from components.kotlin
             artifact sourcesJar
             artifact javadocJar
             pom {
@@ -124,7 +126,7 @@ publishing {
 
 nexusPublishing {
     repositories {
-        sonatype {  
+        sonatype {
             nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
             snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
         }
@@ -143,4 +145,3 @@ signing {
         sign publishing.publications.mavenJava
     }
 }
-

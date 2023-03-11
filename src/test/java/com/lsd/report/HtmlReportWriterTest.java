@@ -9,6 +9,7 @@ import org.junitpioneer.jupiter.SetSystemProperty;
 import java.io.File;
 
 import static com.lsd.properties.LsdProperties.OUTPUT_DIR;
+import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
@@ -19,7 +20,7 @@ class HtmlReportWriterTest {
     private final String outputDirectory = LsdProperties.get(OUTPUT_DIR);
     private final ReportRenderer mockRenderer = mock(ReportRenderer.class);
     private final HtmlReportWriter underTest = new HtmlReportWriter(mockRenderer);
-    private final Report aReport = Report.builder().title("report title").build();
+    private final Report aReport = new Report("report title", emptyList(), "");
 
     @BeforeEach
     public void setup() {
@@ -41,7 +42,7 @@ class HtmlReportWriterTest {
 
         assertThat(new File(LsdProperties.get(OUTPUT_DIR), "style.css")).exists();
     }
-    
+
     @Test
     void addJavaScriptFileToOutputDirectory() {
         underTest.writeToFile(aReport);

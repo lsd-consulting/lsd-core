@@ -1,46 +1,29 @@
 package com.lsd.report.approval;
 
 import com.lsd.IdGenerator;
-import com.lsd.ParticipantType;
 import com.lsd.diagram.SequenceDiagramGenerator;
 import com.lsd.events.Message;
 import org.approvaltests.Approvals;
 import org.junit.jupiter.api.Test;
 
-import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Objects;
 
-import static com.lsd.events.ArrowType.BI_DIRECTIONAL_DOTTED;
-import static com.lsd.events.ArrowType.DOTTED;
+import static com.lsd.ParticipantType.*;
+import static com.lsd.events.ArrowType.*;
 
 class PlantUmlRendererApprovalTest {
 
     @Test
     void renderSequenceUml() {
-        var diagram = sequenceDiagramGenerator().diagram(2).orElseThrow();
-        
+        var diagram = Objects.requireNonNull(sequenceDiagramGenerator().diagram(2));
         Approvals.verify(diagram.getUml());
     }
 
     private SequenceDiagramGenerator sequenceDiagramGenerator() {
-        return SequenceDiagramGenerator.builder()
-                .idGenerator(new IdGenerator(true))
-                .includes(new LinkedHashSet<>(List.of(
-                        "tupadr3/font-awesome-5/clock",
-                        "tupadr3/font-awesome-5/database"
-                )))
-                .participants(List.of(
-                        ParticipantType.ACTOR.called("Arnold", "Arnie"),
-                        ParticipantType.BOUNDARY.called("Nick"),
-                        ParticipantType.CONTROL.called("A control"),
-                        ParticipantType.COLLECTIONS.called("some collection"),
-                        ParticipantType.ENTITY.called("Entity"),
-                        ParticipantType.PARTICIPANT.called("Party"),
-                        ParticipantType.QUEUE.called("Party"),
-                        ParticipantType.QUEUE.called("Party"), // Duplicate participant to test dropping duplicates
-                        ParticipantType.DATABASE.called("Derek", "D for danger")
-                ))
-                .events(List.of(
+        return new SequenceDiagramGenerator(
+                new IdGenerator(true),
+                List.of(
                         Message.builder()
                                 .id("1")
                                 .label(" Sending a request ")
@@ -62,7 +45,21 @@ class PlantUmlRendererApprovalTest {
                                 .from("B")
                                 .to("A")
                                 .arrowType(BI_DIRECTIONAL_DOTTED)
-                                .build()
-                )).build();
+                                .build()),
+                List.of(
+                        "tupadr3/font-awesome-5/clock",
+                        "tupadr3/font-awesome-5/database"
+                ),
+                List.of(
+                        ACTOR.called("Arnold", "Arnie"),
+                        BOUNDARY.called("Nick"),
+                        CONTROL.called("A control"),
+                        COLLECTIONS.called("some collection"),
+                        ENTITY.called("Entity"),
+                        PARTICIPANT.called("Party"),
+                        QUEUE.called("Party"),
+                        QUEUE.called("Party"), // Duplicate participant to test dropping duplicates
+                        DATABASE.called("Derek", "D for danger")
+                ));
     }
 }

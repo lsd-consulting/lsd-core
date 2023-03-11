@@ -20,6 +20,7 @@ import static j2html.TagCreator.*;
 class LsdContextTest {
 
     private final LsdContext lsdContext = LsdContext.getInstance();
+    
     private final IdGenerator idGenerator = lsdContext.getIdGenerator();
 
     private final LinkedHashSet<String> additionalIncludes = new LinkedHashSet<>(List.of(
