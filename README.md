@@ -1,61 +1,141 @@
 [![semantic-release](https://img.shields.io/badge/semantic-release-e10079.svg?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
-
-# LSD Core
 [![CI](https://github.com/lsd-consulting/lsd-core/actions/workflows/ci.yml/badge.svg)](https://github.com/lsd-consulting/lsd-core/actions/workflows/ci.yml)
 [![Nightly Build](https://github.com/lsd-consulting/lsd-core/actions/workflows/nightly.yml/badge.svg)](https://github.com/lsd-consulting/lsd-core/actions/workflows/nightly.yml)
 [![GitHub release](https://img.shields.io/github/release/lsd-consulting/lsd-core)](https://github.com/lsd-consulting/lsd-core/releases)
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.lsd-consulting/lsd-core.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.lsd-consulting%22%20AND%20a:%22lsd-core%22)
 
+# LSD Core
+
+A tool for creating sequence diagrams dynamically without needing to worry about markup.
+
+![example_sequence_diagram.png](docs%2Fexample_sequence_diagram.png)
+
+This library generates html reports and each report contains one or more scenarios of captured events to be displayed 
+ on a sequence diagram.
+
+(Additionally a component diagram is generated to show relationships). 
+
+![example_component_diagram.png](docs%2Fexample_component_diagram.png)
+
 ## Usage
-This library generates html reports and each report contains one or more scenarios that may have captured events that 
-get displayed on sequence diagrams (a component diagram is generated too). 
 
-* Use the LsdContext singleton instance to capture the events for each scenario to be included in the repost. This is a singleton instance
-and can be accessed by calling the `getInstance()` static method:
+* Add dependency for version: [![Maven Central](https://img.shields.io/maven-central/v/io.github.lsd-consulting/lsd-core.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.lsd-consulting%22%20AND%20a:%22lsd-core%22)
 
-```java
-// Wherever required a reference to the lsdContext instance can be obtained like this
-LsdContext.getInstance();
-```
+    <details>
+      <summary>Maven</summary>
+    
+    ```xml
+      <dependency>
+          <groupId>io.github.lsd-consulting</groupId>
+          <artifactId>lsd-core</artifactId>
+          <version>X.X.X</version>
+      </dependency>
+    ```
+    
+    </details>
+    
+    <details>
+      <summary>Gradle</summary>
+    
+    ```groovy
+        implementation 'io.github.lsd-consulting:lsd-core:X.X.X'
+    ```
+    </details>
 
-* Use the lsdContext to capture interactions during the runtime of the application or test e.g.
-```java
-// There are various types of events that can be captured, here are a couple examples using the provided builders
-lsdContext.capture(ShortMessageInbound.builder().id(nextId()).to("A").label("in").data("start some job").build());
-   
-lsdContext.capture(Message.builder().id(nextId()).from("A").to("B").label("Message 1").data("some data 1").arrowType(BI_DIRECTIONAL).build());
-```
 
-* After the events have been captured for a particular scenario you should mark the scenario as complete and provide a name:
-```java
-lsdContext.completeScenario("A Scenario Title", "The sceenario description goes here and may contain html", SUCCESS);
-```
+* Use the LsdContext singleton instance to capture the events for each scenario to be included in the report. 
 
-* After one or more scenarios have been capture you can generate a report like so:
-```java
-// This returns a Path object for the generated file
-lsdContext.completeReport("My Report Title")
-```
+    <details>
+    <summary>Java example:</summary>
 
-**Additional options**
-* Participants can be captured to provide aliases and control the appearance and order of the components on the sequence diagram e.g.
-```java
-lsdContext.addParticipants(List.of(
-    ACTOR.called("A", "Arnie"),
-    ACTOR.called("C"),
-    DATABASE.called("B", "Barny\\nBoy"))
-);
-```
+    ```java
+        import static com.lsd.core.builders.MessageBuilder.*;
+    
+        ...
+                
+        // A reference to the lsdContext instance can be obtained like this
+        var lsdContext = LsdContext.getInstance();
+        
+        ...
+    
+        var arnie = ACTOR.called("Arnie");
+        var bank = PARTICIPANT.called("Bank");
+        var repository = DATABASE.called("Repository");
+    
+        lsdContext.addParticipants(List.of(arnie, bank, repository));
+        
+        lsdContext.capture(new PageTitle("Checking account balanace"));
+        lsdContext.capture(new NoteLeft("On payday", arnie));
+    
+        lsdContext.capture(messageBuilder().id(nextId())
+            .from(arnie)
+            .to(bank)
+            .label("What is my balance?")
+            .data("{ name: 'arnie' }").build());
+    
+        lsdContext.capture(new NoteLeft("High load on\\n payday", bank));
+    
+        lsdContext.capture(messageBuilder().id(nextId())
+            .from(bank)
+            .to(repository)
+            .label("Get balance for Arnie").build());
+    
+        lsdContext.capture(new TimeDelay("a couple seconds later"));
+    
+        lsdContext.capture(messageBuilder().id(nextId())
+            .from(repository)
+            .to(bank)
+            .type(SYNCHRONOUS_RESPONSE)
+            .label("Nothing yet..").build());
+    
+        lsdContext.capture(messageBuilder().id(nextId())
+            .from(bank)
+            .to(arnie)
+            .label("Your balance is 0")
+            .type(SYNCHRONOUS_RESPONSE).build());
+    
+        lsdContext.completeScenario("Checking bank balance", "Capture bank balance lookup", SUCCESS);
+    
+        lsdContext.completeReport("Bank balance interactions");
+    ```
+    
+    </details>
 
-* To draw attention to some interesting details you can include a fact like so before the report is generated:
-```java
-// instances of the keyword Lorem will be highlighted on the report
-lsdContext.addFact("Something to highlight", "Lorem");
-```
+### Additional options
+* A html index file can be generated if multiple reports are captured:
+  ```java
+      lsdContext.createIndex()
+  ```
 
-## Framework Libraries
+* To draw attention to some interesting details you can include **facts** e.g.
+  ```java
+      // instances of the keyword Lorem will be highlighted on the report
+      lsdContext.addFact("Something to highlight", "Lorem");
+  ```
 
-A few libraries exist to automate some of the steps to capture scenarios and generate reports e.g. via JUnit or Cucumber 
+* Advanced users may want to include **additional files** for additional icons etc. For example to include a heart icon on a note:
+  ```java
+        lsdContext.includeFiles(List.of("tupadr3/font-awesome-5/heart"));
+
+        lsdContext.capture(new NoteLeft("Friends <$heart{scale=0.4,color=red}>", null));
+  ```
+  
+## Properties
+The following properties can be overridden by adding a properties file called `lsd.properties` on the classpath of your 
+application or by setting a System property. Note that System properties override file properties.
+
+| Property Name        | Default     | Description |
+| ----------- | ----------- |------------ |
+| lsd.core.label.maxWidth | 200 | The width in number of characters for the labels that appear on the diagrams before being abbreviated. |
+| lsd.core.diagram.theme | plain | The plantUml theme to apply to the diagrams. See the [available themes](https://plantuml.com/theme). |
+| lsd.core.report.outputDir | build/reports/lsd | The directory to write the report files. (This can be a relative path).|
+| lsd.core.ids.deterministic | false | Determines how the html element ids are generated. Allowing deterministic ids is useful when testing (e.g. approval tests of html output since the generated ids won't be random. The default option which provides random ids should be preferred otherwise.|
+| lsd.core.diagram.sequence.maxEventsPerDiagram | 50 | To help make really large diagrams easier to read this value is used to decide when to split a potentially large diagram into sub-diagrams. (Each sub diagram will remove any unused participants and include the participant headers and footers). |
+
+
+## Related Libraries
+
+A few libraries exist to automate some of the steps to capture scenarios and generate reports e.g. via JUnit or Cucumber
 as plugins or extentions to the libraries.
 
 | Name | Latest Version | Description |
@@ -72,23 +152,12 @@ Some libraries have been created to automate the capturing of events e.g. within
 | [lsd-interceptors](https://github.com/lsd-consulting/lsd-interceptors) | [![Maven Central](https://img.shields.io/maven-central/v/io.github.lsd-consulting/lsd-interceptors.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.lsd-consulting%22%20AND%20a:%22lsd-interceptors%22) | Automates the collection of HTTP requests and AMQP messages within a springboot microservice for the sequence diagrams. Works well for acceptance or component tests. |
 | [lsd-distributed-interceptors](https://github.com/lsd-consulting/lsd-distributed-interceptors) |![Maven Central](https://img.shields.io/maven-central/v/io.github.lsd-consulting/lsd-distributed-interceptor) | Enables the automated collection of HTTP requests and AMQP messages sent between springboot microservices. Works well for end to end tests or general purpose tracing of all events being sent between services |
 
-## Properties
-The following properties can be overridden by adding a properties file called `lsd.properties` on the classpath of your 
-application or by setting a System property. Note that System properties override file properties.
-
-| Property Name        | Default     | Description |
-| ----------- | ----------- |------------ |
-| lsd.core.label.maxWidth | 200 | The width in number of characters for the labels that appear on the diagrams before being abbreviated. |
-| lsd.core.diagram.theme | plain | The plantUml theme to apply to the diagrams. See the [available themes](https://plantuml.com/theme). |
-| lsd.core.report.outputDir | build/reports/lsd | The directory to write the report files. (This can be a relative path).|
-| lsd.core.ids.deterministic | false | Determines how the html element ids are generated. Allowing deterministic ids is useful when testing (e.g. approval tests of html output since the generated ids won't be random. The default option which provides random ids should be preferred otherwise.|
-| lsd.core.diagram.sequence.maxEventsPerDiagram | 50 | To help make really large diagrams easier to read this value is used to decide when to split a potentially large diagram into sub-diagrams. (Each sub diagram will remove any unused participants and include the participant headers and footers). |
 
 ## Building
 
 ### Prerequisites
-* Java 11 
-* IDE's will need to enable annotation processing (Lombok is used throughout the project to reduce the amount of boilerplate code).
+* Kotlin
+* Java 11 JDK
 
 ### Git hooks
 
@@ -97,3 +166,4 @@ Git hooks will be configured automatically (to use the hooks in `.githooks` dire
 ### Build
 
     ./gradlew clean build
+

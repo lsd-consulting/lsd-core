@@ -26,7 +26,7 @@
             <h3 class="{{ status }}">Description</h3>
             {{{ description }}}
         </section>
-        {{#if facts.entries }}
+        {{#if facts }}
         <aside class="facts">
             <div class="factTable">
                 <h3>Key Facts</h3>
@@ -34,7 +34,7 @@
                     <div class="factRowHead">Description</div>
                     <div class="factRowHead">Value</div>
                 </div>
-                {{#each facts.entries }}
+                {{#each facts }}
                 <div class="factRow">
                     <div class="factCell">{{key}}</div>
                     <div class="factCell">{{value}}</div>
@@ -113,8 +113,8 @@
     <script>
         highlightKeywords();
         {{#each report.scenarios }}
-            {{#if facts.entries }}
-                {{#each facts.entries }}
+            {{#if facts }}
+                {{#each facts }}
         highlightFact("{{../id}}", "{{value}}");
                 {{/each}}
             {{/if}}
