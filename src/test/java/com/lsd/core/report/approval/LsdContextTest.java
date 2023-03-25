@@ -11,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import java.util.LinkedHashSet;
 import java.util.List;
 
+import static com.lsd.core.builders.ActivateLifelineBuilder.*;
+import static com.lsd.core.builders.DeactivateLifelineBuilder.*;
 import static com.lsd.core.builders.MessageBuilder.messageBuilder;
 import static com.lsd.core.domain.MessageType.*;
 import static com.lsd.core.domain.ParticipantType.*;
@@ -103,15 +105,15 @@ class LsdContextTest {
         lsdContext.capture(new NoteRight("Right note", null));
         lsdContext.capture(new TimeDelay("a few seconds later"));
         lsdContext.capture(messageBuilder().id(nextId()).from(bettie).to(cat).label("Good day to you!").build());
-        lsdContext.capture(new NoteLeft("Left of Cat", cat));
-        lsdContext.capture(new NoteRight("Right of Cat", cat));
+        lsdContext.capture(new NoteLeft("Left of Cat", cat.getComponentName()));
+        lsdContext.capture(new NoteRight("Right of Cat", cat.getComponentName()));
         lsdContext.capture(new NoteRight("Right note", null));
         lsdContext.capture(new LogicalDivider("a divider"));
         lsdContext.capture(messageBuilder().id(nextId()).from(cat).to(arnie).label("Me?").build());
         lsdContext.capture(new NoteRight("Right note", null));
         lsdContext.capture(new VerticalSpace(20));
-        lsdContext.capture(new NoteLeft("Left of Bettie", bettie));
-        lsdContext.capture(new NoteRight("Right of Bettie", bettie));
+        lsdContext.capture(new NoteLeft("Left of Bettie", bettie.getComponentName()));
+        lsdContext.capture(new NoteRight("Right of Bettie", bettie.getComponentName()));
         
         lsdContext.completeScenario("A Success scenario", "description", SUCCESS);
 
@@ -127,12 +129,12 @@ class LsdContextTest {
         lsdContext.addParticipants(List.of(arnie, bettie, cat));
 
         lsdContext.capture(messageBuilder().id(nextId()).from(arnie).to(bettie).label("Good day to you!").build());
-        lsdContext.capture(new ActivateLifeline(bettie, "red"));
+        lsdContext.capture(activation().of(bettie).colour("red").build());
         lsdContext.capture(messageBuilder().id(nextId()).from(bettie).to(cat).label("Good day to you!").build());
-        lsdContext.capture(new DeactivateLifeline(bettie));
-        lsdContext.capture(new ActivateLifeline(cat, "blue"));
+        lsdContext.capture(deactivation().of(bettie).build());
+        lsdContext.capture(activation().of(cat).colour("blue").build());
         lsdContext.capture(messageBuilder().id(nextId()).from(cat).to(arnie).label("Me?").build());
-        lsdContext.capture(new DeactivateLifeline(cat));
+        lsdContext.capture(deactivation().of(cat).build());
         
         lsdContext.completeScenario("Lifeline activation/deactivation", "description", SUCCESS);
 

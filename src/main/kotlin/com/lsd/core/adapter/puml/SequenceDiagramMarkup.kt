@@ -27,10 +27,10 @@ private fun VerticalSpace.verticalSpaceMarkup(): String = size?.let { "||$it||" 
 private fun TimeDelay.timeDelayMarkup(): String = label?.let { "...$label..." } ?: "..."
 
 private fun NoteLeft.noteLeftMarkup(): String =
-    ofParticipant?.let { "note left of ${it.component.name}: $note" } ?: "note left: $note"
+    ofComponent?.let { "note left of ${it.name}: $note" } ?: "note left: $note"
 
 private fun NoteRight.noteRightMarkup(): String =
-    ofParticipant?.let { "note right of ${it.component.name}: $note" } ?: "note right: $note"
+    ofComponent?.let { "note right of ${it.name}: $note" } ?: "note right: $note"
 
 private fun PageTitle.pageTitleMarkup() =
     "${lineSeparator()}title ${title.ifBlank { "<title missing>" }}${lineSeparator()}"
@@ -60,6 +60,7 @@ private fun Message.arrowMarkup(): String {
         SHORT_OUTBOUND,
         SHORT_INBOUND,
         SYNCHRONOUS -> "-$c>"
+
         ASYNCHRONOUS -> "-$c>>"
         SYNCHRONOUS_RESPONSE -> "--$c>"
         LOST -> "-$c>x"
@@ -68,9 +69,9 @@ private fun Message.arrowMarkup(): String {
 }
 
 fun Participant.toParticipantMarkup(): String =
-    "${type.name.lowercase()} ${component.name}${alias?.let { " as \"$alias\"" } ?: ""}"
+    "${type.name.lowercase()} ${componentName.name}${alias?.let { " as \"$alias\"" } ?: ""}"
 
 private fun ActivateLifeline.activateMarkup(): String =
-    "activate ${participant.component.name}${this.colour?.let { "#$it" } ?: ""}"
+    "activate ${component.name}${this.colour?.let { "#$it" } ?: ""}"
 
-private fun DeactivateLifeline.deactivateMarkup(): String = "deactivate ${participant.component.name}"
+private fun DeactivateLifeline.deactivateMarkup(): String = "deactivate ${component.name}"

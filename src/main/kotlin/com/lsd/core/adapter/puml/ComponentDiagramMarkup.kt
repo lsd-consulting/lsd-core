@@ -18,5 +18,5 @@ internal fun Participant.toComponentMarkup(): String {
         ParticipantType.ENTITY,
         ParticipantType.QUEUE -> type.name.lowercase()
     }
-    return "$typeMarkup ${component.name}$alias"
+    return "$typeMarkup ${componentName.name}$alias"
 }
