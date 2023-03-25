@@ -117,6 +117,27 @@ class LsdContextTest {
 
         Approvals.verifyHtml(lsdContext.generateReport("Adding notes to participants"));
     }
+    
+    @Test
+    void lifelineCanBeActivated() {
+        var arnie = ACTOR.called("Arnie");
+        var bettie = BOUNDARY.called("Bettie");
+        var cat = CONTROL.called("Cat");
+
+        lsdContext.addParticipants(List.of(arnie, bettie, cat));
+
+        lsdContext.capture(messageBuilder().id(nextId()).from(arnie).to(bettie).label("Good day to you!").build());
+        lsdContext.capture(new ActivateLifeline(bettie, "red"));
+        lsdContext.capture(messageBuilder().id(nextId()).from(bettie).to(cat).label("Good day to you!").build());
+        lsdContext.capture(new DeactivateLifeline(bettie));
+        lsdContext.capture(new ActivateLifeline(cat, "blue"));
+        lsdContext.capture(messageBuilder().id(nextId()).from(cat).to(arnie).label("Me?").build());
+        lsdContext.capture(new DeactivateLifeline(cat));
+        
+        lsdContext.completeScenario("Lifeline activation/deactivation", "description", SUCCESS);
+
+        Approvals.verifyHtml(lsdContext.generateReport("Activating lifelines"));
+    }
 
     @Test
     void hasNoDiagramSectionWhenThereAreNoEvents() {

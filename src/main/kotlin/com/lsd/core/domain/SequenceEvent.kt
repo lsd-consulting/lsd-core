@@ -9,6 +9,8 @@ data class Newpage(val pageTitle: PageTitle) : SequenceEvent
 data class VerticalSpace(val size: Int?) : SequenceEvent
 data class LogicalDivider(val label: String) : SequenceEvent
 data class TimeDelay(val label: String?) : SequenceEvent
+data class ActivateLifeline(val participant: Participant, var colour: String? = null) : SequenceEvent
+data class DeactivateLifeline(val participant: Participant) : SequenceEvent
 
 data class Message(
     val id: String,

@@ -16,6 +16,8 @@ fun SequenceEvent.toPumlMarkup(): String =
         is PageTitle -> pageTitleMarkup()
         is TimeDelay -> timeDelayMarkup()
         is VerticalSpace -> verticalSpaceMarkup()
+        is ActivateLifeline -> activateMarkup()
+        is DeactivateLifeline -> deactivateMarkup()
     }
 
 private fun LogicalDivider.logicalDividerMarkup(): String = "== $label =="
@@ -67,3 +69,8 @@ private fun Message.arrowMarkup(): String {
 
 fun Participant.toParticipantMarkup(): String =
     "${type.name.lowercase()} ${component.name}${alias?.let { " as \"$alias\"" } ?: ""}"
+
+private fun ActivateLifeline.activateMarkup(): String =
+    "activate ${participant.component.name}${this.colour?.let { "#$it" } ?: ""}"
+
+private fun DeactivateLifeline.deactivateMarkup(): String = "deactivate ${participant.component.name}"
