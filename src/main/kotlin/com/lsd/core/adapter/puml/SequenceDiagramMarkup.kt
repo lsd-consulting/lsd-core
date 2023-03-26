@@ -69,7 +69,7 @@ private fun Message.arrowMarkup(): String {
 }
 
 fun Participant.toParticipantMarkup(): String =
-    "${type.name.lowercase()} ${componentName.name}${alias?.let { " as \"$alias\"" } ?: ""}${colour?.let { " $colour" } ?: ""}"
+    "${type.name.lowercase()} ${componentName.name}${alias?.let { " as \"$alias\"" } ?: ""}${colour?.let { " #$colour" } ?: ""}"
 
 private fun ActivateLifeline.activateMarkup(): String =
     "activate ${component.name}${this.colour?.let { "#$it" } ?: ""}"
