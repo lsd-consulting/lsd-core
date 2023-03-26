@@ -1,8 +1,8 @@
 package com.lsd.core.report
 
-import com.lsd.core.report.model.Report
 import com.lsd.core.properties.LsdProperties
 import com.lsd.core.properties.LsdProperties.OUTPUT_DIR
+import com.lsd.core.report.model.Report
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junitpioneer.jupiter.SetSystemProperty
@@ -33,13 +33,13 @@ internal class HtmlReportWriterTest {
     @Test
     fun addCssFileToOutputDirectory() {
         underTest.writeToFile(aReport)
-        assertThat(File(LsdProperties[OUTPUT_DIR], "style.css")).exists()
+        assertThat(File(outputDirectory, "style.css")).exists()
     }
 
     @Test
     fun addJavaScriptFileToOutputDirectory() {
         underTest.writeToFile(aReport)
-        assertThat(File(LsdProperties[OUTPUT_DIR], "custom.js")).exists()
+        assertThat(File(outputDirectory, "custom.js")).exists()
     }
 
     @Test
