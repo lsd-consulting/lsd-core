@@ -4,9 +4,9 @@ import com.github.jknack.handlebars.Handlebars
 import com.lsd.core.IdGenerator
 import com.lsd.core.adapter.puml.convertToSvg
 import com.lsd.core.adapter.puml.toComponentMarkup
-import com.lsd.core.domain.Participant
 import com.lsd.core.domain.Message
 import com.lsd.core.domain.MessageType.*
+import com.lsd.core.domain.Participant
 import com.lsd.core.domain.SequenceEvent
 import com.lsd.core.properties.LsdProperties
 import com.lsd.core.properties.LsdProperties.DIAGRAM_THEME
@@ -30,7 +30,7 @@ class ComponentDiagramGenerator(
         )
     }
 
-    private fun generateUml(): String {
+    fun generateUml(): String {
         return template.apply(mapOf(
             "theme" to LsdProperties[DIAGRAM_THEME],
             "participants" to participants

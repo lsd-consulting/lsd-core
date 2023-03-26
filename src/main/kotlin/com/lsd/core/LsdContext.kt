@@ -1,7 +1,7 @@
 package com.lsd.core
 
-import com.lsd.core.adapter.parse.SynchronousMessageParser
 import com.lsd.core.adapter.parse.Parser
+import com.lsd.core.adapter.parse.SynchronousMessageParser
 import com.lsd.core.adapter.parse.SynchronousResponseParser
 import com.lsd.core.builders.ScenarioBuilder
 import com.lsd.core.builders.ScenarioModelBuilder.Companion.scenarioModelBuilder
@@ -12,6 +12,7 @@ import com.lsd.core.properties.LsdProperties.DETERMINISTIC_IDS
 import com.lsd.core.properties.LsdProperties.MAX_EVENTS_PER_DIAGRAM
 import com.lsd.core.properties.LsdProperties.getBoolean
 import com.lsd.core.properties.LsdProperties.getInt
+import com.lsd.core.report.ComponentPumlWriter
 import com.lsd.core.report.HtmlIndexWriter.writeToFile
 import com.lsd.core.report.HtmlReportRenderer
 import com.lsd.core.report.HtmlReportWriter
@@ -32,7 +33,7 @@ open class LsdContext {
     private val participants: MutableList<Participant> = ArrayList()
     private val includes: MutableList<String> = ArrayList()
     private var currentScenario = ScenarioBuilder()
-
+    private var combinedEvents = mutableSetOf<SequenceEvent>()
 
     fun addParticipants(additionalParticipants: List<Participant>) = participants.addAll(additionalParticipants)
 
@@ -45,7 +46,10 @@ open class LsdContext {
      *
      * @param event The event to be captured on the sequence diagram for the current scenario.
      */
-    open fun capture(event: SequenceEvent) = currentScenario.add(event)
+    open fun capture(event: SequenceEvent) {
+        currentScenario.add(event)
+        combinedEvents.add(event)
+    }
 
     /**
      * Allow string representations of events to be interpreted. If none of the parsers match the pattern then nothing will be captured
@@ -69,12 +73,23 @@ open class LsdContext {
     }
 
     fun completeReport(title: String): Path {
+        storeCombinedComponentDiagramSource()
         val report = buildReport(title)
         return htmlReportWriter.writeToFile(report).also {
             reportFiles.add(ReportFile(filename = it.fileName.toString(), title = report.title, status = report.status))
             scenarios.clear()
             currentScenario = ScenarioBuilder()
         }
+    }
+
+    private fun storeCombinedComponentDiagramSource() {
+        ComponentPumlWriter.writeToFile(
+            ComponentDiagramGenerator(
+                idGenerator = idGenerator,
+                events = combinedEvents.toList(),
+                participants = participants
+            ).generateUml()
+        )
     }
 
     fun generateReport(title: String): String = htmlReportWriter.writeToString(buildReport(title))
