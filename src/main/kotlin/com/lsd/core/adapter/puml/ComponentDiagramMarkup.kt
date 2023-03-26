@@ -8,7 +8,7 @@ internal fun Message.toComponentMarkup(): String = "[${from.name}] --> ${to.name
 
 internal fun Participant.toComponentMarkup(): String {
     val alias = alias?.let { " as \"$alias\"" } ?: ""
-    val colour = colour?.let { " $colour" } ?: ""
+    val colour = colour?.let { " #$colour" } ?: ""
     val typeMarkup = when (type) {
         ParticipantType.PARTICIPANT -> "component"
         ParticipantType.ACTOR,

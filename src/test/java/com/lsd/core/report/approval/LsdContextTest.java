@@ -122,9 +122,9 @@ class LsdContextTest {
 
     @Test
     void participantAreColoured() {
-        var arnie = ACTOR.called("Arnie", null, "#green");
-        var bettie = BOUNDARY.called("Bettie", null, "#red");
-        var cat = CONTROL.called("Cat", null, "#blue");
+        var arnie = ACTOR.called("Arnie", null, "green");
+        var bettie = BOUNDARY.called("Bettie", null, "red");
+        var cat = CONTROL.called("Cat", null, "blue");
 
         lsdContext.addParticipants(List.of(arnie, bettie, cat));
 
