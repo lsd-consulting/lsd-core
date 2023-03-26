@@ -11,8 +11,8 @@ import org.junit.jupiter.api.Test;
 import java.util.LinkedHashSet;
 import java.util.List;
 
-import static com.lsd.core.builders.ActivateLifelineBuilder.*;
-import static com.lsd.core.builders.DeactivateLifelineBuilder.*;
+import static com.lsd.core.builders.ActivateLifelineBuilder.activation;
+import static com.lsd.core.builders.DeactivateLifelineBuilder.deactivation;
 import static com.lsd.core.builders.MessageBuilder.messageBuilder;
 import static com.lsd.core.domain.MessageType.*;
 import static com.lsd.core.domain.ParticipantType.*;
@@ -119,7 +119,25 @@ class LsdContextTest {
 
         Approvals.verifyHtml(lsdContext.generateReport("Adding notes to participants"));
     }
-    
+
+    @Test
+    void participantAreColoured() {
+        var arnie = ACTOR.called("Arnie", null, "#green");
+        var bettie = BOUNDARY.called("Bettie", null, "#red");
+        var cat = CONTROL.called("Cat", null, "#blue");
+
+        lsdContext.addParticipants(List.of(arnie, bettie, cat));
+
+        lsdContext.capture(new PageTitle("Adding colours"));
+        lsdContext.capture(messageBuilder().id(nextId()).from(arnie).to(bettie).label("Good day to you!").build());
+        lsdContext.capture(messageBuilder().id(nextId()).from(bettie).to(cat).label("Good day to you!").build());
+        lsdContext.capture(messageBuilder().id(nextId()).from(cat).to(arnie).label("Me?").build());
+
+        lsdContext.completeScenario("A Success scenario", "description", SUCCESS);
+
+        Approvals.verifyHtml(lsdContext.generateReport("Adding colours to participants"));
+    }
+
     @Test
     void lifelineCanBeActivated() {
         var arnie = ACTOR.called("Arnie");
