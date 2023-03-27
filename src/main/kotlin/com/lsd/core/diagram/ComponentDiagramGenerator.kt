@@ -30,7 +30,7 @@ class ComponentDiagramGenerator(
         )
     }
 
-    fun generateUml(): String {
+    private fun generateUml(): String {
         return template.apply(mapOf(
             "theme" to LsdProperties[DIAGRAM_THEME],
             "participants" to participants
