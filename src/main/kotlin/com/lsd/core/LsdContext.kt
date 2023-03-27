@@ -12,10 +12,8 @@ import com.lsd.core.properties.LsdProperties.DETERMINISTIC_IDS
 import com.lsd.core.properties.LsdProperties.MAX_EVENTS_PER_DIAGRAM
 import com.lsd.core.properties.LsdProperties.getBoolean
 import com.lsd.core.properties.LsdProperties.getInt
-import com.lsd.core.report.ComponentPumlWriter
+import com.lsd.core.report.*
 import com.lsd.core.report.HtmlIndexWriter.writeToFile
-import com.lsd.core.report.HtmlReportRenderer
-import com.lsd.core.report.HtmlReportWriter
 import com.lsd.core.report.model.DataHolder
 import com.lsd.core.report.model.Report
 import com.lsd.core.report.model.ReportFile
@@ -73,7 +71,6 @@ open class LsdContext {
     }
 
     fun completeReport(title: String): Path {
-        storeCombinedComponentDiagramSource()
         val report = buildReport(title)
         return htmlReportWriter.writeToFile(report).also {
             reportFiles.add(ReportFile(filename = it.fileName.toString(), title = report.title, status = report.status))
@@ -82,14 +79,27 @@ open class LsdContext {
         }
     }
 
-    private fun storeCombinedComponentDiagramSource() {
-        ComponentPumlWriter.writeToFile(
-            ComponentDiagramGenerator(
-                idGenerator = idGenerator,
-                events = combinedEvents.toList(),
-                participants = participants
-            ).generateUml()
-        )
+    /**
+     * Generates a html report with a component diagram of all the events that have been seen up until this point.
+     * Note that the events will also be cleared after invoking this function.
+     */
+    fun completeComponentsReport(title: String): Path {
+        return ComponentReportWriter.writeToFile(
+            content = renderComponentReport(title),
+            fileName = "components-report.html"
+        ).also {
+            combinedEvents.clear()
+        }
+    }
+
+    private fun renderComponentReport(title: String): String {
+        return ComponentDiagramGenerator(
+            idGenerator = idGenerator,
+            events = combinedEvents.toList(),
+            participants = participants
+        ).diagram()?.let {
+            ComponentReportRenderer().render(Model(title = title, uml = it.uml, svg = it.svg))
+        } ?: ""
     }
 
     fun generateReport(title: String): String = htmlReportWriter.writeToString(buildReport(title))
