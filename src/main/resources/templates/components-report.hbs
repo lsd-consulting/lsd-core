@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html" xml:lang="en" lang="en">
+<head>
+    <title>LSD</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main role="main">
+    <h1 class="logo">LSD</h1>
+    <h2>{{model.title}}</h2>
+    <div class="contents">
+        <section class="sequence diagram svg">
+            <h3 class="success">Component Diagram</h3>
+            <figure>{{{ model.svg  }}}</figure>
+            <div onclick="location.href='#!';" id="source" class="overlay">
+                <div class="popup" onclick="event.stopPropagation();">
+                    <h2>PlantUml markup</h2>
+                    <span class="copy" title="copy" onclick="copyToClipboard('uml_code')"></span>
+                    <a class="close" href="#!">&times;</a>
+                    <div class="content">
+                        <pre><code id="uml_code">{{model.uml}}</code></pre>
+                    </div>
+                </div>
+            </div>
+            <sub><a href="#source">[source]</a></sub>
+        </section>
+    </div>
+</main>
+</body>
+</html>

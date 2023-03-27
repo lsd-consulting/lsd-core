@@ -148,28 +148,33 @@ class LsdContextTest {
     }
 
     @Test
-    @SetSystemProperty(key = "lsd.core.report.outputDir", value = "build/reports/lsd")
-    void generateCombinedComponentDiagramSource() throws IOException {
+    void generateCombinedComponentDiagramSource() {
         var arnie = ACTOR.called("Arnie");
         var bettie = BOUNDARY.called("Bettie");
         var cat = CONTROL.called("Cat");
+        var dan = CONTROL.called("Dan");
 
         lsdContext.addParticipants(List.of(arnie, bettie, cat));
 
-        lsdContext.capture(messageBuilder().id(nextId()).from(arnie).to(bettie).label("Good day to you!").build());
-        lsdContext.capture(messageBuilder().id(nextId()).from(bettie).to(cat).label("Good day to you!").build());
-        lsdContext.capture(messageBuilder().id(nextId()).from(cat).to(arnie).label("Me?").build());
-        lsdContext.completeScenario("Store combined component diagram/first", "description", SUCCESS);
+        lsdContext.capture(messageBuilder().id(nextId()).from(arnie).to(bettie).label("message1").build());
+        lsdContext.capture(messageBuilder().id(nextId()).from(bettie).to(cat).label("message2").build());
+        lsdContext.capture(messageBuilder().id(nextId()).from(cat).to(arnie).label("message3").build());
+        lsdContext.completeScenario("Scenario 1", "description", SUCCESS);
+        lsdContext.capture(messageBuilder().id(nextId()).from(cat).to(arnie).label("message4").build());
+        lsdContext.completeScenario("Scenario 2", "description", SUCCESS);
+        lsdContext.completeReport("Report 1");
+        
+        lsdContext.capture(messageBuilder().id(nextId()).from(bettie).to(arnie).label("message5").build());
+        lsdContext.capture(messageBuilder().id(nextId()).from(cat).to(bettie).label("message6").build());
+        lsdContext.completeScenario("Scenario 3", "description", SUCCESS);
+        lsdContext.completeReport("Report 2");
 
-        lsdContext.capture(messageBuilder().id(nextId()).from(bettie).to(arnie).label("Good day to you!").build());
-        lsdContext.capture(messageBuilder().id(nextId()).from(cat).to(bettie).label("Me?").build());
-        lsdContext.capture(messageBuilder().id(nextId()).from(cat).to(arnie).label("Me?").build());
-        lsdContext.completeScenario("Store combined component diagram/second", "description", SUCCESS);
-
-        lsdContext.completeReport("Component Diagram");
-
-        File result = new File(LsdProperties.get(OUTPUT_DIR), "combined-components.puml");
-        Approvals.verify(readFileToString(result, "UTF-8"));
+        lsdContext.capture(messageBuilder().id(nextId()).from(bettie).to(dan).label("message5").build());
+        lsdContext.capture(messageBuilder().id(nextId()).from(dan).to(arnie).label("message6").build());
+        lsdContext.completeScenario("Scenario 4", "description", SUCCESS);
+        lsdContext.completeReport("Report 3");
+        
+        Approvals.verify(lsdContext.completeComponentsReport("Relationships").toFile());
     }
 
     @Test

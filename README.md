@@ -107,6 +107,11 @@ This library generates html reports and each report contains one or more scenari
       lsdContext.createIndex()
   ```
 
+* Generate a component diagram for events included from multiple scenarios and reports
+  ```java
+      lsdContext.completeComponentsReport("Relationships")
+  ```
+
 * To draw attention to some interesting details you can include **facts** e.g.
   ```java
       // instances of the keyword Lorem will be highlighted on the report
