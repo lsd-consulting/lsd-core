@@ -3,15 +3,11 @@ package com.lsd.core.report.approval;
 import com.lsd.core.IdGenerator;
 import com.lsd.core.LsdContext;
 import com.lsd.core.domain.*;
-import com.lsd.core.properties.LsdProperties;
 import com.lsd.core.report.PopupContent;
 import org.approvaltests.Approvals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junitpioneer.jupiter.SetSystemProperty;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.LinkedHashSet;
 import java.util.List;
 
@@ -21,9 +17,7 @@ import static com.lsd.core.builders.MessageBuilder.messageBuilder;
 import static com.lsd.core.domain.MessageType.*;
 import static com.lsd.core.domain.ParticipantType.*;
 import static com.lsd.core.domain.Status.*;
-import static com.lsd.core.properties.LsdProperties.OUTPUT_DIR;
 import static j2html.TagCreator.*;
-import static org.apache.commons.io.FileUtils.readFileToString;
 
 class LsdContextTest {
 
@@ -96,7 +90,7 @@ class LsdContextTest {
 
         Approvals.verifyHtml(lsdContext.generateReport("Split by NewPage Report"));
     }
-    
+
     @Test
     void notesCanBeAddedToParticipants() {
         var arnie = ACTOR.called("Arnie");
@@ -120,7 +114,7 @@ class LsdContextTest {
         lsdContext.capture(new VerticalSpace(20));
         lsdContext.capture(new NoteLeft("Left of Bettie", bettie.getComponentName()));
         lsdContext.capture(new NoteRight("Right of Bettie", bettie.getComponentName()));
-        
+
         lsdContext.completeScenario("A Success scenario", "description", SUCCESS);
 
         Approvals.verifyHtml(lsdContext.generateReport("Adding notes to participants"));
@@ -159,7 +153,7 @@ class LsdContextTest {
         lsdContext.capture(activation().of(cat).colour("blue").build());
         lsdContext.capture(messageBuilder().id(nextId()).from(cat).to(arnie).label("Me?").build());
         lsdContext.capture(deactivation().of(cat).build());
-        
+
         lsdContext.completeScenario("Lifeline activation/deactivation", "description", SUCCESS);
 
         Approvals.verifyHtml(lsdContext.generateReport("Activating lifelines"));
@@ -181,7 +175,7 @@ class LsdContextTest {
         lsdContext.capture(messageBuilder().id(nextId()).from(cat).to(arnie).label("message4").build());
         lsdContext.completeScenario("Scenario 2", "description", SUCCESS);
         lsdContext.completeReport("Report 1");
-        
+
         lsdContext.capture(messageBuilder().id(nextId()).from(bettie).to(arnie).label("message5").build());
         lsdContext.capture(messageBuilder().id(nextId()).from(cat).to(bettie).label("message6").build());
         lsdContext.completeScenario("Scenario 3", "description", SUCCESS);
@@ -191,7 +185,7 @@ class LsdContextTest {
         lsdContext.capture(messageBuilder().id(nextId()).from(dan).to(arnie).label("message6").build());
         lsdContext.completeScenario("Scenario 4", "description", SUCCESS);
         lsdContext.completeReport("Report 3");
-        
+
         Approvals.verify(lsdContext.completeComponentsReport("Relationships").toFile());
     }
 
