@@ -67,7 +67,7 @@ This library generates html reports and each report contains one or more scenari
         lsdContext.capture(new PageTitle("Checking account balanace"));
         lsdContext.capture(new NoteLeft("On payday", arnie));
     
-        lsdContext.capture(messageBuilder().id(nextId())
+        lsdContext.capture(messageBuilder()
             .from(arnie)
             .to(bank)
             .label("What is my balance?")
@@ -75,20 +75,20 @@ This library generates html reports and each report contains one or more scenari
     
         lsdContext.capture(new NoteLeft("High load on\\n payday", bank));
     
-        lsdContext.capture(messageBuilder().id(nextId())
+        lsdContext.capture(messageBuilder()
             .from(bank)
             .to(repository)
             .label("Get balance for Arnie").build());
     
         lsdContext.capture(new TimeDelay("a couple seconds later"));
     
-        lsdContext.capture(messageBuilder().id(nextId())
+        lsdContext.capture(messageBuilder()
             .from(repository)
             .to(bank)
             .type(SYNCHRONOUS_RESPONSE)
             .label("Nothing yet..").build());
     
-        lsdContext.capture(messageBuilder().id(nextId())
+        lsdContext.capture(messageBuilder()
             .from(bank)
             .to(arnie)
             .label("Your balance is 0")

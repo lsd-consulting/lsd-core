@@ -1,12 +1,15 @@
 package com.lsd.core.builders
 
+import com.lsd.core.IdGenerator
 import com.lsd.core.domain.ComponentName
 import com.lsd.core.domain.Message
 import com.lsd.core.domain.MessageType
 import com.lsd.core.domain.Participant
 
+private val idGenerator = IdGenerator(isDeterministic = false)
+
 class MessageBuilder {
-    private var message = Message(id = "", from = ComponentName(""), to = ComponentName(""), label = "")
+    private var message = Message(id = idGenerator.next(), from = ComponentName(""), to = ComponentName(""), label = "")
 
     fun id(id: String) = also { message = message.copy(id = id) }
     fun from(from: String) = also { from(ComponentName(from)) }
