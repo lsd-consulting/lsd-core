@@ -28,12 +28,15 @@ open class LsdContext {
     private val htmlReportWriter = HtmlReportWriter(HtmlReportRenderer())
     private val scenarios: MutableList<Scenario> = ArrayList()
     private val reportFiles: MutableList<ReportFile> = ArrayList()
-    private val participants: MutableList<Participant> = ArrayList()
-    private val includes: MutableList<String> = ArrayList()
+    private val participants = linkedMapOf<String, Participant>()
+    private val includes = linkedSetOf<String>()
     private var currentScenario = ScenarioBuilder()
-    private var combinedEvents = mutableSetOf<SequenceEvent>()
+    private var combinedEvents = linkedSetOf<SequenceEvent>()
 
-    fun addParticipants(additionalParticipants: List<Participant>) = participants.addAll(additionalParticipants)
+    fun addParticipants(vararg participants: Participant) = addParticipants(participants.toList())
+
+    fun addParticipants(additionalParticipants: List<Participant>) =
+        additionalParticipants.forEach { participants[it.componentName.name] = it }
 
     fun includeFiles(additionalIncludes: Set<String>) = includes.addAll(additionalIncludes)
 
@@ -96,7 +99,7 @@ open class LsdContext {
         return ComponentDiagramGenerator(
             idGenerator = idGenerator,
             events = combinedEvents.toList(),
-            participants = participants
+            participants = participants.values.toList()
         ).diagram()?.let {
             ComponentReportRenderer().render(Model(title = title, uml = it.uml, svg = it.svg))
         } ?: ""
@@ -113,7 +116,6 @@ open class LsdContext {
         idGenerator.reset()
         scenarios.clear()
         reportFiles.clear()
-        participants.clear()
         includes.clear()
         currentScenario = ScenarioBuilder()
     }
@@ -154,8 +156,8 @@ open class LsdContext {
                             sequenceDiagramGeneratorBuilder()
                                 .idGenerator(idGenerator)
                                 .events(scenario.events)
-                                .participants(participants)
-                                .includes(includes)
+                                .participants(participants.values.toList())
+                                .includes(includes.toList())
                                 .build()
                                 .diagram(maxEventsPerDiagram)
                         )
@@ -163,7 +165,7 @@ open class LsdContext {
                             ComponentDiagramGenerator(
                                 idGenerator = idGenerator,
                                 events = scenario.events,
-                                participants = participants
+                                participants = participants.values.toList()
                             ).diagram()
                         )
                         .build()

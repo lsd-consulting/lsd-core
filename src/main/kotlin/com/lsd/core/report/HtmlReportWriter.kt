@@ -30,7 +30,7 @@ class HtmlReportWriter(private val reportRenderer: ReportRenderer) {
     private fun writeFileSafely(outputPath: Path, reportContent: String) {
         try {
             Files.write(outputPath, reportContent.toByteArray())
-            println(" LSD Report: file://${outputPath.toAbsolutePath()}")
+            println("LSD Report: file://${outputPath.toAbsolutePath()}")
         } catch (e: IOException) {
             System.err.println("Failed to write LSD report to output path: $outputPath , error message: ${e.message}")
         }

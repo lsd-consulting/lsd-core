@@ -3,7 +3,6 @@
 !theme plain
 skinparam backgroundColor transparent
 
-actor Nick
 
 
 [A] --> B

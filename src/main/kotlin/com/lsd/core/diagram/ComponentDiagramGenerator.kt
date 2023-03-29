@@ -33,7 +33,7 @@ class ComponentDiagramGenerator(
     private fun generateUml(): String {
         return template.apply(mapOf(
             "theme" to LsdProperties[DIAGRAM_THEME],
-            "participants" to participants
+            "participants" to participants.usedIn(events)
                 .map(Participant::toComponentMarkup)
                 .distinct(),
             "events" to events

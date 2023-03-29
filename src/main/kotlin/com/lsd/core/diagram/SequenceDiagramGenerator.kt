@@ -3,8 +3,9 @@ package com.lsd.core.diagram
 import com.github.jknack.handlebars.Handlebars
 import com.lsd.core.IdGenerator
 import com.lsd.core.adapter.puml.convertToSvg
-import com.lsd.core.adapter.puml.toPumlMarkup
 import com.lsd.core.adapter.puml.toParticipantMarkup
+import com.lsd.core.adapter.puml.toPumlMarkup
+import com.lsd.core.domain.Message
 import com.lsd.core.domain.Newpage
 import com.lsd.core.domain.Participant
 import com.lsd.core.domain.SequenceEvent
@@ -39,12 +40,22 @@ data class SequenceDiagramGenerator(
             mapOf(
                 "theme" to LsdProperties[DIAGRAM_THEME],
                 "includes" to includes.distinct(),
-                "participants" to participants.map(Participant::toParticipantMarkup).distinct(),
+                "participants" to participants.usedIn(events).map(Participant::toParticipantMarkup),
                 "events" to events.map(SequenceEvent::toPumlMarkup)
             )
         )
     }
 }
+
+fun Collection<Participant>.usedIn(events: List<SequenceEvent>): List<Participant> {
+    val distinctComponentsNames = events.distinctComponentsNames()
+    return filter { it.componentName.name in distinctComponentsNames }.distinct()
+}
+
+private fun List<SequenceEvent>.distinctComponentsNames(): Set<String> =
+    filterIsInstance<Message>()
+        .flatMap { message -> listOf(message.from.name, message.to.name) }
+        .toSet()
 
 fun List<SequenceEvent>.groupedByPages() =
     fold(mutableListOf<MutableList<SequenceEvent>>()

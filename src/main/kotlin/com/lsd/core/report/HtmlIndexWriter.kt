@@ -18,11 +18,6 @@ object HtmlIndexWriter {
     }
 
     private fun printLocationOfIndex(path: Path) {
-        println(
-            """
-        LSD Index:
-        file://${path.toAbsolutePath()}
-        """.trimIndent()
-        )
+        println("LSD Index: file://${path.toAbsolutePath()}")
     }
 }
