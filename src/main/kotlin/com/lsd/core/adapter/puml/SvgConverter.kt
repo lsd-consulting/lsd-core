@@ -1,7 +1,6 @@
 package com.lsd.core.adapter.puml
 
 import com.lsd.core.countMatches
-import lsd.format.xml.XmlPrettyPrinter
 import net.sourceforge.plantuml.FileFormat
 import net.sourceforge.plantuml.FileFormatOption
 import net.sourceforge.plantuml.SourceStringReader
@@ -12,7 +11,7 @@ fun convertToSvg(markup: String): String {
     val umlCount = markup.countMatches("@startuml")
     for (i in 0 until umlCount) {
         val svg = createSvg(markup, i)
-        result.append(XmlPrettyPrinter.indentXml(svg).orElse(svg))
+        result.append(svg)
     }
     return result.toString()
 }
