@@ -12,7 +12,7 @@ article {
 }
 
 section {
-    overflow: scroll;
+    overflow: auto;
 }
 
 section.description {
