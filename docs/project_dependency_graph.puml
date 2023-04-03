@@ -2,25 +2,31 @@
 ' relationships with lsd-core to help with the order of updates when lsd-core changes
 
 @startuml
-title Project Dependencies
+title Dependencies on lsd-core
 
-[lsd-core] --> [lsd-formatting-library]
-[lsd-cucumber] --> [lsd-core]
-[lsd-distributed-generator-ui] -> [lsd-core]
-[lsd-distributed-generator-ui] -> [lsd-distributed-generator]
-[lsd-distributed-generator] --> [lsd-core]
-[lsd-distributed-generator] --> [lsd-distributed-mongodb-access]
-[lsd-distributed-interceptors] --> [lsd-core]
-[lsd-distributed-interceptors] --> [lsd-distributed-generator] : (test)
-[lsd-distributed-interceptors] --> [lsd-distributed-mongodb-access]
-[lsd-distributed-interceptors] --> [lsd-junit5]: (test)
-[lsd-distributed-interceptors] -->[lsd-formatting-library]
-[lsd-distributed-mongodb-access] --> [lsd-core]
-[lsd-interceptors] --> [lsd-core]
-[lsd-interceptors] --> [lsd-junit5] : (test)
-[lsd-junit5] --> [lsd-core]
-[lsd-kotlin-cucumber-example] --> [lsd-cucumber] : (dynamic\nversioning)
-[lsd-kotlin-cucumber-example] --> [lsd-interceptors] : (dynamic\nversioning)
+component "lsd-core"#royalblue
+component "lsd-junit5"#lightgreen
+component "lsd-cucumber"#lightgreen
+component "lsd-distributed-generator"#lightgreen
+component "lsd-interceptors"#orange
+component "lsd-distributed-interceptors"#orange
+component "lsd-distributed-generator-ui"#orange
+component "lsd-kotlin-cucumber-example"#orange
+
+[lsd-junit5] -[#lightgreen]-> [lsd-core] : -[api]
+
+[lsd-cucumber] -[#lightgreen]-> [lsd-core] : -[api]
+[lsd-interceptors] -[#lightgreen]-> [lsd-core] : -[impl]
+
+[lsd-distributed-generator-ui] -[#orange]-> [lsd-distributed-generator] : -[impl]
+[lsd-distributed-generator] -[#lightgreen]-> [lsd-core] : -[api]
+
+[lsd-distributed-interceptors] -[#orange]-> [lsd-distributed-generator] : -[test]
+[lsd-distributed-interceptors] -[#lightgreen]-> [lsd-core] : -[api]
+[lsd-distributed-interceptors] -[#orange]-> [lsd-junit5] : -[test]
+[lsd-interceptors] -[#orange]-> [lsd-junit5] : -[test]
+[lsd-kotlin-cucumber-example] -[#orange]-> [lsd-cucumber] : -(dynamic\nversioning)
+[lsd-kotlin-cucumber-example] -[#orange]-> [lsd-interceptors] : -(dynamic\nversioning)
 
 hide unlinked
 
