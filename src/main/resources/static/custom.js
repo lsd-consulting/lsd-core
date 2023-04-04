@@ -6,14 +6,15 @@ function copyToClipboard(id) {
 
 function addSliderForSvgZoom() {
     d3.selectAll("svg")
-        .each(function () {
+        .each(function (value, index) {
             let svg = d3.select(this);
             let svgParent = d3.select(this.parentNode);
             let viewBox = svg.attr("viewBox");
             let viewBoxDimensions = viewBox.split(" ");
             let originalWidth = viewBoxDimensions[2];
             let originalHeight = viewBoxDimensions[3];
-            svgParent.insert('input', 'svg')
+            let nthElement = ++index
+            svgParent.insert('input', 'svg:nth-of-type(' + nthElement + ')')
                 .attr("min", 0.01)
                 .attr("type", "range")
                 .attr("max", 1)
