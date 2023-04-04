@@ -52,7 +52,7 @@ class LsdContextTest {
         lsdContext.capture(messageBuilder().id(nextId()).label("A synchronous response").from("Gamma").to("Beta").data("200 OK").type(SYNCHRONOUS_RESPONSE).build());
         lsdContext.completeScenario("A Success scenario", "Given a first scenario description<br/>When something happens<br/>Then something else happens", SUCCESS);
 
-        lsdContext.capture(messageBuilder().id(nextId()).label("Sending food <$hamburger{scale=0.4}>").from(arnie).to(bettie).colour("orange").type(SYNCHRONOUS_RESPONSE).build());
+        lsdContext.capture(messageBuilder().id(nextId()).label("Sending food <$hamburger{scale=0.4}>").from(arnie).to(bettie).colour("orange").build());
         lsdContext.capture(new TimeDelay(null));
         lsdContext.capture("Sending a response from B to A [#red]", "Thank You!");
         lsdContext.capture(new NoteLeft("Friends <$heart{scale=0.4,color=red}>", null));

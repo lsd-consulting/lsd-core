@@ -3,6 +3,8 @@
 !theme plain
 skinparam backgroundColor transparent
 
+component FixesFrom
+component FixesTo
 
 
 [FixesFrom] --> FixesTo

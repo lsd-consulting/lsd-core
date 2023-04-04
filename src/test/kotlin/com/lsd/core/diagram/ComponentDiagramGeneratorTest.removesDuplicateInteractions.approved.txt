@@ -3,6 +3,8 @@
 !theme plain
 skinparam backgroundColor transparent
 
+component A
+component B
 
 
 [A] --> B

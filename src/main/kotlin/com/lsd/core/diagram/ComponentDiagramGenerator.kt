@@ -7,6 +7,7 @@ import com.lsd.core.adapter.puml.toComponentMarkup
 import com.lsd.core.domain.Message
 import com.lsd.core.domain.MessageType.*
 import com.lsd.core.domain.Participant
+import com.lsd.core.domain.ParticipantType.PARTICIPANT
 import com.lsd.core.domain.SequenceEvent
 import com.lsd.core.properties.LsdProperties
 import com.lsd.core.properties.LsdProperties.DIAGRAM_THEME
@@ -31,17 +32,28 @@ class ComponentDiagramGenerator(
     }
 
     private fun generateUml(): String {
-        return template.apply(mapOf(
-            "theme" to LsdProperties[DIAGRAM_THEME],
-            "participants" to participants.usedIn(events)
-                .map(Participant::toComponentMarkup)
-                .distinct(),
-            "events" to events
-                .filterIsInstance<Message>()
-                .filter { it.type in listOf(SYNCHRONOUS, ASYNCHRONOUS, BI_DIRECTIONAL, LOST) }
-                .map(Message::toComponentMarkup)
-                .distinct()
-        ))
+        val messages = events
+            .filterIsInstance<Message>()
+            .filter { it.type in listOf(SYNCHRONOUS, ASYNCHRONOUS, BI_DIRECTIONAL, LOST) }
+
+        return template.apply(
+            mapOf(
+                "theme" to LsdProperties[DIAGRAM_THEME],
+                "participants" to messages.mapToParticipants(providedParticipants = participants)
+                    .map(Participant::toComponentMarkup)
+                    .distinct(),
+                "events" to messages
+                    .map(Message::toComponentMarkup)
+                    .distinct()
+            )
+        )
     }
+}
+
+fun List<Message>.mapToParticipants(providedParticipants: List<Participant>): List<Participant> {
+    val participantsByName = providedParticipants.associateBy { it.componentName.name }
+    return flatMap { listOf(it.from.name, it.to.name) }
+        .distinct()
+        .map { participantsByName.getOrElse(it) { PARTICIPANT.called(it) } }
 }
 

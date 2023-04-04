@@ -3,9 +3,9 @@ package com.lsd.core.diagram
 import com.lsd.core.IdGenerator
 import com.lsd.core.builders.MessageBuilder.Companion.messageBuilder
 import com.lsd.core.domain.Message
-import com.lsd.core.domain.ParticipantType.ACTOR
-import com.lsd.core.domain.ParticipantType.PARTICIPANT
+import com.lsd.core.domain.ParticipantType.*
 import org.approvaltests.Approvals
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 internal class ComponentDiagramGeneratorTest {
@@ -75,6 +75,30 @@ internal class ComponentDiagramGeneratorTest {
         Approvals.verify(diagramGenerator.diagram()?.uml)
     }
 
+    @Test
+    fun mapsMessageEventsToParticipants() {
+        val messages = listOf(
+            messageBuilder().from("A").to("B").build(),
+            messageBuilder().from("B").to("B").build(),
+            messageBuilder().from("C").to("B").build(),
+            messageBuilder().from("D").to("B").build(),
+        )
+
+        val participants = listOf(
+            DATABASE.called("D", "dan", colour = "red"),
+            BOUNDARY.called("B", "ben"),
+            PARTICIPANT.called("unused")
+        )
+
+        assertThat(messages.mapToParticipants(providedParticipants = participants))
+            .containsExactlyInAnyOrder(
+                DATABASE.called("D", "dan", colour = "red"),
+                BOUNDARY.called("B", "ben"),
+                PARTICIPANT.called("A"),
+                PARTICIPANT.called("C")
+            )
+    }
+
     private fun sampleMessage(): Message {
         return messageBuilder()
             .from("A")
@@ -82,3 +106,4 @@ internal class ComponentDiagramGeneratorTest {
             .build()
     }
 }
+
