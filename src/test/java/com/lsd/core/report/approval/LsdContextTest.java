@@ -107,7 +107,7 @@ class LsdContextTest {
         lsdContext.capture(new NoteLeft("Left of Bettie", bettie.getComponentName()));
         lsdContext.capture(new NoteRight("Right of Bettie", bettie.getComponentName()));
 
-        lsdContext.completeScenario("A Success scenario", "description", SUCCESS);
+        lsdContext.completeScenario("A Success scenario", "", SUCCESS);
 
         Approvals.verify(lsdContext.completeReport("Adding notes to participants").toFile());
     }
@@ -125,7 +125,7 @@ class LsdContextTest {
         lsdContext.capture(messageBuilder().id(nextId()).from(rosie).to(bart).label("Voilets are blue!").build());
         lsdContext.capture(messageBuilder().id(nextId()).from(bart).to(greg).label("Grass is green?").build());
 
-        lsdContext.completeScenario("A Success scenario", "description", SUCCESS);
+        lsdContext.completeScenario("A Success scenario", "", SUCCESS);
 
         Approvals.verify(lsdContext.completeReport("Adding colours to participants").toFile());
     }
@@ -140,7 +140,7 @@ class LsdContextTest {
         lsdContext.capture(messageBuilder().id(nextId()).from(cat).to(arnie).label("Me?").build());
         lsdContext.capture(deactivation().of(cat).build());
 
-        lsdContext.completeScenario("Lifeline activation/deactivation", "description", SUCCESS);
+        lsdContext.completeScenario("Lifeline activation/deactivation", null, SUCCESS);
 
         Approvals.verify(lsdContext.completeReport("Activating lifelines").toFile());
     }
@@ -154,19 +154,19 @@ class LsdContextTest {
         lsdContext.capture(messageBuilder().id(nextId()).from(arnie).to(bettie).label("message1").build());
         lsdContext.capture(messageBuilder().id(nextId()).from(bettie).to(cat).label("message2").build());
         lsdContext.capture(messageBuilder().id(nextId()).from(cat).to(arnie).label("message3").build());
-        lsdContext.completeScenario("Scenario 1", "description", SUCCESS);
+        lsdContext.completeScenario("Scenario 1", "", SUCCESS);
         lsdContext.capture(messageBuilder().id(nextId()).from(cat).to(arnie).label("message4").build());
-        lsdContext.completeScenario("Scenario 2", "description", SUCCESS);
+        lsdContext.completeScenario("Scenario 2", "", SUCCESS);
         lsdContext.completeReport("Report 1");
 
         lsdContext.capture(messageBuilder().id(nextId()).from(bettie).to(arnie).label("message5").build());
         lsdContext.capture(messageBuilder().id(nextId()).from(cat).to(bettie).label("message6").build());
-        lsdContext.completeScenario("Scenario 3", "description", SUCCESS);
+        lsdContext.completeScenario("Scenario 3", "", SUCCESS);
         lsdContext.completeReport("Report 2");
 
         lsdContext.capture(messageBuilder().id(nextId()).from(bettie).to(dan).label("message5").build());
         lsdContext.capture(messageBuilder().id(nextId()).from(dan).to(arnie).label("message6").build());
-        lsdContext.completeScenario("Scenario 4", "description", SUCCESS);
+        lsdContext.completeScenario("Scenario 4", "", SUCCESS);
         lsdContext.completeReport("Report 3");
 
         Approvals.verify(lsdContext.completeComponentsReport("Relationships").toFile());

@@ -65,7 +65,7 @@ open class LsdContext {
             }
     }
 
-    fun completeScenario(title: String, description: String = "", status: Status = Status.SUCCESS) {
+    fun completeScenario(title: String, description: String? = "", status: Status = Status.SUCCESS) {
         currentScenario.title(title)
         currentScenario.description(description)
         currentScenario.status(status)

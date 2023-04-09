@@ -15,7 +15,7 @@ class ScenarioBuilder {
     )
 
     fun title(title: String) = also { instance = instance.copy(title = title) }
-    fun description(description: String) = also { instance = instance.copy(description = description) }
+    fun description(description: String?) = also { instance = instance.copy(description = description ?: "") }
     fun status(status: Status) = also { instance = instance.copy(status = status) }
 
     fun clearEvents() = instance.events.clear()

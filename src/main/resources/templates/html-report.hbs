@@ -9,7 +9,7 @@
     <span onclick="location.href='lsd-index.html';" title="back to index page" class="back_to_index"></span>
     <h1 class="logo">LSD</h1>
     <h1>{{ report.title }}</h1>
-    {{#if report.showContentsMenu }}
+    {{#if report.showContentsMenu ~}}
     <div class="dropdown">
         <label class="dropdown">Scenarios</label>
         <div class="dropdown-content">
@@ -18,18 +18,20 @@
             {{/each}}
         </div>
     </div>
-    {{/if}}
+    {{~/if}}
     
     {{#each report.scenarios }}
 
     <article id="{{ id }}">
         <span onclick="location.href='#top';" title="top of page" class="back_to_top"></span>
         <h2 class="{{ status }}">{{title}}</h2>
+        {{# if description ~}}
         <section class="description {{ status }}">
             <h3 class="{{ status }}">Description</h3>
             {{{ description }}}
         </section>
-        {{#if facts }}
+        {{~/if}}
+        {{#if facts ~}}
         <aside class="facts">
             <div class="factTable">
                 <h3>Key Facts</h3>
@@ -45,8 +47,8 @@
                 {{/each}}
             </div>
         </aside>
-        {{/if}}
-        {{#if sequenceDiagram}}
+        {{~/if}}
+        {{#if sequenceDiagram ~}}
         <section class="sequence diagram svg {{ status }}">
             <h3 class="{{ status }}">Sequence Diagram</h3>
             <figure>{{{ sequenceDiagram.svg  }}}</figure>
@@ -97,7 +99,7 @@
             </div>
         </div>
         {{/each}}
-        {{/if}}
+        {{~/if}}
     </article>
     {{/each}}
 </main>
