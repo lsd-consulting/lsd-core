@@ -9,12 +9,8 @@
     <span onclick="location.href='lsd-index.html';" title="back to index page" class="back_to_index"></span>
     <h1 class="logo">LSD</h1>
     <h1>Some title</h1>
-    <div class="contents">
-        <h3>Contents</h3>
-        <ul class="contents">
-            
-        </ul>
-    </div>
+    
+    
     
 </main>
 </body>

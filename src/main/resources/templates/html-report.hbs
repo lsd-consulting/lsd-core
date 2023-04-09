@@ -9,14 +9,17 @@
     <span onclick="location.href='lsd-index.html';" title="back to index page" class="back_to_index"></span>
     <h1 class="logo">LSD</h1>
     <h1>{{ report.title }}</h1>
-    <div class="contents">
-        <h3>Contents</h3>
-        <ul class="contents">
+    {{#if report.showContentsMenu }}
+    <div class="dropdown">
+        <label class="dropdown">Scenarios</label>
+        <div class="dropdown-content">
             {{#each report.scenarios }}
-            <li class="{{ status }}"><a href="#{{ id }}">{{title}}</a></li>
+            <a class="{{ status }}" href="#{{ id }}">{{title}}</a>
             {{/each}}
-        </ul>
+        </div>
     </div>
+    {{/if}}
+    
     {{#each report.scenarios }}
 
     <article id="{{ id }}">

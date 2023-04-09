@@ -133,6 +133,7 @@ open class LsdContext {
         return Report(
             title = title,
             status = determineOverallStatus(scenarios),
+            showContentsMenu = scenarios.size > 1,
             scenarios = scenarios
                 .map { scenario ->
                     scenarioModelBuilder()
