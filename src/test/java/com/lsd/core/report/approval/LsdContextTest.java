@@ -224,10 +224,8 @@ class LsdContextTest {
     }
 
     @Test
-    void generateReport() {
-        String result = lsdContext.generateReport("Some title");
-
-        Approvals.verify(result);
+    void renderReport() {
+        Approvals.verify(lsdContext.renderReport("Some title"));
     }
 
     private String nextId() {

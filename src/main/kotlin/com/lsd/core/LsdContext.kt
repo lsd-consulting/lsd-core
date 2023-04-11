@@ -10,6 +10,7 @@ import com.lsd.core.diagram.ComponentDiagramGenerator
 import com.lsd.core.domain.*
 import com.lsd.core.properties.LsdProperties.DETERMINISTIC_IDS
 import com.lsd.core.properties.LsdProperties.MAX_EVENTS_PER_DIAGRAM
+import com.lsd.core.properties.LsdProperties.USE_LOCAL_STATIC_FILES
 import com.lsd.core.properties.LsdProperties.getBoolean
 import com.lsd.core.properties.LsdProperties.getInt
 import com.lsd.core.report.*
@@ -24,6 +25,7 @@ open class LsdContext {
     val idGenerator = IdGenerator(getBoolean(DETERMINISTIC_IDS))
 
     private val maxEventsPerDiagram = getInt(MAX_EVENTS_PER_DIAGRAM)
+    private val useLocalStaticFiles = getBoolean(USE_LOCAL_STATIC_FILES)
     private val parsers = parsers(idGenerator)
     private val htmlReportWriter = HtmlReportWriter(HtmlReportRenderer())
     private val scenarios: MutableList<Scenario> = ArrayList()
@@ -105,7 +107,11 @@ open class LsdContext {
         } ?: ""
     }
 
-    fun generateReport(title: String): String = htmlReportWriter.writeToString(buildReport(title))
+    @Deprecated(message = "To be removed. User renderReport(title) instead.")
+    fun generateReport(title: String): String = htmlReportWriter.renderReport(buildReport(title))
+
+    fun renderReport(title: String): String =
+        htmlReportWriter.renderReport(buildReport(title).copy(useLocalStaticFiles = false))
 
     fun createIndex(): Path = writeToFile(reportFiles)
 
@@ -134,6 +140,7 @@ open class LsdContext {
             title = title,
             status = determineOverallStatus(scenarios),
             showContentsMenu = scenarios.size > 1,
+            useLocalStaticFiles = useLocalStaticFiles,
             scenarios = scenarios
                 .map { scenario ->
                     scenarioModelBuilder()

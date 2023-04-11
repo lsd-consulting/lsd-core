@@ -2,23 +2,20 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html" xml:lang="en" lang="en">
 <head>
     <title>Some title</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://lsd-consulting.github.io/lsd-core/src/main/resources/static/style.css">
 </head>
 <body>
 <main role="main">
-    <span onclick="location.href='lsd-index.html';" title="back to index page" class="back_to_index"></span>
     <h1 class="logo">LSD</h1>
     <h1>Some title</h1>
-    
-    
     
 </main>
 </body>
 <footer>
-    <script type = "text/javascript" src = "https://d3js.org/d3.v4.min.js"></script>
+    <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/default.min.css">
-    <script src="custom.js"></script>
-    <script language = "javascript">
+    <script src="https://lsd-consulting.github.io/lsd-core/src/main/resources/static/custom.js"></script>
+    <script>
         addSliderForSvgZoom();
         highlightLifelinesWhenClicked();
     </script>
@@ -27,7 +24,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"></script>
     <script>
         highlightKeywords();
-        
         unMarkSvg();
     </script>
 </footer>

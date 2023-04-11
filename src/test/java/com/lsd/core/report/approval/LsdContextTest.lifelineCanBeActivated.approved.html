@@ -6,17 +6,11 @@
 </head>
 <body>
 <main role="main">
-    <span onclick="location.href='lsd-index.html';" title="back to index page" class="back_to_index"></span>
     <h1 class="logo">LSD</h1>
     <h1>Activating lifelines</h1>
-    
-    
-    
-
     <article id="4">
         <span onclick="location.href='#top';" title="top of page" class="back_to_top"></span>
         <h2 class="success">Lifeline activation/deactivation</h2>
-        
         
         <section class="sequence diagram svg success">
             <h3 class="success">Sequence Diagram</h3>
@@ -106,9 +100,7 @@ remove @unlinked
                 </div>
             </div>
         </div>
-        <!-- Section containing data for sequence diagram popups -->
-        
-        <div onclick="location.href='#!';" id="1" class="overlay">
+        <!-- Section containing data for sequence diagram popups --><div onclick="location.href='#!';" id="1" class="overlay">
             <div class="popup" onclick="event.stopPropagation();">
                 <h2>Good day to you!</h2>
                 <a class="close" href="#!">&times;</a>
@@ -116,9 +108,7 @@ remove @unlinked
                     <pre></pre>
                 </div>
             </div>
-        </div>
-        
-        <div onclick="location.href='#!';" id="2" class="overlay">
+        </div><div onclick="location.href='#!';" id="2" class="overlay">
             <div class="popup" onclick="event.stopPropagation();">
                 <h2>Good day to you!</h2>
                 <a class="close" href="#!">&times;</a>
@@ -126,9 +116,7 @@ remove @unlinked
                     <pre></pre>
                 </div>
             </div>
-        </div>
-        
-        <div onclick="location.href='#!';" id="3" class="overlay">
+        </div><div onclick="location.href='#!';" id="3" class="overlay">
             <div class="popup" onclick="event.stopPropagation();">
                 <h2>Me?</h2>
                 <a class="close" href="#!">&times;</a>
@@ -137,16 +125,14 @@ remove @unlinked
                 </div>
             </div>
         </div>
-        
     </article>
-    
 </main>
 </body>
 <footer>
-    <script type = "text/javascript" src = "https://d3js.org/d3.v4.min.js"></script>
+    <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/default.min.css">
     <script src="custom.js"></script>
-    <script language = "javascript">
+    <script>
         addSliderForSvgZoom();
         highlightLifelinesWhenClicked();
     </script>
@@ -155,9 +141,6 @@ remove @unlinked
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"></script>
     <script>
         highlightKeywords();
-        
-            
-        
         unMarkSvg();
     </script>
 </footer>

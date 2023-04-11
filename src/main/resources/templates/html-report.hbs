@@ -2,30 +2,31 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html" xml:lang="en" lang="en">
 <head>
     <title>{{report.title}}</title>
+    {{#if report.useLocalStaticFiles ~}}
     <link rel="stylesheet" href="style.css">
+    {{~ else ~}}
+    <link rel="stylesheet" href="https://lsd-consulting.github.io/lsd-core/src/main/resources/static/style.css">
+    {{~/if}}
 </head>
 <body>
 <main role="main">
-    <span onclick="location.href='lsd-index.html';" title="back to index page" class="back_to_index"></span>
     <h1 class="logo">LSD</h1>
     <h1>{{ report.title }}</h1>
     {{#if report.showContentsMenu ~}}
     <div class="dropdown">
         <label class="dropdown">Scenarios</label>
         <div class="dropdown-content">
-            {{#each report.scenarios }}
+            {{~#each report.scenarios }}
             <a class="{{ status }}" href="#{{ id }}">{{title}}</a>
-            {{/each}}
+            {{~/each}}
         </div>
     </div>
     {{~/if}}
-    
-    {{#each report.scenarios }}
-
+    {{~#each report.scenarios ~}}
     <article id="{{ id }}">
         <span onclick="location.href='#top';" title="top of page" class="back_to_top"></span>
         <h2 class="{{ status }}">{{title}}</h2>
-        {{# if description ~}}
+        {{~# if description ~}}
         <section class="description {{ status }}">
             <h3 class="{{ status }}">Description</h3>
             {{{ description }}}
@@ -39,12 +40,12 @@
                     <div class="factRowHead">Description</div>
                     <div class="factRowHead">Value</div>
                 </div>
-                {{#each facts }}
+                {{~#each facts ~}}
                 <div class="factRow">
                     <div class="factCell">{{key}}</div>
                     <div class="factCell">{{value}}</div>
                 </div>
-                {{/each}}
+                {{~/each}}
             </div>
         </aside>
         {{~/if}}
@@ -88,7 +89,7 @@
             </div>
         </div>
         <!-- Section containing data for sequence diagram popups -->
-        {{#each dataHolders }}
+        {{~#each dataHolders ~}}
         <div onclick="location.href='#!';" id="{{id}}" class="overlay">
             <div class="popup" onclick="event.stopPropagation();">
                 <h2>{{ sanitise abbreviatedLabel }}</h2>
@@ -98,17 +99,21 @@
                 </div>
             </div>
         </div>
-        {{/each}}
+        {{~/each}}
         {{~/if}}
     </article>
-    {{/each}}
+    {{~/each}}
 </main>
 </body>
 <footer>
-    <script type = "text/javascript" src = "https://d3js.org/d3.v4.min.js"></script>
+    <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/default.min.css">
-    <script src="custom.js"></script>
-    <script language = "javascript">
+    {{#if report.useLocalStaticFiles ~}}
+        <script src="custom.js"></script>
+    {{~ else ~}}
+        <script src="https://lsd-consulting.github.io/lsd-core/src/main/resources/static/custom.js"></script>
+    {{~/if}}
+    <script>
         addSliderForSvgZoom();
         highlightLifelinesWhenClicked();
     </script>
@@ -117,13 +122,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"></script>
     <script>
         highlightKeywords();
-        {{#each report.scenarios }}
-            {{#if facts }}
-                {{#each facts }}
+        {{~#each report.scenarios ~}}
+            {{#if facts ~}}
+                {{#each facts ~}}
         highlightFact("{{../id}}", "{{value}}");
-                {{/each}}
-            {{/if}}
-        {{/each}}
+                {{~/each}}
+            {{~/if}}
+        {{~/each}}
         unMarkSvg();
     </script>
 </footer>

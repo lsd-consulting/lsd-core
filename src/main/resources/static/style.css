@@ -109,7 +109,7 @@ section.diagram {
     border-radius: 25px;
     max-width: 70%;
     position: relative;
-    transition: all 2s ease-in-out;
+    transition: all 1s ease-in-out;
 }
 
 h1, h2, h3 {
@@ -205,12 +205,16 @@ section {
     margin-left: var(--margin-content-left);
 }
 
-section.warn {
-    border-color: var(--color-warn);
+section.success:hover {
+    border: thin solid var(--color-success);;
 }
 
-section.error {
-    border-color: var(--color-error);
+section.warn:hover {
+    border: thin solid var(--color-warn);;
+}
+
+section.error:hover {
+    border: thin solid var(--color-error);;
 }
 
 /* highlight key facts (generated at runtime) */

@@ -1,50 +1,49 @@
 package com.lsd.core.report
 
-import com.lsd.core.properties.LsdProperties
-import com.lsd.core.properties.LsdProperties.OUTPUT_DIR
 import com.lsd.core.report.model.Report
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junitpioneer.jupiter.SetSystemProperty
-import org.mockito.kotlin.any
-import org.mockito.kotlin.doReturn
-import org.mockito.kotlin.mock
 import java.io.File
 
-@SetSystemProperty(key = "lsd.core.report.outputDir", value = "build/reports/lsd/deeply/nested/directory")
 internal class HtmlReportWriterTest {
 
-    private val mockRenderer = mock<ReportRenderer> {
-        on { render(any()) } doReturn "report content"
-    }
-    
-    private val outputDirectory = LsdProperties[OUTPUT_DIR]
-    private val underTest = HtmlReportWriter(mockRenderer)
-    private val aReport = Report("report title", emptyList(), "")
+    private val outputDirectory = File("build/reports/lsd/deeply/nested/directory")
+    private val customJsFile = File(outputDirectory, "custom.js")
+    private val styleCssFile = File(outputDirectory, "style.css")
 
-    @Test
-    fun writesFileContainingRenderedContent() {
-        underTest.writeToFile(aReport)
-        assertThat(File(outputDirectory, "reportTitle.html"))
-            .exists()
-            .hasContent("report content")
+    private val underTest = HtmlReportWriter(HtmlReportRenderer())
+    private val aReport = Report("report title")
+
+    @BeforeEach
+    fun clearExistingFiles() {
+        outputDirectory.deleteRecursively()
     }
 
     @Test
-    fun addCssFileToOutputDirectory() {
-        underTest.writeToFile(aReport)
-        assertThat(File(outputDirectory, "style.css")).exists()
+    fun writesFilesToOutputDirectory() {
+        val reportFile = underTest.writeToFile(report = aReport, outputDir = outputDirectory).toFile()
+
+        assertThat(reportFile).exists()
+        assertThat(customJsFile).exists()
+        assertThat(styleCssFile).exists()
+        assertThat(reportFile.readText())
+            .contains("""<link rel="stylesheet" href="style.css">""")
+            .contains("""<script src="custom.js"></script>""")
     }
 
     @Test
-    fun addJavaScriptFileToOutputDirectory() {
-        underTest.writeToFile(aReport)
-        assertThat(File(outputDirectory, "custom.js")).exists()
-    }
+    fun staticFilesNotAddedWhenLocalForStaticContentIsFalse() {
+        val reportFile = underTest.writeToFile(
+            report = aReport.copy(useLocalStaticFiles = false),
+            outputDir = outputDirectory
+        ).toFile()
 
-    @Test
-    fun writeToString() {
-        val result = underTest.writeToString(aReport)
-        assertThat(result).contains("report content")
+        assertThat(reportFile).exists()
+        assertThat(styleCssFile).doesNotExist()
+        assertThat(customJsFile).doesNotExist()
+        assertThat(reportFile.readText())
+            .contains("""<link rel="stylesheet" href="https://lsd-consulting.github.io/lsd-core/src/main/resources/static/style.css">""")
+            .contains("""<script src="https://lsd-consulting.github.io/lsd-core/src/main/resources/static/custom.js"></script>""")
     }
 }

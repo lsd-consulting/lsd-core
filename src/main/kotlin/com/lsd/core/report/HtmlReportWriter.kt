@@ -12,20 +12,23 @@ import java.nio.file.Path
 
 class HtmlReportWriter(private val reportRenderer: ReportRenderer) {
 
-    private val outputDir = prepareOutputDirectory(LsdProperties[OUTPUT_DIR])
     private val extension = ".html"
+    private val outputDirectory = File(LsdProperties[OUTPUT_DIR])
 
-    fun writeToFile(report: Report): Path {
+    fun writeToFile(report: Report, outputDir: File = outputDirectory): Path {
+        outputDir.mkdirs()
         val reportFileName = generateFileName(report.title)
         val outputPath = File(outputDir, reportFileName).toPath()
         val reportContent = reportRenderer.render(report)
         writeFileSafely(outputPath, reportContent)
-        writeFileIfMissing("static/style.css", File(outputDir, "style.css"))
-        writeFileIfMissing("static/custom.js", File(outputDir, "custom.js"))
+        if (report.useLocalStaticFiles) {
+            writeFileIfMissing("static/style.css", File(outputDir, "style.css"))
+            writeFileIfMissing("static/custom.js", File(outputDir, "custom.js"))
+        }
         return outputPath
     }
 
-    fun writeToString(report: Report): String = reportRenderer.render(report)
+    fun renderReport(report: Report): String = reportRenderer.render(report)
 
     private fun writeFileSafely(outputPath: Path, reportContent: String) {
         try {
@@ -36,7 +39,7 @@ class HtmlReportWriter(private val reportRenderer: ReportRenderer) {
         }
     }
 
-    private fun prepareOutputDirectory(dir: String): File = File(dir).also(File::mkdirs)
+    private fun prepareOutputDirectory(file: File): File = file.also(File::mkdirs)
 
     private fun writeFileIfMissing(resourceName: String, targetFile: File) {
         if (!targetFile.isFile) {
