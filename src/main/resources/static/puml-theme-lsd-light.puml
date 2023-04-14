@@ -1,0 +1,52 @@
+
+' These colours should be based on the colours used in style.css
+
+skinparam useBetaStyle false
+
+!$COLOR_HIGHLIGHT  = "yellow"
+!$COLOR_BACKGROUND_PRIMARY  = "#fff"
+!$COLOR_BACKGROUND_SECONDARY  = "#fff"
+!$COLOR_TEXT_PRIMARY  = "#656d76"
+!$COLOR_TEXT_SECONDARY  = "#656d76"
+!$BORDER_COLOR  = "#7d8590"
+!$BORDER_THICKNESS  = "2"
+
+<style>
+  root {
+    FontColor $COLOR_TEXT_PRIMARY
+    BackgroundColor $COLOR_BACKGROUND_PRIMARY
+    LineThickness $BORDER_THICKNESS
+    LineColor $BORDER_COLOR
+    RoundCorner 5
+    Margin 10
+    Padding 6
+  }
+  title {
+    LineThickness 0
+  }
+  note {
+    BackGroundColor $COLOR_HIGHLIGHT
+    LineThickness 1
+  }
+  lifeline {
+    LineThickness 1
+    BackgroundColor $COLOR_BACKGROUND_SECONDARY
+  }
+  arrow {
+    LineThickness 1.5
+  }
+  component {
+    LineColor pink
+    BackgroundColor orange
+  }
+</style>
+
+
+' Note: Component diagrams don't appear to work with the <style> mechanism yet so need skinparams
+skinparam component {
+    FontColor $COLOR_TEXT_PRIMARY
+    BackgroundColor $COLOR_BACKGROUND_PRIMARY
+    BorderThickness $BORDER_THICKNESS
+    BorderColor $BORDER_COLOR
+}
+
