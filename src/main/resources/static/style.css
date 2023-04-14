@@ -178,9 +178,15 @@ h3 {
     border-bottom: 1px outset var(--color-border);
 }
 
-a, svg a text {
+a {
     text-decoration: none;
     color: var(--color-text-secondary);
+}
+
+text {
+    text-decoration: none;
+    fill: var(--color-text-secondary);
+    font-family: system-ui,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";;
 }
 
 svg {
