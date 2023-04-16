@@ -1,52 +1,46 @@
+''
+'' These colours should be based on the colours used in style.css
+''
 
-' These colours should be based on the colours used in style.css
+''
+'' Note that all <text> elements will be styled by css which overrides any of these values
+''  (that includes participant names, arrow text etc)
+''
 
-skinparam useBetaStyle false
-
-!$COLOR_HIGHLIGHT  = "yellow"
-!$COLOR_BACKGROUND_PRIMARY  = "#fff"
-!$COLOR_BACKGROUND_SECONDARY  = "#fff"
-!$COLOR_TEXT_PRIMARY  = "#656d76"
-!$COLOR_TEXT_SECONDARY  = "#656d76"
-!$BORDER_COLOR  = "#7d8590"
-!$BORDER_THICKNESS  = "2"
+!$BACKGROUND_COLOR  = "#fff"
+!$BACKGROUND_COLOR_HIGHLIGHT  = "yellow"
+!$LINE_COLOR_PRIMARY  = "#7d8590"
+!$LINE_COLOR_SECONDARY  = "slategrey"
+!$TEXT_COLOR_PRIMARY  = "#656d76"
+!$TEXT_COLOR_SECONDARY  = "#8392A2FF"
+!$TEXT_COLOR_HYPERLINK  = "#656d76"
 
 <style>
   root {
-    FontColor $COLOR_TEXT_PRIMARY
-    BackgroundColor $COLOR_BACKGROUND_PRIMARY
-    LineThickness $BORDER_THICKNESS
-    LineColor $BORDER_COLOR
+    FontColor $TEXT_COLOR_SECONDARY
+    HyperLinkColor $TEXT_COLOR_HYPERLINK
+    BackgroundColor $BACKGROUND_COLOR
+    LineThickness 1.5
+    LineColor $LINE_COLOR_PRIMARY
     RoundCorner 5
     Margin 10
     Padding 6
+    Shadowing 3
   }
   title {
     LineThickness 0
+    FontColor $TEXT_COLOR_PRIMARY
   }
   note {
-    BackGroundColor $COLOR_HIGHLIGHT
-    LineThickness 1
+    BackGroundColor $BACKGROUND_COLOR_HIGHLIGHT
+    LineThickness 0.5
+    FontColor $TEXT_COLOR_PRIMARY
   }
   lifeline {
     LineThickness 1
-    BackgroundColor $COLOR_BACKGROUND_SECONDARY
+    LineColor $LINE_COLOR_SECONDARY
   }
   arrow {
     LineThickness 1.5
   }
-  component {
-    LineColor pink
-    BackgroundColor orange
-  }
 </style>
-
-
-' Note: Component diagrams don't appear to work with the <style> mechanism yet so need skinparams
-skinparam component {
-    FontColor $COLOR_TEXT_PRIMARY
-    BackgroundColor $COLOR_BACKGROUND_PRIMARY
-    BorderThickness $BORDER_THICKNESS
-    BorderColor $BORDER_COLOR
-}
-
