@@ -2,8 +2,6 @@
 
 !theme plain
 
-skinparam backgroundColor transparent
-
 hide unlinked
 
 
@@ -24,8 +22,6 @@ B --> A: <text fill="">[[#2 {Sending a response with a long label that should be
 @startuml
 
 !theme plain
-
-skinparam backgroundColor transparent
 
 hide unlinked
 
