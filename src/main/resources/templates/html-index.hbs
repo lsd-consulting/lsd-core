@@ -2,18 +2,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html" xml:lang="en" lang="en">
 <head>
     <title>{{report.title}}</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lsd-consulting/lsd-core@3/src/main/resources/static/style.min.css">
 </head>
 <body>
 <main role="main">
     <h1 class="logo">LSD</h1>
-    <h1>Reports</h1>
-    <div class="contents">
-        <ul class="contents">
+    <div class="dropdown">
+        <h1><label class="dropdown">Reports</label></h1>
+        <div class="dropdown-content">
             {{# each reportFiles~}}
-                <li class="{{ status }}"><a href="{{ filename }}">{{ title }}</a></li>
+                <a class="{{ status }}" href="{{ filename }}">{{ title }}</a>
             {{/each}}
-        </ul>
+        </div>
     </div>
 </main>
 </body>
