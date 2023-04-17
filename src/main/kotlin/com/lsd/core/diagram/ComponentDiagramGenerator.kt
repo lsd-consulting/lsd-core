@@ -38,7 +38,7 @@ class ComponentDiagramGenerator(
 
         return template.apply(
             mapOf(
-                "theme" to LsdProperties[DIAGRAM_THEME],
+                "theme" to "plain",
                 "participants" to messages.mapToParticipants(providedParticipants = participants)
                     .map(Participant::toComponentMarkup)
                     .distinct(),
