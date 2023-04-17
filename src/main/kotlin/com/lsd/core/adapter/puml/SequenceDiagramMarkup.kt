@@ -45,14 +45,22 @@ private fun Message.sequenceMessageMarkup() =
         LOST,
         ASYNCHRONOUS,
         SYNCHRONOUS ->
-            """${from.name} ${arrowMarkup()} ${to.name}: <text fill="$colour">[[#${id} {${label.sanitise()}} ${label.abbreviate()}]]</text>"""
+            """${from.name} ${arrowMarkup()} ${to.name}: ${labelMarkup(id, label)}"""
 
         SHORT_OUTBOUND ->
-            """${from.name} ${arrowMarkup()}?: <text fill="$colour">[[#${id} {${label.sanitise()}} ${label.abbreviate()}]]</text>"""
+            """${from.name} ${arrowMarkup()}?: ${labelMarkup(id, label)}"""
 
         SHORT_INBOUND ->
-            """?${arrowMarkup()} ${to.name}: <text fill="$colour">[[#${id} {${label.sanitise()}} ${label.abbreviate()}]]</text>"""
+            """?${arrowMarkup()} ${to.name}: ${labelMarkup(id, label)}"""
     }
+
+private fun Message.labelMarkup(id: String, label: String): String {
+    return if (colour.isBlank()) {
+        """[[#${id} {${label.sanitise()}} ${label.abbreviate()}]]"""
+    } else {
+        """<text fill="$colour">[[#${id} {${label.sanitise()}} ${label.abbreviate()}]]</text>"""
+    }
+}
 
 private fun Message.arrowMarkup(): String {
     val c = if (colour.isBlank()) "" else "[#$colour]"

@@ -1,6 +1,6 @@
 @startuml
 
-!theme plain
+!theme lsd-light from https://raw.githubusercontent.com/lsd-consulting/lsd-core/main/src/main/resources/static
 
 hide unlinked
 
@@ -13,15 +13,15 @@ hide unlinked
 
 
 
-A -> B: <text fill="">[[#1 {Sending a request} Sending a request]]</text>
+A -> B: [[#1 {Sending a request} Sending a request]]
 
-B --> A: <text fill="">[[#2 {Sending a response with a long label that should be abbreviated if all goes well} Sending a response with a long label that shoul...]]</text>
+B --> A: [[#2 {Sending a response with a long label that should be abbreviated if all goes well} Sending a response with a long label that shoul...]]
 
 
 @enduml
 @startuml
 
-!theme plain
+!theme lsd-light from https://raw.githubusercontent.com/lsd-consulting/lsd-core/main/src/main/resources/static
 
 hide unlinked
 
@@ -34,7 +34,7 @@ hide unlinked
 
 
 
-B <-> A: <text fill="">[[#3 {On the phone} On the phone]]</text>
+B <-> A: [[#3 {On the phone} On the phone]]
 
 
 @enduml
