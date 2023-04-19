@@ -64,35 +64,16 @@ This library generates html reports and each report contains one or more scenari
     
         lsdContext.addParticipants(List.of(arnie, bank, repository));
         
-        lsdContext.capture(new PageTitle("Checking account balanace"));
-        lsdContext.capture(new NoteLeft("On payday", arnie));
-    
-        lsdContext.capture(messageBuilder()
-            .from(arnie)
-            .to(bank)
-            .label("What is my balance?")
-            .data("{ name: 'arnie' }").build());
-    
-        lsdContext.capture(new NoteLeft("High load on\\n payday", bank));
-    
-        lsdContext.capture(messageBuilder()
-            .from(bank)
-            .to(repository)
-            .label("Get balance for Arnie").build());
-    
-        lsdContext.capture(new TimeDelay("a couple seconds later"));
-    
-        lsdContext.capture(messageBuilder()
-            .from(repository)
-            .to(bank)
-            .type(SYNCHRONOUS_RESPONSE)
-            .label("Nothing yet..").build());
-    
-        lsdContext.capture(messageBuilder()
-            .from(bank)
-            .to(arnie)
-            .label("Your balance is 0")
-            .type(SYNCHRONOUS_RESPONSE).build());
+        lsdContext.capture(
+                new PageTitle("Checking account balanace")
+                new NoteLeft("On payday", arnie)
+                messageBuilder().from(arnie).to(bank).label("What is my balance?").data("{ name: 'arnie' }").build(),
+                new NoteLeft("High load on\\n payday", bank),
+                messageBuilder().from(bank).to(repository).label("Get balance for Arnie").build(),
+                new TimeDelay("a couple seconds later"),
+                messageBuilder().from(repository).to(bank).type(SYNCHRONOUS_RESPONSE).label("Nothing yet..").build(),
+                messageBuilder().from(bank).to(arnie).label("Your balance is 0").type(SYNCHRONOUS_RESPONSE).build()
+        );
     
         lsdContext.completeScenario("Checking bank balance", "Capture bank balance lookup", SUCCESS);
     

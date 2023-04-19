@@ -44,16 +44,19 @@ class LsdContextTest {
     @Test
     void createsReportWithScenariosAndEvents() {
         lsdContext.includeFiles(additionalIncludes);
-
-        lsdContext.capture(messageBuilder().id(nextId()).to(arnie).label("in").data("start some job").type(SHORT_INBOUND).build());
-        lsdContext.capture(messageBuilder().id(nextId()).from(arnie).to(bettie).label("Message 1").data("some data 1").type(BI_DIRECTIONAL).build());
-        lsdContext.capture(messageBuilder().id(nextId()).from(bettie).label("out").data("some data 1").type(SHORT_OUTBOUND).build());
-        lsdContext.capture(messageBuilder().id(nextId()).label("An interaction description that is long enough to need abbreviating").from("Beta").to("Gamma").data("β").type(LOST).build());
-        lsdContext.capture(messageBuilder().id(nextId()).label("A synchronous response").from("Gamma").to("Beta").data("200 OK").type(SYNCHRONOUS_RESPONSE).build());
+        lsdContext.capture(
+                messageBuilder().id(nextId()).to(arnie).label("in").data("start some job").type(SHORT_INBOUND).build(),
+                messageBuilder().id(nextId()).from(arnie).to(bettie).label("Message 1").data("some data 1").type(BI_DIRECTIONAL).build(),
+                messageBuilder().id(nextId()).from(bettie).label("out").data("some data 1").type(SHORT_OUTBOUND).build(),
+                messageBuilder().id(nextId()).label("An interaction description that is long enough to need abbreviating").from("Beta").to("Gamma").data("β").type(LOST).build(),
+                messageBuilder().id(nextId()).label("A synchronous response").from("Gamma").to("Beta").data("200 OK").type(SYNCHRONOUS_RESPONSE).build()
+        );
         lsdContext.completeScenario("A Success scenario", "Given a first scenario description<br/>When something happens<br/>Then something else happens", SUCCESS);
 
-        lsdContext.capture(messageBuilder().id(nextId()).label("Sending food <$hamburger{scale=0.4}>").from(arnie).to(bettie).colour("orange").build());
-        lsdContext.capture(new TimeDelay(null));
+        lsdContext.capture(
+                messageBuilder().id(nextId()).label("Sending food <$hamburger{scale=0.4}>").from(arnie).to(bettie).colour("orange").build(),
+                new TimeDelay(null)
+        );
         lsdContext.capture("Sending a response from B to A [#red]", "Thank You!");
         lsdContext.capture(new NoteLeft("Friends <$heart{scale=0.4,color=red}>", null));
         lsdContext.addFact("Something to highlight", "Lorem");
@@ -77,13 +80,13 @@ class LsdContextTest {
     @Test
     void diagramIsSplitOnNewPageEvents() {
         lsdContext.includeFiles(additionalIncludes);
-
-        lsdContext.capture(new PageTitle("A title"));
-        lsdContext.capture(messageBuilder().id(nextId()).to(arnie).label("in").data("start some job").type(SHORT_INBOUND).build());
-        lsdContext.capture(new Newpage(new PageTitle("A second page")));
-        lsdContext.capture(messageBuilder().id(nextId()).from(bettie).label("out").data("some data 1").type(SHORT_OUTBOUND).build());
-        lsdContext.capture(new Newpage(new PageTitle("A third page")));
-        lsdContext.capture(messageBuilder().id(nextId()).label("An interaction description that is long enough to need abbreviating").from("Beta").to("Gamma").data("β").type(LOST).build());
+        lsdContext.capture(new PageTitle("A title"),
+                messageBuilder().id(nextId()).to(arnie).label("in").data("start some job").type(SHORT_INBOUND).build(),
+                new Newpage(new PageTitle("A second page")),
+                messageBuilder().id(nextId()).from(bettie).label("out").data("some data 1").type(SHORT_OUTBOUND).build(),
+                new Newpage(new PageTitle("A third page")),
+                messageBuilder().id(nextId()).label("An interaction description that is long enough to need abbreviating").from("Beta").to("Gamma").data("β").type(LOST).build()
+        );
         lsdContext.completeScenario("A Success scenario", "Given a first scenario description<br/>When something happens<br/>Then something else happens", SUCCESS);
 
         Approvals.verify(lsdContext.completeReport("Split by NewPage Report").toFile());
@@ -91,22 +94,23 @@ class LsdContextTest {
 
     @Test
     void notesCanBeAddedToParticipants() {
-        lsdContext.capture(new PageTitle("Adding notes"));
-        lsdContext.capture(messageBuilder().id(nextId()).from(arnie).to(bettie).label("Good day to you!").build());
-        lsdContext.capture(new NoteLeft("Left note", null));
-        lsdContext.capture(new NoteRight("Right note", null));
-        lsdContext.capture(new TimeDelay("a few seconds later"));
-        lsdContext.capture(messageBuilder().id(nextId()).from(bettie).to(cat).label("Good day to you!").build());
-        lsdContext.capture(new NoteLeft("Left of Cat", cat.getComponentName()));
-        lsdContext.capture(new NoteRight("Right of Cat", cat.getComponentName()));
-        lsdContext.capture(new NoteRight("Right note", null));
-        lsdContext.capture(new LogicalDivider("a divider"));
-        lsdContext.capture(messageBuilder().id(nextId()).from(cat).to(arnie).label("Me?").build());
-        lsdContext.capture(new NoteRight("Right note", null));
-        lsdContext.capture(new VerticalSpace(20));
-        lsdContext.capture(new NoteLeft("Left of Bettie", bettie.getComponentName()));
-        lsdContext.capture(new NoteRight("Right of Bettie", bettie.getComponentName()));
-
+        lsdContext.capture(
+                new PageTitle("Adding notes"),
+                messageBuilder().id(nextId()).from(arnie).to(bettie).label("Good day to you!").build(),
+                new NoteLeft("Left note", null),
+                new NoteRight("Right note", null),
+                new TimeDelay("a few seconds later"),
+                messageBuilder().id(nextId()).from(bettie).to(cat).label("Good day to you!").build(),
+                new NoteLeft("Left of Cat", cat.getComponentName()),
+                new NoteRight("Right of Cat", cat.getComponentName()),
+                new NoteRight("Right note", null),
+                new LogicalDivider("a divider"),
+                messageBuilder().id(nextId()).from(cat).to(arnie).label("Me?").build(),
+                new NoteRight("Right note", null),
+                new VerticalSpace(20),
+                new NoteLeft("Left of Bettie", bettie.getComponentName()),
+                new NoteRight("Right of Bettie", bettie.getComponentName())
+        );
         lsdContext.completeScenario("A Success scenario", "", SUCCESS);
 
         Approvals.verify(lsdContext.completeReport("Adding notes to participants").toFile());
@@ -119,12 +123,12 @@ class LsdContextTest {
         var bart = CONTROL.called("Bart", null, "blue");
 
         lsdContext.addParticipants(greg, rosie, bart);
-
-        lsdContext.capture(new PageTitle("Adding colours"));
-        lsdContext.capture(messageBuilder().id(nextId()).from(greg).to(rosie).label("Roses are red!").build());
-        lsdContext.capture(messageBuilder().id(nextId()).from(rosie).to(bart).label("Voilets are blue!").build());
-        lsdContext.capture(messageBuilder().id(nextId()).from(bart).to(greg).label("Grass is green?").build());
-
+        lsdContext.capture(
+                new PageTitle("Adding colours"),
+                messageBuilder().id(nextId()).from(greg).to(rosie).label("Roses are red!").build(),
+                messageBuilder().id(nextId()).from(rosie).to(bart).label("Voilets are blue!").build(),
+                messageBuilder().id(nextId()).from(bart).to(greg).label("Grass is green?").build()
+        );
         lsdContext.completeScenario("A Success scenario", "", SUCCESS);
 
         Approvals.verify(lsdContext.completeReport("Adding colours to participants").toFile());
@@ -132,14 +136,15 @@ class LsdContextTest {
 
     @Test
     void lifelineCanBeActivated() {
-        lsdContext.capture(messageBuilder().id(nextId()).from(arnie).to(bettie).label("Good day to you!").build());
-        lsdContext.capture(activation().of(bettie).colour("red").build());
-        lsdContext.capture(messageBuilder().id(nextId()).from(bettie).to(cat).label("Good day to you!").build());
-        lsdContext.capture(deactivation().of(bettie).build());
-        lsdContext.capture(activation().of(cat).colour("blue").build());
-        lsdContext.capture(messageBuilder().id(nextId()).from(cat).to(arnie).label("Me?").build());
-        lsdContext.capture(deactivation().of(cat).build());
-
+        lsdContext.capture(
+                messageBuilder().id(nextId()).from(arnie).to(bettie).label("Good day to you!").build(),
+                activation().of(bettie).colour("red").build(),
+                messageBuilder().id(nextId()).from(bettie).to(cat).label("Good day to you!").build(),
+                deactivation().of(bettie).build(),
+                activation().of(cat).colour("blue").build(),
+                messageBuilder().id(nextId()).from(cat).to(arnie).label("Me?").build(),
+                deactivation().of(cat).build()
+        );
         lsdContext.completeScenario("Lifeline activation/deactivation", null, SUCCESS);
 
         Approvals.verify(lsdContext.completeReport("Activating lifelines").toFile());
@@ -151,21 +156,27 @@ class LsdContextTest {
 
         lsdContext.addParticipants(arnie, bettie, cat, dan);
 
-        lsdContext.capture(messageBuilder().id(nextId()).from(arnie).to(bettie).label("message1").build());
-        lsdContext.capture(messageBuilder().id(nextId()).from(bettie).to(cat).label("message2").build());
-        lsdContext.capture(messageBuilder().id(nextId()).from(cat).to(arnie).label("message3").build());
+        lsdContext.capture(
+                messageBuilder().id(nextId()).from(arnie).to(bettie).label("message1").build(),
+                messageBuilder().id(nextId()).from(bettie).to(cat).label("message2").build(),
+                messageBuilder().id(nextId()).from(cat).to(arnie).label("message3").build()
+        );
         lsdContext.completeScenario("Scenario 1", "", SUCCESS);
         lsdContext.capture(messageBuilder().id(nextId()).from(cat).to(arnie).label("message4").build());
         lsdContext.completeScenario("Scenario 2", "", SUCCESS);
         lsdContext.completeReport("Report 1");
 
-        lsdContext.capture(messageBuilder().id(nextId()).from(bettie).to(arnie).label("message5").build());
-        lsdContext.capture(messageBuilder().id(nextId()).from(cat).to(bettie).label("message6").build());
+        lsdContext.capture(
+                messageBuilder().id(nextId()).from(bettie).to(arnie).label("message5").build(),
+                messageBuilder().id(nextId()).from(cat).to(bettie).label("message6").build()
+        );
         lsdContext.completeScenario("Scenario 3", "", SUCCESS);
         lsdContext.completeReport("Report 2");
 
-        lsdContext.capture(messageBuilder().id(nextId()).from(bettie).to(dan).label("message5").build());
-        lsdContext.capture(messageBuilder().id(nextId()).from(dan).to(arnie).label("message6").build());
+        lsdContext.capture(
+                messageBuilder().id(nextId()).from(bettie).to(dan).label("message5").build(),
+                messageBuilder().id(nextId()).from(dan).to(arnie).label("message6").build()
+        );
         lsdContext.completeScenario("Scenario 4", "", SUCCESS);
         lsdContext.completeReport("Report 3");
 
@@ -180,7 +191,7 @@ class LsdContextTest {
 
         Approvals.verify(lsdContext.completeReport("No Diagrams Report").toFile());
     }
-    
+
     @Test
     void participantTypeAndAliasCanBeOverridden() {
         var fred1 = CONTROL.called("Fred");
@@ -195,9 +206,10 @@ class LsdContextTest {
 
     @Test
     void hasNoDiagramSectionWhenEventsAreCleared() {
-        lsdContext.capture(messageBuilder().id(nextId()).to("A").label("in").data("start some job").type(SHORT_INBOUND).build());
-        lsdContext.capture(messageBuilder().id(nextId()).to("B").label("in").data("start another job").type(SHORT_INBOUND).build());
-
+        lsdContext.capture(
+                messageBuilder().id(nextId()).to("A").label("in").data("start some job").type(SHORT_INBOUND).build(),
+                messageBuilder().id(nextId()).to("B").label("in").data("start another job").type(SHORT_INBOUND).build()
+        );
         lsdContext.clearScenarioEvents();
         lsdContext.completeScenario("A scenario without events (cleared down)", "This has no diagrams", SUCCESS);
 

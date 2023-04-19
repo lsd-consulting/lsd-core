@@ -47,11 +47,13 @@ open class LsdContext {
     /**
      * Capture a sequence event for the current scenario
      *
-     * @param event The event to be captured on the sequence diagram for the current scenario.
+     * @param events The events to be captured on the sequence diagram for the current scenario.
      */
-    open fun capture(event: SequenceEvent) {
-        currentScenario.add(event)
-        combinedEvents.add(event)
+    open fun capture(vararg events: SequenceEvent) {
+        events.forEach { event ->
+            currentScenario.add(event)
+            combinedEvents.add(event)
+        }
     }
 
     /**
