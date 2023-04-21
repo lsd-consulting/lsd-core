@@ -17,7 +17,6 @@ import static com.lsd.core.builders.MessageBuilder.messageBuilder;
 import static com.lsd.core.domain.MessageType.*;
 import static com.lsd.core.domain.ParticipantType.*;
 import static com.lsd.core.domain.Status.*;
-import static j2html.TagCreator.*;
 
 class LsdContextTest {
 
@@ -63,11 +62,13 @@ class LsdContextTest {
         lsdContext.addFact("Something else to highlight", "amet");
         lsdContext.addFact("Something else to highlight", "consectetur");
         lsdContext.addFact("Something else to highlight", "Thank you!");
-        lsdContext.completeScenario("A Warning scenario", p(
-                text("A popup with a long text that needs scrolling: "),
-                a().withHref("#" + "kljasdlfj").withText("click me!"),
-                PopupContent.popupDiv("kljasdlfj", "I am popup", ".. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.")
-        ).render(), FAILURE);
+        lsdContext.completeScenario("A Warning scenario", "A popup with a long text that needs scrolling:"
+                        + PopupContent.popupHyperlink(
+                        "kljasdlfj",
+                        "I am popup",
+                        "click me please!",
+                        ".. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.")
+                , FAILURE);
 
         lsdContext.capture("a request from Beta to Gamma", "Please do something");
         lsdContext.capture("sync a synchronous response from Gamma to Beta", "Some Error (123456)");
