@@ -90,7 +90,7 @@ internal class ComponentDiagramGeneratorTest {
             PARTICIPANT.called("unused")
         )
 
-        assertThat(messages.mapToParticipants(providedParticipants = participants))
+        assertThat(participants.usedIn(messages))
             .containsExactlyInAnyOrder(
                 DATABASE.called("D", "dan", colour = "red"),
                 BOUNDARY.called("B", "ben"),

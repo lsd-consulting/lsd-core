@@ -21,7 +21,6 @@ import static com.lsd.core.domain.Status.*;
 class LsdContextTest {
 
     private final LsdContext lsdContext = LsdContext.getInstance();
-
     private final IdGenerator idGenerator = lsdContext.getIdGenerator();
 
     private final LinkedHashSet<String> additionalIncludes = new LinkedHashSet<>(List.of(
@@ -32,12 +31,10 @@ class LsdContextTest {
     private final Participant arnie = ACTOR.called("A", "Arnie");
     private final Participant bettie = BOUNDARY.called("Bettie");
     private final Participant cat = CONTROL.called("Cat");
-    private final Participant unused = BOUNDARY.called("Unused participant");
 
     @BeforeEach
     public void clearContext() {
         lsdContext.clear();
-        lsdContext.addParticipants(arnie, bettie, cat, unused);
     }
 
     @Test
@@ -102,15 +99,15 @@ class LsdContextTest {
                 new NoteRight("Right note", null),
                 new TimeDelay("a few seconds later"),
                 messageBuilder().id(nextId()).from(bettie).to(cat).label("Good day to you!").build(),
-                new NoteLeft("Left of Cat", cat.getComponentName()),
-                new NoteRight("Right of Cat", cat.getComponentName()),
+                new NoteLeft("Left of Cat", cat),
+                new NoteRight("Right of Cat", cat),
                 new NoteRight("Right note", null),
                 new LogicalDivider("a divider"),
                 messageBuilder().id(nextId()).from(cat).to(arnie).label("Me?").build(),
                 new NoteRight("Right note", null),
                 new VerticalSpace(20),
-                new NoteLeft("Left of Bettie", bettie.getComponentName()),
-                new NoteRight("Right of Bettie", bettie.getComponentName())
+                new NoteLeft("Left of Bettie", bettie),
+                new NoteRight("Right of Bettie", bettie)
         );
         lsdContext.completeScenario("A Success scenario", "", SUCCESS);
 
@@ -123,7 +120,6 @@ class LsdContextTest {
         var rosie = BOUNDARY.called("Rosie", null, "red");
         var bart = CONTROL.called("Bart", null, "blue");
 
-        lsdContext.addParticipants(greg, rosie, bart);
         lsdContext.capture(
                 new PageTitle("Adding colours"),
                 messageBuilder().id(nextId()).from(greg).to(rosie).label("Roses are red!").build(),
@@ -154,8 +150,6 @@ class LsdContextTest {
     @Test
     void generateCombinedComponentDiagramSource() {
         var dan = CONTROL.called("Dan");
-
-        lsdContext.addParticipants(arnie, bettie, cat, dan);
 
         lsdContext.capture(
                 messageBuilder().id(nextId()).from(arnie).to(bettie).label("message1").build(),
@@ -194,12 +188,14 @@ class LsdContextTest {
     }
 
     @Test
-    void participantTypeAndAliasCanBeOverridden() {
+    void participantTypeAndAliasCanBeOverriddenInParticipantsButNotEvents() {
         var fred1 = CONTROL.called("Fred");
         var fred2 = DATABASE.called("Fred", "Freddy", "purple");
 
-        lsdContext.addParticipants(List.of(fred1, fred2, bettie));
+        lsdContext.addParticipants(fred1, fred2, bettie);
+        lsdContext.capture(messageBuilder().id(nextId()).from(PARTICIPANT.called("Jake", "J", "orange")).to(fred1).build());
         lsdContext.capture(messageBuilder().id(nextId()).from("Fred").to(bettie).build());
+        lsdContext.capture(messageBuilder().id(nextId()).from(PARTICIPANT.called("Fred", "Fredster", "red")).to(bettie).build());
         lsdContext.completeScenario("Participant is updated", "Freddy is used", SUCCESS);
 
         Approvals.verify(lsdContext.completeReport("Fred is updated").toFile());

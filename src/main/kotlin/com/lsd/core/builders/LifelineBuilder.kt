@@ -1,16 +1,13 @@
 package com.lsd.core.builders
 
-import com.lsd.core.domain.ActivateLifeline
-import com.lsd.core.domain.ComponentName
-import com.lsd.core.domain.DeactivateLifeline
-import com.lsd.core.domain.Participant
+import com.lsd.core.domain.*
+import com.lsd.core.domain.ParticipantType.*
 
 class ActivateLifelineBuilder {
-    private var lifeline = ActivateLifeline(component = ComponentName(""))
+    private var lifeline = ActivateLifeline(participant = PARTICIPANT.called(""))
 
-    fun of(name: String) = also { of(ComponentName(name)) }
-    fun of(participant: Participant) = also { of(participant.componentName) }
-    fun of(componentName: ComponentName) = also { lifeline = lifeline.copy(component = componentName) }
+    fun of(name: String) = also { lifeline = lifeline.copy(participant = PARTICIPANT.called(name)) }
+    fun of(participant: Participant) = also { lifeline = lifeline.copy(participant = participant) }
     fun colour(colour: String) = also { lifeline = lifeline.copy(colour = colour) }
     fun build(): ActivateLifeline = lifeline
 
@@ -21,11 +18,10 @@ class ActivateLifelineBuilder {
 }
 
 class DeactivateLifelineBuilder {
-    private var lifeline = DeactivateLifeline(component = ComponentName(""))
+    private var lifeline = DeactivateLifeline(participant = PARTICIPANT.called(""))
 
-    fun of(name: String) = also { of(ComponentName(name)) }
-    fun of(participant: Participant) = also { of(participant.componentName) }
-    fun of(componentName: ComponentName) = also { lifeline = lifeline.copy(component = componentName) }
+    fun of(name: String) = also { lifeline = lifeline.copy(participant = PARTICIPANT.called(name)) }
+    fun of(participant: Participant) = also { lifeline = lifeline.copy(participant = participant) }
     fun build(): DeactivateLifeline = lifeline
 
     companion object {

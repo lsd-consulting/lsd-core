@@ -4,7 +4,7 @@ import com.lsd.core.domain.Message
 import com.lsd.core.domain.Participant
 import com.lsd.core.domain.ParticipantType
 
-internal fun Message.toComponentMarkup(): String = "[${from.name}] --> ${to.name}"
+internal fun Message.toComponentMarkup(): String = "[${from.componentName.normalisedName}] --> ${to.componentName.normalisedName}"
 
 internal fun Participant.toComponentMarkup(): String {
     val alias = alias?.let { " as \"$alias\"" } ?: ""
@@ -19,5 +19,5 @@ internal fun Participant.toComponentMarkup(): String {
         ParticipantType.ENTITY,
         ParticipantType.QUEUE -> type.name.lowercase()
     }
-    return "$typeMarkup ${componentName.name}$alias$colour"
+    return "$typeMarkup ${componentName.normalisedName}$alias$colour"
 }

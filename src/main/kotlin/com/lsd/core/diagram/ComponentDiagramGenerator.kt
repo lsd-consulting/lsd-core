@@ -7,10 +7,7 @@ import com.lsd.core.adapter.puml.toComponentMarkup
 import com.lsd.core.domain.Message
 import com.lsd.core.domain.MessageType.*
 import com.lsd.core.domain.Participant
-import com.lsd.core.domain.ParticipantType.PARTICIPANT
 import com.lsd.core.domain.SequenceEvent
-import com.lsd.core.properties.LsdProperties
-import com.lsd.core.properties.LsdProperties.DIAGRAM_THEME
 import com.lsd.core.report.model.Diagram
 
 class ComponentDiagramGenerator(
@@ -39,7 +36,7 @@ class ComponentDiagramGenerator(
         return template.apply(
             mapOf(
                 "theme" to "plain",
-                "participants" to messages.mapToParticipants(providedParticipants = participants)
+                "participants" to participants.usedIn(messages)
                     .map(Participant::toComponentMarkup)
                     .distinct(),
                 "events" to messages
@@ -49,11 +46,3 @@ class ComponentDiagramGenerator(
         )
     }
 }
-
-fun List<Message>.mapToParticipants(providedParticipants: List<Participant>): List<Participant> {
-    val participantsByName = providedParticipants.associateBy { it.componentName.name }
-    return flatMap { listOf(it.from.name, it.to.name) }
-        .distinct()
-        .map { participantsByName.getOrElse(it) { PARTICIPANT.called(it) } }
-}
-

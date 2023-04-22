@@ -11,6 +11,10 @@ hide unlinked
 
 
 
+participant A
+
+participant B
+
 
 
 A -> B: [[#1 {Sending a request} Sending a request]]
@@ -31,6 +35,10 @@ hide unlinked
 !include <tupadr3/font-awesome-5/database>
 
 
+
+participant B
+
+participant A
 
 
 

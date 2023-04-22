@@ -38,7 +38,7 @@ open class LsdContext {
     fun addParticipants(vararg participants: Participant) = addParticipants(participants.toList())
 
     fun addParticipants(additionalParticipants: List<Participant>) =
-        additionalParticipants.forEach { participants[it.componentName.name] = it }
+        additionalParticipants.forEach { participants[it.componentName.normalisedName] = it }
 
     fun includeFiles(additionalIncludes: Set<String>) = includes.addAll(additionalIncludes)
 

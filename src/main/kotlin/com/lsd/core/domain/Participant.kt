@@ -1,9 +1,9 @@
 package com.lsd.core.domain
 
 data class Participant(
-    var type: ParticipantType,
+    var type: ParticipantType = ParticipantType.PARTICIPANT,
     val componentName: ComponentName,
-    val alias: String?,
+    val alias: String? = null,
     val colour: String? = null
 )
 

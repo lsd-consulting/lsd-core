@@ -48,14 +48,19 @@ data class SequenceDiagramGenerator(
 }
 
 fun Collection<Participant>.usedIn(events: List<SequenceEvent>): List<Participant> {
-    val distinctComponentsNames = events.distinctComponentsNames()
-    return filter { it.componentName.name in distinctComponentsNames }.distinct()
+    val suppliedParticipantNames = associate { it.componentName.normalisedName to it }
+    return events.filterIsInstance<Message>()
+        .flatMap { listOf(it.from, it.to) }
+        .distinctBy { it.componentName.normalisedName }
+        .associateBy { it.componentName.normalisedName }
+        .filter { it.key.isNotBlank() }
+        .map { eventParticipant ->
+            suppliedParticipantNames.getOrDefault(
+                key = eventParticipant.key,
+                defaultValue = eventParticipant.value
+            )
+        }
 }
-
-private fun List<SequenceEvent>.distinctComponentsNames(): Set<String> =
-    filterIsInstance<Message>()
-        .flatMap { message -> listOf(message.from.name, message.to.name) }
-        .toSet()
 
 fun List<SequenceEvent>.groupedByPages() =
     fold(mutableListOf<MutableList<SequenceEvent>>()

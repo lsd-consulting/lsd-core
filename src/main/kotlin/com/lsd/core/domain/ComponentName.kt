@@ -3,7 +3,7 @@ package com.lsd.core.domain
 import com.lsd.core.capitalise
 
 data class ComponentName(val raw: String) {
-    val name = convertToValidName(raw)
+    val normalisedName = convertToValidName(raw)
 }
 
 

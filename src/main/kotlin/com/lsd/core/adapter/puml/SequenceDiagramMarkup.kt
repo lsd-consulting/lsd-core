@@ -27,10 +27,10 @@ private fun VerticalSpace.verticalSpaceMarkup(): String = size?.let { "||$it||" 
 private fun TimeDelay.timeDelayMarkup(): String = label?.let { "...$label..." } ?: "..."
 
 private fun NoteLeft.noteLeftMarkup(): String =
-    ofComponent?.let { "note left of ${it.name}: $note" } ?: "note left: $note"
+    ofParticipant?.let { "note left of ${it.componentName.normalisedName}: $note" } ?: "note left: $note"
 
 private fun NoteRight.noteRightMarkup(): String =
-    ofComponent?.let { "note right of ${it.name}: $note" } ?: "note right: $note"
+    ofParticipant?.let { "note right of ${it.componentName.normalisedName}: $note" } ?: "note right: $note"
 
 private fun PageTitle.pageTitleMarkup() =
     "${lineSeparator()}title ${title.ifBlank { "<title missing>" }}${lineSeparator()}"
@@ -45,13 +45,13 @@ private fun Message.sequenceMessageMarkup() =
         LOST,
         ASYNCHRONOUS,
         SYNCHRONOUS ->
-            """${from.name} ${arrowMarkup()} ${to.name}: ${labelMarkup(id, label)}"""
+            """${from.componentName.normalisedName} ${arrowMarkup()} ${to.componentName.normalisedName}: ${labelMarkup(id, label)}"""
 
         SHORT_OUTBOUND ->
-            """${from.name} ${arrowMarkup()}?: ${labelMarkup(id, label)}"""
+            """${from.componentName.normalisedName} ${arrowMarkup()}?: ${labelMarkup(id, label)}"""
 
         SHORT_INBOUND ->
-            """?${arrowMarkup()} ${to.name}: ${labelMarkup(id, label)}"""
+            """?${arrowMarkup()} ${to.componentName.normalisedName}: ${labelMarkup(id, label)}"""
     }
 
 private fun Message.labelMarkup(id: String, label: String): String {
@@ -77,9 +77,9 @@ private fun Message.arrowMarkup(): String {
 }
 
 fun Participant.toParticipantMarkup(): String =
-    "${type.name.lowercase()} ${componentName.name}${alias?.let { " as \"$alias\"" } ?: ""}${colour?.let { " #$colour" } ?: ""}"
+    "${type.name.lowercase()} ${componentName.normalisedName}${alias?.let { " as \"$alias\"" } ?: ""}${colour?.let { " #$colour" } ?: ""}"
 
 private fun ActivateLifeline.activateMarkup(): String =
-    "activate ${component.name}${this.colour?.let { "#$it" } ?: ""}"
+    "activate ${participant.componentName.normalisedName}${this.colour?.let { "#$it" } ?: ""}"
 
-private fun DeactivateLifeline.deactivateMarkup(): String = "deactivate ${component.name}"
+private fun DeactivateLifeline.deactivateMarkup(): String = "deactivate ${participant.componentName.normalisedName}"

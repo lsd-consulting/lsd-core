@@ -12,6 +12,6 @@ internal class ComponentNameTest {
         delimiter = ':'
     )
     fun generatesValidNameForMarkup(raw: String, expected: String) {
-        Assertions.assertThat(ComponentName(raw).name).isEqualTo(expected)
+        Assertions.assertThat(ComponentName(raw).normalisedName).isEqualTo(expected)
     }
 }
