@@ -38,4 +38,20 @@ internal class StringUtilsTest {
     fun `sanitise() removes PlantUml markup`(input: String, expected: String) {
         assertThat(input.sanitise()).isEqualTo(expected)
     }
+    
+    @ParameterizedTest
+    @CsvSource(
+        delimiter = ',',
+        value = [
+            "<,&lt;",
+            ">,&gt;",
+            "you & me,you &amp; me",
+            "I 'was' here,I &#x27;was&#x27; here",
+            "my \"quote\",my &quot;quote&quot;",
+            "<true>,&lt;true&gt;",
+        ]
+    )
+    fun `escapes html`(input: String, expected: String) {
+        assertThat(input.escapeHtml()).isEqualTo(expected)
+    }
 }

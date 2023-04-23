@@ -47,3 +47,16 @@ fun String.capitalise(): String = split(" ").joinToString(separator = "") { it.r
 fun String.capitalizeFully(): String = lowercase().capitalise()
 
 fun String.countMatches(token: String) = token.toRegex().findAll(this).count()
+
+fun String.escapeHtml(): String {
+    return toCharArray().map { char ->
+        when (char) {
+            '<' -> "&lt;"
+            '>' -> "&gt;"
+            '&' -> "&amp;"
+            '\"' -> "&quot;"
+            '\'' -> "&#x27;"
+            else -> char
+        }
+    }.joinToString(separator = "")
+}
