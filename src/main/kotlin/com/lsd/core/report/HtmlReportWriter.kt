@@ -21,10 +21,6 @@ class HtmlReportWriter(private val reportRenderer: ReportRenderer) {
         val outputPath = File(outputDir, reportFileName).toPath()
         val reportContent = reportRenderer.render(report)
         writeFileSafely(outputPath, reportContent)
-        if (report.useLocalStaticFiles) {
-            writeFileIfMissing("static/style.css", File(outputDir, "style.css"))
-            writeFileIfMissing("static/custom.js", File(outputDir, "custom.js"))
-        }
         return outputPath
     }
 

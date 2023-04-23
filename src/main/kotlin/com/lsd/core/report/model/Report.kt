@@ -5,5 +5,4 @@ data class Report(
     var scenarios: Collection<ScenarioModel> = emptyList(),
     var status: String = "",
     var showContentsMenu: Boolean = true,
-    var useLocalStaticFiles: Boolean = true,
 )

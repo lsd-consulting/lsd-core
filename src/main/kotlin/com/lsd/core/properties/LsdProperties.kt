@@ -7,7 +7,6 @@ object LsdProperties {
     const val DIAGRAM_THEME = "lsd.core.diagram.theme"
     const val LABEL_MAX_WIDTH = "lsd.core.label.maxWidth"
     const val OUTPUT_DIR = "lsd.core.report.outputDir"
-    const val USE_LOCAL_STATIC_FILES = "lsd.core.report.useLocalStaticFiles"
     const val DETERMINISTIC_IDS = "lsd.core.ids.deterministic"
     const val MAX_EVENTS_PER_DIAGRAM = "lsd.core.diagram.sequence.maxEventsPerDiagram"
 
