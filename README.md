@@ -8,14 +8,14 @@
 
 A tool for creating sequence diagrams dynamically without needing to worry about markup.
 
-![example_sequence_diagram.png](docs%2Fexample_sequence_diagram.png)
 
 This library generates html reports and each report contains one or more scenarios of captured events to be displayed 
- on a sequence diagram.
+on a sequence diagram.
 
 (Additionally a component diagram is generated to show relationships). 
 
-![example_component_diagram.png](docs%2Fexample_component_diagram.png)
+[![LSD_example.gif](https://s11.gifyu.com/images/LSD_example.gif)](https://gifyu.com/image/SlT1M)
+
 
 ## Usage
 
