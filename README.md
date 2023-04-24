@@ -42,69 +42,100 @@ on a sequence diagram.
     </details>
 
 
-* Use the LsdContext singleton instance to capture the events for each scenario to be included in the report. 
+* User lsd context singleton to capture messages (and other events):
+ 
+**Kotlin:**
+  ```kotlin
+  fun main() {
+    val lsd = LsdContext.instance
+  
+    lsd.capture(
+      MessageBuilder.messageBuilder().from("A").to("B").label("message1").build(),
+      MessageBuilder.messageBuilder().from("B").to("A").label("message2").build(),
+    )
+    lsd.completeScenario("<Scenario Title>")
+    lsd.completeReport("<Report Title>")
+  }
+  ```
 
-    <details>
-    <summary>Java example:</summary>
+**Java:**
+```java
+  public static void main(String[] args) {
+      LsdContext lsd = LsdContext.getInstance();
+      
+      lsd.capture(
+          MessageBuilder.messageBuilder().from("A").to("B").label("message1").build(),
+          MessageBuilder.messageBuilder().from("B").to("A").label("message2").build()
+      );
+      lsd.completeScenario("<Scenario Title>", "<description>", SUCCESS);
+      lsd.completeReport("<Report Title>");
+  }
+```
 
-    ```java
-        import static com.lsd.core.builders.MessageBuilder.*;
-    
-        ...
-                
-        // A reference to the lsdContext instance can be obtained like this
-        var lsdContext = LsdContext.getInstance();
-        
-        ...
-    
-        var arnie = ACTOR.called("Arnie");
-        var bank = PARTICIPANT.called("Bank");
-        var repository = DATABASE.called("Repository");
-    
-        lsdContext.addParticipants(List.of(arnie, bank, repository));
-        
-        lsdContext.capture(
-                new PageTitle("Checking account balanace")
-                new NoteLeft("On payday", arnie)
-                messageBuilder().from(arnie).to(bank).label("What is my balance?").data("{ name: 'arnie' }").build(),
-                new NoteLeft("High load on\\n payday", bank),
-                messageBuilder().from(bank).to(repository).label("Get balance for Arnie").build(),
-                new TimeDelay("a couple seconds later"),
-                messageBuilder().from(repository).to(bank).type(SYNCHRONOUS_RESPONSE).label("Nothing yet..").build(),
-                messageBuilder().from(bank).to(arnie).label("Your balance is 0").type(SYNCHRONOUS_RESPONSE).build()
-        );
-    
-        lsdContext.completeScenario("Checking bank balance", "Capture bank balance lookup", SUCCESS);
-    
-        lsdContext.completeReport("Bank balance interactions");
-    ```
-    
-    </details>
+---
+#### Participants
+Instead of using a String to specify a participant you can create a Participant type. This give you more options, 
+e.g. to provide an alias , colour and type. 
+So instead of `"A"` which will produce a default type of `PARTICIPANT` in the examples above you could use: 
+
+  `ACTOR.called("A", "Arnie", "blue")` which will create a stickman labelled as "Arnie" and will be coloured in red.
+
+`ParticipantType`s include:
+* ACTOR
+* BOUNDARY
+* COLLECTIONS
+* CONTROL
+* DATABASE
+* ENTITY
+* PARTICIPANT
+* QUEUE
+
+You can define participants upfront and register them using the lsd context, e.g.
+
+```kotlin
+    lsd.addParticipants(listOf(arnie, donnie))
+```
+The participants specified here will override any other participants with the same name so if you want to ensure colours 
+or aliases are not overridden set them here before creating a report.
+
+---
+#### SequenceEvents
+There are other event types that can be captured, other than messages.
+
+* **PageTitle**          - Sets a title on the diagram
+* **NoteLeft**           - Sets a note (can be to the left of a provided participant)
+* **NoteRight**          - Similar to NoteLeft but on the right
+* **TimeDelay**          - Shows that a period of time has elapsed (optional label can be provided)
+* **Newpage**            - Splits a diagram into a new page at the point this event was captured
+* **ActivateLifeline**   - Activates a participant lifeline (colour can be provided)
+* **DeactivateLifeline** - Deactivates a lifeline that has been activated
+
+---
 
 ### Additional options
 * A html index file can be generated if multiple reports are captured:
-  ```java
-      lsdContext.createIndex()
+  ```kotlin
+      lsd.createIndex()
   ```
 
 * Generate a component diagram for events included from multiple scenarios and reports
-  ```java
-      lsdContext.completeComponentsReport("Relationships")
+  ```kotlin
+      lsd.completeComponentsReport("Relationships")
   ```
 
 * To draw attention to some interesting details you can include **facts** e.g.
-  ```java
+  ```kotlin
       // instances of the keyword Lorem will be highlighted on the report
-      lsdContext.addFact("Something to highlight", "Lorem");
+      lsd.addFact("Something to highlight", "Lorem");
   ```
 
 * Advanced users may want to include **additional files** for additional icons etc. For example to include a heart icon on a note:
-  ```java
-        lsdContext.includeFiles(List.of("tupadr3/font-awesome-5/heart"));
+  ```kotlin
+        lsd.includeFiles(listOf("tupadr3/font-awesome-5/heart"))
 
-        lsdContext.capture(new NoteLeft("Friends <$heart{scale=0.4,color=red}>", null));
+        lsd.capture(NoteLeft("Friends <$heart{scale=0.4,color=red}>"))
   ```
-  
+---
 ## Properties
 The following properties can be overridden by adding a properties file called `lsd.properties` on the classpath of your 
 application or by setting a System property. Note that System properties override file properties.
