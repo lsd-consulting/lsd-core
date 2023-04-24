@@ -14,7 +14,7 @@ on a sequence diagram.
 
 (Additionally a component diagram is generated to show relationships). 
 
-<a href="https://gifyu.com/image/SlT1M"><img src="https://s11.gifyu.com/images/LSD_example.gif" alt="LSD_example.gif" border="0" /></a>
+![LSD_example](https://user-images.githubusercontent.com/1330362/233956459-f8545861-b323-4243-9097-4b1dd1877bda.gif)
 
 ## Usage
 
