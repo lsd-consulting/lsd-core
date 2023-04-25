@@ -6,6 +6,7 @@ import com.lsd.core.domain.MessageType.SYNCHRONOUS_RESPONSE
 import com.lsd.core.domain.ParticipantType.PARTICIPANT
 import com.lsd.core.domain.SequenceEvent
 
+@Deprecated(message = "To be deleted")
 class SynchronousResponseParser(private val idGenerator: IdGenerator) : Parser {
 
     private val regex = "^sync ?(.*?) from (.*?) to (.*?)(?: \\[#(.*)])?\$".toRegex()

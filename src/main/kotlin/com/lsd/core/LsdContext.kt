@@ -60,6 +60,7 @@ open class LsdContext {
      * @param pattern The input string that represents some event to be captured on the sequence diagram
      * @param body    The extra data associated with the event.
      */
+    @Deprecated(message = "To be deleted", replaceWith = ReplaceWith("capture(vararg: events: SequenceEvent)"))
     open fun capture(pattern: String, body: String = "") {
         parsers.firstNotNullOfOrNull { it.parse(pattern, body) }
             .also {
