@@ -62,7 +62,7 @@ span.back_to_index::after {
 }
 
 span.copy::after {
-    content: "\2702";
+    content: "\01F4CB";
     cursor: pointer;
     margin-left: 20px;
 }
