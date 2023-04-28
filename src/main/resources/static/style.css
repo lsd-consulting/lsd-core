@@ -51,11 +51,6 @@ aside {
     padding: 20px;
 }
 
-span.back_to_top::after {
-    content: "\2191";
-    cursor: pointer;
-}
-
 span.back_to_index::after {
     content: "\2190";
     cursor: pointer;
@@ -335,6 +330,12 @@ h1.logo {
 
 
 /* Scenario dropdown menu */
+div.menu {
+    top: 10px;
+    right: 20px;
+    position: fixed;
+}
+
 div.dropdown {
     position: relative;
     display: inline-block;
@@ -351,14 +352,13 @@ label.dropdown {
 }
 
 label.dropdown::after {
-    content: "\25BC";
+    content: "\2630";
     margin-left: 5px;
 }
 
 .dropdown-content {
     margin-left: var(--margin-content-left);
     display: none;
-    position: absolute;
     background-color: #f9f9f9;
     min-width: max-content;
     box-shadow: var(--box-shadow);

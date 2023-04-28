@@ -6,21 +6,23 @@
 </head>
 <body>
 <main role="main">
+    {{#if report.showContentsMenu ~}}
+        <div class="menu">
+            <div class="dropdown">
+                <label class="dropdown">Scenarios</label>
+                <div class="dropdown-content">
+                    {{~#each report.scenarios }}
+                        <a class="{{ status }}" href="#{{ id }}">{{title}}</a>
+                    {{~/each}}
+                </div>
+            </div>
+        </div>
+    {{~/if}}
     <h1 class="logo">LSD</h1>
     <h1>{{ report.title }}</h1>
-    {{#if report.showContentsMenu ~}}
-    <div class="dropdown">
-        <label class="dropdown">Scenarios</label>
-        <div class="dropdown-content">
-            {{~#each report.scenarios }}
-            <a class="{{ status }}" href="#{{ id }}">{{title}}</a>
-            {{~/each}}
-        </div>
-    </div>
-    {{~/if}}
     {{~#each report.scenarios ~}}
     <article id="{{ id }}">
-        <span onclick="location.href='#top';" title="top of page" class="back_to_top"></span>
+        <span class="articleStart"></span>
         <h2 class="{{ status }}">{{title}}</h2>
         {{~# if description ~}}
         <section class="description {{ status }}">

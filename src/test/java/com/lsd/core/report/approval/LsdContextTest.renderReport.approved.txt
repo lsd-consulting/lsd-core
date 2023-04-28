@@ -6,9 +6,9 @@
 </head>
 <body>
 <main role="main">
+    
     <h1 class="logo">LSD</h1>
     <h1>Some title</h1>
-    
 </main>
 </body>
 <footer>

@@ -6,17 +6,19 @@
 </head>
 <body>
 <main role="main">
-    <h1 class="logo">LSD</h1>
-    <h1>Approval Report</h1>
-    <div class="dropdown">
-        <label class="dropdown">Scenarios</label>
-        <div class="dropdown-content">
-            <a class="success" href="#10">A Success scenario</a>
-            <a class="warn" href="#13">A Warning scenario</a>
-            <a class="error" href="#16">An Error scenario</a>
+    <div class="menu">
+            <div class="dropdown">
+                <label class="dropdown">Scenarios</label>
+                <div class="dropdown-content">
+                        <a class="success" href="#10">A Success scenario</a>
+                        <a class="warn" href="#13">A Warning scenario</a>
+                        <a class="error" href="#16">An Error scenario</a>
+                </div>
+            </div>
         </div>
-    </div><article id="10">
-        <span onclick="location.href='#top';" title="top of page" class="back_to_top"></span>
+    <h1 class="logo">LSD</h1>
+    <h1>Approval Report</h1><article id="10">
+        <span class="articleStart"></span>
         <h2 class="success">A Success scenario</h2><section class="description success">
             <h3 class="success">Description</h3>
             Given a first scenario description<br/>When something happens<br/>Then something else happens
@@ -152,7 +154,7 @@ remove @unlinked
             </div>
         </div>
     </article><article id="13">
-        <span onclick="location.href='#top';" title="top of page" class="back_to_top"></span>
+        <span class="articleStart"></span>
         <h2 class="warn">A Warning scenario</h2><section class="description warn">
             <h3 class="warn">Description</h3>
             A popup with a long text that needs scrolling:            <a href="#kljasdlfj">click me please!</a>
@@ -286,7 +288,7 @@ remove @unlinked
             </div>
         </div>
     </article><article id="16">
-        <span onclick="location.href='#top';" title="top of page" class="back_to_top"></span>
+        <span class="articleStart"></span>
         <h2 class="error">An Error scenario</h2><section class="description error">
             <h3 class="error">Description</h3>
             <p>Failure! Expected value to be 123 but was 123456</p>
