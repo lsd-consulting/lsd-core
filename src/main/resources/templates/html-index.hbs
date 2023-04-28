@@ -7,13 +7,11 @@
 <body>
 <main role="main">
     <h1 class="logo">LSD</h1>
-    <div class="dropdown">
-        <h1><label class="dropdown">Reports</label></h1>
-        <div class="dropdown-content">
-            {{# each reportFiles~}}
-                <a class="{{ status }}" href="{{ filename }}">{{ title }}</a>
-            {{/each}}
-        </div>
+    <h2><label class="index">Available Reports</label></h2>
+    <div class="index-content">
+        {{# each reportFiles~}}
+            <a class="{{ status }}" href="{{ filename }}">{{ title }}</a>
+        {{/each}}
     </div>
 </main>
 </body>

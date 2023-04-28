@@ -382,3 +382,25 @@ label.dropdown::after {
 .dropdown:hover .dropdown-content {
     display: block;
 }
+
+
+label.index {
+    padding: 12px;
+    font-size: x-large;
+    border-bottom: inset;
+    border-top: outset;
+    text-transform: uppercase;
+    display: block;
+}
+
+.index-content a {
+    color: var(--color-text-primary);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    margin-left: var(--margin-content-left);
+}
+
+.index-content a:hover {
+    background-color: #f1f1f1
+}
