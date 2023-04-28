@@ -268,7 +268,7 @@ h2.error:before, h3.error:before, a.error:before {
 /* Logo section - inspired by https://codepen.io/fossheim/pen/PooBwRa */
 h1.logo {
     font-weight: 800;
-    font-size: 6em;
+    font-size: 4em;
     width: 2em;
     line-height: 0.9em;
     margin-left: auto;
@@ -287,8 +287,13 @@ h1.logo {
             #A7489B 83.333%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    animation: logo-animation-rev 0.5s ease forwards;
+    animation-name: logo-animation-rev;
+    animation-duration: 3.5s;
+    animation-direction: normal;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: 1;
     cursor: pointer;
+    font-family: monospace;
 }
 
 /* Add animation on hover. */
@@ -322,9 +327,12 @@ h1.logo {
         background-size: 57%;
         background-position: 0 1em;
     }
+    50% {
+        letter-spacing: -20px;
+        transform: rotate(4turn);
+    }
     100% {
         background-size: 57%;
-        background-position: 0 0;
     }
 }
 
