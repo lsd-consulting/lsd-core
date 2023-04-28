@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html" xml:lang="en" lang="en">
 <head>
     <title>Some title</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lsd-consulting/lsd-core@3/src/main/resources/static/style.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lsd-consulting/lsd-core@4/src/main/resources/static/style.min.css">
 </head>
 <body>
 <main role="main">
@@ -14,7 +14,7 @@
 <footer>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11/build/styles/dark.min.css">
-    <script src="https://cdn.jsdelivr.net/gh/lsd-consulting/lsd-core@3/src/main/resources/static/custom.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/lsd-consulting/lsd-core@4/src/main/resources/static/custom.min.js"></script>
     <script>
         addSliderForSvgZoom();
         highlightLifelinesWhenClicked();
