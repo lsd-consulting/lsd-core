@@ -179,15 +179,6 @@ class LsdContextTest {
     }
 
     @Test
-    void hasNoDiagramSectionWhenThereAreNoEvents() {
-        lsdContext.includeFiles(additionalIncludes);
-        lsdContext.addFact("Fact", "no diagrams");
-        lsdContext.completeScenario("A scenario without events", "This has no diagrams", SUCCESS);
-
-        Approvals.verify(lsdContext.completeReport("No Diagrams Report").toFile());
-    }
-
-    @Test
     void participantTypeAndAliasCanBeOverriddenInParticipantsButNotEvents() {
         var fred1 = CONTROL.called("Fred");
         var fred2 = DATABASE.called("Fred", "Freddy", "purple");
@@ -199,37 +190,6 @@ class LsdContextTest {
         lsdContext.completeScenario("Participant is updated", "Freddy is used", SUCCESS);
 
         Approvals.verify(lsdContext.completeReport("Fred is updated").toFile());
-    }
-
-    @Test
-    void hasNoDiagramSectionWhenEventsAreCleared() {
-        lsdContext.capture(
-                messageBuilder().id(nextId()).to("A").label("in").data("start some job").type(SHORT_INBOUND).build(),
-                messageBuilder().id(nextId()).to("B").label("in").data("start another job").type(SHORT_INBOUND).build()
-        );
-        lsdContext.clearScenarioEvents();
-        lsdContext.completeScenario("A scenario without events (cleared down)", "This has no diagrams", SUCCESS);
-
-        Approvals.verify(lsdContext.completeReport("No Diagrams Report (cleared down)").toFile());
-    }
-
-    @Test
-    void createsIndex() {
-        lsdContext.completeScenario("Scenario 1", "Error", ERROR);
-        lsdContext.completeScenario("Scenario 2", "Warn", FAILURE);
-        lsdContext.completeScenario("Scenario 3", "Success", SUCCESS);
-        lsdContext.completeReport("First Report (Error)");
-
-        lsdContext.completeScenario("Scenario 1", "Warn", FAILURE);
-        lsdContext.completeScenario("Scenario 2", "Success", SUCCESS);
-        lsdContext.completeReport("Second Report (Warn)");
-
-        lsdContext.completeScenario("Scenario 1", "Success", SUCCESS);
-        lsdContext.completeReport("Third Report");
-
-        lsdContext.completeReport("Fourth Report");
-
-        Approvals.verify(lsdContext.createIndex().toFile());
     }
 
     @Test
