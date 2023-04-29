@@ -15,7 +15,6 @@ jobs:
         with:
           java-version: '11'
           distribution: 'adopt'
-      - uses: browser-actions/setup-chrome@v1
       - name: Build with Gradle
         run: ./gradlew build
       - uses: actions/upload-artifact@v2
