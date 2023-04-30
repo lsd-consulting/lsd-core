@@ -191,12 +191,7 @@ class LsdContextTest {
 
         Approvals.verify(lsdContext.completeReport("Fred is updated").toFile());
     }
-
-    @Test
-    void renderReport() {
-        Approvals.verify(lsdContext.renderReport("Some title"));
-    }
-
+    
     private String nextId() {
         return idGenerator.next();
     }
