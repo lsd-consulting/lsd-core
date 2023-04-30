@@ -16,6 +16,12 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
           cache: 'gradle'
+      - name: cache-playwright
+        id: cache-playwright
+        uses: actions/cache@v3
+        with:
+          path: /Users/runner/Library/Caches/ms-playwright
+          key: ms-playwright
       - name: Build with Gradle
         run: ./gradlew build
       - uses: actions/upload-artifact@v2
