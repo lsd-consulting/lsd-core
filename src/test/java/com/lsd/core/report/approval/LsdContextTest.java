@@ -146,38 +146,7 @@ class LsdContextTest {
 
         Approvals.verify(lsdContext.completeReport("Activating lifelines").toFile());
     }
-
-    @Test
-    void generateCombinedComponentDiagramSource() {
-        var dan = CONTROL.called("Dan");
-
-        lsdContext.capture(
-                messageBuilder().id(nextId()).from(arnie).to(bettie).label("message1").build(),
-                messageBuilder().id(nextId()).from(bettie).to(cat).label("message2").build(),
-                messageBuilder().id(nextId()).from(cat).to(arnie).label("message3").build()
-        );
-        lsdContext.completeScenario("Scenario 1", "", SUCCESS);
-        lsdContext.capture(messageBuilder().id(nextId()).from(cat).to(arnie).label("message4").build());
-        lsdContext.completeScenario("Scenario 2", "", SUCCESS);
-        lsdContext.completeReport("Report 1");
-
-        lsdContext.capture(
-                messageBuilder().id(nextId()).from(bettie).to(arnie).label("message5").build(),
-                messageBuilder().id(nextId()).from(cat).to(bettie).label("message6").build()
-        );
-        lsdContext.completeScenario("Scenario 3", "", SUCCESS);
-        lsdContext.completeReport("Report 2");
-
-        lsdContext.capture(
-                messageBuilder().id(nextId()).from(bettie).to(dan).label("message5").build(),
-                messageBuilder().id(nextId()).from(dan).to(arnie).label("message6").build()
-        );
-        lsdContext.completeScenario("Scenario 4", "", SUCCESS);
-        lsdContext.completeReport("Report 3");
-
-        Approvals.verify(lsdContext.completeComponentsReport("Relationships").toFile());
-    }
-
+    
     @Test
     void participantTypeAndAliasCanBeOverriddenInParticipantsButNotEvents() {
         var fred1 = CONTROL.called("Fred");

@@ -1,5 +1,6 @@
-package com.lsd.core
+package com.lsd.core.report
 
+import com.lsd.core.LsdContext
 import com.lsd.core.domain.Status
 import com.microsoft.playwright.Playwright
 import com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat
