@@ -27,11 +27,9 @@ class CombinedComponentReportUiTest {
         givenMultipleScenariosAndReportsWithParticipants(arnie, bettie, cat, dan)
 
         whenTheCompleteComponentsReportIsGenerated()
-
-        assertThat(page).hasTitle("Components")
-        assertThat(page.locator("h1.logo")).isVisible()
-        assertThat(page.locator("section.diagram")).isVisible()
-        pageContainsParticipantNames(arnie, bettie, cat, dan)
+        
+        thenPageContainsParticipantNames(arnie, bettie, cat, dan)
+        takeScreenshot()
     }
 
     private fun givenMultipleScenariosAndReportsWithParticipants(
@@ -55,7 +53,15 @@ class CombinedComponentReportUiTest {
         lsd.completeReport("Report 3")
     }
 
-    private fun pageContainsParticipantNames(vararg participants: Participant) {
+    private fun whenTheCompleteComponentsReportIsGenerated() {
+        page.navigate("file://${lsd.completeComponentsReport("Relationships").absolute()}")
+    }
+
+    private fun thenPageContainsParticipantNames(vararg participants: Participant) {
+        assertThat(page).hasTitle("Components")
+        assertThat(page.locator("h1.logo")).isVisible()
+        assertThat(page.locator("section.diagram")).isVisible()
+        
         participants.forEach { participant ->
             val expectedName =
                 if (participant.alias?.isNotBlank() == true) participant.alias else participant.componentName.normalisedName
@@ -63,7 +69,7 @@ class CombinedComponentReportUiTest {
         }
     }
 
-    private fun whenTheCompleteComponentsReportIsGenerated() {
-        page.navigate("file://${lsd.completeComponentsReport("Relationships").absolute()}")
+    private fun takeScreenshot() {
+        page.screenshot(path = "docs/combine_components_report.png")
     }
 }

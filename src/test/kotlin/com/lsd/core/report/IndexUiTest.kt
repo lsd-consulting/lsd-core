@@ -33,10 +33,6 @@ class IndexUiTest {
         page.screenshot(path = "docs/example_index.png")
     }
 
-    private fun Page.screenshot(path: String) {
-        screenshot(ScreenshotOptions().setAnimations(DISABLED).setPath(Paths.get(path)))
-    }
-
     private fun givenAReportWithSuccessWarnAndErrorScenarios(title: String) {
         lsd.completeScenario("Scenario 1", "Error", Status.ERROR)
         lsd.completeScenario("Scenario 2", "Warn", Status.FAILURE)
