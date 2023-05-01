@@ -13,26 +13,70 @@ class ReportUiTest {
     private val chromium = playwright.chromium()
     private val browser = chromium.launch()
     private val page = browser.newPage()
+    
+    private lateinit var messagePopupData: String
+    private lateinit var messageText: String
 
     @Test
     fun hasNoDiagramSectionWhenThereAreNoEvents() {
-        lsd.completeScenario("A scenario without events")
+        givenAScenarioWithoutAnyCapturedEvents()
 
-        page.setContent(lsd.renderReport("No Diagrams Report"))
+        whenReportIsRendered()
 
-        assertThat(page).hasTitle("No Diagrams Report")
-        assertThat(page.locator("section.diagram")).not().isVisible()
+        thenNoDiagramSectionIsVisible()
     }
 
     @Test
     fun hasNoDiagramSectionWhenEventsAreCleared() {
+        givenAScenarioHasCapturedEventsCleared()
+
+        whenReportIsRendered()
+
+        thenNoDiagramSectionIsVisible()
+    }
+
+    @Test
+    fun showPopupWhenClickingOnMessageLabel() {
+        givenAScenarioContainingMessage(withText = "Message 1", withPopupData = "some data shown in popup")
+
+        whenReportIsRendered()
+        andTheMessageLabelIsClicked()
+
+        thenThePopupDataIsShown()
+    }
+
+    private fun givenAScenarioHasCapturedEventsCleared() {
         lsd.capture(messageBuilder().to("B").label("in").build())
         lsd.clearScenarioEvents()
         lsd.completeScenario("A scenario without events")
+    }
 
-        page.setContent(lsd.renderReport("No Diagrams Report"))
+    private fun givenAScenarioWithoutAnyCapturedEvents() {
+        lsd.completeScenario("A scenario without events")
+    }
 
-        assertThat(page).hasTitle("No Diagrams Report")
+    private fun givenAScenarioContainingMessage(withText: String, withPopupData: String) {
+        messageText = withText
+        messagePopupData = withPopupData
+        lsd.capture(messageBuilder().from("A").to("B").label(withText).data(withPopupData).build())
+        lsd.completeScenario("Scenario")
+    }
+
+    private fun whenReportIsRendered() {
+        page.setContent(lsd.renderReport("Report"))
+    }
+
+    private fun andTheMessageLabelIsClicked() {
+        assertThat(page.getByText(messageText).first()).isVisible()
+        assertThat(page.getByText(messagePopupData)).not().isVisible()
+    }
+
+    private fun thenNoDiagramSectionIsVisible() {
         assertThat(page.locator("section.diagram")).not().isVisible()
+    }
+
+    private fun thenThePopupDataIsShown() {
+        page.getByText(messageText).first().click()
+        assertThat(page.getByText(messagePopupData)).isVisible()
     }
 }
