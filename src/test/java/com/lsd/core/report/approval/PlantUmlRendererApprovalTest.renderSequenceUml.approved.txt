@@ -1,6 +1,6 @@
 @startuml
 
-!theme lsd-light from https://cdn.jsdelivr.net/gh/lsd-consulting/lsd-core@4/src/main/resources/static/
+!theme lsd-light from https://cdn.jsdelivr.net/gh/lsd-consulting/lsd-core@5/src/main/resources/static/
 
 hide unlinked
 
@@ -25,7 +25,7 @@ B --> A: [[#2 {Sending a response with a long label that should be abbreviated i
 @enduml
 @startuml
 
-!theme lsd-light from https://cdn.jsdelivr.net/gh/lsd-consulting/lsd-core@4/src/main/resources/static/
+!theme lsd-light from https://cdn.jsdelivr.net/gh/lsd-consulting/lsd-core@5/src/main/resources/static/
 
 hide unlinked
 
