@@ -29,7 +29,7 @@ class LsdContextTest {
     ));
 
     private final Participant arnie = ACTOR.called("A", "Arnie");
-    private final Participant bettie = BOUNDARY.called("Bettie");
+    private final Participant bettie = BOUNDARY.called("Bettie", null, "red");
     private final Participant cat = CONTROL.called("Cat");
 
     @BeforeEach
@@ -38,26 +38,30 @@ class LsdContextTest {
     }
 
     @Test
-    void createsReportWithScenariosAndEvents() {
+    void createsReportWithScenarios() {
         lsdContext.includeFiles(additionalIncludes);
-        lsdContext.capture(
-                messageBuilder().id(nextId()).to(arnie).label("in").data("start some job").type(SHORT_INBOUND).build(),
-                messageBuilder().id(nextId()).from(arnie).to(bettie).label("Message 1").data("some data 1").type(BI_DIRECTIONAL).build(),
-                messageBuilder().id(nextId()).from(bettie).label("out").data("some data 1").type(SHORT_OUTBOUND).build(),
-                messageBuilder().id(nextId()).label("An interaction description that is long enough to need abbreviating").from("Beta").to("Gamma").data("β").type(LOST).build(),
-                messageBuilder().id(nextId()).label("A synchronous response").from("Gamma").to("Beta").data("200 OK").type(SYNCHRONOUS_RESPONSE).build()
-        );
-        lsdContext.completeScenario("A Success scenario", "Given a first scenario description<br/>When something happens<br/>Then something else happens", SUCCESS);
+        scenarioWithMessages();
+        scenarioWithLifelineActivation();
+        scenarioWithNotes();
+        scenarioWithMultipleDiagrams();
+        scenarioWithWarningStatus();
+        scenarioWithErrorStatus();
 
+        Approvals.verify(lsdContext.completeReport("Approval Report").toFile());
+    }
+
+    private void scenarioWithErrorStatus() {
+        lsdContext.addFact("some error value", "XYZ");
+        lsdContext.capture(messageBuilder().id(nextId()).from(arnie).to(bettie).label("error XYZ").data("Found a fault!").type(LOST).colour("red").build());
+        lsdContext.completeScenario("An Error scenario", "<p>Failure! Expected value to be 123 but was XYZ</p>", ERROR);
+    }
+
+    private void scenarioWithWarningStatus() {
+        lsdContext.addFact("Something to highlight", "Lorem");
         lsdContext.capture(
                 messageBuilder().id(nextId()).label("Sending food <$hamburger{scale=0.4}>").from(arnie).to(bettie).colour("orange").build(),
                 new TimeDelay(null)
         );
-        lsdContext.capture(new NoteLeft("Friends <$heart{scale=0.4,color=red}>", null));
-        lsdContext.addFact("Something to highlight", "Lorem");
-        lsdContext.addFact("Something else to highlight", "amet");
-        lsdContext.addFact("Something else to highlight", "consectetur");
-        lsdContext.addFact("Something else to highlight", "Thank you!");
         lsdContext.completeScenario("A Warning scenario", "A popup with a long text that needs scrolling:"
                         + PopupContent.popupHyperlink(
                         "kljasdlfj",
@@ -65,71 +69,20 @@ class LsdContextTest {
                         "click me please!",
                         ".. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.")
                 , FAILURE);
-
-        lsdContext.addFact("some important value", "123456");
-        lsdContext.completeScenario("An Error scenario", "<p>Failure! Expected value to be 123 but was 123456</p>", ERROR);
-
-        Approvals.verify(lsdContext.completeReport("Approval Report").toFile());
     }
 
-    @Test
-    void diagramIsSplitOnNewPageEvents() {
-        lsdContext.includeFiles(additionalIncludes);
-        lsdContext.capture(new PageTitle("A title"),
+    private void scenarioWithMessages() {
+        lsdContext.capture(
                 messageBuilder().id(nextId()).to(arnie).label("in").data("start some job").type(SHORT_INBOUND).build(),
-                new Newpage(new PageTitle("A second page")),
+                messageBuilder().id(nextId()).from(arnie).to(bettie).label("Message 1").data("some data 1").type(BI_DIRECTIONAL).build(),
                 messageBuilder().id(nextId()).from(bettie).label("out").data("some data 1").type(SHORT_OUTBOUND).build(),
-                new Newpage(new PageTitle("A third page")),
-                messageBuilder().id(nextId()).label("An interaction description that is long enough to need abbreviating").from("Beta").to("Gamma").data("β").type(LOST).build()
+                messageBuilder().id(nextId()).label("An interaction description that is long enough to need abbreviating").from("Beta").to("Gamma").data("β").type(LOST).build(),
+                messageBuilder().id(nextId()).label("A synchronous response").from("Gamma").to("Beta").data("200 OK").type(SYNCHRONOUS_RESPONSE).build()
         );
-        lsdContext.completeScenario("A Success scenario", "Given a first scenario description<br/>When something happens<br/>Then something else happens", SUCCESS);
-
-        Approvals.verify(lsdContext.completeReport("Split by NewPage Report").toFile());
+        lsdContext.completeScenario("A Success scenario with messages", "Given a first scenario description<br/>When something happens<br/>Then something else happens", SUCCESS);
     }
 
-    @Test
-    void notesCanBeAddedToParticipants() {
-        lsdContext.capture(
-                new PageTitle("Adding notes"),
-                messageBuilder().id(nextId()).from(arnie).to(bettie).label("Good day to you!").build(),
-                new NoteLeft("Left note", null),
-                new NoteRight("Right note", null),
-                new TimeDelay("a few seconds later"),
-                messageBuilder().id(nextId()).from(bettie).to(cat).label("Good day to you!").build(),
-                new NoteLeft("Left of Cat", cat),
-                new NoteRight("Right of Cat", cat),
-                new NoteRight("Right note", null),
-                new LogicalDivider("a divider"),
-                messageBuilder().id(nextId()).from(cat).to(arnie).label("Me?").build(),
-                new NoteRight("Right note", null),
-                new VerticalSpace(20),
-                new NoteLeft("Left of Bettie", bettie),
-                new NoteRight("Right of Bettie", bettie)
-        );
-        lsdContext.completeScenario("A Success scenario", "", SUCCESS);
-
-        Approvals.verify(lsdContext.completeReport("Adding notes to participants").toFile());
-    }
-
-    @Test
-    void participantAreColoured() {
-        var greg = ACTOR.called("Greg", null, "green");
-        var rosie = BOUNDARY.called("Rosie", null, "red");
-        var bart = CONTROL.called("Bart", null, "blue");
-
-        lsdContext.capture(
-                new PageTitle("Adding colours"),
-                messageBuilder().id(nextId()).from(greg).to(rosie).label("Roses are red!").build(),
-                messageBuilder().id(nextId()).from(rosie).to(bart).label("Voilets are blue!").build(),
-                messageBuilder().id(nextId()).from(bart).to(greg).label("Grass is green?").build()
-        );
-        lsdContext.completeScenario("A Success scenario", "", SUCCESS);
-
-        Approvals.verify(lsdContext.completeReport("Adding colours to participants").toFile());
-    }
-
-    @Test
-    void lifelineCanBeActivated() {
+    private void scenarioWithLifelineActivation() {
         lsdContext.capture(
                 messageBuilder().id(nextId()).from(arnie).to(bettie).label("Good day to you!").build(),
                 activation().of(bettie).colour("red").build(),
@@ -139,25 +92,42 @@ class LsdContextTest {
                 messageBuilder().id(nextId()).from(cat).to(arnie).label("Me?").build(),
                 deactivation().of(cat).build()
         );
-        lsdContext.completeScenario("Lifeline activation/deactivation", null, SUCCESS);
-
-        Approvals.verify(lsdContext.completeReport("Activating lifelines").toFile());
+        lsdContext.completeScenario("Lifeline activation/deactivation", "Adding lifelines to participants", SUCCESS);
     }
-    
-    @Test
-    void participantTypeAndAliasCanBeOverriddenInParticipantsButNotEvents() {
-        var fred1 = CONTROL.called("Fred");
-        var fred2 = DATABASE.called("Fred", "Freddy", "purple");
 
-        lsdContext.addParticipants(fred1, fred2, bettie);
-        lsdContext.capture(messageBuilder().id(nextId()).from(PARTICIPANT.called("Jake", "J", "orange")).to(fred1).build());
-        lsdContext.capture(messageBuilder().id(nextId()).from("Fred").to(bettie).build());
-        lsdContext.capture(messageBuilder().id(nextId()).from(PARTICIPANT.called("Fred", "Fredster", "red")).to(bettie).build());
-        lsdContext.completeScenario("Participant is updated", "Freddy is used", SUCCESS);
-
-        Approvals.verify(lsdContext.completeReport("Fred is updated").toFile());
+    private void scenarioWithMultipleDiagrams() {
+        lsdContext.capture(
+                new PageTitle("Splitting diagrams with Newpage"),
+                messageBuilder().id(nextId()).to(arnie).label("in").data("start some job").type(SHORT_INBOUND).build(),
+                new Newpage(new PageTitle("Another diagram")),
+                messageBuilder().id(nextId()).from(bettie).label("out").data("some data 1").type(SHORT_OUTBOUND).build()
+        );
+        lsdContext.completeScenario("A Newpage scenario", "Splitting a diagram into multiple diagrams using Newpage event type", SUCCESS);
     }
-    
+
+    private void scenarioWithNotes() {
+        lsdContext.capture(
+                new PageTitle("Adding notes"),
+                new NoteLeft("Friends <$heart{scale=0.4,color=red}>", null),
+                messageBuilder().id(nextId()).from(arnie).to(bettie).label("Good day to you!").build(),
+                new NoteLeft("Left note", null),
+                new NoteRight("Right note", null),
+                new TimeDelay("a few seconds later"),
+                messageBuilder().id(nextId()).from(bettie).to(cat).label("Good day to you!").build(),
+                new NoteLeft("Left of Cat", cat),
+                new NoteRight("Right of Cat", cat),
+                new NoteOver("Note over Bettie", bettie),
+                new NoteRight("Right note", null),
+                new LogicalDivider("a divider"),
+                messageBuilder().id(nextId()).from(cat).to(arnie).label("Me?").build(),
+                new NoteRight("Right note", null),
+                new VerticalSpace(20),
+                new NoteLeft("Left of Bettie", bettie),
+                new NoteRight("Right of Bettie", bettie)
+        );
+        lsdContext.completeScenario("Capturing Notes", "Notes can be added to participants", SUCCESS);
+    }
+
     private String nextId() {
         return idGenerator.next();
     }

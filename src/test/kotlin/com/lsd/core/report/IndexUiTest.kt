@@ -2,13 +2,9 @@ package com.lsd.core.report
 
 import com.lsd.core.LsdContext
 import com.lsd.core.domain.Status
-import com.microsoft.playwright.Page
-import com.microsoft.playwright.Page.*
 import com.microsoft.playwright.Playwright
 import com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat
-import com.microsoft.playwright.options.ScreenshotAnimations.*
 import org.junit.jupiter.api.Test
-import java.nio.file.Paths
 import kotlin.io.path.absolute
 
 

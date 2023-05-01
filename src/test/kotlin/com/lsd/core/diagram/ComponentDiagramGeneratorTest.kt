@@ -99,6 +99,26 @@ internal class ComponentDiagramGeneratorTest {
             )
     }
 
+    @Test
+    fun participantTypeAndAliasCanBeOverriddenInParticipantsButNotEvents() {
+        val fred1 = CONTROL.called("Fred")
+        val fred2 = DATABASE.called("Fred", "Freddy", "purple")
+        val participants = listOf(fred1, fred2)
+
+        val messages = listOf(
+            messageBuilder().from(PARTICIPANT.called("Jake")).to(fred1).build(),
+            messageBuilder().from("Fred").to("Bettie").build(),
+            messageBuilder().from(PARTICIPANT.called("Fred", "Fredster", "red")).to("Bettie").build()
+        )
+        
+        assertThat(participants.usedIn(messages))
+            .containsExactly(
+                PARTICIPANT.called("Jake"),
+                fred2,
+                PARTICIPANT.called("Bettie"),
+            )
+    }
+
     private fun sampleMessage(): Message {
         return messageBuilder()
             .from("A")
