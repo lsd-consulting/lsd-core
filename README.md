@@ -152,8 +152,10 @@ application or by setting a System property. Note that System properties overrid
 
 ## Gallery
 
-<img src="docs/example_index.png" height="720" width="1280"  alt="example index page">
-<img src="docs/combine_components_report.png" height="720" width="1280"  alt="example components report">
+| Image                                                                                                        | Description                                                                                                                                                                                         |
+|--------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| <img src="docs/example_index.png"  alt="index page example"/>                    | **Index pages** contain links to all reports that were generated prior to the index page being rendered                                                                                             |
+| <img src="docs/combine_components_report.png"  alt="components report example"/> | **Components Reports** contain a component diagram of _all_ participants from all reports and scenarios that were captured prior to generating the components report via `completeComponentsReport()` |
 
 
 ## Related Libraries
