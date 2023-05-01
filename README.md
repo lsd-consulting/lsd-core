@@ -104,8 +104,9 @@ or aliases are not overridden set them here before creating a report.
 There are other event types that can be captured, other than messages.
 
 * **PageTitle**          - Sets a title on the diagram
-* **NoteLeft**           - Sets a note (can be to the left of a provided participant)
+* **NoteLeft**           - Create a note (can be to the left of a provided participant)
 * **NoteRight**          - Similar to NoteLeft but on the right
+* **NoteOver**           - Create a note in the middle of a participant lifeline
 * **TimeDelay**          - Shows that a period of time has elapsed (optional label can be provided)
 * **Newpage**            - Splits a diagram into a new page at the point this event was captured
 * **ActivateLifeline**   - Activates a participant lifeline (colour can be provided)
@@ -127,7 +128,7 @@ There are other event types that can be captured, other than messages.
 * To draw attention to some interesting details you can include **facts** e.g.
   ```kotlin
       // instances of the keyword Lorem will be highlighted on the report
-      lsd.addFact("Something to highlight", "Lorem");
+      lsd.addFact("Something to highlight", "Lorem")
   ```
 
 * Advanced users may want to include **additional files** for additional icons etc. For example to include a heart icon on a note:
