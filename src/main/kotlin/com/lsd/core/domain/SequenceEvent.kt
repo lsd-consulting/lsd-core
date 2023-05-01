@@ -4,6 +4,7 @@ sealed interface SequenceEvent
 
 data class NoteLeft(val note: String, val ofParticipant: Participant? = null) : SequenceEvent
 data class NoteRight(val note: String, val ofParticipant: Participant? = null) : SequenceEvent
+data class NoteOver(val note: String, val participant: Participant) : SequenceEvent
 data class PageTitle(val title: String) : SequenceEvent
 data class Newpage(val pageTitle: PageTitle) : SequenceEvent
 data class VerticalSpace(val size: Int?) : SequenceEvent

@@ -13,6 +13,7 @@ fun SequenceEvent.toPumlMarkup(): String =
         is Newpage -> newpageMarkup()
         is NoteLeft -> noteLeftMarkup()
         is NoteRight -> noteRightMarkup()
+        is NoteOver -> noteOverMarkup()
         is PageTitle -> pageTitleMarkup()
         is TimeDelay -> timeDelayMarkup()
         is VerticalSpace -> verticalSpaceMarkup()
@@ -32,6 +33,8 @@ private fun NoteLeft.noteLeftMarkup(): String =
 private fun NoteRight.noteRightMarkup(): String =
     ofParticipant?.let { "note right of ${it.componentName.normalisedName}: $note" } ?: "note right: $note"
 
+private fun NoteOver.noteOverMarkup(): String = "note over ${participant.componentName.normalisedName}: $note"
+    
 private fun PageTitle.pageTitleMarkup() =
     "${lineSeparator()}title ${title.ifBlank { "<title missing>" }}${lineSeparator()}"
 
@@ -45,7 +48,12 @@ private fun Message.sequenceMessageMarkup() =
         LOST,
         ASYNCHRONOUS,
         SYNCHRONOUS ->
-            """${from.componentName.normalisedName} ${arrowMarkup()} ${to.componentName.normalisedName}: ${labelMarkup(id, label)}"""
+            """${from.componentName.normalisedName} ${arrowMarkup()} ${to.componentName.normalisedName}: ${
+                labelMarkup(
+                    id,
+                    label
+                )
+            }"""
 
         SHORT_OUTBOUND ->
             """${from.componentName.normalisedName} ${arrowMarkup()}?: ${labelMarkup(id, label)}"""
