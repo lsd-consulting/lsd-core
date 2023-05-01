@@ -53,7 +53,6 @@ class LsdContextTest {
                 messageBuilder().id(nextId()).label("Sending food <$hamburger{scale=0.4}>").from(arnie).to(bettie).colour("orange").build(),
                 new TimeDelay(null)
         );
-        lsdContext.capture("Sending a response from B to A [#red]", "Thank You!");
         lsdContext.capture(new NoteLeft("Friends <$heart{scale=0.4,color=red}>", null));
         lsdContext.addFact("Something to highlight", "Lorem");
         lsdContext.addFact("Something else to highlight", "amet");
@@ -67,8 +66,6 @@ class LsdContextTest {
                         ".. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.")
                 , FAILURE);
 
-        lsdContext.capture("a request from Beta to Gamma", "Please do something");
-        lsdContext.capture("sync a synchronous response from Gamma to Beta", "Some Error (123456)");
         lsdContext.addFact("some important value", "123456");
         lsdContext.completeScenario("An Error scenario", "<p>Failure! Expected value to be 123 but was 123456</p>", ERROR);
 

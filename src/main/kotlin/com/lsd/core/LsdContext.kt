@@ -1,8 +1,5 @@
 package com.lsd.core
 
-import com.lsd.core.adapter.parse.Parser
-import com.lsd.core.adapter.parse.SynchronousMessageParser
-import com.lsd.core.adapter.parse.SynchronousResponseParser
 import com.lsd.core.builders.ScenarioBuilder
 import com.lsd.core.builders.ScenarioModelBuilder.Companion.scenarioModelBuilder
 import com.lsd.core.builders.SequenceDiagramGeneratorBuilder.Companion.sequenceDiagramGeneratorBuilder
@@ -24,7 +21,6 @@ open class LsdContext {
     val idGenerator = IdGenerator(getBoolean(DETERMINISTIC_IDS))
 
     private val maxEventsPerDiagram = getInt(MAX_EVENTS_PER_DIAGRAM)
-    private val parsers = parsers(idGenerator)
     private val htmlReportWriter = HtmlReportWriter(HtmlReportRenderer())
     private val scenarios: MutableList<Scenario> = ArrayList()
     private val reportFiles: MutableList<ReportFile> = ArrayList()
@@ -52,20 +48,6 @@ open class LsdContext {
             currentScenario.add(event)
             combinedEvents.add(event)
         }
-    }
-
-    /**
-     * Allow string representations of events to be interpreted. If none of the parsers match the pattern then nothing will be captured
-     *
-     * @param pattern The input string that represents some event to be captured on the sequence diagram
-     * @param body    The extra data associated with the event.
-     */
-    @Deprecated(message = "To be deleted", replaceWith = ReplaceWith("capture(vararg: events: SequenceEvent)"))
-    open fun capture(pattern: String, body: String = "") {
-        parsers.firstNotNullOfOrNull { it.parse(pattern, body) }
-            .also {
-                it?.let { capture(it) }
-            }
     }
 
     fun completeScenario(title: String, description: String? = "", status: Status = Status.SUCCESS) {
@@ -188,13 +170,6 @@ open class LsdContext {
                 Status.SUCCESS -> 2
             }
         }).firstOrNull()?.toCssClass() ?: ""
-    }
-
-    private fun parsers(idGenerator: IdGenerator): List<Parser> {
-        return listOf(
-            SynchronousMessageParser(idGenerator),
-            SynchronousResponseParser(idGenerator)
-        )
     }
 
     companion object {
