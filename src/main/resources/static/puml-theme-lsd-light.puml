@@ -25,7 +25,6 @@
     RoundCorner 5
     Margin 10
     Padding 6
-    Shadowing 3
   }
   title {
     LineThickness 0
