@@ -5,7 +5,7 @@ import com.lsd.core.domain.Fact
 /**
  * Beware that these names are use in the html template so be careful when renaming.
  */
-data class ScenarioModel(
+data class ScenarioModel @JvmOverloads constructor(
     var id: String,
     var title: String,
     var description: String = "",

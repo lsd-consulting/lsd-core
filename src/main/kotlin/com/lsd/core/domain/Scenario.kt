@@ -1,6 +1,7 @@
 package com.lsd.core.domain
 
-data class Scenario(
+data class Scenario
+@JvmOverloads constructor(
     val title: String,
     val events: MutableList<SequenceEvent> = ArrayList(),
     val facts: MutableList<Fact> = ArrayList(),

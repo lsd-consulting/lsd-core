@@ -5,6 +5,7 @@ import com.lsd.core.LsdContext;
 import com.lsd.core.domain.*;
 import com.lsd.core.report.PopupContent;
 import org.approvaltests.Approvals;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,18 +20,21 @@ import static com.lsd.core.domain.ParticipantType.*;
 import static com.lsd.core.domain.Status.*;
 
 class LsdContextTest {
-
     private final LsdContext lsdContext = LsdContext.getInstance();
     private final IdGenerator idGenerator = lsdContext.getIdGenerator();
+    private final Participant arnie = ACTOR.called("A", "Arnie");
+    private final Participant bettie = BOUNDARY.called("Bettie", null, "red");
+    private final Participant cat = CONTROL.called("Cat");
 
+    public LsdContextTest() {
+        lsdContext.addParticipants(arnie, bettie, cat);
+    }
+    
     private final LinkedHashSet<String> additionalIncludes = new LinkedHashSet<>(List.of(
             "tupadr3/font-awesome-5/hamburger",
             "tupadr3/font-awesome-5/heart"
     ));
 
-    private final Participant arnie = ACTOR.called("A", "Arnie");
-    private final Participant bettie = BOUNDARY.called("Bettie", null, "red");
-    private final Participant cat = CONTROL.called("Cat");
 
     @BeforeEach
     public void clearContext() {
@@ -60,7 +64,7 @@ class LsdContextTest {
         lsdContext.addFact("Something to highlight", "Lorem");
         lsdContext.capture(
                 messageBuilder().id(nextId()).label("Sending food <$hamburger{scale=0.4}>").from(arnie).to(bettie).colour("orange").build(),
-                new TimeDelay(null)
+                new TimeDelay()
         );
         lsdContext.completeScenario("A Warning scenario", "A popup with a long text that needs scrolling:"
                         + PopupContent.popupHyperlink(
@@ -92,7 +96,7 @@ class LsdContextTest {
                 messageBuilder().id(nextId()).from(cat).to(arnie).label("Me?").build(),
                 deactivation().of(cat).build()
         );
-        lsdContext.completeScenario("Lifeline activation/deactivation", "Adding lifelines to participants", SUCCESS);
+        lsdContext.completeScenario("Lifeline activation/deactivation", "Adding lifelines to participants");
     }
 
     private void scenarioWithMultipleDiagrams() {
@@ -102,30 +106,30 @@ class LsdContextTest {
                 new Newpage(new PageTitle("Another diagram")),
                 messageBuilder().id(nextId()).from(bettie).label("out").data("some data 1").type(SHORT_OUTBOUND).build()
         );
-        lsdContext.completeScenario("A Newpage scenario", "Splitting a diagram into multiple diagrams using Newpage event type", SUCCESS);
+        lsdContext.completeScenario("A Newpage scenario", "Splitting a diagram into multiple diagrams using Newpage event type");
     }
 
     private void scenarioWithNotes() {
         lsdContext.capture(
                 new PageTitle("Adding notes"),
-                new NoteLeft("Friends <$heart{scale=0.4,color=red}>", null),
+                new NoteLeft("Friends <$heart{scale=0.4,color=red}>"),
                 messageBuilder().id(nextId()).from(arnie).to(bettie).label("Good day to you!").build(),
-                new NoteLeft("Left note", null),
-                new NoteRight("Right note", null),
+                new NoteLeft("Left note"),
+                new NoteRight("Right note"),
                 new TimeDelay("a few seconds later"),
                 messageBuilder().id(nextId()).from(bettie).to(cat).label("Good day to you!").build(),
                 new NoteLeft("Left of Cat", cat),
                 new NoteRight("Right of Cat", cat),
                 new NoteOver("Note over Bettie", bettie),
-                new NoteRight("Right note", null),
+                new NoteRight("Right note"),
                 new LogicalDivider("a divider"),
                 messageBuilder().id(nextId()).from(cat).to(arnie).label("Me?").build(),
-                new NoteRight("Right note", null),
+                new NoteRight("Right note"),
                 new VerticalSpace(20),
                 new NoteLeft("Left of Bettie", bettie),
                 new NoteRight("Right of Bettie", bettie)
         );
-        lsdContext.completeScenario("Capturing Notes", "Notes can be added to participants", SUCCESS);
+        lsdContext.completeScenario("Capturing Notes", "Notes can be added to participants");
     }
 
     private String nextId() {

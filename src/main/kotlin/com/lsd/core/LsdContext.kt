@@ -50,6 +50,7 @@ open class LsdContext {
         }
     }
 
+    @JvmOverloads
     fun completeScenario(title: String, description: String? = "", status: Status = Status.SUCCESS) {
         currentScenario.title(title)
         currentScenario.description(description)

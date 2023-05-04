@@ -1,6 +1,7 @@
 package com.lsd.core.domain
 
-data class Participant(
+data class Participant
+@JvmOverloads constructor(
     var type: ParticipantType = ParticipantType.PARTICIPANT,
     val componentName: ComponentName,
     val alias: String? = null,
@@ -17,11 +18,6 @@ enum class ParticipantType {
     PARTICIPANT,
     QUEUE;
 
-    fun called(name: String) = called(name = name, alias = null)
-
-    fun called(name: String, alias: String? = null) =
-        Participant(componentName = ComponentName(name), type = this, alias = alias)
-
-    fun called(name: String, alias: String? = null, colour: String? = null) =
+    @JvmOverloads fun called(name: String, alias: String? = null, colour: String? = null) =
         Participant(componentName = ComponentName(name), type = this, alias = alias, colour = colour)
 }
