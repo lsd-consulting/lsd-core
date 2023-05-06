@@ -68,7 +68,7 @@ on a sequence diagram.
           MessageBuilder.messageBuilder().from("A").to("B").label("message1").build(),
           MessageBuilder.messageBuilder().from("B").to("A").label("message2").build()
       );
-      lsd.completeScenario("<Scenario Title>", "<description>", SUCCESS);
+      lsd.completeScenario("<Scenario Title>", "<description>");
       lsd.completeReport("<Report Title>");
   }
 ```
