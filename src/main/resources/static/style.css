@@ -191,14 +191,7 @@ svg {
     display: block;
 }
 
-input[type="range"] {
-    display: block;
-    margin-bottom: 0;
-    margin-left: 35%;
-    margin-top: 30px;
-    height: 1px;
-    width: 30%;
-}
+
 
 section {
     box-shadow: var(--box-shadow);
@@ -411,4 +404,39 @@ label.index {
 
 .index-content a:hover {
     background-color: #f1f1f1
+}
+
+/* Range slider */
+input[type="range"] {
+    display: block;
+    margin-bottom: 0;
+    margin-left: 35%;
+    margin-top: 30px;
+    height: 6px;
+    width: 30%;
+    background: var(--color-border);
+    outline: none;
+    -webkit-appearance: none;
+    border-radius: 30px;
+}
+
+input[type="range"]:hover {
+    opacity: 1;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 5px;
+    background: var(--color-background-primary);
+    cursor: pointer;
+    border-radius: 30px;
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: 15px;
+    height: 5px;
+    background: var(--color-background-primary);
+    cursor: pointer;
 }
