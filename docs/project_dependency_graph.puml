@@ -22,6 +22,7 @@ component "lsd-kotlin-cucumber-example"#orange
 [lsd-distributed-generator] -[#lightgreen]-> [lsd-core] : -[api]
 
 [lsd-distributed-interceptors] -[#orange]-> [lsd-distributed-generator] : -[test]
+[lsd-distributed-interceptors] -[#orange]-> [lsd-distributed-generator-ui] : -[test]
 [lsd-distributed-interceptors] -[#lightgreen]-> [lsd-core] : -[api]
 [lsd-distributed-interceptors] -[#orange]-> [lsd-junit5] : -[test]
 [lsd-interceptors] -[#orange]-> [lsd-junit5] : -[test]
