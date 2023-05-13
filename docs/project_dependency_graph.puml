@@ -12,11 +12,12 @@ component "lsd-interceptors"#orange
 component "lsd-distributed-interceptors"#orange
 component "lsd-distributed-generator-ui"#orange
 component "lsd-kotlin-cucumber-example"#orange
+component "lsd-interceptors-http4k" #lightgreen
 
 [lsd-junit5] -[#lightgreen]-> [lsd-core] : -[api]
-
 [lsd-cucumber] -[#lightgreen]-> [lsd-core] : -[api]
 [lsd-interceptors] -[#lightgreen]-> [lsd-core] : -[impl]
+[lsd-interceptors-http4k] -[#lightgreen]> [lsd-core] : -[api]
 
 [lsd-distributed-generator-ui] -[#orange]-> [lsd-distributed-generator] : -[impl]
 [lsd-distributed-generator] -[#lightgreen]-> [lsd-core] : -[api]
