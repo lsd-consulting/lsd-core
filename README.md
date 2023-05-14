@@ -160,22 +160,8 @@ application or by setting a System property. Note that System properties overrid
 
 ## Related Libraries
 
-A few libraries exist to automate some of the steps to capture scenarios and generate reports e.g. via JUnit or Cucumber
+A few [related libraries](https://github.com/lsd-consulting) exist to automate some of the steps to capture scenarios and generate reports e.g. via JUnit or Cucumber
 as plugins or extentions to the libraries.
-
-| Name | Latest Version | Description |
-| ----------- | ----------- |------------ |
-| [lsd-junit5](https://github.com/lsd-consulting/lsd-junit5) | [![Maven Central](https://img.shields.io/maven-central/v/io.github.lsd-consulting/lsd-junit5.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.lsd-consulting%22%20AND%20a:%22lsd-junit5%22) | JUnit5 extension to generate LSD reports for unit tests |
-| [lsd-cucumber](https://github.com/lsd-consulting/lsd-cucumber) |[![Maven Central](https://img.shields.io/maven-central/v/io.github.lsd-consulting/lsd-cucumber.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.lsd-consulting%22%20AND%20a:%22lsd-cucumber%22) | Cucumber plugin to generate LSD reports for specifications |
-
-## Companion Libraries
-
-Some libraries have been created to automate the capturing of events e.g. within SpringBoot applications
-
-| Name | Latest Version | Description |
-| ----------- | ----------- |------------ |
-| [lsd-interceptors](https://github.com/lsd-consulting/lsd-interceptors) | [![Maven Central](https://img.shields.io/maven-central/v/io.github.lsd-consulting/lsd-interceptors.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.lsd-consulting%22%20AND%20a:%22lsd-interceptors%22) | Automates the collection of HTTP requests and AMQP messages within a springboot microservice for the sequence diagrams. Works well for acceptance or component tests. |
-| [lsd-distributed-interceptors](https://github.com/lsd-consulting/lsd-distributed-interceptors) |![Maven Central](https://img.shields.io/maven-central/v/io.github.lsd-consulting/lsd-distributed-interceptor) | Enables the automated collection of HTTP requests and AMQP messages sent between springboot microservices. Works well for end to end tests or general purpose tracing of all events being sent between services |
 
 
 ## Building
