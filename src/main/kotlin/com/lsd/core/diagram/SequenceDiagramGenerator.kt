@@ -5,10 +5,7 @@ import com.lsd.core.IdGenerator
 import com.lsd.core.adapter.puml.convertToSvg
 import com.lsd.core.adapter.puml.toParticipantMarkup
 import com.lsd.core.adapter.puml.toPumlMarkup
-import com.lsd.core.domain.Message
-import com.lsd.core.domain.Newpage
-import com.lsd.core.domain.Participant
-import com.lsd.core.domain.SequenceEvent
+import com.lsd.core.domain.*
 import com.lsd.core.properties.LsdProperties
 import com.lsd.core.properties.LsdProperties.DIAGRAM_THEME
 import com.lsd.core.report.model.Diagram
@@ -30,10 +27,19 @@ data class SequenceDiagramGenerator(
         return Diagram(id = idGenerator.next(), uml = uml, svg = svg)
     }
 
-    private fun generateUml(maxEventsPerDiagram: Int): String =
-        events.groupedByPages()
+    private fun generateUml(maxEventsPerDiagram: Int): String {
+        return removeLifelineActivationsIfDiagramWillBeSplit(maxEventsPerDiagram)
+            .groupedByPages()
             .flatMap { it.chunked(maxEventsPerDiagram) }
             .joinToString(separator = lineSeparator(), transform = ::generateSequenceUml)
+    }
+
+    private fun removeLifelineActivationsIfDiagramWillBeSplit(maxEventsPerDiagram: Int) =
+        if (events.size > maxEventsPerDiagram || events.any { it is Newpage })
+            events.filterNot {
+                it is ActivateLifeline || it is DeactivateLifeline
+            }
+        else events
 
     private fun generateSequenceUml(events: List<SequenceEvent>): String {
         return template.apply(
