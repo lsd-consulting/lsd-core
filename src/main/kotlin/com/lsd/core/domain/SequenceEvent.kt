@@ -10,7 +10,9 @@ data class Newpage(val pageTitle: PageTitle) : SequenceEvent
 data class VerticalSpace(val size: Int? = null) : SequenceEvent
 data class LogicalDivider(val label: String) : SequenceEvent
 data class TimeDelay(val label: String? = null) : SequenceEvent
-data class ActivateLifeline @JvmOverloads constructor(val participant: Participant, var colour: String? = null) : SequenceEvent
+data class ActivateLifeline @JvmOverloads constructor(val participant: Participant, var colour: String? = null) :
+    SequenceEvent
+
 data class DeactivateLifeline(val participant: Participant) : SequenceEvent
 
 data class Message

@@ -12,9 +12,11 @@ import com.lsd.core.properties.LsdProperties.getInt
 import com.lsd.core.report.*
 import com.lsd.core.report.HtmlIndexWriter.writeToFile
 import com.lsd.core.report.model.DataHolder
+import com.lsd.core.report.model.Diagram
 import com.lsd.core.report.model.Report
 import com.lsd.core.report.model.ReportFile
 import java.nio.file.Path
+import kotlin.time.*
 
 open class LsdContext {
 
@@ -59,8 +61,9 @@ open class LsdContext {
         currentScenario = ScenarioBuilder()
     }
 
-    fun completeReport(title: String): Path {
-        val report = buildReport(title)
+    @JvmOverloads
+    fun completeReport(title: String, showMetrics: Boolean = false): Path {
+        val report = buildReport(title, showMetrics)
         return htmlReportWriter.writeToFile(report).also {
             reportFiles.add(ReportFile(filename = it.fileName.toString(), title = report.title, status = report.status))
             scenarios.clear()
@@ -92,10 +95,10 @@ open class LsdContext {
     }
 
     @Deprecated(message = "To be removed. User renderReport(title) instead.")
-    fun generateReport(title: String): String = htmlReportWriter.renderReport(buildReport(title))
+    fun generateReport(title: String): String = htmlReportWriter.renderReport(buildReport(title, false))
 
     fun renderReport(title: String): String =
-        htmlReportWriter.renderReport(buildReport(title))
+        htmlReportWriter.renderReport(buildReport(title, false))
 
     fun createIndex(): Path = writeToFile(reportFiles)
 
@@ -119,19 +122,29 @@ open class LsdContext {
         currentScenario.clearEvents()
     }
 
-    private fun buildReport(title: String): Report {
+    @OptIn(ExperimentalTime::class)
+    internal fun buildReport(title: String, showMetrics: Boolean): Report {
+
         return Report(
             title = title,
             status = determineOverallStatus(scenarios),
             showContentsMenu = scenarios.size > 1,
             scenarios = scenarios
                 .map { scenario ->
+                    val (sequenceDiagram, sequenceDuration) = sequenceDiagramWithDuration(scenario)
+                    val (componentDiagram, componentDuration) = componentDiagramWithDuration(scenario)
+                    val metrics = if (showMetrics) metricsFacts(
+                        scenario.events,
+                        sequenceDuration,
+                        componentDuration
+                    ) else emptyList()
+                    
                     scenarioModelBuilder()
                         .id(idGenerator.next())
                         .title(scenario.title)
                         .status(scenario.status.toCssClass())
                         .description(scenario.description)
-                        .facts(scenario.facts)
+                        .facts(scenario.facts + metrics)
                         .dataHolders(
                             scenario.events
                                 .filterIsInstance<Message>()
@@ -143,24 +156,47 @@ open class LsdContext {
                                     )
                                 }
                         )
-                        .sequenceDiagram(
-                            sequenceDiagramGeneratorBuilder()
-                                .idGenerator(idGenerator)
-                                .events(scenario.events)
-                                .participants(participants.values.toList())
-                                .includes(includes.toList())
-                                .build()
-                                .diagram(maxEventsPerDiagram)
-                        )
-                        .componentDiagram(
-                            ComponentDiagramGenerator(
-                                idGenerator = idGenerator,
-                                events = scenario.events,
-                                participants = participants.values.toList()
-                            ).diagram()
-                        )
+                        .sequenceDiagram(sequenceDiagram)
+                        .componentDiagram(componentDiagram)
                         .build()
                 })
+    }
+
+    @OptIn(ExperimentalTime::class)
+    private fun sequenceDiagramWithDuration(scenario: Scenario): TimedValue<Diagram?> {
+        return measureTimedValue {
+            sequenceDiagramGeneratorBuilder()
+                .idGenerator(idGenerator)
+                .events(scenario.events)
+                .participants(participants.values.toList())
+                .includes(includes.toList())
+                .build()
+                .diagram(maxEventsPerDiagram)
+        }
+    }
+    
+    @OptIn(ExperimentalTime::class)
+    private fun componentDiagramWithDuration(scenario: Scenario): TimedValue<Diagram?> {
+        return measureTimedValue {
+            ComponentDiagramGenerator(
+                idGenerator = idGenerator,
+                events = scenario.events,
+                participants = participants.values.toList()
+            ).diagram()
+        }
+    }
+
+    private fun metricsFacts(events: MutableList<SequenceEvent>, sequenceDuration: Duration, componentDuration: Duration): List<Fact> {
+        val allMessages = events.filterIsInstance(Message::class.java)
+        val messagesByType = allMessages.groupBy { it.type }
+        return listOf(
+            Fact("Total events captured", "${events.size}"),
+            Fact("Time for generating sequence diagram", "$sequenceDuration"),
+            Fact("Time for generating component diagram", "$componentDuration"),
+            Fact("Total messages captured", "${allMessages.size}"),
+        ) + messagesByType.keys.map {
+            Fact("Total $it messages captured", "${messagesByType[it]?.size}")
+        }
     }
 
     private fun determineOverallStatus(scenarios: List<Scenario>): String {

@@ -5,7 +5,6 @@ import com.lsd.core.LsdContext;
 import com.lsd.core.domain.*;
 import com.lsd.core.report.PopupContent;
 import org.approvaltests.Approvals;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -29,7 +28,7 @@ class LsdContextTest {
     public LsdContextTest() {
         lsdContext.addParticipants(arnie, bettie, cat);
     }
-    
+
     private final LinkedHashSet<String> additionalIncludes = new LinkedHashSet<>(List.of(
             "tupadr3/font-awesome-5/hamburger",
             "tupadr3/font-awesome-5/heart"
