@@ -16,7 +16,7 @@ import com.lsd.core.report.model.Diagram
 import com.lsd.core.report.model.Report
 import com.lsd.core.report.model.ReportFile
 import java.nio.file.Path
-import kotlin.time.*
+import kotlin.time.Duration
 
 open class LsdContext {
 
@@ -95,11 +95,13 @@ open class LsdContext {
     }
 
     @Deprecated(message = "To be removed. User renderReport(title) instead.")
-    fun generateReport(title: String): String = htmlReportWriter.renderReport(buildReport(
-        title = title,
-        showMetrics = false,
-        maxEventsPerDiagram = maxEventsPerDiagram
-    ))
+    fun generateReport(title: String): String = htmlReportWriter.renderReport(
+        buildReport(
+            title = title,
+            showMetrics = false,
+            maxEventsPerDiagram = maxEventsPerDiagram
+        )
+    )
 
     fun renderReport(title: String, showMetrics: Boolean = false): String =
         htmlReportWriter.renderReport(buildReport(title, showMetrics, maxEventsPerDiagram))
@@ -126,7 +128,6 @@ open class LsdContext {
         currentScenario.clearEvents()
     }
 
-    @OptIn(ExperimentalTime::class)
     internal fun buildReport(
         title: String,
         showMetrics: Boolean = false,
@@ -139,14 +140,14 @@ open class LsdContext {
             showContentsMenu = scenarios.size > 1,
             scenarios = scenarios
                 .map { scenario ->
-                    val (sequenceDiagram, sequenceDuration) = sequenceDiagramWithDuration(scenario, maxEventsPerDiagram)
-                    val (componentDiagram, componentDuration) = componentDiagramWithDuration(scenario)
+                    val (sequenceDuration, sequenceDiagram) = sequenceDiagramWithDuration(scenario, maxEventsPerDiagram)
+                    val (componentDuration, componentDiagram) = componentDiagramWithDuration(scenario)
                     val metrics = if (showMetrics) metricsFacts(
                         events = scenario.events,
                         sequenceDuration = sequenceDuration,
                         componentDuration = componentDuration
                     ) else emptyList()
-                    
+
                     scenarioModelBuilder()
                         .id(idGenerator.next())
                         .title(scenario.title)
@@ -170,9 +171,11 @@ open class LsdContext {
                 })
     }
 
-    @OptIn(ExperimentalTime::class)
-    private fun sequenceDiagramWithDuration(scenario: Scenario, maxEventsPerDiagram: Int): TimedValue<Diagram?> {
-        return measureTimedValue {
+    private fun sequenceDiagramWithDuration(
+        scenario: Scenario,
+        maxEventsPerDiagram: Int
+    ): Pair<Duration, Diagram?> {
+        return timedResult {
             sequenceDiagramGeneratorBuilder()
                 .idGenerator(idGenerator)
                 .events(scenario.events)
@@ -182,10 +185,9 @@ open class LsdContext {
                 .diagram(maxEventsPerDiagram)
         }
     }
-    
-    @OptIn(ExperimentalTime::class)
-    private fun componentDiagramWithDuration(scenario: Scenario): TimedValue<Diagram?> {
-        return measureTimedValue {
+
+    private fun componentDiagramWithDuration(scenario: Scenario): Pair<Duration, Diagram?> {
+        return timedResult {
             ComponentDiagramGenerator(
                 idGenerator = idGenerator,
                 events = scenario.events,
@@ -194,7 +196,11 @@ open class LsdContext {
         }
     }
 
-    private fun metricsFacts(events: MutableList<SequenceEvent>, sequenceDuration: Duration, componentDuration: Duration): List<Fact> {
+    private fun metricsFacts(
+        events: MutableList<SequenceEvent>,
+        sequenceDuration: Duration,
+        componentDuration: Duration
+    ): List<Fact> {
         val allMessages = events.filterIsInstance(Message::class.java)
         val messagesByType = allMessages.groupBy { it.type }
         return listOf(
