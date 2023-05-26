@@ -16,7 +16,8 @@ import com.lsd.core.report.model.Diagram
 import com.lsd.core.report.model.Report
 import com.lsd.core.report.model.ReportFile
 import java.nio.file.Path
-import kotlin.time.Duration
+import java.time.Duration
+import java.util.regex.Pattern
 
 open class LsdContext {
 
@@ -205,8 +206,8 @@ open class LsdContext {
         val messagesByType = allMessages.groupBy { it.type }
         return listOf(
             Fact("Total events captured", "${events.size}"),
-            Fact("Time for generating sequence diagram", "$sequenceDuration"),
-            Fact("Time for generating component diagram", "$componentDuration"),
+            Fact("Time for generating sequence diagram", sequenceDuration.pretty()),
+            Fact("Time for generating component diagram", componentDuration.pretty()),
             Fact("Total messages captured", "${allMessages.size}"),
         ) + messagesByType.keys.map {
             Fact("Total $it messages captured", "${messagesByType[it]?.size}")
@@ -235,6 +236,11 @@ open class LsdContext {
         val instance = LsdContext()
     }
 }
+
+private fun Duration.pretty(): String = toString()
+    .substring(2)
+    .replace(Pattern.compile("(\\d[HMS])(?!$)").toRegex(), "$1 ")
+    .lowercase()
 
 fun Status.toCssClass(): String = when (this) {
     Status.SUCCESS -> "success"

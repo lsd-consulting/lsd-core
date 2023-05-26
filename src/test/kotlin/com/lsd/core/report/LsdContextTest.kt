@@ -71,4 +71,20 @@ class LsdContextTest {
             .contains("New page here")
             .contains("A -> B")
     }
+    
+    @Test
+    fun activationsKeptWhenDiagramsAreNotSplit() {
+        context.capture(MessageBuilder.messageBuilder().from("A").to("B").build())
+        context.capture(ActivateLifelineBuilder.activation().of("A").build())
+        context.capture(MessageBuilder.messageBuilder().from("B").to("A").type(SYNCHRONOUS_RESPONSE).build())
+        context.capture(DeactivateLifelineBuilder.deactivation().of("A").build())
+        context.completeScenario("scenario")
+
+        val report = context.buildReport("report")
+        val sequenceUml = report.scenarios.single().sequenceDiagram?.uml
+
+        assertThat(sequenceUml)
+            .contains("activate", "deactivate")
+            .contains("A -> B")
+    }
 }
