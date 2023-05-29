@@ -5,6 +5,11 @@ import com.lsd.core.LsdContext;
 import com.lsd.core.domain.*;
 import com.lsd.core.report.PopupContent;
 import org.approvaltests.Approvals;
+import org.approvaltests.core.Options;
+import org.approvaltests.core.Scrubber;
+import org.approvaltests.scrubbers.DateScrubber;
+import org.approvaltests.scrubbers.RegExScrubber;
+import org.approvaltests.scrubbers.Scrubbers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -29,6 +34,9 @@ class LsdContextTest {
         lsdContext.addParticipants(arnie, bettie, cat);
     }
 
+    final Scrubber durationScrubber = new RegExScrubber(">\\d+\\.\\d+s<", ">0.00s<");
+    Scrubber scrubber = Scrubbers.scrubAll(durationScrubber);
+
     private final LinkedHashSet<String> additionalIncludes = new LinkedHashSet<>(List.of(
             "tupadr3/font-awesome-5/hamburger",
             "tupadr3/font-awesome-5/heart"
@@ -50,7 +58,7 @@ class LsdContextTest {
         scenarioWithWarningStatus();
         scenarioWithErrorStatus();
 
-        Approvals.verify(lsdContext.completeReport("Approval Report").toFile());
+        Approvals.verifyHtml(lsdContext.renderReport("Approval Report", true), new Options(scrubber));
     }
 
     private void scenarioWithErrorStatus() {

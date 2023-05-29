@@ -150,8 +150,8 @@ h3 {
     overflow: auto;
 }
 
-/*    Make Facts look like table*/
-.factTable {
+/* Make div look like table */
+.table {
     display: table;
     margin: auto;
     padding: 15px;
@@ -159,17 +159,17 @@ h3 {
     border-radius: 15px;
 }
 
-.factRow {
+.row {
     display: table-row;
 }
 
-.factRowHead {
+.rowHead {
     display: table-header-group;
     font-weight: bold;
     border-bottom: 1px solid var(--color-border);
 }
 
-.factCell, .factRowHead {
+.cell, .rowHead {
     display: table-cell;
     padding: 3px 10px;
     border-bottom: 1px outset var(--color-border);
@@ -190,8 +190,6 @@ text {
 svg {
     display: block;
 }
-
-
 
 section {
     box-shadow: var(--box-shadow);

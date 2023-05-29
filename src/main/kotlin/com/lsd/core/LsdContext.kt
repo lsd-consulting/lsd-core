@@ -11,13 +11,9 @@ import com.lsd.core.properties.LsdProperties.getBoolean
 import com.lsd.core.properties.LsdProperties.getInt
 import com.lsd.core.report.*
 import com.lsd.core.report.HtmlIndexWriter.writeToFile
-import com.lsd.core.report.model.DataHolder
-import com.lsd.core.report.model.Diagram
-import com.lsd.core.report.model.Report
-import com.lsd.core.report.model.ReportFile
+import com.lsd.core.report.model.*
 import java.nio.file.Path
 import java.time.Duration
-import java.util.regex.Pattern
 
 open class LsdContext {
 
@@ -143,18 +139,19 @@ open class LsdContext {
                 .map { scenario ->
                     val (sequenceDuration, sequenceDiagram) = sequenceDiagramWithDuration(scenario, maxEventsPerDiagram)
                     val (componentDuration, componentDiagram) = componentDiagramWithDuration(scenario)
-                    val metrics = if (showMetrics) metricsFacts(
+                    val metrics = if (showMetrics) Metrics(
                         events = scenario.events,
                         sequenceDuration = sequenceDuration,
                         componentDuration = componentDuration
-                    ) else emptyList()
+                    ) else null
 
                     scenarioModelBuilder()
                         .id(idGenerator.next())
                         .title(scenario.title)
                         .status(scenario.status.toCssClass())
                         .description(scenario.description)
-                        .facts(scenario.facts + metrics)
+                        .facts(scenario.facts)
+                        .metrics(metrics)
                         .dataHolders(
                             scenario.events
                                 .filterIsInstance<Message>()
@@ -197,23 +194,6 @@ open class LsdContext {
         }
     }
 
-    private fun metricsFacts(
-        events: MutableList<SequenceEvent>,
-        sequenceDuration: Duration,
-        componentDuration: Duration
-    ): List<Fact> {
-        val allMessages = events.filterIsInstance(Message::class.java)
-        val messagesByType = allMessages.groupBy { it.type }
-        return listOf(
-            Fact("Total events captured", "${events.size}"),
-            Fact("Time for generating sequence diagram", sequenceDuration.pretty()),
-            Fact("Time for generating component diagram", componentDuration.pretty()),
-            Fact("Total messages captured", "${allMessages.size}"),
-        ) + messagesByType.keys.map {
-            Fact("Total $it messages captured", "${messagesByType[it]?.size}")
-        }
-    }
-
     private fun determineOverallStatus(scenarios: List<Scenario>): String {
         return scenarios.map { it.status }.sortedWith(compareBy {
             when (it) {
@@ -236,11 +216,6 @@ open class LsdContext {
         val instance = LsdContext()
     }
 }
-
-private fun Duration.pretty(): String = toString()
-    .substring(2)
-    .replace(Pattern.compile("(\\d[HMS])(?!$)").toRegex(), "$1 ")
-    .lowercase()
 
 fun Status.toCssClass(): String = when (this) {
     Status.SUCCESS -> "success"

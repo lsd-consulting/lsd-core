@@ -32,16 +32,33 @@
         {{~/if}}
         {{#if facts ~}}
         <aside class="facts">
-            <div class="factTable">
+            <div class="table">
                 <h3>Key Facts</h3>
-                <div class="factRow">
-                    <div class="factRowHead">Description</div>
-                    <div class="factRowHead">Value</div>
+                <div class="row">
+                    <div class="rowHead">Description</div>
+                    <div class="rowHead">Value</div>
                 </div>
                 {{~#each facts ~}}
-                <div class="factRow">
-                    <div class="factCell">{{key}}</div>
-                    <div class="factCell">{{value}}</div>
+                <div class="row">
+                    <div class="cell">{{key}}</div>
+                    <div class="cell">{{value}}</div>
+                </div>
+                {{~/each}}
+            </div>
+        </aside>
+        {{~/if}}
+        {{#if metrics ~}}
+        <aside class="metrics">
+            <div class="table">
+                <h3>Metrics</h3>
+                <div class="row">
+                    <div class="rowHead">Name</div>
+                    <div class="rowHead">Value</div>
+                </div>
+                {{~#each metrics.asList ~}}
+                <div class="row">
+                    <div class="cell">{{name}}</div>
+                    <div class="cell">{{value}}</div>
                 </div>
                 {{~/each}}
             </div>

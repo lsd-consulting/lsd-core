@@ -1,5 +1,7 @@
 package com.lsd.core.domain
 
+import java.time.Duration
+
 sealed interface SequenceEvent
 
 data class NoteLeft @JvmOverloads constructor(val note: String, val ofParticipant: Participant? = null) : SequenceEvent
@@ -24,6 +26,7 @@ data class Message
     val type: MessageType = MessageType.SYNCHRONOUS,
     val colour: String = "",
     val data: Any? = null,
+    val duration: Duration? = null,
 ) : SequenceEvent
 
 enum class MessageType {

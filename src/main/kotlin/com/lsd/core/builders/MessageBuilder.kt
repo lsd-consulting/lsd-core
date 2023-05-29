@@ -5,6 +5,7 @@ import com.lsd.core.domain.Message
 import com.lsd.core.domain.MessageType
 import com.lsd.core.domain.Participant
 import com.lsd.core.domain.ParticipantType.PARTICIPANT
+import java.time.Duration
 
 private val idGenerator = IdGenerator(isDeterministic = false)
 
@@ -21,6 +22,7 @@ class MessageBuilder {
     fun data(data: Any) = also { message = message.copy(data = data) }
     fun colour(colour: String) = also { message = message.copy(colour = colour) }
     fun type(type: MessageType) = also { message = message.copy(type = type) }
+    fun duration(duration: Duration) = also { message = message.copy(duration = duration) }
 
     fun build(): Message = message
 

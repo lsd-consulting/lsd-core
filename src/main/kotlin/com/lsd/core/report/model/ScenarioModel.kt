@@ -14,4 +14,5 @@ data class ScenarioModel @JvmOverloads constructor(
     var componentDiagram: Diagram? = null,
     var dataHolders: List<DataHolder> = emptyList(),
     var facts: List<Fact> = ArrayList(),
+    var metrics: Metrics? = null,
 )
