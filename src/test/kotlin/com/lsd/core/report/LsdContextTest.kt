@@ -4,12 +4,12 @@ import com.lsd.core.LsdContext
 import com.lsd.core.builders.ActivateLifelineBuilder
 import com.lsd.core.builders.DeactivateLifelineBuilder
 import com.lsd.core.builders.MessageBuilder.Companion.messageBuilder
-import com.lsd.core.domain.MessageType.LOST
-import com.lsd.core.domain.MessageType.SYNCHRONOUS_RESPONSE
+import com.lsd.core.domain.MessageType.*
 import com.lsd.core.domain.Newpage
 import com.lsd.core.domain.PageTitle
 import com.lsd.core.report.model.Metric
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Condition
 import org.junit.jupiter.api.Test
 import java.time.Duration.ofSeconds
 
@@ -41,21 +41,38 @@ class LsdContextTest {
     @Test
     fun messageDurationMetricsAreAdded() {
         context.capture(
-            messageBuilder().from("A").to("B").label("sing song 1").duration(ofSeconds(10)).build(),
-            messageBuilder().from("A").to("B").label("sing song 2").duration(ofSeconds(8)).build(),
-            messageBuilder().from("A").to("C").label("yell loudly").duration(ofSeconds(11)).type(LOST).build(),
+            messageBuilder().id("1").from("A").to("B").label("sing song 2").duration(ofSeconds(8)).build(),
+            messageBuilder().id("2").from("A").to("B").label("sing song 1").duration(ofSeconds(10)).build(),
+            messageBuilder().id("3").from("A").to("C").label("yell loudly").duration(ofSeconds(11)).type(LOST).build(),
+            messageBuilder().id("4").from("A").to("B").label("abc").duration(ofSeconds(7)).build(),
+            messageBuilder().id("5").from("A").to("B").label("abc").duration(ofSeconds(6)).build(),
+            messageBuilder().id("6").from("A").to("B").label("abc").duration(ofSeconds(5)).build(),
+            messageBuilder().id("7").from("A").to("B").label("abc").duration(ofSeconds(4)).build(),
+            messageBuilder().id("8").from("A").to("D").label("whisper").type(BI_DIRECTIONAL).build(),
         )
         context.completeScenario("duration scenario")
 
         val metrics = whenMetricsAreGenerated()
 
         assertThat(metrics).isNotNull
-            .contains(Metric("SYNCHRONOUS messages max duration", "10s : sing song 1 [A -> B]"))
-            .contains(Metric("SYNCHRONOUS messages mean duration", "9s [2 message(s) with duration]"))
-            .contains(Metric("LOST messages max duration", "11s : yell loudly [A -> C]"))
-            .contains(Metric("LOST messages mean duration", "11s [1 message(s) with duration]"))
+            .contains(
+                Metric(
+                    "SYNCHRONOUS messages with duration - top",
+                    """<a href="#2">10s [A -> B]</a><br><a href="#1">8s [A -> B]</a><br><a href="#4">7s [A -> B]</a><br><a href="#5">6s [A -> B]</a><br><a href="#6">5s [A -> B]</a>"""
+                )
+            )
+            .contains(Metric("SYNCHRONOUS messages with duration - mean", "6.666s [6 duration(s)]"))
+            .contains(Metric("LOST messages with duration - top", """<a href="#3">11s [A -> C]</a>"""))
+            .contains(Metric("LOST messages with duration - mean", "11s [1 duration(s)]"))
+            .doesNotHave(anyMetricWithName("BI_DIRECTIONAL messages with duration - top"))
+            .doesNotHave(anyMetricWithName("BI_DIRECTIONAL messages with duration - mean"))
     }
-    
+
+    private fun anyMetricWithName(expectedName: String) =
+        Condition<List<Metric>>({ metric -> metric.any { it.name == expectedName } },
+            "any metric with expected name: $expectedName"
+        )
+
     @Test
     fun diagramDurationMetricsAreAdded() {
         context.completeScenario("duration scenario")

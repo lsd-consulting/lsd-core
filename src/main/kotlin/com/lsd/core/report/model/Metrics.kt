@@ -19,33 +19,52 @@ class Metrics(
             Metric("Time for generating sequence diagram", sequenceDuration.pretty()),
             Metric("Time for generating component diagram", componentDuration.pretty()),
             Metric("Messages captured", "${allMessages.size}"),
-        ) + messagesByType.keys.flatMap {
+        ) + messagesByType.keys.flatMap { type ->
+            val messagesOfType = messagesByType[type].orEmpty()
+            val durationMessages = messagesOfType.filter { it.duration != null }
+
             listOf(
-                Metric("$it messages captured", "${messagesByType[it]?.size}"),
-                Metric("$it messages max duration", messagesByType[it]?.let(::longestDuration) ?: "NA"),
-                Metric("$it messages mean duration", messagesByType[it]?.let(::meanDuration) ?: "NA"),
-            )
+                Metric("$type messages captured", "${messagesOfType.size}"),
+            ) + if (durationMessages.isNotEmpty()) listOf(
+                Metric("$type messages total duration", durationMessages.let(::totalDuration)),
+                Metric("$type messages with duration - top", durationMessages.let(::topDurations).durationString()),
+                Metric("$type messages with duration - mean", durationMessages.let(::meanDuration)),
+            ) else emptyList()
         }
     }
 
-    private fun longestDuration(messages: List<Message>): String {
-        val longestDurationMessage = messages.maxByOrNull { it.duration ?: Duration.ZERO }
-        return longestDurationMessage?.let {
-            "${it.duration?.pretty() ?: "0s"} : ${longestDurationMessage.label} [${it.from.componentName.normalisedName} -> ${it.to.componentName.normalisedName}]"
-        } ?: ""
+    private fun topDurations(messages: List<Message>): List<Message> {
+        return messages
+            .sortedBy { it.duration }
+            .reversed()
+            .take(5)
     }
 
     private fun meanDuration(messages: List<Message>): String {
         val durationMessages = messages.filter { it.duration != null }
         val average = durationMessages.map { it.duration?.toMillis() ?: 0 }.average()
         val averageDuration = Duration.ofMillis(average.toLong())
-        return "${averageDuration.pretty()} [${durationMessages.size} message(s) with duration]"
+        return "${averageDuration.pretty()} [${durationMessages.size} duration(s)]"
     }
 
-    private fun Duration.pretty(): String = toString()
-        .substring(2)
-        .replace(Pattern.compile("(\\d[HMS])(?!$)").toRegex(), "$1 ")
-        .lowercase()
+    private fun totalDuration(messages: List<Message>): String {
+        val durationMessages = messages.filter { it.duration != null }
+        val total = durationMessages.sumOf { it.duration?.toMillis() ?: 0 }
+        val totalDuration = Duration.ofMillis(total)
+        return "${totalDuration.pretty()} [${durationMessages.size} duration(s)]"
+    }
+
+}
+
+private fun Duration.pretty(): String = toString()
+    .substring(2)
+    .replace(Pattern.compile("(\\d[HMS])(?!$)").toRegex(), "$1 ")
+    .lowercase()
+
+private fun List<Message>.durationString(): String {
+    return joinToString(separator = "<br>") {
+        """<a href="#${it.id}">${it.duration?.pretty() ?: "0s"} [${it.from.componentName.normalisedName} -> ${it.to.componentName.normalisedName}]</a>"""
+    }
 }
 
 data class Metric(val name: String, val value: String)
