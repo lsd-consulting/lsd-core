@@ -99,3 +99,10 @@ function unMarkSvg() {
     let unmarker = new Mark(document.querySelectorAll("svg"));
     unmarker.unmark();
 }
+
+<!-- show the svg (target='_self' explicitly added) hyperlink with the given id -->
+function scrollIntoViewFor(id) {
+    const target = document.querySelector("a[href='#" + id + "'][target='_self']");
+    target.scrollIntoView();
+    target.classList.add("highlight");
+}

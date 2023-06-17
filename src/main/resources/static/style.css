@@ -51,6 +51,10 @@ aside {
     padding: 20px;
 }
 
+aside.metrics {
+    flex: 100%;
+}
+
 span.back_to_index::after {
     content: "\2190";
     cursor: pointer;
@@ -175,15 +179,17 @@ h3 {
     border-bottom: 1px outset var(--color-border);
 }
 
-a {
-    text-decoration: none;
-    color: var(--color-text-secondary);
+a:hover, a:focus
+{
+    font-weight: bolder;
 }
 
 /* SVG generates <text> elements for all text */
-text {
+a, text {
     text-decoration: none;
+    font-style: italic;
     fill: var(--color-text-secondary);
+    color: var(--color-text-secondary);
     font-family: system-ui,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";;
 }
 
@@ -218,6 +224,12 @@ span.highlight {
     padding: 2px;
     color: var(--color-text-primary);
     background-color: var(--color-highlight);
+}
+
+/* highlighted arrows when clicked via metrics */
+a.highlight  text {
+    fill: red;
+    font-variant: small-caps;
 }
 
 /* highlight keywords (inline-block to allow first-letter styling) */
