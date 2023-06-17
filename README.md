@@ -186,3 +186,6 @@ cache to avoid waiting for several days (I think it's up to 7 days). Use this [t
 to clear the cache and specify these files:
 * https://cdn.jsdelivr.net/gh/lsd-consulting/lsd-core@5/src/main/resources/static/style.min.css
 * https://cdn.jsdelivr.net/gh/lsd-consulting/lsd-core@5/src/main/resources/static/custom.min.js
+
+**Note** that the browser cache may also need to be cleared since the browser will also cache css and js 
+files if they have the same url

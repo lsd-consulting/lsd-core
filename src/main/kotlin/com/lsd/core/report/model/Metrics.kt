@@ -19,7 +19,7 @@ class Metrics(
             Metric("Time to generate component diagram", componentDuration.pretty()),
             Metric("Events captured", "${events.size}"),
             Metric("Messages captured", "${allMessages.size}"),
-            Metric("Top isolated durations", allMessages.let(::createTree).asList
+            Metric("Top bottlenecks", allMessages.let(::createTree).asList
                 .drop(1)
                 .sortedBy { it.isolatedDuration }
                 .reversed()
@@ -28,10 +28,10 @@ class Metrics(
                     """<li>
                         | <ul>
                         |  <li>Isolated duration ${node.isolatedDuration.pretty()}</li>
-                        |  <li>Children duration ${node.childrenDuration.pretty()}</li>
-                        |  <li>Total duration ${node.duration.pretty()}</li>
-                        |  ${node.request?.let { "<li>request ${it.messageHyperlink()}</li>" } ?: ""}
-                        |  ${node.response?.let { "<li>response ${it.messageHyperlink()}</li>" } ?: ""}
+                        |  ${node.request?.let { "<li>${it.details()} ${it.show()} ${it.open()} </li>" } ?: ""}
+                        |  ${node.response?.let { "<li>${it.details()} ${it.show()} ${it.open()} </li>" } ?: ""}
+                        |  ${if (node.children.isNotEmpty()) "<li>Children ${node.childrenDuration.pretty()}</li>" else ""}
+                        |  <li>Total ${node.duration.pretty()}</li>
                         | </ul>
                         |</li>""".trimMargin()
                 }),
@@ -44,8 +44,14 @@ private fun Duration.pretty(): String = toString()
     .replace(Pattern.compile("(\\d[HMS])(?!$)").toRegex(), "$1 ")
     .lowercase()
 
-private fun Message.messageHyperlink() =
-    """<a href="#${id}">${duration?.pretty() ?: "0s"} [${from.componentName.normalisedName} -> ${to.componentName.normalisedName}]</a>"""
+private fun Message.open() =
+    """<a href="#${id}"><sub>[open]</sub></a>"""
+
+private fun Message.show() =
+    """<a href="javascript:scrollIntoViewFor($id);"><sub>[show]</sub></a>"""
+
+private fun Message.details() = 
+    """[${from.componentName.normalisedName} -> ${to.componentName.normalisedName}] ${duration?.pretty() ?: "0s"}"""
 
 data class Metric(val name: String, val value: String)
 

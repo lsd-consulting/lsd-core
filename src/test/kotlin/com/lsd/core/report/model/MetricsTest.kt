@@ -60,45 +60,43 @@ class MetricsTest {
             .has(
                 anyMetricWithValueContaining(
                     "Isolated duration 4s",
-                    "Children duration 6s",
-                    "Total duration 10s",
-                    "0s [A -> B]",
-                    "10s [B -> A]",
+                    "Children 6s",
+                    "Total 10s",
+                    "[A -> B] 0s",
+                    "[B -> A] 10s",
                 )
             )
             .has(
                 anyMetricWithValueContaining(
                     "Isolated duration 3s",
-                    "Children duration 0s",
-                    "Total duration 3s",
-                    "0s [B -> C]",
-                    "3s [C -> B]",
+                    "[B -> C] 0s",
+                    "[C -> B] 3s",
+                    "Total 3s",
                 )
             )
             .has(
                 anyMetricWithValueContaining(
                     "Isolated duration 2s",
-                    "Children duration 0s",
-                    "Total duration 2s",
-                    "2s [B -> C]",
+                    "[B -> C] 2s",
+                    "Total 2s",
                 )
             )
             .has(
                 anyMetricWithValueContaining(
                     "Isolated duration 1s",
-                    "Children duration 1s",
-                    "Total duration 2s",
-                    "0s [C -> D]",
-                    "1s [D -> C]",
+                    "[C -> D] 0s",
+                    "[D -> C] 1s",
+                    "Children 1s",
+                    "Total 2s",
                 )
             )
             .has(
                 anyMetricWithValueContaining(
                     "Isolated duration 0s",
-                    "Children duration 1s",
-                    "Total duration 1s",
-                    "0s [B -> C]",
-                    "1s [C -> B]",
+                    "[B -> C] 0s",
+                    "[C -> B] 1s",
+                    "Children 1s",
+                    "Total 1s",
                 )
             )
     }
@@ -121,34 +119,31 @@ class MetricsTest {
             .has(
                 anyMetricWithValueContaining(
                     "Isolated duration 4s",
-                    "Children duration 0s",
-                    "Total duration 4s",
-                    "4s [D -> C]",
+                    "[D -> C] 4s ",
+                    "Total 4s",
                 )
             )
             .has(
                 anyMetricWithValueContaining(
                     "Isolated duration 3s",
-                    "Children duration 0s",
-                    "Total duration 3s",
-                    "3s [C -> B]",
+                    "[C -> B] 3s",
+                    "Total 3s",
                 )
             )
             .has(
                 anyMetricWithValueContaining(
                     "Isolated duration 2s",
-                    "Children duration 3s",
-                    "Total duration 5s",
-                    "0s [A -> B]",
-                    "5s [B -> A]",
+                    "[A -> B] 0s",
+                    "[B -> A] 5s",
+                    "Children 3s",
+                    "Total 5s",
                 )
             )
             .has(
                 anyMetricWithValueContaining(
                     "Isolated duration 0s",
-                    "Children duration 0s",
-                    "Total duration 0s",
-                    "0s [C -> D]",
+                    "[C -> D] 0s",
+                    "Total 0s",
                 )
             )
 
@@ -172,21 +167,19 @@ class MetricsTest {
         )
 
         assertThat(metrics.asList(max = 2)).isNotNull
-            .has(anyMetricWithName("Top isolated durations"))
+            .has(anyMetricWithName("Top bottlenecks"))
             .has(
                 anyMetricWithValueContaining(
                     "Isolated duration 11s",
-                    "Children duration 0s",
-                    "Total duration 11s",
-                    "11s [A -> C]"
+                    "[A -> C] 11s",
+                    "Total 11s",
                 )
             )
             .has(
                 anyMetricWithValueContaining(
                     "Isolated duration 10s",
-                    "Children duration 0s",
-                    "Total duration 10s",
-                    "10s [A -> B]"
+                    "[A -> B] 10s",
+                    "Total 10s",
                 )
             )
     }
