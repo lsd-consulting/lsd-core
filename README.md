@@ -178,3 +178,11 @@ Git hooks will be configured automatically (to use the hooks in `.githooks` dire
 
     ./gradlew clean build
 
+### Troubleshooting
+
+#### Static files stale
+Since the static css and javascript files are cached on JSDelivr CDN it will occasionally be useful to force clear the 
+cache to avoid waiting for several days (I think it's up to 7 days). Use this [tool](https://www.jsdelivr.com/tools/purge) 
+to clear the cache and specify these files:
+* https://cdn.jsdelivr.net/gh/lsd-consulting/lsd-core@5/src/main/resources/static/style.min.css
+* https://cdn.jsdelivr.net/gh/lsd-consulting/lsd-core@5/src/main/resources/static/custom.min.js
