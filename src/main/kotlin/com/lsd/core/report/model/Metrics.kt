@@ -48,7 +48,7 @@ private fun Message.open() =
     """<a href="#${id}"><sub>[open]</sub></a>"""
 
 private fun Message.show() =
-    """<a href="javascript:scrollIntoViewFor($id);"><sub>[show]</sub></a>"""
+    """<a href="javascript:scrollIntoViewFor('$id');"><sub>[show]</sub></a>"""
 
 private fun Message.details() = 
     """[${from.componentName.normalisedName} -> ${to.componentName.normalisedName}] ${duration?.pretty() ?: "0s"}"""
