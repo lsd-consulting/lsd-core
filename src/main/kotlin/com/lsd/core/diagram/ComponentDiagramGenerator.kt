@@ -2,7 +2,7 @@ package com.lsd.core.diagram
 
 import com.github.jknack.handlebars.Handlebars
 import com.lsd.core.IdGenerator
-import com.lsd.core.adapter.puml.convertToSvg
+import com.lsd.core.adapter.puml.convertToSvgAsync
 import com.lsd.core.adapter.puml.toComponentMarkup
 import com.lsd.core.domain.Message
 import com.lsd.core.domain.MessageType.*
@@ -24,7 +24,7 @@ class ComponentDiagramGenerator(
         return Diagram(
             id = idGenerator.next(),
             uml = uml,
-            svg = convertToSvg(markup = uml)
+            svg = convertToSvgAsync(markup = uml)
         )
     }
 

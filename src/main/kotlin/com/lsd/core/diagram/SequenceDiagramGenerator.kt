@@ -2,7 +2,7 @@ package com.lsd.core.diagram
 
 import com.github.jknack.handlebars.Handlebars
 import com.lsd.core.IdGenerator
-import com.lsd.core.adapter.puml.convertToSvg
+import com.lsd.core.adapter.puml.convertToSvgAsync
 import com.lsd.core.adapter.puml.toParticipantMarkup
 import com.lsd.core.adapter.puml.toPumlMarkup
 import com.lsd.core.domain.*
@@ -23,7 +23,7 @@ data class SequenceDiagramGenerator(
         if (events.isEmpty()) return null
 
         val uml = generateUml(maxEventsPerDiagram)
-        val svg = convertToSvg(markup = uml)
+        val svg = convertToSvgAsync(markup = uml)
         return Diagram(id = idGenerator.next(), uml = uml, svg = svg)
     }
 

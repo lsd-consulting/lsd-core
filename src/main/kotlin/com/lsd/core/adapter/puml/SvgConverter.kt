@@ -1,25 +1,27 @@
 package com.lsd.core.adapter.puml
 
 import com.lsd.core.countMatches
+import kotlinx.coroutines.*
 import net.sourceforge.plantuml.FileFormat
 import net.sourceforge.plantuml.FileFormatOption
 import net.sourceforge.plantuml.SourceStringReader
 import java.io.ByteArrayOutputStream
 
-fun convertToSvg(markup: String): String {
-    val result = StringBuilder()
+fun convertToSvgAsync(markup: String): String = runBlocking {
+    val deferredResults = mutableListOf<Deferred<String>>()
     val umlCount = markup.countMatches("@startuml")
-    for (i in 0 until umlCount) {
-        val svg = createSvg(markup, i)
-        result.append(svg)
+    val sourceStringReader = SourceStringReader(markup)
+    (0 until umlCount).forEach { i ->
+        deferredResults += async(Dispatchers.Default) { createSvg(i, sourceStringReader) }
     }
-    return result.toString()
+    
+    StringBuilder().apply { deferredResults.awaitAll().forEach(::append) }
+        .toString()
 }
 
-private fun createSvg(plantUmlMarkup: String, pageNumber: Int): String {
+private fun createSvg(pageNumber: Int, sourceStringReader: SourceStringReader): String {
     ByteArrayOutputStream().use { os ->
-        val reader = SourceStringReader(plantUmlMarkup)
-        reader.outputImage(os, pageNumber, FileFormatOption(FileFormat.SVG, false))
+        sourceStringReader.outputImage(os, pageNumber, FileFormatOption(FileFormat.SVG, false))
         return os.toString()
     }
 }
