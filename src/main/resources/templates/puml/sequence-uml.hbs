@@ -5,15 +5,15 @@ skinparam svgLinkTarget _self
 
 hide unlinked
 
-{{#each includes}}
+{{#each includes ~}}
 !include <{{{ . }}}>
 {{/each}}
 
-{{#each participants}}
+{{#each participants ~}}
 {{{ . }}}
 {{/each}}
 
-{{#each events }}
+{{#each events ~}}
 {{{ . }}}
 {{/each}}
 

@@ -5,21 +5,15 @@ skinparam svgLinkTarget _self
 
 hide unlinked
 
-
 !include <tupadr3/font-awesome-5/clock>
-
 !include <tupadr3/font-awesome-5/database>
 
 
-
 participant A
-
 participant B
 
 
-
 A -> B: [[#1 {Sending a request} Sending a request]]
-
 B --> A: [[#2 {Sending a response with a long label that should be abbreviated if all goes well} Sending a response with a long label that shoul...]]
 
 
@@ -31,22 +25,16 @@ skinparam svgLinkTarget _self
 
 hide unlinked
 
-
 !include <tupadr3/font-awesome-5/clock>
-
 !include <tupadr3/font-awesome-5/database>
 
 
-
 participant B
-
 participant A
 
 
 
-
 title on the phone
-
 
 B <-> A: [[#3 {On the phone} On the phone]]
 

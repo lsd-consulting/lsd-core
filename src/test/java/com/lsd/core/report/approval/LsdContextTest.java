@@ -7,7 +7,6 @@ import com.lsd.core.report.PopupContent;
 import org.approvaltests.Approvals;
 import org.approvaltests.core.Options;
 import org.approvaltests.core.Scrubber;
-import org.approvaltests.scrubbers.DateScrubber;
 import org.approvaltests.scrubbers.RegExScrubber;
 import org.approvaltests.scrubbers.Scrubbers;
 import org.junit.jupiter.api.BeforeEach;
