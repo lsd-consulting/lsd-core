@@ -49,7 +49,7 @@ class LsdContextTest {
 
         assertThat(sequenceUml)
             .doesNotContain("activate", "deactivate")
-            .contains("New page here")
+            .doesNotContain("New page here")
             .contains("A -> B")
     }
 

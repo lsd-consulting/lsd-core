@@ -42,6 +42,7 @@ data class SequenceDiagramGenerator(
         else events
 
     private fun generateSequenceUml(events: List<SequenceEvent>): String {
+        if (events.none { it is Message }) return ""
         return template.apply(
             mapOf(
                 "theme" to LsdProperties[DIAGRAM_THEME],

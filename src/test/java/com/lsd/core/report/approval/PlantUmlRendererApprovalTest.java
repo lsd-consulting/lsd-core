@@ -2,6 +2,8 @@ package com.lsd.core.report.approval;
 
 import com.lsd.core.IdGenerator;
 import com.lsd.core.diagram.SequenceDiagramGenerator;
+import com.lsd.core.domain.Newpage;
+import com.lsd.core.domain.PageTitle;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -40,13 +42,16 @@ class PlantUmlRendererApprovalTest {
                                 .data("OK")
                                 .type(SYNCHRONOUS_RESPONSE)
                                 .build(),
+                        new Newpage(new PageTitle("on the phone")),
                         messageBuilder()
                                 .id("3")
                                 .label("On the phone")
                                 .from("B")
                                 .to("A")
                                 .type(BI_DIRECTIONAL)
-                                .build()),
+                                .build(),
+                        new Newpage(new PageTitle("No messages after this new page - should not create diagram"))
+                ),
                 List.of(
                         "tupadr3/font-awesome-5/clock",
                         "tupadr3/font-awesome-5/database"
