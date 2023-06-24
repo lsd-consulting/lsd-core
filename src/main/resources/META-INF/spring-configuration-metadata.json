@@ -19,6 +19,10 @@
     {
       "name": "lsd.core.diagram.sequence.maxEventsPerDiagram",
       "type": "java.lang.String"
+    },
+    {
+      "name": "lsd.core.devMode",
+      "type": "java.lang.Boolean"
     }
   ]
 }

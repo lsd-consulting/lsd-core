@@ -4,14 +4,11 @@ import com.lsd.core.LsdContext
 import com.lsd.core.builders.ActivateLifelineBuilder
 import com.lsd.core.builders.DeactivateLifelineBuilder
 import com.lsd.core.builders.MessageBuilder.Companion.messageBuilder
-import com.lsd.core.domain.MessageType.*
+import com.lsd.core.domain.MessageType.SYNCHRONOUS_RESPONSE
 import com.lsd.core.domain.Newpage
 import com.lsd.core.domain.PageTitle
-import com.lsd.core.report.model.Metric
 import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Condition
 import org.junit.jupiter.api.Test
-import java.time.Duration.ofSeconds
 
 class LsdContextTest {
 
@@ -27,7 +24,7 @@ class LsdContextTest {
         }
         context.completeScenario("scenario")
 
-        val report = context.buildReport("report", maxEventsPerDiagram = 5)
+        val report = context.buildReport("report", maxEventsPerDiagram = 5, isDevMode = false)
         val sequenceUml = report.scenarios.single().sequenceDiagram?.uml
 
         assertThat(sequenceUml)
@@ -44,7 +41,7 @@ class LsdContextTest {
         context.capture(DeactivateLifelineBuilder.deactivation().of("A").build())
         context.completeScenario("scenario")
 
-        val report = context.buildReport("report")
+        val report = context.buildReport("report", isDevMode = false)
         val sequenceUml = report.scenarios.single().sequenceDiagram?.uml
 
         assertThat(sequenceUml)
@@ -61,7 +58,7 @@ class LsdContextTest {
         context.capture(DeactivateLifelineBuilder.deactivation().of("A").build())
         context.completeScenario("scenario")
 
-        val report = context.buildReport("report")
+        val report = context.buildReport("report", isDevMode = false)
         val sequenceUml = report.scenarios.single().sequenceDiagram?.uml
 
         assertThat(sequenceUml)

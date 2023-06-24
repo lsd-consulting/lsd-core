@@ -1,5 +1,6 @@
 package com.lsd.core.properties
 
+import com.lsd.core.properties.LsdProperties.DEV_MODE
 import com.lsd.core.properties.LsdProperties.LABEL_MAX_WIDTH
 import com.lsd.core.properties.LsdProperties.OUTPUT_DIR
 import org.assertj.core.api.Assertions.assertThat
@@ -15,6 +16,11 @@ internal class LsdPropertiesTest {
     @Test
     fun convertsIntegers() {
         assertThat(LsdProperties.getInt(LABEL_MAX_WIDTH)).isEqualTo(50)
+    }
+    
+    @Test
+    fun convertsBooleans() {
+        assertThat(LsdProperties.getBoolean(DEV_MODE)).isEqualTo(true)
     }
 
     @Test

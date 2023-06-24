@@ -1,0 +1,7 @@
+{{#if devMode ~}}
+<script>
+    {{{inlineResourceFile "static/custom.js"}}}
+</script>
+{{else ~}}
+<script src="https://cdn.jsdelivr.net/gh/lsd-consulting/lsd-core@5/src/main/resources/static/custom.min.js"></script>
+{{/if}}

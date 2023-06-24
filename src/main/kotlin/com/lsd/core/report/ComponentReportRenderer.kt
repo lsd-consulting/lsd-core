@@ -1,14 +1,18 @@
 package com.lsd.core.report
 
 import com.github.jknack.handlebars.Context
-import com.github.jknack.handlebars.Handlebars
 
 class ComponentReportRenderer {
-    private val template = Handlebars().compile("templates/components-report")
+    private val template = HandlebarsWrapper.compile("templates/components-report")
 
-    fun render(model: Model): String {
+    fun render(model: Model, devMode: Boolean): String {
         return template.apply(
-            Context.newBuilder(mapOf("model" to model)).build()
+            Context.newBuilder(
+                mapOf(
+                    "model" to model,
+                    "devMode" to devMode
+                )
+            ).build()
         )
     }
 }

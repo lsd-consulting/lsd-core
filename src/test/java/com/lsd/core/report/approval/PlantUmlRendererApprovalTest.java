@@ -19,7 +19,7 @@ class PlantUmlRendererApprovalTest {
 
     @Test
     void renderSequenceUml() {
-        var diagram = Objects.requireNonNull(sequenceDiagramGenerator().diagram(2));
+        var diagram = Objects.requireNonNull(sequenceDiagramGenerator().diagram(2, false));
         verify(diagram.getUml());
     }
 

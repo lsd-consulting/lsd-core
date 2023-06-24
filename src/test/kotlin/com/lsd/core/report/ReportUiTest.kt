@@ -4,7 +4,8 @@ import com.lsd.core.LsdContext
 import com.lsd.core.builders.MessageBuilder.Companion.messageBuilder
 import com.microsoft.playwright.Playwright
 import com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat
-import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 
 class ReportUiTest {
 
@@ -17,29 +18,32 @@ class ReportUiTest {
     private lateinit var messagePopupData: String
     private lateinit var messageText: String
 
-    @Test
-    fun hasNoDiagramSectionWhenThereAreNoEvents() {
+    @ParameterizedTest
+    @ValueSource(booleans = [true, false])
+    fun hasNoDiagramSectionWhenThereAreNoEvents(isDevMode: Boolean) {
         givenAScenarioWithoutAnyCapturedEvents()
 
-        whenReportIsRendered()
+        whenReportIsRendered(isDevMode)
 
         thenNoDiagramSectionIsVisible()
     }
 
-    @Test
-    fun hasNoDiagramSectionWhenEventsAreCleared() {
+    @ParameterizedTest
+    @ValueSource(booleans = [true, false])    
+    fun hasNoDiagramSectionWhenEventsAreCleared(isDevMode: Boolean) {
         givenAScenarioHasCapturedEventsCleared()
 
-        whenReportIsRendered()
+        whenReportIsRendered(isDevMode)
 
         thenNoDiagramSectionIsVisible()
     }
 
-    @Test
-    fun showPopupWhenClickingOnMessageLabel() {
+    @ParameterizedTest
+    @ValueSource(booleans = [true, false])
+    fun showPopupWhenClickingOnMessageLabel(isDevMode: Boolean) {
         givenAScenarioContainingMessage(withText = "Message 1", withPopupData = "some data shown in popup")
 
-        whenReportIsRendered()
+        whenReportIsRendered(isDevMode)
         andTheMessageLabelIsClicked()
 
         thenThePopupDataIsShown()
@@ -62,8 +66,8 @@ class ReportUiTest {
         lsd.completeScenario("Scenario")
     }
 
-    private fun whenReportIsRendered() {
-        page.setContent(lsd.renderReport("Report"))
+    private fun whenReportIsRendered(isDevMode : Boolean) {
+        page.setContent(lsd.renderReport("Report", isDevMode = isDevMode))
     }
 
     private fun andTheMessageLabelIsClicked() {

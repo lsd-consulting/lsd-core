@@ -2,7 +2,461 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html" xml:lang="en" lang="en">
 <head>
     <title>Approval Report</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lsd-consulting/lsd-core@5/src/main/resources/static/style.min.css">
+    <style>
+    
+:root {
+    --color-1: #1F2328;
+    --color-2: #656d76;
+    --color-3: slategrey;
+    --color-4: #7d8590;
+    --color-5: #2f81f7;
+    --color-6: #fff;
+    --color-success: limegreen;
+    --color-warn: orange;
+    --color-error: red;
+    --color-highlight: yellow;
+
+    --color-background-primary: var(--color-6);
+    --color-background-secondary: var(--color-6);
+    --color-background-transparent: rgba(0, 0, 0, 0.2);
+    --color-border: var(--color-4);
+    --color-text-primary: var(--color-2);
+    --color-text-secondary: var(--color-2);
+
+    --box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    --margin-content-left: 20px;
+}
+
+html {
+    font-family: system-ui,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+    background-color: var(--color-background-primary);
+}
+
+article {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    margin-bottom: 90px;
+}
+
+section {
+    overflow: auto;
+    background: var(--color-background-primary);
+}
+
+section.description {
+    flex: 50%;
+}
+
+aside {
+    flex: 30%;
+    margin: 10px;
+    padding: 20px;
+}
+
+aside.metrics {
+    flex: 100%;
+}
+
+span.back_to_index::after {
+    content: "\2190";
+    cursor: pointer;
+}
+
+span.copy::after {
+    content: "\01F4CB";
+    cursor: pointer;
+    margin-left: 20px;
+}
+
+span.copy:active::after {
+    cursor: grab;
+    content: "\2713";
+}
+
+code {
+    border-radius: 25px;
+}
+
+span.copy:active {
+    cursor: crosshair;
+}
+
+section.diagram {
+    flex: 100%;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--color-1);
+    transition: opacity 500ms;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.overlay:target {
+    visibility: visible;
+    opacity: 1;
+    overflow: scroll;
+}
+
+.popup {
+    margin: 70px auto;
+    padding: 20px;
+    background: var(--color-background-primary);
+    border-radius: 25px;
+    max-width: 70%;
+    position: relative;
+    transition: all 1s ease-in-out;
+}
+
+h1, h2, h3 {
+    flex: 100%;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+h1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100px;
+    color: var(--color-text-primary);
+}
+
+h2 {
+    margin-left: var(--margin-content-left);
+    color: var(--color-text-primary);
+}
+
+h3 {
+    margin-bottom: 10px;
+    color: var(--color-text-primary);
+}
+
+.popup .close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    transition: all 200ms;
+    font-size: 30px;
+    font-weight: bold;
+    text-decoration: none;
+    color: var(--color-text-primary);
+}
+
+.popup .close:hover {
+    color: var(--color-text-secondary);
+}
+
+.popup .content {
+    overflow: auto;
+}
+
+/* Make div look like table */
+.table {
+    display: table;
+    margin: auto;
+    padding: 15px;
+    box-shadow: var(--box-shadow);
+    border-radius: 15px;
+}
+
+.row {
+    display: table-row;
+}
+
+.rowHead {
+    display: table-header-group;
+    font-weight: bold;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.cell, .rowHead {
+    display: table-cell;
+    padding: 3px 10px;
+    border-bottom: 1px outset var(--color-border);
+}
+
+a:hover, a:focus
+{
+    font-weight: bolder;
+}
+
+/* SVG generates <text> elements for all text */
+a, text {
+    text-decoration: none;
+    font-style: italic;
+    fill: var(--color-text-secondary);
+    color: var(--color-text-secondary);
+    font-family: system-ui,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";;
+}
+
+svg {
+    display: block;
+}
+
+section {
+    box-shadow: var(--box-shadow);
+    border-radius: 15px;
+    padding: 50px;
+    margin-top: 12px;
+    margin-right: 10px;
+    margin-left: var(--margin-content-left);
+}
+
+section.success:hover {
+    border: thin solid var(--color-success);;
+}
+
+section.warn:hover {
+    border: thin solid var(--color-warn);;
+}
+
+section.error:hover {
+    border: thin solid var(--color-error);;
+}
+
+/* highlight key facts (generated at runtime) */
+span.highlight {
+    border-radius: 15px;
+    padding: 2px;
+    color: var(--color-text-primary);
+    background-color: var(--color-highlight);
+}
+
+/* highlighted arrows when clicked via metrics */
+a.highlight  text {
+    fill: red;
+    font-variant: small-caps;
+}
+
+/* highlight keywords (inline-block to allow first-letter styling) */
+span.keyword {
+    display: inline-block;
+}
+
+span.keyword::first-letter {
+    font-size: larger;
+    transform-style: flat ;
+}
+
+/* popup content sections */
+div.content {
+    margin-left: var(--margin-content-left);
+}
+
+h2.success:before, h3.success:before, a.success:before {
+    content: "";
+    padding-right: 3px;
+    margin-right: 3px;
+    background-color: var(--color-success);
+}
+
+h2.warn:before, h3.warn:before, a.warn:before {
+    content: "";
+    padding-right: 3px;
+    margin-right: 3px;
+    background-color: var(--color-warn);
+}
+
+h2.error:before, h3.error:before, a.error:before {
+    content: "";
+    padding-right: 3px;
+    margin-right: 3px;
+    background-color: var(--color-error);
+}
+
+/* Logo section - inspired by https://codepen.io/fossheim/pen/PooBwRa */
+h1.logo {
+    font-weight: 800;
+    font-size: 4em;
+    width: 2em;
+    line-height: 0.9em;
+    margin-left: auto;
+    margin-right: auto;
+    background: #CA4246;
+    background: conic-gradient(
+            #CA4246 16.666%,
+            #E16541 16.666%,
+            #E16541 33.333%,
+            #F18F43 33.333%,
+            #F18F43 50%,
+            #8B9862 50%,
+            #8B9862 66.666%,
+            #476098 66.666%,
+            #476098 83.333%,
+            #A7489B 83.333%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation-name: logo-animation-rev;
+    animation-duration: 3.5s;
+    animation-direction: normal;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: 1;
+    cursor: pointer;
+    font-family: monospace;
+}
+
+/* Add animation on hover. */
+.logo:hover {
+    animation: logo-animation 0.5s ease forwards;
+}
+
+/* Animation shown when hovering over the text. */
+@keyframes logo-animation {
+    0% {
+        background-size: 57%;
+        background-position: 0 0;
+    }
+    20% {
+        background-size: 57%;
+        background-position: 0 1em;
+    }
+    100% {
+        background-size: 300%;
+        background-position: -9em 1em;
+    }
+}
+
+/* Animation shown when entering the page and after the hover animation. */
+@keyframes logo-animation-rev {
+    0% {
+        background-size: 300%;
+        background-position: -9em 1em;
+    }
+    20% {
+        background-size: 57%;
+        background-position: 0 1em;
+    }
+    50% {
+        letter-spacing: -20px;
+        transform: rotate(4turn);
+    }
+    100% {
+        background-size: 57%;
+    }
+}
+
+
+/* Scenario dropdown menu */
+div.menu {
+    top: 10px;
+    right: 20px;
+    position: fixed;
+}
+
+div.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+label.dropdown {
+    padding: 12px;
+    font-size: x-small;
+    border-bottom: inset;
+    border-top: outset;
+    cursor: pointer;
+    margin-left: var(--margin-content-left);
+    text-transform: uppercase;
+}
+
+label.dropdown::after {
+    content: "\2630";
+    margin-left: 5px;
+}
+
+.dropdown-content {
+    margin-left: var(--margin-content-left);
+    display: none;
+    background-color: #f9f9f9;
+    min-width: max-content;
+    box-shadow: var(--box-shadow);
+    z-index: 1;
+    border-radius: 5px;
+}
+
+.dropdown-content a {
+    color: var(--color-text-primary);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: smaller;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+
+label.index {
+    padding: 12px;
+    font-size: x-large;
+    border-bottom: inset;
+    border-top: outset;
+    text-transform: uppercase;
+    display: block;
+}
+
+.index-content a {
+    color: var(--color-text-primary);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    margin-left: var(--margin-content-left);
+}
+
+.index-content a:hover {
+    background-color: #f1f1f1
+}
+
+/* Range slider */
+input[type="range"] {
+    display: block;
+    margin-bottom: 0;
+    margin-left: 35%;
+    margin-top: 30px;
+    height: 6px;
+    width: 30%;
+    background: var(--color-border);
+    outline: none;
+    -webkit-appearance: none;
+    border-radius: 30px;
+}
+
+input[type="range"]:hover {
+    opacity: 1;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 5px;
+    background: var(--color-background-primary);
+    cursor: pointer;
+    border-radius: 30px;
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: 15px;
+    height: 5px;
+    background: var(--color-background-primary);
+    cursor: pointer;
+}
+
+</style>
 
 </head>
 <body>
@@ -87,7 +541,52 @@
                     <div class="content">
                         <pre><code id="sequence_uml_code16">@startuml
 
-!theme lsd-light from https://cdn.jsdelivr.net/gh/lsd-consulting/lsd-core@5/src/main/resources/static/
+&#x27;&#x27;
+&#x27;&#x27; These colours should be based on the colours used in style.css
+&#x27;&#x27;
+
+&#x27;&#x27;
+&#x27;&#x27; Note that all &lt;text&gt; elements will be styled by css which overrides any of these values
+&#x27;&#x27;  (that includes participant names, arrow text etc)
+&#x27;&#x27;
+
+!$BACKGROUND_COLOR  &#x3D; &quot;#fff&quot;
+!$BACKGROUND_COLOR_HIGHLIGHT  &#x3D; &quot;yellow&quot;
+!$LINE_COLOR_PRIMARY  &#x3D; &quot;#7d8590&quot;
+!$LINE_COLOR_SECONDARY  &#x3D; &quot;slategrey&quot;
+!$TEXT_COLOR_PRIMARY  &#x3D; &quot;#656d76&quot;
+!$TEXT_COLOR_SECONDARY  &#x3D; &quot;#8392A2FF&quot;
+!$TEXT_COLOR_HYPERLINK  &#x3D; &quot;#656d76&quot;
+
+&lt;style&gt;
+  root {
+    FontColor $TEXT_COLOR_SECONDARY
+    HyperLinkColor $TEXT_COLOR_HYPERLINK
+    BackgroundColor $BACKGROUND_COLOR
+    LineThickness 1.5
+    LineColor $LINE_COLOR_PRIMARY
+    RoundCorner 5
+    Margin 10
+    Padding 6
+  }
+  title {
+    LineThickness 0
+    FontColor $TEXT_COLOR_PRIMARY
+  }
+  note {
+    BackGroundColor $BACKGROUND_COLOR_HIGHLIGHT
+    LineThickness 0.5
+    FontColor $TEXT_COLOR_PRIMARY
+  }
+  lifeline {
+    LineThickness 1
+    LineColor $LINE_COLOR_SECONDARY
+  }
+  arrow {
+    LineThickness 1.5
+  }
+&lt;/style&gt;
+
 skinparam svgLinkTarget _self
 
 hide unlinked
@@ -253,7 +752,52 @@ remove @unlinked
                     <div class="content">
                         <pre><code id="sequence_uml_code19">@startuml
 
-!theme lsd-light from https://cdn.jsdelivr.net/gh/lsd-consulting/lsd-core@5/src/main/resources/static/
+&#x27;&#x27;
+&#x27;&#x27; These colours should be based on the colours used in style.css
+&#x27;&#x27;
+
+&#x27;&#x27;
+&#x27;&#x27; Note that all &lt;text&gt; elements will be styled by css which overrides any of these values
+&#x27;&#x27;  (that includes participant names, arrow text etc)
+&#x27;&#x27;
+
+!$BACKGROUND_COLOR  &#x3D; &quot;#fff&quot;
+!$BACKGROUND_COLOR_HIGHLIGHT  &#x3D; &quot;yellow&quot;
+!$LINE_COLOR_PRIMARY  &#x3D; &quot;#7d8590&quot;
+!$LINE_COLOR_SECONDARY  &#x3D; &quot;slategrey&quot;
+!$TEXT_COLOR_PRIMARY  &#x3D; &quot;#656d76&quot;
+!$TEXT_COLOR_SECONDARY  &#x3D; &quot;#8392A2FF&quot;
+!$TEXT_COLOR_HYPERLINK  &#x3D; &quot;#656d76&quot;
+
+&lt;style&gt;
+  root {
+    FontColor $TEXT_COLOR_SECONDARY
+    HyperLinkColor $TEXT_COLOR_HYPERLINK
+    BackgroundColor $BACKGROUND_COLOR
+    LineThickness 1.5
+    LineColor $LINE_COLOR_PRIMARY
+    RoundCorner 5
+    Margin 10
+    Padding 6
+  }
+  title {
+    LineThickness 0
+    FontColor $TEXT_COLOR_PRIMARY
+  }
+  note {
+    BackGroundColor $BACKGROUND_COLOR_HIGHLIGHT
+    LineThickness 0.5
+    FontColor $TEXT_COLOR_PRIMARY
+  }
+  lifeline {
+    LineThickness 1
+    LineColor $LINE_COLOR_SECONDARY
+  }
+  arrow {
+    LineThickness 1.5
+  }
+&lt;/style&gt;
+
 skinparam svgLinkTarget _self
 
 hide unlinked
@@ -404,7 +948,52 @@ remove @unlinked
                     <div class="content">
                         <pre><code id="sequence_uml_code22">@startuml
 
-!theme lsd-light from https://cdn.jsdelivr.net/gh/lsd-consulting/lsd-core@5/src/main/resources/static/
+&#x27;&#x27;
+&#x27;&#x27; These colours should be based on the colours used in style.css
+&#x27;&#x27;
+
+&#x27;&#x27;
+&#x27;&#x27; Note that all &lt;text&gt; elements will be styled by css which overrides any of these values
+&#x27;&#x27;  (that includes participant names, arrow text etc)
+&#x27;&#x27;
+
+!$BACKGROUND_COLOR  &#x3D; &quot;#fff&quot;
+!$BACKGROUND_COLOR_HIGHLIGHT  &#x3D; &quot;yellow&quot;
+!$LINE_COLOR_PRIMARY  &#x3D; &quot;#7d8590&quot;
+!$LINE_COLOR_SECONDARY  &#x3D; &quot;slategrey&quot;
+!$TEXT_COLOR_PRIMARY  &#x3D; &quot;#656d76&quot;
+!$TEXT_COLOR_SECONDARY  &#x3D; &quot;#8392A2FF&quot;
+!$TEXT_COLOR_HYPERLINK  &#x3D; &quot;#656d76&quot;
+
+&lt;style&gt;
+  root {
+    FontColor $TEXT_COLOR_SECONDARY
+    HyperLinkColor $TEXT_COLOR_HYPERLINK
+    BackgroundColor $BACKGROUND_COLOR
+    LineThickness 1.5
+    LineColor $LINE_COLOR_PRIMARY
+    RoundCorner 5
+    Margin 10
+    Padding 6
+  }
+  title {
+    LineThickness 0
+    FontColor $TEXT_COLOR_PRIMARY
+  }
+  note {
+    BackGroundColor $BACKGROUND_COLOR_HIGHLIGHT
+    LineThickness 0.5
+    FontColor $TEXT_COLOR_PRIMARY
+  }
+  lifeline {
+    LineThickness 1
+    LineColor $LINE_COLOR_SECONDARY
+  }
+  arrow {
+    LineThickness 1.5
+  }
+&lt;/style&gt;
+
 skinparam svgLinkTarget _self
 
 hide unlinked
@@ -559,7 +1148,52 @@ remove @unlinked
                     <div class="content">
                         <pre><code id="sequence_uml_code25">@startuml
 
-!theme lsd-light from https://cdn.jsdelivr.net/gh/lsd-consulting/lsd-core@5/src/main/resources/static/
+&#x27;&#x27;
+&#x27;&#x27; These colours should be based on the colours used in style.css
+&#x27;&#x27;
+
+&#x27;&#x27;
+&#x27;&#x27; Note that all &lt;text&gt; elements will be styled by css which overrides any of these values
+&#x27;&#x27;  (that includes participant names, arrow text etc)
+&#x27;&#x27;
+
+!$BACKGROUND_COLOR  &#x3D; &quot;#fff&quot;
+!$BACKGROUND_COLOR_HIGHLIGHT  &#x3D; &quot;yellow&quot;
+!$LINE_COLOR_PRIMARY  &#x3D; &quot;#7d8590&quot;
+!$LINE_COLOR_SECONDARY  &#x3D; &quot;slategrey&quot;
+!$TEXT_COLOR_PRIMARY  &#x3D; &quot;#656d76&quot;
+!$TEXT_COLOR_SECONDARY  &#x3D; &quot;#8392A2FF&quot;
+!$TEXT_COLOR_HYPERLINK  &#x3D; &quot;#656d76&quot;
+
+&lt;style&gt;
+  root {
+    FontColor $TEXT_COLOR_SECONDARY
+    HyperLinkColor $TEXT_COLOR_HYPERLINK
+    BackgroundColor $BACKGROUND_COLOR
+    LineThickness 1.5
+    LineColor $LINE_COLOR_PRIMARY
+    RoundCorner 5
+    Margin 10
+    Padding 6
+  }
+  title {
+    LineThickness 0
+    FontColor $TEXT_COLOR_PRIMARY
+  }
+  note {
+    BackGroundColor $BACKGROUND_COLOR_HIGHLIGHT
+    LineThickness 0.5
+    FontColor $TEXT_COLOR_PRIMARY
+  }
+  lifeline {
+    LineThickness 1
+    LineColor $LINE_COLOR_SECONDARY
+  }
+  arrow {
+    LineThickness 1.5
+  }
+&lt;/style&gt;
+
 skinparam svgLinkTarget _self
 
 hide unlinked
@@ -580,7 +1214,52 @@ title Splitting diagrams with Newpage
 @enduml
 @startuml
 
-!theme lsd-light from https://cdn.jsdelivr.net/gh/lsd-consulting/lsd-core@5/src/main/resources/static/
+&#x27;&#x27;
+&#x27;&#x27; These colours should be based on the colours used in style.css
+&#x27;&#x27;
+
+&#x27;&#x27;
+&#x27;&#x27; Note that all &lt;text&gt; elements will be styled by css which overrides any of these values
+&#x27;&#x27;  (that includes participant names, arrow text etc)
+&#x27;&#x27;
+
+!$BACKGROUND_COLOR  &#x3D; &quot;#fff&quot;
+!$BACKGROUND_COLOR_HIGHLIGHT  &#x3D; &quot;yellow&quot;
+!$LINE_COLOR_PRIMARY  &#x3D; &quot;#7d8590&quot;
+!$LINE_COLOR_SECONDARY  &#x3D; &quot;slategrey&quot;
+!$TEXT_COLOR_PRIMARY  &#x3D; &quot;#656d76&quot;
+!$TEXT_COLOR_SECONDARY  &#x3D; &quot;#8392A2FF&quot;
+!$TEXT_COLOR_HYPERLINK  &#x3D; &quot;#656d76&quot;
+
+&lt;style&gt;
+  root {
+    FontColor $TEXT_COLOR_SECONDARY
+    HyperLinkColor $TEXT_COLOR_HYPERLINK
+    BackgroundColor $BACKGROUND_COLOR
+    LineThickness 1.5
+    LineColor $LINE_COLOR_PRIMARY
+    RoundCorner 5
+    Margin 10
+    Padding 6
+  }
+  title {
+    LineThickness 0
+    FontColor $TEXT_COLOR_PRIMARY
+  }
+  note {
+    BackGroundColor $BACKGROUND_COLOR_HIGHLIGHT
+    LineThickness 0.5
+    FontColor $TEXT_COLOR_PRIMARY
+  }
+  lifeline {
+    LineThickness 1
+    LineColor $LINE_COLOR_SECONDARY
+  }
+  arrow {
+    LineThickness 1.5
+  }
+&lt;/style&gt;
+
 skinparam svgLinkTarget _self
 
 hide unlinked
@@ -722,7 +1401,52 @@ remove @unlinked
                     <div class="content">
                         <pre><code id="sequence_uml_code28">@startuml
 
-!theme lsd-light from https://cdn.jsdelivr.net/gh/lsd-consulting/lsd-core@5/src/main/resources/static/
+&#x27;&#x27;
+&#x27;&#x27; These colours should be based on the colours used in style.css
+&#x27;&#x27;
+
+&#x27;&#x27;
+&#x27;&#x27; Note that all &lt;text&gt; elements will be styled by css which overrides any of these values
+&#x27;&#x27;  (that includes participant names, arrow text etc)
+&#x27;&#x27;
+
+!$BACKGROUND_COLOR  &#x3D; &quot;#fff&quot;
+!$BACKGROUND_COLOR_HIGHLIGHT  &#x3D; &quot;yellow&quot;
+!$LINE_COLOR_PRIMARY  &#x3D; &quot;#7d8590&quot;
+!$LINE_COLOR_SECONDARY  &#x3D; &quot;slategrey&quot;
+!$TEXT_COLOR_PRIMARY  &#x3D; &quot;#656d76&quot;
+!$TEXT_COLOR_SECONDARY  &#x3D; &quot;#8392A2FF&quot;
+!$TEXT_COLOR_HYPERLINK  &#x3D; &quot;#656d76&quot;
+
+&lt;style&gt;
+  root {
+    FontColor $TEXT_COLOR_SECONDARY
+    HyperLinkColor $TEXT_COLOR_HYPERLINK
+    BackgroundColor $BACKGROUND_COLOR
+    LineThickness 1.5
+    LineColor $LINE_COLOR_PRIMARY
+    RoundCorner 5
+    Margin 10
+    Padding 6
+  }
+  title {
+    LineThickness 0
+    FontColor $TEXT_COLOR_PRIMARY
+  }
+  note {
+    BackGroundColor $BACKGROUND_COLOR_HIGHLIGHT
+    LineThickness 0.5
+    FontColor $TEXT_COLOR_PRIMARY
+  }
+  lifeline {
+    LineThickness 1
+    LineColor $LINE_COLOR_SECONDARY
+  }
+  arrow {
+    LineThickness 1.5
+  }
+&lt;/style&gt;
+
 skinparam svgLinkTarget _self
 
 hide unlinked
@@ -851,7 +1575,52 @@ remove @unlinked
                     <div class="content">
                         <pre><code id="sequence_uml_code31">@startuml
 
-!theme lsd-light from https://cdn.jsdelivr.net/gh/lsd-consulting/lsd-core@5/src/main/resources/static/
+&#x27;&#x27;
+&#x27;&#x27; These colours should be based on the colours used in style.css
+&#x27;&#x27;
+
+&#x27;&#x27;
+&#x27;&#x27; Note that all &lt;text&gt; elements will be styled by css which overrides any of these values
+&#x27;&#x27;  (that includes participant names, arrow text etc)
+&#x27;&#x27;
+
+!$BACKGROUND_COLOR  &#x3D; &quot;#fff&quot;
+!$BACKGROUND_COLOR_HIGHLIGHT  &#x3D; &quot;yellow&quot;
+!$LINE_COLOR_PRIMARY  &#x3D; &quot;#7d8590&quot;
+!$LINE_COLOR_SECONDARY  &#x3D; &quot;slategrey&quot;
+!$TEXT_COLOR_PRIMARY  &#x3D; &quot;#656d76&quot;
+!$TEXT_COLOR_SECONDARY  &#x3D; &quot;#8392A2FF&quot;
+!$TEXT_COLOR_HYPERLINK  &#x3D; &quot;#656d76&quot;
+
+&lt;style&gt;
+  root {
+    FontColor $TEXT_COLOR_SECONDARY
+    HyperLinkColor $TEXT_COLOR_HYPERLINK
+    BackgroundColor $BACKGROUND_COLOR
+    LineThickness 1.5
+    LineColor $LINE_COLOR_PRIMARY
+    RoundCorner 5
+    Margin 10
+    Padding 6
+  }
+  title {
+    LineThickness 0
+    FontColor $TEXT_COLOR_PRIMARY
+  }
+  note {
+    BackGroundColor $BACKGROUND_COLOR_HIGHLIGHT
+    LineThickness 0.5
+    FontColor $TEXT_COLOR_PRIMARY
+  }
+  lifeline {
+    LineThickness 1
+    LineColor $LINE_COLOR_SECONDARY
+  }
+  arrow {
+    LineThickness 1.5
+  }
+&lt;/style&gt;
+
 skinparam svgLinkTarget _self
 
 hide unlinked
@@ -924,7 +1693,117 @@ remove @unlinked
 <footer>
     <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11/build/styles/dark.min.css">
-    <script src="https://cdn.jsdelivr.net/gh/lsd-consulting/lsd-core@5/src/main/resources/static/custom.min.js"></script>
+    <script>
+    // copy the element text to clipboard for the given element id
+function copyToClipboard(id) {
+    const copyText = document.getElementById(id).innerText;
+    navigator.clipboard.writeText(copyText);
+}
+
+function addSliderForSvgZoom() {
+    d3.selectAll(":has(> svg)")
+        .each(function () {
+            let figure = d3.select(this);
+            figure.selectAll("svg")
+                .each(function (value, index) {
+                    let svg = d3.select(this)
+                    let svgParent = d3.select(this.parentNode);
+                    let viewBox = svg.attr("viewBox");
+                    let viewBoxDimensions = viewBox.split(" ");
+                    let originalWidth = viewBoxDimensions[2];
+                    let originalHeight = viewBoxDimensions[3];
+                    let i = ++index
+                    svgParent.insert('input', 'svg:nth-of-type(' + i + ')')
+                        .attr("min", 0.0)
+                        .attr("type", "range")
+                        .attr("max", 1)
+                        .attr("step", 0.01)
+                        .attr("value", 1)
+                        .on("input", adjustSvgZoom(originalWidth, originalHeight, svg));
+                })
+        });
+}
+
+function adjustSvgZoom(originalWidth, originalHeight, svg) {
+    return function () {
+        let sliderValue = this.value;
+        if (sliderValue < 0.1) {
+            svg.attr("style", "display:none;");
+        } else {
+            let newWidth = originalWidth / sliderValue;
+            let newHeight = originalHeight / sliderValue;
+            let newViewBox = '0 0 ' + newWidth + ' ' + newHeight;
+            svg.attr("viewBox", newViewBox)
+            svg.attr("style", "display:block;") // also removes inline styling of height and width
+            svg.attr("width", originalWidth * sliderValue)
+            svg.attr("height", originalHeight * sliderValue)
+        }
+    };
+}
+
+function highlightLifelinesWhenClicked() {
+    d3.selectAll("svg")
+        .each(function () {
+            d3.select(this).selectAll('line')
+                .filter(function () {
+                    let currentLine = d3.select(this);
+                    return currentLine.attr("x1") === currentLine.attr("x2"); // only vertical lifelines
+                })
+                .each(function () {
+                    let currentLine = d3.select(this);
+                    let originalStyle = currentLine.attr("style")
+                    let clickedStyle = originalStyle + "stroke-width:4.0;"
+                    let toggle = true
+                    currentLine.on("click", function () {
+                        let style = toggle ? clickedStyle : originalStyle
+                        toggle = !toggle
+                        currentLine.attr("style", style)
+                    })
+                })
+        });
+}
+
+const keywordOptions = {
+    "element": "span",
+    "className": "keyword"
+};
+
+// Add a span with class: "keyword" around matching keywords so that they can be styled
+function highlightKeywords() {
+    const patterns = [/Given/, /When/, /Then/, /And/];
+    let keywordMarker = new Mark(document.querySelectorAll("section.description"));
+    patterns.forEach(value => keywordMarker.markRegExp(value, keywordOptions));
+}
+
+const factOptions = {
+    "element": "span",
+    "className": "highlight",
+    "separateWordSearch": false,
+    "acrossElements": true,
+    "accuracy": {
+        "value": "exactly", "limiters": [",", ".", ";", ":", "-", "(", ")", "<", ">", "/"]
+    }
+}
+
+function highlightFact(id, word) {
+    let factMarker = new Mark(document.getElementById(id));
+    factMarker.mark(word, factOptions);
+}
+
+<!-- Remove highlights in svg (causes text to disappear) -->
+function unMarkSvg() {
+    let unmarker = new Mark(document.querySelectorAll("svg"));
+    unmarker.unmark();
+}
+
+<!-- show the svg (target='_self' explicitly added) hyperlink with the given id -->
+function scrollIntoViewFor(id) {
+    const target = document.querySelector("a[href='#" + id + "'][target='_self']");
+    target.scrollIntoView();
+    target.classList.add("highlight");
+}
+
+</script>
 
     <script>
         addSliderForSvgZoom();

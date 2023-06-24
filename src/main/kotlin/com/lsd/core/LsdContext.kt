@@ -5,13 +5,16 @@ import com.lsd.core.builders.ScenarioModelBuilder.Companion.scenarioModelBuilder
 import com.lsd.core.builders.SequenceDiagramGeneratorBuilder.Companion.sequenceDiagramGeneratorBuilder
 import com.lsd.core.diagram.ComponentDiagramGenerator
 import com.lsd.core.domain.*
+import com.lsd.core.properties.LsdProperties
 import com.lsd.core.properties.LsdProperties.DETERMINISTIC_IDS
+import com.lsd.core.properties.LsdProperties.DEV_MODE
 import com.lsd.core.properties.LsdProperties.MAX_EVENTS_PER_DIAGRAM
 import com.lsd.core.properties.LsdProperties.getBoolean
 import com.lsd.core.properties.LsdProperties.getInt
 import com.lsd.core.report.*
 import com.lsd.core.report.HtmlIndexWriter.writeToFile
 import com.lsd.core.report.model.*
+import java.io.File
 import java.nio.file.Path
 import java.time.Duration
 
@@ -20,6 +23,8 @@ open class LsdContext {
     val idGenerator = IdGenerator(getBoolean(DETERMINISTIC_IDS))
 
     private val maxEventsPerDiagram = getInt(MAX_EVENTS_PER_DIAGRAM)
+    private val outputDirectory = File(LsdProperties[LsdProperties.OUTPUT_DIR])
+    private val isDevMode = getBoolean(DEV_MODE)
     private val htmlReportWriter = HtmlReportWriter(HtmlReportRenderer())
     private val scenarios: MutableList<Scenario> = ArrayList()
     private val reportFiles: MutableList<ReportFile> = ArrayList()
@@ -59,9 +64,13 @@ open class LsdContext {
     }
 
     @JvmOverloads
-    fun completeReport(title: String, showMetrics: Boolean = false): Path {
-        val report = buildReport(title, showMetrics, maxEventsPerDiagram)
-        return htmlReportWriter.writeToFile(report).also {
+    fun completeReport(title: String, showMetrics: Boolean = false, devMode: Boolean = isDevMode): Path {
+        val report = buildReport(title, showMetrics, maxEventsPerDiagram, devMode)
+        return htmlReportWriter.writeToFile(
+            report = report,
+            outputDir = outputDirectory,
+            devMode = devMode
+        ).also {
             reportFiles.add(ReportFile(filename = it.fileName.toString(), title = report.title, status = report.status))
             scenarios.clear()
             currentScenario = ScenarioBuilder()
@@ -72,38 +81,53 @@ open class LsdContext {
      * Generates a html report with a component diagram of all the events that have been seen up until this point.
      * Note that the events will also be cleared after invoking this function.
      */
-    fun completeComponentsReport(title: String): Path {
+    @JvmOverloads
+    fun completeComponentsReport(title: String, devMode: Boolean = isDevMode): Path {
         return ComponentReportWriter.writeToFile(
-            content = renderComponentReport(title),
+            content = renderComponentReport(title, devMode),
             fileName = "components-report.html"
         ).also {
             combinedEvents.clear()
         }
     }
 
-    private fun renderComponentReport(title: String): String {
+    private fun renderComponentReport(title: String, isDevMode: Boolean): String {
         return ComponentDiagramGenerator(
             idGenerator = idGenerator,
             events = combinedEvents.toList(),
             participants = participants.values.toList()
         ).diagram()?.let {
-            ComponentReportRenderer().render(Model(title = title, uml = it.uml, svg = it.svg))
+            ComponentReportRenderer().render(
+                model = Model(title = title, uml = it.uml, svg = it.svg),
+                devMode = isDevMode
+            )
         } ?: ""
     }
 
     @Deprecated(message = "To be removed. User renderReport(title) instead.")
-    fun generateReport(title: String): String = htmlReportWriter.renderReport(
-        buildReport(
+    fun generateReport(title: String, devMode: Boolean = isDevMode): String = htmlReportWriter.renderReport(
+        report = buildReport(
             title = title,
             showMetrics = false,
-            maxEventsPerDiagram = maxEventsPerDiagram
-        )
+            maxEventsPerDiagram = maxEventsPerDiagram,
+            devMode
+        ),
+        devMode = devMode
     )
 
-    fun renderReport(title: String, showMetrics: Boolean = false): String =
-        htmlReportWriter.renderReport(buildReport(title, showMetrics, maxEventsPerDiagram))
+    @JvmOverloads
+    fun renderReport(title: String, showMetrics: Boolean = false, isDevMode: Boolean = this.isDevMode): String =
+        htmlReportWriter.renderReport(
+            report = buildReport(
+                title = title,
+                showMetrics = showMetrics,
+                maxEventsPerDiagram = maxEventsPerDiagram,
+                isDevMode = isDevMode
+            ),
+            devMode = isDevMode
+        )
 
-    fun createIndex(): Path = writeToFile(reportFiles)
+    fun createIndex(devMode: Boolean = isDevMode): Path = writeToFile(reportFiles, devMode)
 
     /**
      * This clears down the context - all scenarios, reports, events and ids will be reset.
@@ -128,7 +152,8 @@ open class LsdContext {
     internal fun buildReport(
         title: String,
         showMetrics: Boolean = false,
-        maxEventsPerDiagram: Int = this.maxEventsPerDiagram
+        maxEventsPerDiagram: Int = this.maxEventsPerDiagram,
+        isDevMode: Boolean,
     ): Report {
 
         return Report(
@@ -137,7 +162,11 @@ open class LsdContext {
             showContentsMenu = scenarios.size > 1,
             scenarios = scenarios
                 .map { scenario ->
-                    val (sequenceDuration, sequenceDiagram) = sequenceDiagramWithDuration(scenario, maxEventsPerDiagram)
+                    val (sequenceDuration, sequenceDiagram) = sequenceDiagramWithDuration(
+                        scenario,
+                        maxEventsPerDiagram,
+                        isDevMode
+                    )
                     val (componentDuration, componentDiagram) = componentDiagramWithDuration(scenario)
                     val metrics = if (showMetrics) Metrics(
                         events = scenario.events,
@@ -171,7 +200,8 @@ open class LsdContext {
 
     private fun sequenceDiagramWithDuration(
         scenario: Scenario,
-        maxEventsPerDiagram: Int
+        maxEventsPerDiagram: Int,
+        isDevMode: Boolean,
     ): Pair<Duration, Diagram?> {
         return timedResult {
             sequenceDiagramGeneratorBuilder()
@@ -180,7 +210,7 @@ open class LsdContext {
                 .participants(participants.values.toList())
                 .includes(includes.toList())
                 .build()
-                .diagram(maxEventsPerDiagram)
+                .diagram(maxEventsPerDiagram, isDevMode)
         }
     }
 

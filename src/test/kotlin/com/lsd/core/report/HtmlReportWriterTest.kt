@@ -19,7 +19,7 @@ internal class HtmlReportWriterTest {
 
     @Test
     fun writesFilesToOutputDirectory() {
-        val reportFile = underTest.writeToFile(report = aReport, outputDir = outputDirectory).toFile()
+        val reportFile = underTest.writeToFile(report = aReport, outputDir = outputDirectory, devMode = true).toFile()
 
         assertThat(reportFile).exists()
     }

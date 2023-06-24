@@ -9,10 +9,10 @@ import java.nio.file.Path
 
 object HtmlIndexWriter {
 
-    fun writeToFile(reports: List<ReportFile>): Path {
+    fun writeToFile(reports: List<ReportFile>, isDevMode: Boolean): Path {
         File(LsdProperties[OUTPUT_DIR]).mkdir()
         return File(File(LsdProperties[OUTPUT_DIR]), "lsd-index.html").toPath().also {
-            Files.write(it, HtmlIndexRenderer().render(reports).toByteArray())
+            Files.write(it, HtmlIndexRenderer().render(reports, isDevMode).toByteArray())
             printLocationOfIndex(it)
         }
     }

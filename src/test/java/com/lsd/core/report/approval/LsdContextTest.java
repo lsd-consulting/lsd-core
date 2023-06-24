@@ -49,6 +49,17 @@ class LsdContextTest {
 
     @Test
     void createsReportWithScenarios() {
+        captureEvents();
+        Approvals.verifyHtml(lsdContext.renderReport("Approval Report", true, false), new Options(scrubber));
+    }
+
+    @Test
+    void createsReportWithScenariosInDevMode() {
+        captureEvents();
+        Approvals.verifyHtml(lsdContext.renderReport("Approval Report", true, true), new Options(scrubber));
+    }
+
+    private void captureEvents() {
         lsdContext.includeFiles(additionalIncludes);
         scenarioWithMessages();
         scenarioWithLifelineActivation();
@@ -56,8 +67,6 @@ class LsdContextTest {
         scenarioWithMultipleDiagrams();
         scenarioWithWarningStatus();
         scenarioWithErrorStatus();
-
-        Approvals.verifyHtml(lsdContext.renderReport("Approval Report", true), new Options(scrubber));
     }
 
     private void scenarioWithErrorStatus() {
