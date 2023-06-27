@@ -26,7 +26,6 @@ class IndexUiTest {
         whenTheIndexIsGenerated()
 
         thenTheIndexPageContainsLinksToAllReports()
-        page.screenshot(path = "docs/example_index.png")
     }
 
     private fun givenAReportWithSuccessWarnAndErrorScenarios(title: String) {
@@ -59,6 +58,7 @@ class IndexUiTest {
         assertThat(page).hasTitle("Index")
         assertThat(page.locator("h1.logo")).isVisible()
         assertThat(page.locator("label.index")).hasText("Available Reports")
+        page.capture(name = "example_index")
 
         assertHyperlinkCreated(linkText = "First Report", cssClass = "error", href = "FirstReport.html")
         assertHyperlinkCreated(linkText = "Second Report", cssClass = "warn", href = "SecondReport.html")
