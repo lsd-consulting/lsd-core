@@ -1,6 +1,7 @@
 package com.lsd.core.report
 
 import com.lsd.core.LsdContext
+import com.lsd.core.ReportOptions
 import com.lsd.core.builders.MessageBuilder.Companion.messageBuilder
 import com.microsoft.playwright.Playwright
 import com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat
@@ -14,6 +15,7 @@ class ReportUiTest {
     private val chromium = playwright.chromium()
     private val browser = chromium.launch()
     private val page = browser.newPage()
+    private val options = ReportOptions()
     
     private lateinit var messagePopupData: String
     private lateinit var messageText: String
@@ -67,7 +69,7 @@ class ReportUiTest {
     }
 
     private fun whenReportIsRendered(isDevMode : Boolean) {
-        page.setContent(lsd.renderReport("Report", isDevMode = isDevMode))
+        page.setContent(lsd.renderReport("Report", reportOptions = options.copy(devMode = isDevMode)))
     }
 
     private fun andTheMessageLabelIsClicked() {

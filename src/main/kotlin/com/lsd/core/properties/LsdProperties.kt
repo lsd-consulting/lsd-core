@@ -10,6 +10,7 @@ object LsdProperties {
     const val DETERMINISTIC_IDS = "lsd.core.ids.deterministic"
     const val MAX_EVENTS_PER_DIAGRAM = "lsd.core.diagram.sequence.maxEventsPerDiagram"
     const val DEV_MODE = "lsd.core.devMode"
+    const val METRICS_ENABLED = "lsd.core.metrics.enabled"
 
     private val PROPERTIES = PropertiesLoader("lsd.properties", DefaultProperties.defaultProperties()).load()
 

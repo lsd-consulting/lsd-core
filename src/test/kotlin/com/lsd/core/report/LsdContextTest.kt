@@ -1,6 +1,7 @@
 package com.lsd.core.report
 
 import com.lsd.core.LsdContext
+import com.lsd.core.ReportOptions
 import com.lsd.core.builders.ActivateLifelineBuilder
 import com.lsd.core.builders.DeactivateLifelineBuilder
 import com.lsd.core.builders.MessageBuilder.Companion.messageBuilder
@@ -24,10 +25,7 @@ class LsdContextTest {
         }
         context.completeScenario("scenario")
 
-        val report = context.buildReport("report", maxEventsPerDiagram = 5, isDevMode = false)
-        val sequenceUml = report.scenarios.single().sequenceDiagram?.uml
-
-        assertThat(sequenceUml)
+        assertThat(generatedSequenceUml(maxEventsPerDiagram = 5))
             .doesNotContain("activate", "deactivate")
             .contains("A -> B")
     }
@@ -41,10 +39,7 @@ class LsdContextTest {
         context.capture(DeactivateLifelineBuilder.deactivation().of("A").build())
         context.completeScenario("scenario")
 
-        val report = context.buildReport("report", isDevMode = false)
-        val sequenceUml = report.scenarios.single().sequenceDiagram?.uml
-
-        assertThat(sequenceUml)
+        assertThat(generatedSequenceUml())
             .doesNotContain("activate", "deactivate")
             .doesNotContain("New page here")
             .contains("A -> B")
@@ -58,11 +53,20 @@ class LsdContextTest {
         context.capture(DeactivateLifelineBuilder.deactivation().of("A").build())
         context.completeScenario("scenario")
 
-        val report = context.buildReport("report", isDevMode = false)
-        val sequenceUml = report.scenarios.single().sequenceDiagram?.uml
-
-        assertThat(sequenceUml)
+        assertThat(generatedSequenceUml())
             .contains("activate", "deactivate")
             .contains("A -> B")
+    }
+
+    private fun generatedSequenceUml(maxEventsPerDiagram: Int = 100): String? {
+        val report = context.buildReport(
+            title = "report",
+            options = ReportOptions(
+                devMode = false,
+                metricsEnabled = false,
+                maxEventsPerDiagram = maxEventsPerDiagram
+            ),
+        )
+        return report.scenarios.single().sequenceDiagram?.uml
     }
 }

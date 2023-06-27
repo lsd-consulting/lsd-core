@@ -7,10 +7,7 @@ import com.lsd.core.diagram.ComponentDiagramGenerator
 import com.lsd.core.domain.*
 import com.lsd.core.properties.LsdProperties
 import com.lsd.core.properties.LsdProperties.DETERMINISTIC_IDS
-import com.lsd.core.properties.LsdProperties.DEV_MODE
-import com.lsd.core.properties.LsdProperties.MAX_EVENTS_PER_DIAGRAM
 import com.lsd.core.properties.LsdProperties.getBoolean
-import com.lsd.core.properties.LsdProperties.getInt
 import com.lsd.core.report.*
 import com.lsd.core.report.HtmlIndexWriter.writeToFile
 import com.lsd.core.report.model.*
@@ -21,10 +18,8 @@ import java.time.Duration
 open class LsdContext {
 
     val idGenerator = IdGenerator(getBoolean(DETERMINISTIC_IDS))
+    val outputDirectory = File(LsdProperties[LsdProperties.OUTPUT_DIR])
 
-    private val maxEventsPerDiagram = getInt(MAX_EVENTS_PER_DIAGRAM)
-    private val outputDirectory = File(LsdProperties[LsdProperties.OUTPUT_DIR])
-    private val isDevMode = getBoolean(DEV_MODE)
     private val htmlReportWriter = HtmlReportWriter(HtmlReportRenderer())
     private val scenarios: MutableList<Scenario> = ArrayList()
     private val reportFiles: MutableList<ReportFile> = ArrayList()
@@ -32,6 +27,7 @@ open class LsdContext {
     private val includes = linkedSetOf<String>()
     private var currentScenario = ScenarioBuilder()
     private var combinedEvents = linkedSetOf<SequenceEvent>()
+    private val options = ReportOptions()
 
     fun addParticipants(vararg participants: Participant) = addParticipants(participants.toList())
 
@@ -64,12 +60,15 @@ open class LsdContext {
     }
 
     @JvmOverloads
-    fun completeReport(title: String, showMetrics: Boolean = false, devMode: Boolean = isDevMode): Path {
-        val report = buildReport(title, showMetrics, maxEventsPerDiagram, devMode)
+    fun completeReport(
+        title: String,
+        options: ReportOptions = this.options
+    ): Path {
+        val report = buildReport(title, options)
         return htmlReportWriter.writeToFile(
             report = report,
             outputDir = outputDirectory,
-            devMode = devMode
+            devMode = options.devMode
         ).also {
             reportFiles.add(ReportFile(filename = it.fileName.toString(), title = report.title, status = report.status))
             scenarios.clear()
@@ -82,7 +81,7 @@ open class LsdContext {
      * Note that the events will also be cleared after invoking this function.
      */
     @JvmOverloads
-    fun completeComponentsReport(title: String, devMode: Boolean = isDevMode): Path {
+    fun completeComponentsReport(title: String, devMode: Boolean = options.devMode): Path {
         return ComponentReportWriter.writeToFile(
             content = renderComponentReport(title, devMode),
             fileName = "components-report.html"
@@ -104,30 +103,20 @@ open class LsdContext {
         } ?: ""
     }
 
-    @Deprecated(message = "To be removed. User renderReport(title) instead.")
-    fun generateReport(title: String, devMode: Boolean = isDevMode): String = htmlReportWriter.renderReport(
-        report = buildReport(
-            title = title,
-            showMetrics = false,
-            maxEventsPerDiagram = maxEventsPerDiagram,
-            devMode
-        ),
-        devMode = devMode
-    )
-
     @JvmOverloads
-    fun renderReport(title: String, showMetrics: Boolean = false, isDevMode: Boolean = this.isDevMode): String =
+    fun renderReport(
+        title: String,
+        reportOptions: ReportOptions = options
+    ): String =
         htmlReportWriter.renderReport(
             report = buildReport(
                 title = title,
-                showMetrics = showMetrics,
-                maxEventsPerDiagram = maxEventsPerDiagram,
-                isDevMode = isDevMode
+                options = reportOptions
             ),
-            devMode = isDevMode
+            devMode = reportOptions.devMode
         )
 
-    fun createIndex(devMode: Boolean = isDevMode): Path = writeToFile(reportFiles, devMode)
+    fun createIndex(devMode: Boolean = options.devMode): Path = writeToFile(reportFiles, devMode)
 
     /**
      * This clears down the context - all scenarios, reports, events and ids will be reset.
@@ -149,13 +138,7 @@ open class LsdContext {
         currentScenario.clearEvents()
     }
 
-    internal fun buildReport(
-        title: String,
-        showMetrics: Boolean = false,
-        maxEventsPerDiagram: Int = this.maxEventsPerDiagram,
-        isDevMode: Boolean,
-    ): Report {
-
+    internal fun buildReport(title: String, options: ReportOptions): Report {
         return Report(
             title = title,
             status = determineOverallStatus(scenarios),
@@ -164,11 +147,11 @@ open class LsdContext {
                 .map { scenario ->
                     val (sequenceDuration, sequenceDiagram) = sequenceDiagramWithDuration(
                         scenario,
-                        maxEventsPerDiagram,
-                        isDevMode
+                        options.maxEventsPerDiagram,
+                        options.devMode
                     )
                     val (componentDuration, componentDiagram) = componentDiagramWithDuration(scenario)
-                    val metrics = if (showMetrics) Metrics(
+                    val metrics = if (options.metricsEnabled) Metrics(
                         events = scenario.events,
                         sequenceDuration = sequenceDuration,
                         componentDuration = componentDuration

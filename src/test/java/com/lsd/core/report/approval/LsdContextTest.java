@@ -2,6 +2,7 @@ package com.lsd.core.report.approval;
 
 import com.lsd.core.IdGenerator;
 import com.lsd.core.LsdContext;
+import com.lsd.core.ReportOptionsBuilder;
 import com.lsd.core.domain.*;
 import com.lsd.core.report.PopupContent;
 import org.approvaltests.Approvals;
@@ -33,14 +34,18 @@ class LsdContextTest {
         lsdContext.addParticipants(arnie, bettie, cat);
     }
 
-    final Scrubber durationScrubber = new RegExScrubber(">\\d+\\.\\d+s<", ">0.00s<");
-    Scrubber scrubber = Scrubbers.scrubAll(durationScrubber);
+    private final Scrubber durationScrubber = new RegExScrubber(">\\d+\\.\\d+s<", ">0.00s<");
+    private final Scrubber scrubber = Scrubbers.scrubAll(durationScrubber);
 
     private final LinkedHashSet<String> additionalIncludes = new LinkedHashSet<>(List.of(
             "tupadr3/font-awesome-5/hamburger",
             "tupadr3/font-awesome-5/heart"
     ));
 
+    private final ReportOptionsBuilder reportOptions = new ReportOptionsBuilder()
+            .devMode(false)
+            .maxEventsPerDiagram(100)
+            .metricsEnabled(true);
 
     @BeforeEach
     public void clearContext() {
@@ -50,13 +55,15 @@ class LsdContextTest {
     @Test
     void createsReportWithScenarios() {
         captureEvents();
-        Approvals.verifyHtml(lsdContext.renderReport("Approval Report", true, false), new Options(scrubber));
+        Approvals.verifyHtml(lsdContext.renderReport("Approval Report", reportOptions.build()), new Options(scrubber));
     }
 
     @Test
     void createsReportWithScenariosInDevMode() {
         captureEvents();
-        Approvals.verifyHtml(lsdContext.renderReport("Approval Report", true, true), new Options(scrubber));
+        Approvals.verifyHtml(lsdContext.renderReport(
+                "Approval Report", reportOptions.devMode(true).build()
+        ), new Options(scrubber));
     }
 
     private void captureEvents() {
