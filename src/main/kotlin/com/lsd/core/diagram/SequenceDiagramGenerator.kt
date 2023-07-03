@@ -30,6 +30,7 @@ data class SequenceDiagramGenerator(
 
     private fun generateUml(maxEventsPerDiagram: Int, isDevMode: Boolean): String {
         return removeLifelineActivationsIfDiagramWillBeSplit(maxEventsPerDiagram)
+            .sortedBy { it.created }
             .groupedByPages()
             .flatMap { it.chunked(maxEventsPerDiagram) }
             .joinToString(separator = lineSeparator()) { generateSequenceUml(it, isDevMode) }

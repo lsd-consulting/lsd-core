@@ -10,6 +10,7 @@ import com.lsd.core.domain.Newpage
 import com.lsd.core.domain.PageTitle
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import java.time.Instant.now
 
 class LsdContextTest {
 
@@ -19,9 +20,9 @@ class LsdContextTest {
     fun activationsRemovedWhenDiagramsAreSplitDueToSize() {
         repeat(10) {
             context.capture(messageBuilder().from("A").to("B").build())
-            context.capture(ActivateLifelineBuilder.activation().of("A").build())
+            context.capture(ActivateLifelineBuilder.activation().of("A").created(now()).build())
             context.capture(messageBuilder().from("B").to("A").type(SYNCHRONOUS_RESPONSE).build())
-            context.capture(DeactivateLifelineBuilder.deactivation().of("A").build())
+            context.capture(DeactivateLifelineBuilder.deactivation().of("A").created(now()).build())
         }
         context.completeScenario("scenario")
 

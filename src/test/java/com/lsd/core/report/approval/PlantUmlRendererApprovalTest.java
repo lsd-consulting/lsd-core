@@ -6,12 +6,12 @@ import com.lsd.core.domain.Newpage;
 import com.lsd.core.domain.PageTitle;
 import org.junit.jupiter.api.Test;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Objects;
 
 import static com.lsd.core.builders.MessageBuilder.messageBuilder;
-import static com.lsd.core.domain.MessageType.BI_DIRECTIONAL;
-import static com.lsd.core.domain.MessageType.SYNCHRONOUS_RESPONSE;
+import static com.lsd.core.domain.MessageType.*;
 import static com.lsd.core.domain.ParticipantType.*;
 import static org.approvaltests.Approvals.verify;
 
@@ -19,7 +19,7 @@ class PlantUmlRendererApprovalTest {
 
     @Test
     void renderSequenceUml() {
-        var diagram = Objects.requireNonNull(sequenceDiagramGenerator().diagram(2, false));
+        var diagram = Objects.requireNonNull(sequenceDiagramGenerator().diagram(3, false));
         verify(diagram.getUml());
     }
 
@@ -49,6 +49,14 @@ class PlantUmlRendererApprovalTest {
                                 .from("B")
                                 .to("A")
                                 .type(BI_DIRECTIONAL)
+                                .build(),
+                        messageBuilder()
+                                .id("0")
+                                .created(Instant.EPOCH)
+                                .label("this timestamp is earliest so should be first on the diagram")
+                                .from("")
+                                .to("A")
+                                .type(SHORT_INBOUND)
                                 .build(),
                         new Newpage(new PageTitle("No messages after this new page - should not create diagram"))
                 ),

@@ -13,6 +13,7 @@ participant A
 participant B
 
 
+?-> A: [[#0 {this timestamp is earliest so should be first on the diagram} this timestamp is earliest so should be first o...]]
 A -> B: [[#1 {Sending a request} Sending a request]]
 B --> A: [[#2 {Sending a response with a long label that should be abbreviated if all goes well} Sending a response with a long label that shoul...]]
 
