@@ -8,7 +8,12 @@ internal class ComponentNameTest {
 
     @ParameterizedTest
     @CsvSource(
-        value = ["ShouldPreserveCamelCase:ShouldPreserveCamelCase", "Should remove spaces:ShouldRemoveSpaces", "removes  / illegal (characters):RemovesIllegalCharacters"],
+        value = [
+            "ShouldPreserveCamelCase:ShouldPreserveCamelCase",
+            "Should remove spaces:ShouldRemoveSpaces",
+            "removes / illegal (characters):RemovesIllegalCharacters",
+            "replace-hyphen-with-underscore:Replace_hyphen_with_underscore"
+        ],
         delimiter = ':'
     )
     fun generatesValidNameForMarkup(raw: String, expected: String) {
