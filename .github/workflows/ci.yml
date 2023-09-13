@@ -24,13 +24,13 @@ jobs:
           key: ms-playwright
       - name: Build with Gradle
         run: ./gradlew build
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         if: always()
         with:
           retention-days: 30
           name: build-reports
           path: build/reports
-      - uses: codecov/codecov-action@v1
+      - uses: codecov/codecov-action@v3
         with:
           files: build/reports/jacoco/test/jacocoTestReport.xml
           verbose: true
