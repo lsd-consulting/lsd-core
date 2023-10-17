@@ -12,36 +12,12 @@ internal class ComponentDiagramGeneratorTest {
     private val idGenerator = IdGenerator(isDeterministic = true)
 
     @Test
-    fun removesDuplicateInteractions() {
-        val sampleMessage = sampleMessage()
-        val diagramGenerator = ComponentDiagramGenerator(
-            idGenerator = idGenerator,
-            events = listOf(sampleMessage, sampleMessage, sampleMessage),
-            participants = emptyList()
-        )
-
-        Approvals.verify(diagramGenerator.diagram()?.uml)
-    }
-
-    @Test
-    fun removesDuplicateParticipants() {
-        val sampleParticipant = ACTOR.called("Nick")
-        val diagramGenerator = ComponentDiagramGenerator(
-            idGenerator,
-            listOf(sampleMessage()),
-            listOf(sampleParticipant, sampleParticipant)
-        )
-
-        Approvals.verify(diagramGenerator.diagram()?.uml)
-    }
-
-    @Test
     fun replacesParticipantKeywordWithComponent() {
         val sampleParticipant = PARTICIPANT.called("SomeService")
         val diagramGenerator = ComponentDiagramGenerator(
             idGenerator = idGenerator,
-            events = listOf(sampleMessage()),
-            participants = listOf(sampleParticipant)
+            events = setOf(sampleMessage()),
+            participants = setOf(sampleParticipant)
         )
 
         Approvals.verify(diagramGenerator.diagram()?.uml)
@@ -53,8 +29,8 @@ internal class ComponentDiagramGeneratorTest {
         val diagramGenerator =
             ComponentDiagramGenerator(
                 idGenerator = idGenerator,
-                events = listOf(sampleMessage()),
-                participants = listOf(sampleParticipant)
+                events = setOf(sampleMessage()),
+                participants = setOf(sampleParticipant)
             )
 
         Approvals.verify(diagramGenerator.diagram()!!.uml)
@@ -64,12 +40,12 @@ internal class ComponentDiagramGeneratorTest {
     fun convertsToValidComponentNamesForFromAndTo() {
         val diagramGenerator = ComponentDiagramGenerator(
             idGenerator = idGenerator,
-            events = listOf(
+            events = setOf(
                 messageBuilder()
                     .from("fixes from")
                     .to("fixes to")
                     .build()
-            ), participants = emptyList()
+            ), participants = emptySet()
         )
 
         Approvals.verify(diagramGenerator.diagram()?.uml)

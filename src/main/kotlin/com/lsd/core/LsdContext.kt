@@ -26,7 +26,7 @@ open class LsdContext {
     private val participants = linkedMapOf<String, Participant>()
     private val includes = linkedSetOf<String>()
     private var currentScenario = ScenarioBuilder()
-    private var combinedEvents = linkedSetOf<SequenceEvent>()
+    private val combinedEvents = linkedSetOf<SequenceEvent>()
     private val options = ReportOptions()
 
     fun addParticipants(vararg participants: Participant) = addParticipants(participants.toList())
@@ -44,10 +44,8 @@ open class LsdContext {
      * @param events The events to be captured on the sequence diagram for the current scenario.
      */
     open fun capture(vararg events: SequenceEvent) {
-        events.forEach { event ->
-            currentScenario.add(event)
-            combinedEvents.add(event)
-        }
+        currentScenario.addAll(events)
+        combinedEvents.addAll(events)
     }
 
     @JvmOverloads
@@ -93,8 +91,8 @@ open class LsdContext {
     private fun renderComponentReport(title: String, isDevMode: Boolean): String {
         return ComponentDiagramGenerator(
             idGenerator = idGenerator,
-            events = combinedEvents.toList(),
-            participants = participants.values.toList()
+            events = combinedEvents,
+            participants = participants.values.toSet()
         ).diagram()?.let {
             ComponentReportRenderer().render(
                 model = Model(title = title, uml = it.uml, svg = it.svg),
@@ -201,8 +199,8 @@ open class LsdContext {
         return timedResult {
             ComponentDiagramGenerator(
                 idGenerator = idGenerator,
-                events = scenario.events,
-                participants = participants.values.toList()
+                events = scenario.events.toSet(),
+                participants = participants.values.toSet()
             ).diagram()
         }
     }

@@ -21,6 +21,7 @@ class ScenarioBuilder {
     fun clearEvents() = instance.events.clear()
     fun addFact(key: String, value: String) = instance.facts.add(Fact(key, value))
     fun add(event: SequenceEvent) = instance.events.add(event)
+    fun addAll(events: Array<out SequenceEvent>) = instance.events.addAll(events)
 
     fun build(): Scenario = instance.copy()
     

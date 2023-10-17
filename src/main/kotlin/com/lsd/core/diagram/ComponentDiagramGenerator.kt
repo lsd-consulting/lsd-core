@@ -12,8 +12,8 @@ import com.lsd.core.report.model.Diagram
 
 class ComponentDiagramGenerator(
     private val idGenerator: IdGenerator,
-    private val events: List<SequenceEvent>,
-    private val participants: List<Participant> = emptyList()
+    private val events: Set<SequenceEvent>,
+    private val participants: Set<Participant> = emptySet()
 ) {
     private val template = HandlebarsWrapper.compile("templates/puml/component-uml")
 
@@ -37,11 +37,8 @@ class ComponentDiagramGenerator(
             mapOf(
                 "theme" to "plain",
                 "participants" to participants.usedIn(messages)
-                    .map(Participant::toComponentMarkup)
-                    .distinct(),
-                "events" to messages
-                    .map(Message::toComponentMarkup)
-                    .distinct()
+                    .map(Participant::toComponentMarkup),
+                "events" to messages.map(Message::toComponentMarkup)
             )
         )
     }
