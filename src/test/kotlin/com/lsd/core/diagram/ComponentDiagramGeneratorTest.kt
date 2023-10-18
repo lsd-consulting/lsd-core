@@ -7,16 +7,31 @@ import com.lsd.core.domain.ParticipantType.*
 import org.approvaltests.Approvals
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import kotlin.random.Random
 
 internal class ComponentDiagramGeneratorTest {
     private val idGenerator = IdGenerator(isDeterministic = true)
 
     @Test
+    fun removesDuplicateInteractions() {
+        val diagramGenerator = ComponentDiagramGenerator(
+            idGenerator = idGenerator,
+            participants = emptySet(),
+            events = setOf(
+                randomMessage(from = "A", to = "B"), 
+                randomMessage(from = "A", to = "B"), 
+                randomMessage(from = "A", to = "B")),
+        )
+
+        Approvals.verify(diagramGenerator.diagram()?.uml)
+    }
+    
+    @Test
     fun replacesParticipantKeywordWithComponent() {
         val sampleParticipant = PARTICIPANT.called("SomeService")
         val diagramGenerator = ComponentDiagramGenerator(
             idGenerator = idGenerator,
-            events = setOf(sampleMessage()),
+            events = setOf(randomMessage(from = "A", to = "B")),
             participants = setOf(sampleParticipant)
         )
 
@@ -29,7 +44,7 @@ internal class ComponentDiagramGeneratorTest {
         val diagramGenerator =
             ComponentDiagramGenerator(
                 idGenerator = idGenerator,
-                events = setOf(sampleMessage()),
+                events = setOf(randomMessage(from = "A", to = "B")),
                 participants = setOf(sampleParticipant)
             )
 
@@ -95,10 +110,11 @@ internal class ComponentDiagramGeneratorTest {
             )
     }
 
-    private fun sampleMessage(): Message {
+    private fun randomMessage(from: String, to: String): Message {
         return messageBuilder()
-            .from("A")
-            .to("B")
+            .from(from)
+            .to(to)
+            .data("${Random.nextInt()}")
             .build()
     }
 }

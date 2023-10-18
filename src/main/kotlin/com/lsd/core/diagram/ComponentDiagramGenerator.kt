@@ -32,6 +32,7 @@ class ComponentDiagramGenerator(
         val messages = events
             .filterIsInstance<Message>()
             .filter { it.type in listOf(SYNCHRONOUS, ASYNCHRONOUS, BI_DIRECTIONAL, LOST) }
+            .distinctBy { it.from to it.to }
 
         return template.apply(
             mapOf(
