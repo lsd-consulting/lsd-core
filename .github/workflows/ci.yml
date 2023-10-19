@@ -44,7 +44,7 @@ jobs:
         uses: cycjimmy/semantic-release-action@v3
         id: semantic
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_TOKEN }}
       - name: Publish to Sonatype
         if: steps.semantic.outputs.new_release_published == 'true'
         env:
