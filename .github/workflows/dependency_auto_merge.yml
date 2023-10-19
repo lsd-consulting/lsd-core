@@ -1,0 +1,15 @@
+name: Auto Merge Dependency Updates
+on:
+  pull_request_target:
+    branches:
+      - main
+jobs:
+  auto-merge:
+    runs-on: ubuntu-latest
+    if: ${{ github.actor == 'dependabot[bot]' }}
+    steps:
+      - name: Dependabot merge trigger
+        run: gh pr comment --body "@dependabot merge" "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.AUTO_MERGE }}
