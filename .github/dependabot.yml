@@ -8,10 +8,16 @@ updates:
       prefix: "fix"
     groups:
       lsd-dependencies:
+        dependency-type: "production"
         patterns:
           - "io.github.lsd-consulting:*"
       other-dependencies:
+        dependency-type: "production"
         patterns:
           - "*"
         exclude-patterns:
           - "io.github.lsd-consulting:*"
+      dev-dependencies:
+        dependency-type: "development"
+        patterns:
+          - "*"
