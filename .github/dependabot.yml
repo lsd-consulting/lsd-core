@@ -17,6 +17,14 @@ updates:
           - "*"
         exclude-patterns:
           - "io.github.lsd-consulting:*"
+
+  - package-ecosystem: "gradle"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    commit-message:
+      prefix: "chore"
+    groups:
       dev-dependencies:
         dependency-type: "development"
         patterns:
