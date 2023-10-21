@@ -8,24 +8,10 @@ updates:
       prefix: "fix"
     groups:
       lsd-dependencies:
-        dependency-type: "production"
         patterns:
           - "io.github.lsd-consulting:*"
       other-dependencies:
-        dependency-type: "production"
         patterns:
           - "*"
         exclude-patterns:
           - "io.github.lsd-consulting:*"
-
-  - package-ecosystem: "gradle"
-    directory: "/"
-    schedule:
-      interval: "daily"
-    commit-message:
-      prefix: "chore"
-    groups:
-      dev-dependencies:
-        dependency-type: "development"
-        patterns:
-          - "*"
