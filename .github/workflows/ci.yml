@@ -4,7 +4,14 @@
 #  https://github.com/marketplace/actions/action-for-semantic-release
 
 name: CI
-on: [ push, pull_request ]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, edited, reopened]
+    branches:
+      - main
 jobs:
   build:
     runs-on: macos-latest
