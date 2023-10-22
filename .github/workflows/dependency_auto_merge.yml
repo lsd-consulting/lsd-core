@@ -3,7 +3,7 @@ on:
   pull_request_target:
     types: [opened, reopened]
     branches:
-      - master
+      - main
 jobs:
   auto-merge:
     runs-on: ubuntu-latest
