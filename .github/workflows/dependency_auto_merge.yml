@@ -1,4 +1,4 @@
-name: Auto Merge Dependency Updates
+name: Request dependabot merge
 on:
   pull_request_target:
     branches:
