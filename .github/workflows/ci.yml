@@ -9,7 +9,6 @@ on:
     branches:
       - main
   pull_request:
-    types: [opened, edited, reopened]
     branches:
       - main
 jobs:
