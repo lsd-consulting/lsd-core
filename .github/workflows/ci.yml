@@ -42,23 +42,7 @@ jobs:
           verbose: true
   release:
     needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          persist-credentials: false
-      - name: Semantic Release
-        uses: cycjimmy/semantic-release-action@v4
-        id: semantic
-        env:
-          GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_TOKEN }}
-      - name: Publish to Sonatype
-        if: steps.semantic.outputs.new_release_published == 'true'
-        env:
-          ORG_GRADLE_PROJECT_sonatypeUsername: ${{ secrets.SONATYPE_USERNAME }}
-          ORG_GRADLE_PROJECT_sonatypePassword: ${{ secrets.SONATYPE_PASSWORD }}
-          ORG_GRADLE_PROJECT_signingKey: ${{ secrets.SIGNING_KEY }}
-          ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.SIGNING_PASSWORD }}
-        run: |
-          ./gradlew publishToSonatype closeAndReleaseStagingRepository
+    uses: lsd-consulting/shared-workflows/.github/workflows/release.yml@main
+    with:
+      java-version: '11'
+    secrets: inherit
