@@ -7,11 +7,24 @@ updates:
     commit-message:
       prefix: "fix"
     groups:
-      lsd-dependencies:
+      runtime-dependencies:
         patterns:
-          - "io.github.lsd-consulting:*"
+          - "com.github.jknack:handlebars:*"
+          - "net.sourceforge.plantuml:plantuml-mit:*"
+          - "org.jetbrains.kotlinx:kotlinx-coroutines-core:*"
+          - "org.jetbrains.kotlin.jvm:*"
+  - package-ecosystem: "gradle"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    commit-message:
+      prefix: "chore"
+    groups:
       other-dependencies:
         patterns:
           - "*"
         exclude-patterns:
-          - "io.github.lsd-consulting:*"
+          - "com.github.jknack:handlebars:*"
+          - "net.sourceforge.plantuml:plantuml-mit:*"
+          - "org.jetbrains.kotlinx:kotlinx-coroutines-core:*"
+          - "org.jetbrains.kotlin.jvm:*"
