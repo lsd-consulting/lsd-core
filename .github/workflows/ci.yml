@@ -13,33 +13,11 @@ on:
       - main
 jobs:
   build:
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Set up JDK 11
-        uses: actions/setup-java@v3
-        with:
-          java-version: '11'
-          distribution: 'adopt'
-          cache: 'gradle'
-      - name: cache-playwright
-        id: cache-playwright
-        uses: actions/cache@v3
-        with:
-          path: /Users/runner/Library/Caches/ms-playwright
-          key: ms-playwright
-      - name: Build with Gradle
-        run: ./gradlew build
-      - uses: actions/upload-artifact@v3
-        if: always()
-        with:
-          retention-days: 30
-          name: build-reports
-          path: build/reports
-      - uses: codecov/codecov-action@v3
-        with:
-          files: build/reports/jacoco/test/jacocoTestReport.xml
-          verbose: true
+    uses: lsd-consulting/shared-workflows/.github/workflows/build.yml@main
+    with: 
+      java-version: '11'
+      cache-playwright: true
+      codecov: true
   release:
     needs: build
     uses: lsd-consulting/shared-workflows/.github/workflows/release.yml@main
