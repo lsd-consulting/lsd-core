@@ -169,8 +169,7 @@ as plugins or extentions to the libraries.
 ## Building
 
 ### Prerequisites
-* Kotlin
-* Java 11 JDK
+* Java 17 JDK
 
 ### Git hooks
 
