@@ -41,9 +41,9 @@ dependencies {
 
 jacocoTestReport {
     reports {
-        xml.enabled(true)
-        html.enabled(true)
-        html.setDestination(project.provider(() -> new File("${project.buildDir}/reports/coverage")))
+        xml.required = true
+        html.required = true
+        html.outputLocation = file("${project.buildDir}/reports/coverage")
     }
 }
 
