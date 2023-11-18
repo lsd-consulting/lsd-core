@@ -7,5 +7,5 @@ jobs:
   build:
     uses: lsd-consulting/shared-workflows/.github/workflows/build.yml@main
     with:
-      java-version: '11'
+      java-version: '17'
       cache-playwright: true
