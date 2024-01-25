@@ -28,7 +28,7 @@ dependencies {
     implementation 'net.sourceforge.plantuml:plantuml-mit:1.2023.13'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3'
 
-    testImplementation 'org.assertj:assertj-core:3.25.1'
+    testImplementation 'org.assertj:assertj-core:3.25.2'
     testImplementation 'com.approvaltests:approvaltests:22.3.3'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.1'
     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.10.1'
