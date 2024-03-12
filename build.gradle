@@ -34,7 +34,7 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.10.2'
     testImplementation 'org.junit-pioneer:junit-pioneer:2.2.0'
     testImplementation "org.mockito.kotlin:mockito-kotlin:5.2.1"
-    testImplementation 'com.microsoft.playwright:playwright:1.41.2'
+    testImplementation 'com.microsoft.playwright:playwright:1.42.0'
 
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.2'
 }
