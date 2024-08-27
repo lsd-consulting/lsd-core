@@ -18,6 +18,10 @@ jobs:
       java-version: '17'
       cache-playwright: true
       codecov: true
+      artifact-path: |
+        build/reports
+        src/test/java/com/lsd/core/report/approval/*.html
+        src/test/java/com/lsd/core/report/approval/*.txt
     secrets: inherit
   release:
     needs: build
