@@ -14,10 +14,11 @@ on:
 jobs:
   build:
     uses: lsd-consulting/shared-workflows/.github/workflows/build.yml@main
-    with: 
+    with:
       java-version: '17'
       cache-playwright: true
       codecov: true
+    secrets: inherit
   release:
     needs: build
     uses: lsd-consulting/shared-workflows/.github/workflows/release.yml@main
