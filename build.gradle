@@ -26,7 +26,7 @@ kotlin {
 dependencies {
     implementation 'com.github.jknack:handlebars:4.4.0'
     implementation 'net.sourceforge.plantuml:plantuml-mit:1.2024.4'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.1'
 
     testImplementation 'org.assertj:assertj-core:3.27.0'
     testImplementation 'com.approvaltests:approvaltests:24.12.0'
