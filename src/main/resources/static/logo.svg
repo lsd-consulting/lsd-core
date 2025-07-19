@@ -1,0 +1,67 @@
+<svg width="400" height="200" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+    <!-- Psychedelic Gradient with Enhanced Animation -->
+    <defs>
+        <linearGradient id="proGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#00FF00"> <!-- Lime Green -->
+                <animate attributeName="stop-color" values="#00FF00; #FF00FF; #00FFFF; #FFFF00; #FF0000; #FF1493; #9400D3; #00FF00" dur="6s" fill="freeze" />
+            </stop>
+            <stop offset="100%" stop-color="#FF00FF"> <!-- Magenta -->
+                <animate attributeName="stop-color" values="#FF00FF; #00FFFF; #FFFF00; #FF0000; #FF1493; #9400D3; #00FF00; #FF00FF" dur="6s" fill="freeze" />
+            </stop>
+        </linearGradient>
+        <!-- Dynamic Arrowhead Marker -->
+        <marker id="arrowhead" markerWidth="8" markerHeight="5" refX="0" refY="2.5" orient="auto">
+            <path d="M0,0 L8,2.5 L0,5 L1.5,2.5 Z" fill="context-stroke" />
+        </marker>
+        <!-- Shadow Filter for Text -->
+        <filter id="textShadow">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="1" result="blur" />
+            <feOffset in="blur" dx="2" dy="2" result="offsetBlur" />
+            <feMerge>
+                <feMergeNode in="offsetBlur" />
+                <feMergeNode in="SourceGraphic" />
+            </feMerge>
+        </filter>
+        <!-- Watermark Diagram Icon (Minimalist Arrow) -->
+        <path id="diagramIcon" d="M350 150 L370 170 L350 190" fill="none" stroke="#D1D5DB" stroke-width="1" opacity="0.3" />
+    </defs>
+
+    <!-- Background (Transparent by Default) -->
+    <rect width="400" height="200" fill="none" />
+
+    <!-- Flow Path with Psychedelic Fade and Proportional Arrowhead -->
+    <path d="M100 100 C120 50 160 150 180 100 S220 50 240 100 S280 150 300 100" fill="none" stroke="url(#proGradient)" stroke-width="8" stroke-dasharray="400" stroke-dashoffset="400" stroke-linecap="round" marker-end="url(#arrowhead)">
+        <animate attributeName="stroke-dashoffset" from="400" to="0" dur="3s" fill="freeze" />
+        <animate attributeName="stroke-width" values="8;12;8" dur="3s" fill="freeze" />
+        <animate attributeName="stroke" values="url(#proGradient);#60A5FA;#93C5FD;#D1D5DB" begin="3s" dur="2s" fill="freeze" /> <!-- Smooth fade to gray -->
+    </path>
+    <!-- Subtle Bursts -->
+    <circle cx="140" cy="100" r="0" fill="none" stroke="#F59E0B" stroke-width="2">
+        <animate attributeName="r" values="0;20;0" begin="1s" dur="3s" fill="freeze" />
+    </circle>
+    <circle cx="220" cy="100" r="0" fill="none" stroke="#10B981" stroke-width="2">
+        <animate attributeName="r" values="0;20;0" begin="1.5s" dur="3s" fill="freeze" />
+    </circle>
+    <circle cx="300" cy="100" r="0" fill="none" stroke="#8B5CF6" stroke-width="2">
+        <animate attributeName="r" values="0;20;0" begin="2s" dur="3s" fill="freeze" />
+    </circle>
+
+    <!-- Text with Rounded Font and Copper Color -->
+    <text x="95" y="110" font-family="'Roboto Condensed', sans-serif" font-size="40" font-weight="700" fill="#B87333" stroke="#B87333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" filter="url(#textShadow)" opacity="0">
+        L
+        <animate attributeName="opacity" from="0" to="1" begin="1s" dur="1s" fill="freeze" />
+        <animate attributeName="x" from="95" to="135" begin="1s" dur="1s" fill="freeze" />
+    </text>
+    <text x="185" y="110" font-family="'Roboto Condensed', sans-serif" font-size="40" font-weight="700" fill="#B87333" stroke="#B87333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" filter="url(#textShadow)" opacity="0">
+        S
+        <animate attributeName="opacity" from="0" to="1" begin="1.5s" dur="1s" fill="freeze" />
+    </text>
+    <text x="275" y="110" font-family="'Roboto Condensed', sans-serif" font-size="40" font-weight="700" fill="#B87333" stroke="#B87333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" filter="url(#textShadow)" opacity="0">
+        D
+        <animate attributeName="opacity" from="0" to="1" begin="2s" dur="1s" fill="freeze" />
+        <animate attributeName="x" from="275" to="235" begin="2s" dur="1s" fill="freeze" />
+    </text>
+
+    <!-- Watermark Diagram Icon -->
+    <use href="#diagramIcon" x="0" y="0" />
+</svg>
