@@ -85,7 +85,7 @@ class LsdContextTest {
     private void scenarioWithWarningStatus() {
         lsdContext.addFact("Something to highlight", "Lorem");
         lsdContext.capture(
-                messageBuilder().id(nextId()).label("Sending food <$hamburger{scale=0.4}>").from(arnie).to(bettie).colour("orange").build(),
+                messageBuilder().id(nextId()).label("Sending food").from(arnie).to(bettie).colour("orange").build(),
                 new TimeDelay()
         );
         lsdContext.completeScenario("A Warning scenario", "A popup with a long text that needs scrolling:"
