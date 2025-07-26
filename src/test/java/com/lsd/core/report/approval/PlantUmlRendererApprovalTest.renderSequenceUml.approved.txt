@@ -1,6 +1,6 @@
 @startuml
 
-!theme lsd-light from https://cdn.jsdelivr.net/gh/lsd-consulting/lsd-core@6/src/main/resources/static/
+!theme mono
 skinparam svgLinkTarget _self
 
 hide unlinked
@@ -21,7 +21,7 @@ B --> A: [[#2 {Sending a response with a long label that should be abbreviated i
 @enduml
 @startuml
 
-!theme lsd-light from https://cdn.jsdelivr.net/gh/lsd-consulting/lsd-core@6/src/main/resources/static/
+!theme mono
 skinparam svgLinkTarget _self
 
 hide unlinked
