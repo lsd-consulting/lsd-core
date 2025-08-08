@@ -24,7 +24,7 @@ kotlin {
 }
 
 dependencies {
-    implementation 'com.github.jknack:handlebars:4.4.0'
+    implementation 'com.github.jknack:handlebars:4.5.0'
     implementation 'net.sourceforge.plantuml:plantuml-mit:1.2025.4'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2'
 
