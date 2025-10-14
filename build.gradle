@@ -61,9 +61,9 @@ java {
 }
 
 tasks.register('javadocJar', Jar) {
-    dependsOn(dokkaJavadoc)
+    dependsOn('dokkaGeneratePublicationHtml')
     archiveClassifier = 'javadoc'
-    from dokkaHtml.outputDirectory
+    from layout.buildDirectory.dir('dokka/html')
 }
 
 artifacts {
