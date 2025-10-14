@@ -8,6 +8,7 @@ import com.microsoft.playwright.Playwright
 import com.microsoft.playwright.assertions.LocatorAssertions.IsVisibleOptions
 import com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat
 import com.microsoft.playwright.options.AriaRole.HEADING
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
@@ -26,6 +27,11 @@ class ReportUiTest {
 
     private lateinit var messagePopupData: String
     private lateinit var messageText: String
+
+    @AfterEach
+    fun cleanup() {
+        playwright.close()
+    }
 
     @ParameterizedTest
     @ValueSource(booleans = [true, false])

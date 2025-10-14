@@ -4,6 +4,7 @@ import com.lsd.core.LsdContext
 import com.lsd.core.domain.Status
 import com.microsoft.playwright.Playwright
 import com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import kotlin.io.path.absolute
 
@@ -15,6 +16,11 @@ class IndexUiTest {
     private val chromium = playwright.chromium()
     private val browser = chromium.launch()
     private val page = browser.newPage()
+
+    @AfterEach
+    fun cleanup() {
+        playwright.close()
+    }
 
     @Test
     fun createsIndex() {

@@ -6,6 +6,7 @@ import com.lsd.core.domain.Participant
 import com.lsd.core.domain.ParticipantType.*
 import com.microsoft.playwright.Playwright
 import com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import kotlin.io.path.absolute
 
@@ -21,6 +22,11 @@ class CombinedComponentReportUiTest {
     private val bettie = BOUNDARY.called("Bettie")
     private val cat = CONTROL.called("Cat")
     private val dan = CONTROL.called("Dan")
+
+    @AfterEach
+    fun cleanup() {
+        playwright.close()
+    }
 
     @Test
     fun generateCombinedComponentDiagramSource() {
