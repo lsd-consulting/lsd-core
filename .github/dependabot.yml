@@ -1,3 +1,5 @@
+# https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
+
 version: 2
 updates:
   - package-ecosystem: "gradle"
@@ -5,11 +7,41 @@ updates:
     schedule:
       interval: "daily"
     commit-message:
-      prefix: "fix"
+      prefix: "fix"  # Triggers PATCH release
+    open-pull-requests-limit: 10
     groups:
-      runtime-dependencies:
+      testing-dependencies:
         patterns:
-          - "com.github.jknack:handlebars:*"
-          - "net.sourceforge.plantuml:plantuml-mit:*"
-          - "org.jetbrains.kotlinx:kotlinx-coroutines-core:*"
-          - "org.jetbrains.kotlin.jvm:*"
+          - "org.junit.jupiter:*"
+          - "org.junit-pioneer:*"
+          - "org.assertj:*"
+          - "org.mockito.kotlin:*"
+          - "com.approvaltests:*"
+          - "com.microsoft.playwright:*"
+        update-types:
+          - "minor"
+          - "patch"
+
+      utility-dependencies:
+        patterns:
+          - "com.github.jknack:*"
+          - "net.sourceforge.plantuml:*"
+        update-types:
+          - "minor"
+          - "patch"
+
+      kotlin-dependencies:
+        patterns:
+          - "org.jetbrains.kotlin*"
+          - "org.jetbrains.dokka*"
+          - "org.jetbrains.kotlinx:*"
+        update-types:
+          - "minor"
+          - "patch"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "ci"  # For workflow updates - no version impact
