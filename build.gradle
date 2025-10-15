@@ -81,6 +81,7 @@ publishing {
 
             from components.kotlin
             artifact sourcesJar
+            artifact javadocJar
             pom {
                 name = 'lsd-core'
                 description = 'A library used to generate living sequence diagrams'
