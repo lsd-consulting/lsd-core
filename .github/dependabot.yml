@@ -2,36 +2,23 @@
 
 version: 2
 updates:
-  # Test dependencies - does not trigger semantic releases (processed first)
+  # Production dependencies - triggers semantic releases
   - package-ecosystem: "gradle"
     directory: "/"
     target-branch: "main"
     schedule:
       interval: "daily"
     commit-message:
-      prefix: "test"  # Does not trigger semantic release
-    open-pull-requests-limit: 5
-    groups:
-      testing-dependencies:
-        patterns:
-          - "org.junit.jupiter:*"
-          - "org.junit-pioneer:*"
-          - "org.assertj:*"
-          - "org.mockito.kotlin:*"
-          - "com.approvaltests:*"
-          - "com.microsoft.playwright:*"
-        update-types:
-          - "minor"
-          - "patch"
-
-  # Production dependencies - triggers semantic releases (fallback for everything else)
-  - package-ecosystem: "gradle"
-    directory: "/"
-    schedule:
-      interval: "daily"
-    commit-message:
       prefix: "fix"  # Triggers PATCH release
     open-pull-requests-limit: 5
+    ignore:
+      # Ignore test dependencies in this update group
+      - dependency-name: "org.junit.jupiter:*"
+      - dependency-name: "org.junit-pioneer:*"
+      - dependency-name: "org.assertj:*"
+      - dependency-name: "org.mockito.kotlin:*"
+      - dependency-name: "com.approvaltests:*"
+      - dependency-name: "com.microsoft.playwright:*"
     groups:
       utility-dependencies:
         patterns:
@@ -46,6 +33,27 @@ updates:
           - "org.jetbrains.kotlin*"
           - "org.jetbrains.dokka*"
           - "org.jetbrains.kotlinx:*"
+        update-types:
+          - "minor"
+          - "patch"
+
+  # Test dependencies - does not trigger semantic releases
+  - package-ecosystem: "gradle"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    commit-message:
+      prefix: "test"  # Does not trigger semantic release
+    open-pull-requests-limit: 5
+    groups:
+      testing-dependencies:
+        patterns:
+          - "org.junit.jupiter:*"
+          - "org.junit-pioneer:*"
+          - "org.assertj:*"
+          - "org.mockito.kotlin:*"
+          - "com.approvaltests:*"
+          - "com.microsoft.playwright:*"
         update-types:
           - "minor"
           - "patch"
