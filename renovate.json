@@ -1,0 +1,83 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:base"],
+  "semanticCommits": "enabled",
+  "schedule": ["every day"],
+  "prHourlyLimit": 10,
+  "prConcurrentLimit": 5,
+  "packageRules": [
+    {
+      "description": "Test dependencies - does not trigger semantic releases",
+      "matchDepTypes": ["test"],
+      "matchPackagePatterns": [
+        "^org\\.junit\\.jupiter",
+        "^org\\.junit-pioneer",
+        "^org\\.assertj",
+        "^org\\.mockito\\.kotlin",
+        "^com\\.approvaltests",
+        "^com\\.microsoft\\.playwright"
+      ],
+      "groupName": "testing-dependencies",
+      "commitMessagePrefix": "test:",
+      "semanticCommitType": "test",
+      "matchUpdateTypes": ["minor", "patch"],
+      "schedule": ["every day"]
+    },
+    {
+      "description": "Utility dependencies - production",
+      "matchPackagePatterns": [
+        "^com\\.github\\.jknack",
+        "^net\\.sourceforge\\.plantuml"
+      ],
+      "excludeDepTypes": ["test"],
+      "groupName": "utility-dependencies",
+      "commitMessagePrefix": "fix:",
+      "semanticCommitType": "fix",
+      "matchUpdateTypes": ["minor", "patch"],
+      "schedule": ["every day"]
+    },
+    {
+      "description": "Kotlin dependencies - production",
+      "matchPackagePatterns": [
+        "^org\\.jetbrains\\.kotlin",
+        "^org\\.jetbrains\\.dokka",
+        "^org\\.jetbrains\\.kotlinx"
+      ],
+      "excludeDepTypes": ["test"],
+      "groupName": "kotlin-dependencies",
+      "commitMessagePrefix": "fix:",
+      "semanticCommitType": "fix",
+      "matchUpdateTypes": ["minor", "patch"],
+      "schedule": ["every day"]
+    },
+    {
+      "description": "GitHub Actions - no version impact",
+      "matchManagers": ["github-actions"],
+      "commitMessagePrefix": "ci:",
+      "semanticCommitType": "ci",
+      "schedule": ["every week"]
+    },
+    {
+      "description": "All other production dependencies",
+      "excludeDepTypes": ["test"],
+      "excludePackagePatterns": [
+        "^com\\.github\\.jknack",
+        "^net\\.sourceforge\\.plantuml",
+        "^org\\.jetbrains\\.kotlin",
+        "^org\\.jetbrains\\.dokka",
+        "^org\\.jetbrains\\.kotlinx",
+        "^org\\.junit\\.jupiter",
+        "^org\\.junit-pioneer",
+        "^org\\.assertj",
+        "^org\\.mockito\\.kotlin",
+        "^com\\.approvaltests",
+        "^com\\.microsoft\\.playwright"
+      ],
+      "excludeManagers": ["github-actions"],
+      "commitMessagePrefix": "fix:",
+      "semanticCommitType": "fix",
+      "matchUpdateTypes": ["minor", "patch"],
+      "schedule": ["every day"]
+    }
+  ]
+}
