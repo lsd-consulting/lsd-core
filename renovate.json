@@ -16,9 +16,9 @@
     },
     {
       "description": "Utility dependencies - production",
-      "matchPackagePatterns": [
-        "^com\\.github\\.jknack",
-        "^net\\.sourceforge\\.plantuml"
+      "matchPackageNames": [
+        "com.github.jknack:**",
+        "net.sourceforge.plantuml:**"
       ],
       "matchDepTypes": ["dependencies"],
       "groupName": "utility-dependencies",
@@ -28,10 +28,10 @@
     },
     {
       "description": "Kotlin dependencies - production",
-      "matchPackagePatterns": [
-        "^org\\.jetbrains\\.kotlin",
-        "^org\\.jetbrains\\.dokka",
-        "^org\\.jetbrains\\.kotlinx"
+      "matchPackageNames": [
+        "org.jetbrains.kotlin:**",
+        "org.jetbrains.dokka:**",
+        "org.jetbrains.kotlinx:**"
       ],
       "matchDepTypes": ["dependencies"],
       "groupName": "kotlin-dependencies",
@@ -49,12 +49,12 @@
     {
       "description": "All other production dependencies",
       "matchDepTypes": ["dependencies"],
-      "excludePackagePatterns": [
-        "^com\\.github\\.jknack",
-        "^net\\.sourceforge\\.plantuml",
-        "^org\\.jetbrains\\.kotlin",
-        "^org\\.jetbrains\\.dokka",
-        "^org\\.jetbrains\\.kotlinx"
+      "excludePackageNames": [
+        "com.github.jknack:**",
+        "net.sourceforge.plantuml:**",
+        "org.jetbrains.kotlin:**",
+        "org.jetbrains.dokka:**",
+        "org.jetbrains.kotlinx:**"
       ],
       "commitMessagePrefix": "fix:",
       "semanticCommitType": "fix",
