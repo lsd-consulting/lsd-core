@@ -9,14 +9,6 @@
     {
       "description": "Test dependencies - does not trigger semantic releases",
       "matchDepTypes": ["test"],
-      "matchPackagePatterns": [
-        "^org\\.junit\\.jupiter",
-        "^org\\.junit-pioneer",
-        "^org\\.assertj",
-        "^org\\.mockito\\.kotlin",
-        "^com\\.approvaltests",
-        "^com\\.microsoft\\.playwright"
-      ],
       "groupName": "testing-dependencies",
       "commitMessagePrefix": "test:",
       "semanticCommitType": "test",
@@ -62,13 +54,7 @@
         "^net\\.sourceforge\\.plantuml",
         "^org\\.jetbrains\\.kotlin",
         "^org\\.jetbrains\\.dokka",
-        "^org\\.jetbrains\\.kotlinx",
-        "^org\\.junit\\.jupiter",
-        "^org\\.junit-pioneer",
-        "^org\\.assertj",
-        "^org\\.mockito\\.kotlin",
-        "^com\\.approvaltests",
-        "^com\\.microsoft\\.playwright"
+        "^org\\.jetbrains\\.kotlinx"
       ],
       "commitMessagePrefix": "fix:",
       "semanticCommitType": "fix",
