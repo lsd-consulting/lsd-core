@@ -2,7 +2,7 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:base"],
   "semanticCommits": "enabled",
-  "schedule": ["every day"],
+  "schedule": ["at any time"],
   "prHourlyLimit": 10,
   "prConcurrentLimit": 5,
   "packageRules": [
@@ -20,8 +20,7 @@
       "groupName": "testing-dependencies",
       "commitMessagePrefix": "test:",
       "semanticCommitType": "test",
-      "matchUpdateTypes": ["minor", "patch"],
-      "schedule": ["every day"]
+      "matchUpdateTypes": ["minor", "patch"]
     },
     {
       "description": "Utility dependencies - production",
@@ -29,12 +28,11 @@
         "^com\\.github\\.jknack",
         "^net\\.sourceforge\\.plantuml"
       ],
-      "excludeDepTypes": ["test"],
+      "matchDepTypes": ["dependencies"],
       "groupName": "utility-dependencies",
       "commitMessagePrefix": "fix:",
       "semanticCommitType": "fix",
-      "matchUpdateTypes": ["minor", "patch"],
-      "schedule": ["every day"]
+      "matchUpdateTypes": ["minor", "patch"]
     },
     {
       "description": "Kotlin dependencies - production",
@@ -43,23 +41,22 @@
         "^org\\.jetbrains\\.dokka",
         "^org\\.jetbrains\\.kotlinx"
       ],
-      "excludeDepTypes": ["test"],
+      "matchDepTypes": ["dependencies"],
       "groupName": "kotlin-dependencies",
       "commitMessagePrefix": "fix:",
       "semanticCommitType": "fix",
-      "matchUpdateTypes": ["minor", "patch"],
-      "schedule": ["every day"]
+      "matchUpdateTypes": ["minor", "patch"]
     },
     {
       "description": "GitHub Actions - no version impact",
       "matchManagers": ["github-actions"],
       "commitMessagePrefix": "ci:",
       "semanticCommitType": "ci",
-      "schedule": ["every week"]
+      "schedule": ["before 4am on monday"]
     },
     {
       "description": "All other production dependencies",
-      "excludeDepTypes": ["test"],
+      "matchDepTypes": ["dependencies"],
       "excludePackagePatterns": [
         "^com\\.github\\.jknack",
         "^net\\.sourceforge\\.plantuml",
@@ -73,11 +70,9 @@
         "^com\\.approvaltests",
         "^com\\.microsoft\\.playwright"
       ],
-      "excludeManagers": ["github-actions"],
       "commitMessagePrefix": "fix:",
       "semanticCommitType": "fix",
-      "matchUpdateTypes": ["minor", "patch"],
-      "schedule": ["every day"]
+      "matchUpdateTypes": ["minor", "patch"]
     }
   ]
 }
