@@ -45,7 +45,6 @@
       "automerge": true,
       "automergeType": "branch"
     },
-    },
     {
       "description": "GitHub Actions - no version impact",
       "matchManagers": ["github-actions"],
