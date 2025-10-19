@@ -1,10 +1,10 @@
-name: Merge dependabot PR
+name: Auto-approve Renovate PR
 on:
   pull_request_target:
     branches:
       - main
       - master
 jobs:
-  pr-merge:
-    uses: lsd-consulting/shared-workflows/.github/workflows/dependabot-merge.yml@main
+  renovate-auto-approve:
+    uses: lsd-consulting/shared-workflows/.github/workflows/renovate-automerge.yml@main
     secrets: inherit
