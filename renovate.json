@@ -47,7 +47,9 @@
       "matchManagers": ["github-actions"],
       "commitMessagePrefix": "ci:",
       "semanticCommitType": "ci",
-      "schedule": ["before 4am on monday"]
+      "schedule": ["before 4am on monday"],
+      "automerge": true,
+      "automergeType": "branch"
     },
     {
       "description": "All other production dependencies",
@@ -60,7 +62,9 @@
         "org.jetbrains.kotlinx:**"
       ],
       "commitMessagePrefix": "fix:",
-      "semanticCommitType": "fix"
+      "semanticCommitType": "fix",
+      "automerge": true,
+      "automergeType": "branch"
     },
     {
       "description": "Major version updates - require manual review",
