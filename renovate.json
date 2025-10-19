@@ -13,7 +13,6 @@
       "groupName": "testing-dependencies",
       "commitMessagePrefix": "test:",
       "semanticCommitType": "test",
-      "matchUpdateTypes": ["minor", "patch"],
       "automerge": true,
       "automergeType": "branch"
     },
@@ -27,7 +26,6 @@
       "groupName": "utility-dependencies",
       "commitMessagePrefix": "fix:",
       "semanticCommitType": "fix",
-      "matchUpdateTypes": ["minor", "patch"],
       "automerge": true,
       "automergeType": "branch"
     },
@@ -41,7 +39,6 @@
       "groupName": "kotlin-dependencies",
       "commitMessagePrefix": "fix:",
       "semanticCommitType": "fix",
-      "matchUpdateTypes": ["minor", "patch"],
       "automerge": true,
       "automergeType": "branch"
     },
@@ -63,8 +60,12 @@
         "org.jetbrains.kotlinx:**"
       ],
       "commitMessagePrefix": "fix:",
-      "semanticCommitType": "fix",
-      "matchUpdateTypes": ["minor", "patch"]
+      "semanticCommitType": "fix"
+    },
+    {
+      "description": "Major version updates - require manual review",
+      "matchUpdateTypes": ["major"],
+      "automerge": false
     }
   ]
 }
