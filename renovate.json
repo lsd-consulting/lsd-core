@@ -10,6 +10,8 @@
   "vulnerabilityAlerts": {
     "enabled": true
   },
+  "labels": ["dependencies"],
+  "addLabels": ["{{updateType}}"],
   "packageRules": [
     {
       "matchUpdateTypes": ["patch", "minor"],
