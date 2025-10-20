@@ -1,75 +1,48 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:base"],
-  "semanticCommits": "enabled",
-  "schedule": ["at any time"],
-  "prHourlyLimit": 10,
-  "prConcurrentLimit": 5,
-  "platformAutomerge": true,
+  "extends": [
+    "config:base",
+    ":dependencyDashboard",
+    ":gradle"
+  ],
+  "lockFileMaintenance": {
+    "enabled": true
+  },
+  "vulnerabilityAlerts": {
+    "enabled": true
+  },
   "packageRules": [
     {
-      "description": "Test dependencies - does not trigger semantic releases",
-      "matchDepTypes": ["test"],
-      "groupName": "testing-dependencies",
-      "commitMessagePrefix": "test:",
-      "semanticCommitType": "test",
+      "matchUpdateTypes": ["patch", "minor"],
       "automerge": true,
-      "automergeType": "branch"
+      "automergeType": "pr"
     },
     {
-      "description": "Utility dependencies - production",
-      "matchPackageNames": [
-        "com.github.jknack:**",
-        "net.sourceforge.plantuml:**"
-      ],
-      "matchDepTypes": ["dependencies"],
-      "groupName": "utility-dependencies",
-      "commitMessagePrefix": "fix:",
-      "semanticCommitType": "fix",
-      "automerge": true,
-      "automergeType": "branch"
-    },
-    {
-      "description": "Kotlin dependencies - production",
-      "matchPackageNames": [
-        "org.jetbrains.kotlin:**",
-        "org.jetbrains.dokka:**"
-      ],
-      "matchDepTypes": ["dependencies"],
-      "groupName": "kotlin-dependencies",
-      "commitMessagePrefix": "fix:",
-      "semanticCommitType": "fix",
-      "automerge": true,
-      "automergeType": "branch"
-    },
-    {
-      "description": "GitHub Actions - no version impact",
-      "matchManagers": ["github-actions"],
-      "commitMessagePrefix": "ci:",
-      "semanticCommitType": "ci",
-      "schedule": ["before 4am on monday"],
-      "automerge": true,
-      "automergeType": "branch"
-    },
-    {
-      "description": "All other production dependencies",
-      "matchDepTypes": ["dependencies"],
-      "excludePackageNames": [
-        "com.github.jknack:**",
-        "net.sourceforge.plantuml:**",
-        "org.jetbrains.kotlin:**",
-        "org.jetbrains.dokka:**",
-        "org.jetbrains.kotlinx:**"
-      ],
-      "commitMessagePrefix": "fix:",
-      "semanticCommitType": "fix",
-      "automerge": true,
-      "automergeType": "branch"
-    },
-    {
-      "description": "Major version updates - require manual review",
       "matchUpdateTypes": ["major"],
       "automerge": false
+    },
+    {
+      "matchPackagePatterns": ["org.jetbrains.kotlin"],
+      "groupName": "kotlin dependencies"
+    },
+    {
+      "matchDepTypes": [
+        "testImplementation",
+        "testCompileOnly",
+        "testRuntimeOnly",
+        "testApi"
+      ],
+      "commitMessagePrefix": "test(deps): "
+    },
+    {
+      "matchDepTypes": [
+        "implementation",
+        "api",
+        "compileOnly",
+        "runtimeOnly"
+      ],
+      "commitMessagePrefix": "fix(deps): "
     }
-  ]
+  ],
+  "commitMessagePrefix": "chore(deps): "
 }
