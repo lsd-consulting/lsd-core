@@ -12,6 +12,7 @@
   },
   "labels": ["dependencies"],
   "addLabels": ["{{updateType}}"],
+  "rebaseWhen": "behind-base-branch",
   "packageRules": [
     {
       "matchUpdateTypes": ["patch", "minor"],
