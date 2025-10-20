@@ -25,22 +25,19 @@
       "groupName": "kotlin dependencies"
     },
     {
-      "matchDepTypes": [
-        "testImplementation",
-        "testCompileOnly",
-        "testRuntimeOnly",
-        "testApi"
-      ],
-      "commitMessagePrefix": "test(deps): "
-    },
-    {
-      "matchDepTypes": [
-        "implementation",
-        "api",
-        "compileOnly",
-        "runtimeOnly"
+      "description": "Production dependencies - triggers semantic releases",
+      "matchPackagePatterns": [
+        "org.jetbrains.kotlin*",
+        "org.jetbrains.dokka*",
+        "com.github.jknack:**",
+        "net.sourceforge.plantuml:**",
+        "io.github.lsd-consulting:**"
       ],
       "commitMessagePrefix": "fix(deps): "
+    },
+    {
+      "matchManagers": ["github-actions"],
+      "commitMessagePrefix": "ci(deps): "
     }
   ],
   "commitMessagePrefix": "chore(deps): "
