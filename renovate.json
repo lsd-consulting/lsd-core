@@ -29,6 +29,7 @@
       "matchPackagePatterns": [
         "org.jetbrains.kotlin*",
         "org.jetbrains.dokka*",
+        "org.jetbrains.kotlinx:**",
         "com.github.jknack:**",
         "net.sourceforge.plantuml:**",
         "io.github.lsd-consulting:**"
