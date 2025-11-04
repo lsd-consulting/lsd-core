@@ -7,18 +7,87 @@
 
 # LSD Core
 
-**Living Sequence Diagrams** - Generate interactive sequence and component diagrams from your code automatically.
+> Living Sequence Diagrams - Automatically generate interactive sequence diagrams from your code
 
-## Overview
+LSD Core transforms how you document system interactions. Instead of manually maintaining sequence diagrams that quickly become stale, **capture interactions programmatically** and generate living documentation that stays in sync with your code.
 
-LSD Core is a library for creating sequence diagrams dynamically without needing to write PlantUML markup manually. Simply capture events in your code, and LSD generates interactive HTML reports with:
+**Key Features:**
+- Generate sequence diagrams without writing PlantUML markup
+- Interactive HTML reports with clickable event details
+- Component diagrams showing system-wide relationships
+- Automatic diagram splitting for complex flows
+- Multiple output formats and customizable themes
 
-- **Sequence diagrams** showing message flows between components
-- **Component diagrams** visualizing system relationships
-- **Interactive popups** with detailed event information
-- **Multiple scenarios** grouped into comprehensive reports
+**Use Cases:**
+- Document API interactions in integration tests
+- Visualize microservice communication patterns
+- Debug complex distributed system flows
+- Generate architecture documentation from tests
+- Create onboarding materials automatically
 
 ![LSD_example](https://user-images.githubusercontent.com/1330362/233956459-f8545861-b323-4243-9097-4b1dd1877bda.gif)
+
+## Table of Contents
+
+- [Why LSD?](#why-lsd)
+- [Quick Start](#quick-start)
+- [Advanced Features](#advanced-features)
+- [Configuration](#configuration)
+- [Gallery](#gallery)
+- [Ecosystem](#ecosystem)
+- [FAQ](#faq)
+- [Development](#development)
+
+## Why LSD?
+
+### Traditional Approach
+
+```plantuml
+@startuml
+User -> API: POST /login
+API -> Database: SELECT * FROM users
+Database --> API: user data
+API --> User: 200 OK
+@enduml
+```
+
+**Problems:**
+- Manual maintenance required
+- Quickly becomes outdated
+- No connection to actual code
+- Limited interactivity
+
+### LSD Approach
+
+```kotlin
+// In your test or application code
+lsd.capture(
+    message().from("User").to("API").label("POST /login"),
+    message().from("API").to("Database").label("SELECT * FROM users"),
+    message().from("Database").to("API").label("user data"),
+    message().from("API").to("User").label("200 OK")
+)
+```
+
+**Benefits:**
+- Generated from actual execution
+- Always in sync with code
+- Interactive HTML with details
+- Automatic from tests
+
+### Features at a Glance
+
+| Feature | Description |
+|---------|-------------|
+| **Zero Markup** | No PlantUML syntax to learn - just Java/Kotlin code |
+| **Living Documentation** | Diagrams generated from actual execution, not manual drawings |
+| **Interactive Reports** | Click any interaction to see full request/response details |
+| **Multiple Diagrams** | Sequence diagrams + component diagrams from same data |
+| **Test Integration** | JUnit 5 and Cucumber plugins available |
+| **HTTP Interception** | Auto-capture REST/HTTP calls with interceptors |
+| **Customizable** | Themes, colors, participant types, custom icons |
+| **Large Diagram Support** | Auto-splitting for complex flows |
+| **Offline Mode** | Works without internet (inline CSS/JS) |
 
 ## Quick Start
 
@@ -49,82 +118,192 @@ implementation 'io.github.lsd-consulting:lsd-core:X.X.X'
 
 ### Basic Usage
 
-Use the `LsdContext` singleton to capture messages and events:
+Capture interactions using the `LsdContext` singleton:
 
 <details open>
-  <summary>Kotlin</summary>
+  <summary>Kotlin Example</summary>
 
 ```kotlin
 fun main() {
     val lsd = LsdContext.instance
 
+    // Capture message exchanges
     lsd.capture(
-        MessageBuilder.messageBuilder().from("A").to("B").label("message1").build(),
-        MessageBuilder.messageBuilder().from("B").to("A").label("message2").build(),
+        messageBuilder()
+            .from("User Service")
+            .to("Auth Service")
+            .label("POST /authenticate")
+            .build(),
+        messageBuilder()
+            .from("Auth Service")
+            .to("User Service")
+            .label("200 OK")
+            .data("$token")
+            .build(),
     )
-    lsd.completeScenario("<Scenario Title>")
-    lsd.completeReport("<Report Title>")
+
+    // Complete the scenario and generate report
+    lsd.completeScenario("User Authentication Flow")
+    lsd.completeReport("Authentication API")
 }
 ```
 </details>
 
 <details>
-  <summary>Java</summary>
+  <summary>Java Example</summary>
 
 ```java
 public static void main(String[] args) {
     LsdContext lsd = LsdContext.getInstance();
     
     lsd.capture(
-        MessageBuilder.messageBuilder().from("A").to("B").label("message1").build(),
-        MessageBuilder.messageBuilder().from("B").to("A").label("message2").build()
+        messageBuilder()
+            .from("User Service")
+            .to("Auth Service")
+            .label("POST /authenticate")
+            .build(),
+        messageBuilder()
+            .from("Auth Service")
+            .to("User Service")
+            .label("200 OK {token}")
+            .build()
     );
-    lsd.completeScenario("<Scenario Title>", "<description>");
-    lsd.completeReport("<Report Title>");
+    
+    lsd.completeScenario("User Authentication Flow");
+    lsd.completeReport("Authentication API");
 }
 ```
 </details>
 
-The generated HTML report will be in `build/reports/lsd/` by default.
+**Output:** The generated HTML report will be in `build/reports/lsd/` (configurable via properties).
+
+### Real-World Example
+
+Here's how you might document an order processing flow:
+
+```kotlin
+@Test
+fun `process order with payment`() {
+    val lsd = LsdContext.instance
+    
+    // Customer places order
+    lsd.capture(
+        messageBuilder()
+            .from("Customer")
+            .to("Order Service")
+            .label("POST /orders {items, total}")
+            .build()
+    )
+    
+    // Order service validates and requests payment
+    lsd.capture(
+        messageBuilder()
+            .from("Order Service")
+            .to("Payment Service")
+            .label("POST /payments {amount, card}")
+            .build(),
+        messageBuilder()
+            .from("Payment Service")
+            .to("Order Service")
+            .label("200 OK")
+            .data("<transactionId>")
+            .build()
+    )
+    
+    // Order confirmed
+    lsd.capture(
+        messageBuilder()
+            .from("Order Service")
+            .to("Customer")
+            .label("201 Created")
+            .data("<orderId>")
+            .build()
+    )
+    
+    lsd.completeScenario("Successful Order Processing")
+    lsd.completeReport("E-Commerce API Flows")
+}
+```
+
+This generates an interactive diagram showing the complete flow, with each arrow clickable to reveal request/response details.
 
 ## Advanced Features
 
 ### Customizing Participants
 
-Instead of simple strings, create `Participant` objects with custom types, colors, and aliases:
+Enhance diagrams with typed participants that have custom colors and aliases:
 
 ```kotlin
-// Instead of "A", use:
-val arnie = ACTOR.called("A", "Arnie", "blue")
+// Define participants with visual styling
+val frontend = BOUNDARY.called("Web App", "Frontend", "#3498db")
+val api = CONTROL.called("API Gateway", "Gateway", "#2ecc71")
+val userDb = DATABASE.called("PostgreSQL", "User DB", "#e74c3c")
+val cache = DATABASE.called("Redis", "Cache", "#f39c12")
+val queue = QUEUE.called("RabbitMQ", "Event Queue", "#9b59b6")
 
-// Register participants to ensure consistent styling
-lsd.addParticipants(listOf(arnie))
+// Register participants for consistent styling across scenarios
+lsd.addParticipants(listOf(frontend, api, userDb, cache, queue))
+
+// Use in messages
+lsd.capture(
+    messageBuilder()
+        .from(frontend)
+        .to(api)
+        .label("GET /users/123")
+        .build()
+)
 ```
 
-**Available ParticipantTypes:**
-- `ACTOR` - Stick figure representation
-- `BOUNDARY` - System boundary
-- `COLLECTIONS` - Collection/list
-- `CONTROL` - Controller component
-- `DATABASE` - Database storage
-- `ENTITY` - Business entity
-- `PARTICIPANT` - Generic participant (default)
-- `QUEUE` - Message queue
+**Available Participant Types:**
+
+| Type | Visual | Best For |
+|------|--------|----------|
+| `ACTOR` | Stick figure | End users, external actors |
+| `BOUNDARY` | Box with side bar | UI components, API boundaries |
+| `CONTROL` | Circle with arrow | Controllers, orchestrators |
+| `DATABASE` | Cylinder | Databases, data stores |
+| `ENTITY` | Circle | Domain entities, models |
+| `QUEUE` | Queue icon | Message queues, event streams |
+| `COLLECTIONS` | Stacked boxes | Collections, lists |
+| `PARTICIPANT` | Simple box | Generic components (default) |
 
 ### Sequence Events
 
-Beyond messages, you can capture various event types:
+Beyond messages, capture additional context with these event types:
 
-| Event | Description |
-|-------|-------------|
-| `PageTitle` | Sets a title on the diagram |
-| `NoteLeft` | Creates a note to the left of a participant |
-| `NoteRight` | Creates a note to the right of a participant |
-| `NoteOver` | Creates a note over a participant's lifeline |
-| `TimeDelay` | Shows elapsed time with optional label |
-| `Newpage` | Splits diagram into multiple pages |
-| `ActivateLifeline` | Activates a participant lifeline (with optional color) |
-| `DeactivateLifeline` | Deactivates an active lifeline |
+```kotlin
+// Add a title to the diagram
+lsd.capture(PageTitle("User Registration Flow"))
+
+// Add explanatory notes
+lsd.capture(NoteOver("API", "Validates email format"))
+lsd.capture(NoteLeft("Database", "Checks for existing user"))
+lsd.capture(NoteRight("Email Service", "Sends welcome email"))
+
+// Show async operations or delays
+lsd.capture(TimeDelay("Processing..."))
+
+// Split complex flows into multiple pages
+lsd.capture(Newpage("Payment Processing"))
+
+// Show active processing (useful for async operations)
+lsd.capture(ActivateLifeline("Payment Processor", "#ff6b6b"))
+// ... processing events ...
+lsd.capture(DeactivateLifeline("Payment Processor"))
+```
+
+**Available Event Types:**
+
+| Event | Use Case | Example |
+|-------|----------|----------|
+| `PageTitle` | Set diagram title | `PageTitle("Authentication Flow")` |
+| `NoteLeft` | Add context to the left | `NoteLeft("API", "Rate limited")` |
+| `NoteRight` | Add context to the right | `NoteRight("DB", "Cached result")` |
+| `NoteOver` | Add context over lifeline | `NoteOver("Service", "Retry logic")` |
+| `TimeDelay` | Show elapsed time | `TimeDelay("5 seconds")` |
+| `Newpage` | Split into pages | `Newpage("Error Handling")` |
+| `ActivateLifeline` | Show active processing | `ActivateLifeline("Worker", "red")` |
+| `DeactivateLifeline` | End active processing | `DeactivateLifeline("Worker")` |
 
 ### Additional Capabilities
 
@@ -202,6 +381,38 @@ Customize LSD behavior by adding an `lsd.properties` file to your classpath or s
 - **[lsd-interceptors](https://github.com/lsd-consulting/lsd-interceptors)** - HTTP/messaging interceptors
 - **[More libraries...](https://github.com/lsd-consulting)**
 
+
+## FAQ
+
+<details>
+<summary><b>How does LSD differ from manually writing PlantUML?</b></summary>
+
+LSD generates diagrams from actual code execution, ensuring they stay synchronized with your implementation. You can capture events during tests, and the diagrams are always accurate.
+</details>
+
+<details>
+<summary><b>Can I use LSD with existing test frameworks?</b></summary>
+
+Yes! Check out the [Ecosystem](#ecosystem) section for integrations with JUnit, Cucumber, and HTTP interceptors that automatically capture interactions.
+</details>
+
+<details>
+<summary><b>What's the performance impact?</b></summary>
+
+LSD is designed for test and development environments. In production, you can disable event capture or use conditional logic. Event capture is lightweight, but diagram generation should happen offline.
+</details>
+
+<details>
+<summary><b>Can I customize the diagram appearance?</b></summary>
+
+Yes! You can use any PlantUML theme, customize participant colors, add notes, and control diagram layout. See [Configuration](#configuration) and [Advanced Features](#advanced-features).
+</details>
+
+<details>
+<summary><b>How do I handle large diagrams?</b></summary>
+
+LSD automatically splits diagrams when they exceed `lsd.core.diagram.sequence.maxEventsPerDiagram` (default: 50 events). You can also manually split using `Newpage` events.
+</details>
 
 ## Development
 
