@@ -7,186 +7,234 @@
 
 # LSD Core
 
-A tool for creating sequence diagrams dynamically without needing to worry about markup.
+**Living Sequence Diagrams** - Generate interactive sequence and component diagrams from your code automatically.
 
+## Overview
 
-This library generates html reports and each report contains one or more scenarios of captured events to be displayed 
-on a sequence diagram.
+LSD Core is a library for creating sequence diagrams dynamically without needing to write PlantUML markup manually. Simply capture events in your code, and LSD generates interactive HTML reports with:
 
-(Additionally a component diagram is generated to show relationships). 
+- **Sequence diagrams** showing message flows between components
+- **Component diagrams** visualizing system relationships
+- **Interactive popups** with detailed event information
+- **Multiple scenarios** grouped into comprehensive reports
 
 ![LSD_example](https://user-images.githubusercontent.com/1330362/233956459-f8545861-b323-4243-9097-4b1dd1877bda.gif)
 
-## Usage
+## Quick Start
 
-* Add dependency for version: [![Maven Central](https://img.shields.io/maven-central/v/io.github.lsd-consulting/lsd-core.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.lsd-consulting%22%20AND%20a:%22lsd-core%22)
+### Installation
 
-    <details>
-      <summary>Maven</summary>
-    
-    ```xml
-      <dependency>
-          <groupId>io.github.lsd-consulting</groupId>
-          <artifactId>lsd-core</artifactId>
-          <version>X.X.X</version>
-      </dependency>
-    ```
-    
-    </details>
-    
-    <details>
-      <summary>Gradle</summary>
-    
-    ```groovy
-        implementation 'io.github.lsd-consulting:lsd-core:X.X.X'
-    ```
-    </details>
+Add the dependency to your project: [![Maven Central](https://img.shields.io/maven-central/v/io.github.lsd-consulting/lsd-core.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.lsd-consulting%22%20AND%20a:%22lsd-core%22)
 
+<details>
+  <summary>Maven</summary>
 
-* User lsd context singleton to capture messages (and other events):
- 
-**Kotlin:**
-  ```kotlin
-  fun main() {
+```xml
+<dependency>
+    <groupId>io.github.lsd-consulting</groupId>
+    <artifactId>lsd-core</artifactId>
+    <version>X.X.X</version>
+</dependency>
+```
+
+</details>
+
+<details>
+  <summary>Gradle</summary>
+
+```groovy
+implementation 'io.github.lsd-consulting:lsd-core:X.X.X'
+```
+</details>
+
+### Basic Usage
+
+Use the `LsdContext` singleton to capture messages and events:
+
+<details open>
+  <summary>Kotlin</summary>
+
+```kotlin
+fun main() {
     val lsd = LsdContext.instance
-  
+
     lsd.capture(
-      MessageBuilder.messageBuilder().from("A").to("B").label("message1").build(),
-      MessageBuilder.messageBuilder().from("B").to("A").label("message2").build(),
+        MessageBuilder.messageBuilder().from("A").to("B").label("message1").build(),
+        MessageBuilder.messageBuilder().from("B").to("A").label("message2").build(),
     )
     lsd.completeScenario("<Scenario Title>")
     lsd.completeReport("<Report Title>")
-  }
-  ```
-
-**Java:**
-```java
-  public static void main(String[] args) {
-      LsdContext lsd = LsdContext.getInstance();
-      
-      lsd.capture(
-          MessageBuilder.messageBuilder().from("A").to("B").label("message1").build(),
-          MessageBuilder.messageBuilder().from("B").to("A").label("message2").build()
-      );
-      lsd.completeScenario("<Scenario Title>", "<description>");
-      lsd.completeReport("<Report Title>");
-  }
+}
 ```
+</details>
 
----
-#### Participants
-Instead of using a String to specify a participant you can create a Participant type. This give you more options, 
-e.g. to provide an alias , colour and type. 
-So instead of `"A"` which will produce a default type of `PARTICIPANT` in the examples above you could use: 
+<details>
+  <summary>Java</summary>
 
-  `ACTOR.called("A", "Arnie", "blue")` which will create a stickman labelled as "Arnie" and will be coloured in red.
+```java
+public static void main(String[] args) {
+    LsdContext lsd = LsdContext.getInstance();
+    
+    lsd.capture(
+        MessageBuilder.messageBuilder().from("A").to("B").label("message1").build(),
+        MessageBuilder.messageBuilder().from("B").to("A").label("message2").build()
+    );
+    lsd.completeScenario("<Scenario Title>", "<description>");
+    lsd.completeReport("<Report Title>");
+}
+```
+</details>
 
-`ParticipantType`s include:
-* ACTOR
-* BOUNDARY
-* COLLECTIONS
-* CONTROL
-* DATABASE
-* ENTITY
-* PARTICIPANT
-* QUEUE
+The generated HTML report will be in `build/reports/lsd/` by default.
 
-You can define participants upfront and register them using the lsd context, e.g.
+## Advanced Features
+
+### Customizing Participants
+
+Instead of simple strings, create `Participant` objects with custom types, colors, and aliases:
 
 ```kotlin
-    lsd.addParticipants(listOf(arnie, donnie))
+// Instead of "A", use:
+val arnie = ACTOR.called("A", "Arnie", "blue")
+
+// Register participants to ensure consistent styling
+lsd.addParticipants(listOf(arnie))
 ```
-The participants specified here will override any other participants with the same name so if you want to ensure colours 
-or aliases are not overridden set them here before creating a report.
 
----
-#### SequenceEvents
-There are other event types that can be captured, other than messages.
+**Available ParticipantTypes:**
+- `ACTOR` - Stick figure representation
+- `BOUNDARY` - System boundary
+- `COLLECTIONS` - Collection/list
+- `CONTROL` - Controller component
+- `DATABASE` - Database storage
+- `ENTITY` - Business entity
+- `PARTICIPANT` - Generic participant (default)
+- `QUEUE` - Message queue
 
-* **PageTitle**          - Sets a title on the diagram
-* **NoteLeft**           - Create a note (can be to the left of a provided participant)
-* **NoteRight**          - Similar to NoteLeft but on the right
-* **NoteOver**           - Create a note in the middle of a participant lifeline
-* **TimeDelay**          - Shows that a period of time has elapsed (optional label can be provided)
-* **Newpage**            - Splits a diagram into a new page at the point this event was captured
-* **ActivateLifeline**   - Activates a participant lifeline (colour can be provided)
-* **DeactivateLifeline** - Deactivates a lifeline that has been activated
+### Sequence Events
 
----
+Beyond messages, you can capture various event types:
 
-### Additional options
-* A html index file can be generated if multiple reports are captured:
-  ```kotlin
-      lsd.createIndex()
-  ```
+| Event | Description |
+|-------|-------------|
+| `PageTitle` | Sets a title on the diagram |
+| `NoteLeft` | Creates a note to the left of a participant |
+| `NoteRight` | Creates a note to the right of a participant |
+| `NoteOver` | Creates a note over a participant's lifeline |
+| `TimeDelay` | Shows elapsed time with optional label |
+| `Newpage` | Splits diagram into multiple pages |
+| `ActivateLifeline` | Activates a participant lifeline (with optional color) |
+| `DeactivateLifeline` | Deactivates an active lifeline |
 
-* Generate a component diagram for events included from multiple scenarios and reports
-  ```kotlin
-      lsd.completeComponentsReport("Relationships")
-  ```
+### Additional Capabilities
 
-* To draw attention to some interesting details you can include **facts** e.g.
-  ```kotlin
-      // instances of the keyword Lorem will be highlighted on the report
-      lsd.addFact("Something to highlight", "Lorem")
-  ```
+**Generate an index page** for multiple reports:
+```kotlin
+lsd.createIndex()
+```
 
-* Advanced users may want to include **additional files** for additional icons etc. For example to include a heart icon on a note:
-  ```kotlin
-        lsd.includeFiles(listOf("tupadr3/font-awesome-5/heart"))
+**Create component diagrams** showing relationships across all scenarios:
+```kotlin
+lsd.completeComponentsReport("Relationships")
+```
 
-        lsd.capture(NoteLeft("Friends <$heart{scale=0.4,color=red}>"))
-  ```
----
-## Properties
-The following properties can be overridden by adding a properties file called `lsd.properties` on the classpath of your 
-application or by setting a System property. Note that System properties override file properties.
+**Highlight important information** with facts:
+```kotlin
+// The keyword "Lorem" will be highlighted throughout the report
+lsd.addFact("Something to highlight", "Lorem")
+```
 
-| Property Name                                 | Default           | Description                                                                                                                                                                                                                                                   |
-|-----------------------------------------------|-------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| lsd.core.label.maxWidth                       | 200               | The width in number of characters for the labels that appear on the diagrams before being abbreviated.                                                                                                                                                        |
-| lsd.core.diagram.theme                        | plain             | The plantUml theme to apply to the diagrams. See the [available themes](https://plantuml.com/theme).                                                                                                                                                          |
-| lsd.core.report.outputDir                     | build/reports/lsd | The directory to write the report files. (This can be a relative path).                                                                                                                                                                                       |
-| lsd.core.ids.deterministic                    | false             | Determines how the html element ids are generated. Allowing deterministic ids is useful when testing (e.g. approval tests of html output since the generated ids won't be random. The default option which provides random ids should be preferred otherwise. |
-| lsd.core.diagram.sequence.maxEventsPerDiagram | 50                | To help make really large diagrams easier to read this value is used to decide when to split a potentially large diagram into sub-diagrams. (Each sub diagram will remove any unused participants and include the participant headers and footers).           |
-| lsd.core.devMode                              | true              | Offline mode with inline css and js. Helps development when amending css and js but can also be useful when runninng in environments without internet connectivity                                                                                            |
-| lsd.core.metrics.enabled               | false             | _Experimental_ feature to show a table of metrics on the report (e.g. top bottlenecks, time to generate the report etc.)                                                                                                                                      |
+**Include custom icons** (e.g., Font Awesome):
+```kotlin
+lsd.includeFiles(listOf("tupadr3/font-awesome-5/heart"))
+lsd.capture(NoteLeft("Friends <$heart{scale=0.4,color=red}>"))
+```
+## Configuration
+
+Customize LSD behavior by adding an `lsd.properties` file to your classpath or setting system properties (which take precedence).
+
+| Property | Default | Description |
+|----------|---------|-------------|
+| `lsd.core.label.maxWidth` | `200` | Maximum label width (in characters) before abbreviation |
+| `lsd.core.diagram.theme` | `plain` | PlantUML theme ([available themes](https://plantuml.com/theme)) |
+| `lsd.core.report.outputDir` | `build/reports/lsd` | Output directory for report files |
+| `lsd.core.ids.deterministic` | `false` | Generate deterministic HTML element IDs (useful for approval testing) |
+| `lsd.core.diagram.sequence.maxEventsPerDiagram` | `50` | Maximum events per diagram before auto-splitting |
+| `lsd.core.devMode` | `true` | Offline mode with inline CSS/JS (no CDN dependencies) |
+| `lsd.core.metrics.enabled` | `false` | _Experimental:_ Show performance metrics table |
 
 ## Gallery
 
-|                                                                                                                                                                                                                                                                                        |                                                                                                                                                                       |
-|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **LSD Reports** with metrics enabled <img src="docs/lsd_metrics_example_report.png" alt="LSD report example"/>                                                                                                                                                                         | **Popups** contain additional data. They open when the arrows are clicked <img src="docs/popup_example.png" alt="Popup example"/>                                     |
-| **Components Reports** contain a component diagram of _all_ participants from all reports and scenarios that were captured prior to generating the components report via `completeComponentsReport()` <img src="docs/combine_components_report.png"  alt="components report example"/> | **Index pages** contain links to all reports that were generated prior to the index page being rendered <img src="docs/example_index.png"  alt="index page example"/> |
-|                                                                                                                                                                                                                                                                                        |                                                                                                                                                                       |
+### Report Types
 
-## Related Libraries
+<table>
+  <tr>
+    <td width="50%">
+      <b>Sequence Diagrams with Metrics</b><br/>
+      <img src="docs/lsd_metrics_example_report.png" alt="LSD report example"/>
+    </td>
+    <td width="50%">
+      <b>Interactive Popups</b><br/>
+      Click arrows to view detailed event data<br/>
+      <img src="docs/popup_example.png" alt="Popup example"/>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <b>Component Diagrams</b><br/>
+      Visualize all participants across scenarios<br/>
+      <img src="docs/combine_components_report.png" alt="components report example"/>
+    </td>
+    <td width="50%">
+      <b>Index Pages</b><br/>
+      Navigate between multiple reports<br/>
+      <img src="docs/example_index.png" alt="index page example"/>
+    </td>
+  </tr>
+</table>
 
-A few [related libraries](https://github.com/lsd-consulting) exist to automate some of the steps to capture scenarios and generate reports e.g. via JUnit or Cucumber
-as plugins or extentions to the libraries.
+## Ecosystem
+
+**LSD Core** is the foundation library. Several companion libraries automate diagram generation for popular testing frameworks:
+
+- **[lsd-junit5](https://github.com/lsd-consulting/lsd-junit5)** - JUnit 5 extension
+- **[lsd-cucumber](https://github.com/lsd-consulting/lsd-cucumber)** - Cucumber plugin
+- **[lsd-interceptors](https://github.com/lsd-consulting/lsd-interceptors)** - HTTP/messaging interceptors
+- **[More libraries...](https://github.com/lsd-consulting)**
 
 
-## Building
+## Development
 
 ### Prerequisites
-* Java 17 JDK
 
-### Git hooks
+- Java 17 JDK
 
-Git hooks will be configured automatically (to use the hooks in `.githooks` directory when the `gradle clean` task is invoked).
+### Building
 
-### Build
+```bash
+./gradlew clean build
+```
 
-    ./gradlew clean build
+Git hooks are configured automatically on first build (uses `.githooks` directory).
 
 ### Troubleshooting
 
-#### Static files stale
-Since the static css and javascript files are cached on JSDelivr CDN it will occasionally be useful to force clear the 
-cache to avoid waiting for several days (I think it's up to 7 days). Use this [tool](https://www.jsdelivr.com/tools/purge) 
-to clear the cache and specify these files:
-* https://cdn.jsdelivr.net/gh/lsd-consulting/lsd-core@5/src/main/resources/static/style.min.css
-* https://cdn.jsdelivr.net/gh/lsd-consulting/lsd-core@5/src/main/resources/static/custom.min.js
+#### CDN Cache Issues
 
-**Note** that the browser cache may also need to be cleared since the browser will also cache css and js 
-files if they have the same url
+Static files (CSS/JS) are cached on JSDelivr CDN for up to 7 days. To force a cache refresh:
+
+1. Use the [JSDelivr Purge tool](https://www.jsdelivr.com/tools/purge)
+2. Purge these files:
+   - `https://cdn.jsdelivr.net/gh/lsd-consulting/lsd-core@5/src/main/resources/static/style.min.css`
+   - `https://cdn.jsdelivr.net/gh/lsd-consulting/lsd-core@5/src/main/resources/static/custom.min.js`
+3. Clear your browser cache
+
+**Tip:** Use `lsd.core.devMode=true` (default) to avoid CDN issues during development.
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.txt](LICENSE.txt) file for details.
