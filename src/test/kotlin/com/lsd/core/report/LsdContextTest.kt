@@ -4,8 +4,8 @@ import com.lsd.core.LsdContext
 import com.lsd.core.ReportOptions
 import com.lsd.core.builders.ActivateLifelineBuilder
 import com.lsd.core.builders.DeactivateLifelineBuilder
-import com.lsd.core.builders.MessageBuilder.Companion.messageBuilder
-import com.lsd.core.domain.MessageType.SYNCHRONOUS_RESPONSE
+import com.lsd.core.builders.messages
+import com.lsd.core.builders.respondsTo
 import com.lsd.core.domain.Newpage
 import com.lsd.core.domain.PageTitle
 import org.assertj.core.api.Assertions.assertThat
@@ -19,9 +19,9 @@ class LsdContextTest {
     @Test
     fun activationsRemovedWhenDiagramsAreSplitDueToSize() {
         repeat(10) {
-            context.capture(messageBuilder().from("A").to("B").build())
+            context.capture(("A" messages "B") {})
             context.capture(ActivateLifelineBuilder.activation().of("A").created(now()).build())
-            context.capture(messageBuilder().from("B").to("A").type(SYNCHRONOUS_RESPONSE).build())
+            context.capture(("B" respondsTo "A") {})
             context.capture(DeactivateLifelineBuilder.deactivation().of("A").created(now()).build())
         }
         context.completeScenario("scenario")
@@ -33,9 +33,9 @@ class LsdContextTest {
 
     @Test
     fun activationsRemovedWhenDiagramsAreSplitDueToNewpage() {
-        context.capture(messageBuilder().from("A").to("B").build())
+        context.capture(("A" messages "B") {})
         context.capture(ActivateLifelineBuilder.activation().of("A").build())
-        context.capture(messageBuilder().from("B").to("A").type(SYNCHRONOUS_RESPONSE).build())
+        context.capture(("B" respondsTo "A") {})
         context.capture(Newpage(PageTitle("New page here")))
         context.capture(DeactivateLifelineBuilder.deactivation().of("A").build())
         context.completeScenario("scenario")
@@ -48,9 +48,9 @@ class LsdContextTest {
 
     @Test
     fun activationsKeptWhenDiagramsAreNotSplit() {
-        context.capture(messageBuilder().from("A").to("B").build())
+        context.capture(("A" messages "B") {})
         context.capture(ActivateLifelineBuilder.activation().of("A").build())
-        context.capture(messageBuilder().from("B").to("A").type(SYNCHRONOUS_RESPONSE).build())
+        context.capture(("B" respondsTo "A") {})
         context.capture(DeactivateLifelineBuilder.deactivation().of("A").build())
         context.completeScenario("scenario")
 

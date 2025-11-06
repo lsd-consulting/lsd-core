@@ -62,10 +62,10 @@ API --> User: 200 OK
 ```kotlin
 // In your test or application code
 lsd.capture(
-    message().from("User").to("API").label("POST /login"),
-    message().from("API").to("Database").label("SELECT * FROM users"),
-    message().from("Database").to("API").label("user data"),
-    message().from("API").to("User").label("200 OK")
+    ("User" messages "API") { label("POST /login") },
+    ("API" messages "Database") { label("SELECT * FROM users") },
+    ("Database" respondsTo "API") { label("user data") },
+    ("API" respondsTo "User") { label("200 OK") }
 )
 ```
 
@@ -123,23 +123,19 @@ Capture interactions using the `LsdContext` singleton:
 <details open>
   <summary>Kotlin Example</summary>
 
+(Kotlin DSL as below or alternatively use the Java style builder or create `Message()` instances directly)
+
 ```kotlin
 fun main() {
     val lsd = LsdContext.instance
 
     // Capture message exchanges
     lsd.capture(
-        messageBuilder()
-            .from("User Service")
-            .to("Auth Service")
-            .label("POST /authenticate")
-            .build(),
-        messageBuilder()
-            .from("Auth Service")
-            .to("User Service")
-            .label("200 OK")
-            .data("$token")
-            .build(),
+        ("User Service" messages "Auth Service") { label("POST /authenticate") },
+        ("Auth Service" respondsTo "User Service") {
+            label("200 OK")
+            data("<token>")
+        }
     )
 
     // Complete the scenario and generate report
@@ -165,7 +161,9 @@ public static void main(String[] args) {
         messageBuilder()
             .from("Auth Service")
             .to("User Service")
-            .label("200 OK {token}")
+            .label("200 OK")
+            .data("<token>")
+            .type(SYNCHRONOUS_RESPONSE)
             .build()
     );
     
@@ -188,36 +186,21 @@ fun `process order with payment`() {
     
     // Customer places order
     lsd.capture(
-        messageBuilder()
-            .from("Customer")
-            .to("Order Service")
-            .label("POST /orders {items, total}")
-            .build()
+        ("Customer" messages "Order Service") { label("POST /orders {items, total}") }
     )
     
     // Order service validates and requests payment
     lsd.capture(
-        messageBuilder()
-            .from("Order Service")
-            .to("Payment Service")
-            .label("POST /payments {amount, card}")
-            .build(),
-        messageBuilder()
-            .from("Payment Service")
-            .to("Order Service")
-            .label("200 OK")
-            .data("<transactionId>")
-            .build()
+        ("Order Service" messages "Payment Service") { label("POST /payments") },
+        ("Payment Service" respondsTo "Order Service") { label("200 OK"); data("<transactionId>") }
     )
     
     // Order confirmed
     lsd.capture(
-        messageBuilder()
-            .from("Order Service")
-            .to("Customer")
-            .label("201 Created")
-            .data("<orderId>")
-            .build()
+        ("Order Service" respondsTo "Customer") { 
+            label("201 Created")
+            data("<orderId>")
+        }
     )
     
     lsd.completeScenario("Successful Order Processing")
@@ -246,11 +229,10 @@ lsd.addParticipants(listOf(frontend, api, userDb, cache, queue))
 
 // Use in messages
 lsd.capture(
-    messageBuilder()
-        .from(frontend)
-        .to(api)
-        .label("GET /users/123")
-        .build()
+    (frontend messages api) {
+        label("GET /users/123")
+        data("data for report diagram popup (may contain json, xml, html)")
+    }
 )
 ```
 

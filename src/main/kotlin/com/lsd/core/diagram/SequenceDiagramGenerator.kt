@@ -57,7 +57,7 @@ data class SequenceDiagramGenerator(
     }
 }
 
-fun Collection<Participant>.usedIn(events: List<SequenceEvent>): List<Participant> {
+fun Collection<Participant>.usedIn(events: Collection<SequenceEvent>): List<Participant> {
     val suppliedParticipantNames = associate { it.componentName.normalisedName to it }
     return events.filterIsInstance<Message>()
         .flatMap { listOf(it.from, it.to) }

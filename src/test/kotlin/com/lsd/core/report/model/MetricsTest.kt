@@ -1,12 +1,12 @@
 package com.lsd.core.report.model
 
-import com.lsd.core.builders.MessageBuilder.Companion.messageBuilder
+import com.lsd.core.builders.messages
 import com.lsd.core.domain.NoteLeft
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Condition
 import org.junit.jupiter.api.Test
 import java.time.Duration
-import java.time.Duration.ofSeconds
+import kotlin.time.Duration.Companion.seconds
 
 class MetricsTest {
 
@@ -26,8 +26,8 @@ class MetricsTest {
             componentDuration = Duration.ZERO,
             events = listOf(
                 NoteLeft(note = "hi"),
-                messageBuilder().from("A").to("B").build(),
-                messageBuilder().from("B").to("A").build()
+                ("A" messages "B") {},
+                ("B" messages "A") {}
             ),
         )
 
@@ -44,15 +44,15 @@ class MetricsTest {
             sequenceDuration = Duration.ZERO,
             componentDuration = Duration.ZERO,
             events = listOf(
-                message(from = "A", to = "B"),
-                message(from = "B", to = "C"),
-                message(from = "C", to = "B", duration = 3),
-                message(from = "B", to = "C"),
-                message(from = "C", to = "D"),
-                message(from = "D", to = "C", duration = 1),
-                message(from = "C", to = "B", duration = 1),
-                message(from = "B", to = "C", duration = 2),
-                message(from = "B", to = "A", duration = 10),
+                ("A" messages "B") {},
+                ("B" messages "C") {},
+                ("C" messages "B") { duration(3.seconds) },
+                ("B" messages "C") {},
+                ("C" messages "D") {},
+                ("D" messages "C") { duration(1.seconds) },
+                ("C" messages "B") { duration(1.seconds) },
+                ("B" messages "C") { duration(2.seconds) },
+                ("B" messages "A") { duration(10.seconds) },
             ),
         )
 
@@ -107,11 +107,11 @@ class MetricsTest {
             sequenceDuration = Duration.ZERO,
             componentDuration = Duration.ZERO,
             events = listOf(
-                message(from = "A", to = "B"),
-                message(from = "C", to = "D"),
-                message(from = "C", to = "B", duration = 3),
-                message(from = "B", to = "A", duration = 5),
-                message(from = "D", to = "C", duration = 4),
+                ("A" messages "B") {},
+                ("C" messages "D") {},
+                ("C" messages "B") { duration(3.seconds) },
+                ("B" messages "A") { duration(5.seconds) },
+                ("D" messages "C") { duration(4.seconds) },
             ),
         )
 
@@ -155,14 +155,14 @@ class MetricsTest {
             sequenceDuration = Duration.ZERO,
             componentDuration = Duration.ZERO,
             events = listOf(
-                message(from = "A", to = "B", duration = 8),
-                message(from = "A", to = "B", duration = 10),
-                message(from = "A", to = "C", duration = 11),
-                message(from = "A", to = "B", duration = 7),
-                message(from = "A", to = "B", duration = 6),
-                message(from = "A", to = "B", duration = 5),
-                message(from = "A", to = "B", duration = 4),
-                message(from = "A", to = "D"),
+                ("A" messages "B") { duration(8.seconds) },
+                ("A" messages "B") { duration(10.seconds) },
+                ("A" messages "C") { duration(11.seconds) },
+                ("A" messages "B") { duration(7.seconds) },
+                ("A" messages "B") { duration(6.seconds) },
+                ("A" messages "B") { duration(5.seconds) },
+                ("A" messages "B") { duration(4.seconds) },
+                ("A" messages "D") {}
             ),
         )
 
@@ -183,10 +183,6 @@ class MetricsTest {
                 )
             )
     }
-
-    private fun message(from: String, to: String, duration: Long = 0) =
-        messageBuilder().from(from).to(to).duration(ofSeconds(duration)).build()
-
 
     private fun anyMetricWithName(expectedName: String) =
         Condition<List<Metric>>(

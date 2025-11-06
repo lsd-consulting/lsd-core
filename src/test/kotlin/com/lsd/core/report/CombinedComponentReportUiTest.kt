@@ -1,7 +1,7 @@
 package com.lsd.core.report
 
 import com.lsd.core.LsdContext
-import com.lsd.core.builders.MessageBuilder.Companion.messageBuilder
+import com.lsd.core.builders.messages
 import com.lsd.core.domain.Participant
 import com.lsd.core.domain.ParticipantType.*
 import com.microsoft.playwright.Playwright
@@ -43,19 +43,21 @@ class CombinedComponentReportUiTest {
         participantC: Participant,
         participantD: Participant
     ) {
-        lsd.capture(messageBuilder().from(participantA).to(participantB).label("message1").build())
-        lsd.completeScenario("Scenario 1.1")
-        lsd.capture(messageBuilder().from(participantB).to(participantC).label("message2").build())
-        lsd.completeScenario("Scenario 1.2")
-        lsd.completeReport("Report 1")
+        with(lsd) {
+            capture((participantA messages participantB) { label("message1") })
+            completeScenario("Scenario 1.1")
+            capture((participantB messages participantC) { label("message2") })
+            completeScenario("Scenario 1.2")
+            completeReport("Report 1")
 
-        lsd.capture(messageBuilder().from(participantC).to(participantD).label("message3").build())
-        lsd.completeScenario("Scenario 2.1")
-        lsd.completeReport("Report 2")
+            capture((participantC messages participantD) { label("message3") })
+            completeScenario("Scenario 2.1")
+            completeReport("Report 2")
 
-        lsd.capture(messageBuilder().from(participantD).to(participantA).label("message4").build())
-        lsd.completeScenario("Scenario 3.1")
-        lsd.completeReport("Report 3")
+            capture((participantD messages participantA) { label("message4") })
+            completeScenario("Scenario 3.1")
+            completeReport("Report 3")
+        }
     }
 
     private fun whenTheCompleteComponentsReportIsGenerated() {
