@@ -19,13 +19,14 @@ class Metrics(
             Metric("Time to generate component diagram", componentDuration.pretty()),
             Metric("Events captured", "${events.size}"),
             Metric("Messages captured", "${allMessages.size}"),
-            Metric("Top bottlenecks", allMessages.let(::createTree).asList
-                .drop(1)
-                .sortedBy { it.isolatedDuration }
-                .reversed()
-                .take(max)
-                .joinToString(separator = "<br>", prefix = "<ol>", postfix = "</ol>") { node ->
-                    """<li>
+            Metric(
+                "Top bottlenecks", allMessages.let(::createTree).asList
+                    .drop(1)
+                    .sortedBy { it.isolatedDuration }
+                    .reversed()
+                    .take(max)
+                    .joinToString(separator = "<br>", prefix = "<ol>", postfix = "</ol>") { node ->
+                        """<li>
                         | <ul>
                         |  <li>Isolated duration ${node.isolatedDuration.pretty()}</li>
                         |  ${node.request?.let { "<li>${it.details()} ${it.show()} ${it.open()} </li>" } ?: ""}
@@ -34,7 +35,7 @@ class Metrics(
                         |  <li>Total ${node.duration.pretty()}</li>
                         | </ul>
                         |</li>""".trimMargin()
-                }),
+                    }),
         )
     }
 }
@@ -50,39 +51,41 @@ private fun Message.open() =
 private fun Message.show() =
     """<a href="javascript:scrollIntoViewFor('$id');"><sub>[show]</sub></a>"""
 
-private fun Message.details() = 
+private fun Message.details() =
     """[${from.componentName.normalisedName} -> ${to.componentName.normalisedName}] ${duration?.pretty() ?: "0s"}"""
 
 data class Metric(val name: String, val value: String)
 
 fun createTree(messages: List<Message>): TreeNode {
-    return TreeNode(request = null, response = null, parent = null).apply {
-        messages.fold(this) { node, message ->
-            val nodeComponent = node.request?.from?.componentName?.normalisedName
-            val nodeParentComponent = node.parent?.request?.from?.componentName?.normalisedName
-            val messageTo = message.to.componentName.normalisedName
-            val messageFrom = message.from.componentName.normalisedName
-            when  {
+    return TreeNode().also { root ->
+        messages.fold(root) { node, message ->
+            val nodeName = node.name
+            val parentNodeName = node.parent?.name
+            val from = message.from.componentName.normalisedName
+            val to = message.to.componentName.normalisedName
+
+            when {
                 // response to current node
-                messageTo == nodeComponent -> {
+                to == nodeName -> {
                     node.response = message
                     node.parent ?: node
                 }
                 // response to parent node
-                messageTo == nodeParentComponent -> {
+                to == parentNodeName -> {
                     node.parent.response = message
                     node.parent
                 }
 
-                // sibling node with same component
-                messageFrom == nodeComponent -> {
-                    val child = TreeNode(request = message, response = null, parent = node.parent)
-                    node.parent!!.children.add(child)
+                // sibling node
+                from == nodeName && node.parent != null -> {
+                    val child = TreeNode(request = message, parent = node.parent)
+                    node.parent.children.add(child)
                     node.parent
                 }
-                
+
+                // New child under this node
                 else -> {
-                    val child = TreeNode(request = message, response = null, parent = node)
+                    val child = TreeNode(request = message, parent = node)
                     node.children.add(child)
                     child
                 }
@@ -92,18 +95,24 @@ fun createTree(messages: List<Message>): TreeNode {
 }
 
 data class TreeNode(
-    val request: Message?,
-    var response: Message?,
-    val parent: TreeNode?,
+    val request: Message? = null,
+    var response: Message? = null,
+    val parent: TreeNode? = null,
     val children: MutableList<TreeNode> = arrayListOf()
 ) {
-    val duration get() = Duration.ofMillis((request?.duration?.toMillis() ?: 0) + (response?.duration?.toMillis() ?: 0))
-    val childrenDuration get() = Duration.ofMillis(children.sumOf { it.duration.toMillis() })
-    val isolatedDuration get() = duration.minus(childrenDuration)
+    val duration: Duration
+        get() = Duration.ofMillis(
+            (request?.duration?.toMillis() ?: 0) + (response?.duration?.toMillis() ?: 0)
+        )
+    val childrenDuration: Duration get() = Duration.ofMillis(children.sumOf { it.duration.toMillis() })
+    val isolatedDuration: Duration get() = duration.minus(childrenDuration)
     val asList get() : List<TreeNode> = listOf(this) + children.flatMap { it.asList }
+
+    internal val name get() = request?.from?.componentName?.normalisedName
 
     override fun toString() = """
         TreeNode {
+            name: $name,
             request: [${request?.from?.componentName?.normalisedName} -> ${request?.to?.componentName?.normalisedName}],
             response: [${response?.from?.componentName?.normalisedName} -> ${response?.to?.componentName?.normalisedName}],
             parent: $parent,
