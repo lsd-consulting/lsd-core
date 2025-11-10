@@ -72,16 +72,29 @@ fun Collection<Participant>.usedIn(events: Collection<SequenceEvent>): List<Part
         }
 }
 
-fun List<SequenceEvent>.groupedByPages() =
-    fold(mutableListOf<MutableList<SequenceEvent>>()
-        .also { it.add(ArrayList()) }) { groups, event ->
-        when (event) {
-            is Newpage -> groups.apply {
-                add(ArrayList())
-                last().add(event.pageTitle)
+/**
+ * Splits on Newpage events.
+ *
+ * Returns a list of lists, where each inner list represents events for one page.
+ */
+internal fun List<SequenceEvent>.groupedByPages(): List<List<SequenceEvent>> {
+    val events = this
+    val currentGrouping = mutableListOf<SequenceEvent>()
+
+    return buildList {
+        events.forEach {
+            when (it) {
+                is Newpage -> {
+                    if (currentGrouping.isNotEmpty()) {
+                        add(currentGrouping.toList())
+                        currentGrouping.clear()
+                    }
+                    currentGrouping.add(it.pageTitle)
+                }
+
+                else -> currentGrouping.add(it)
             }
-
-            else -> groups.apply { last().add(event) }
         }
+        add(currentGrouping.toList())
     }
-
+}
