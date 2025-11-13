@@ -1,4 +1,3 @@
-[![semantic-release](https://img.shields.io/badge/semantic-release-e10079.svg?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
 [![CI](https://github.com/lsd-consulting/lsd-core/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/lsd-consulting/lsd-core/actions/workflows/ci.yml)
 [![Nightly Build](https://github.com/lsd-consulting/lsd-core/actions/workflows/nightly.yml/badge.svg)](https://github.com/lsd-consulting/lsd-core/actions/workflows/nightly.yml)
 [![GitHub release](https://img.shields.io/github/release/lsd-consulting/lsd-core)](https://github.com/lsd-consulting/lsd-core/releases)
