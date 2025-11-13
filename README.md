@@ -358,7 +358,8 @@ Customize LSD behavior by adding an `lsd.properties` file to your classpath or s
 
 **LSD Core** is the foundation library. Several companion libraries automate diagram generation for popular testing frameworks:
 
-- **[lsd-junit5](https://github.com/lsd-consulting/lsd-junit5)** - JUnit 5 extension
+- **[lsd-junit-jupiter](https://github.com/lsd-consulting/lsd-junit-jupiter)** - JUnit Jupiter extension
+- **[lsd-junit5](https://github.com/lsd-consulting/lsd-junit5)** - JUnit 5 extension (deprecated)
 - **[lsd-cucumber](https://github.com/lsd-consulting/lsd-cucumber)** - Cucumber plugin
 - **[lsd-interceptors](https://github.com/lsd-consulting/lsd-interceptors)** - HTTP/messaging interceptors
 - **[More libraries...](https://github.com/lsd-consulting)**
