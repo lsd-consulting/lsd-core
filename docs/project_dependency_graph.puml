@@ -5,6 +5,7 @@
 title Dependencies on lsd-core
 
 component "lsd-core"#royalblue
+component "lsd-junit-jupiter"#lightgreen
 component "lsd-junit5"#lightgreen
 component "lsd-cucumber"#lightgreen
 component "lsd-distributed-generator"#lightgreen
@@ -14,6 +15,7 @@ component "lsd-distributed-generator-ui"#orange
 component "lsd-kotlin-cucumber-example"#orange
 component "lsd-interceptors-http4k" #lightgreen
 
+[lsd-junit-jupiter] -[#lightgreen]-> [lsd-core] : -[api]
 [lsd-junit5] -[#lightgreen]-> [lsd-core] : -[api]
 [lsd-cucumber] -[#lightgreen]-> [lsd-core] : -[api]
 [lsd-interceptors] -[#lightgreen]-> [lsd-core] : -[impl]
@@ -25,8 +27,8 @@ component "lsd-interceptors-http4k" #lightgreen
 [lsd-distributed-interceptors] -[#orange]-> [lsd-distributed-generator] : -[test]
 [lsd-distributed-interceptors] -[#orange]-> [lsd-distributed-generator-ui] : -[test]
 [lsd-distributed-interceptors] -[#lightgreen]-> [lsd-core] : -[api]
-[lsd-distributed-interceptors] -[#orange]-> [lsd-junit5] : -[test]
-[lsd-interceptors] -[#orange]-> [lsd-junit5] : -[test]
+[lsd-distributed-interceptors] -[#orange]-> [lsd-junit-jupiter] : -[test]
+[lsd-interceptors] -[#orange]-> [lsd-junit-jupiter] : -[test]
 [lsd-kotlin-cucumber-example] -[#orange]-> [lsd-cucumber] : -(dynamic\nversioning)
 [lsd-kotlin-cucumber-example] -[#orange]-> [lsd-interceptors] : -(dynamic\nversioning)
 
