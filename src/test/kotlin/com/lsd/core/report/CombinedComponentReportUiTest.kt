@@ -1,7 +1,7 @@
 package com.lsd.core.report
 
 import com.lsd.core.LsdContext
-import com.lsd.core.builders.messages
+import com.lsd.core.builders.message
 import com.lsd.core.domain.Participant
 import com.lsd.core.domain.ParticipantType.*
 import com.microsoft.playwright.Playwright
@@ -44,17 +44,17 @@ class CombinedComponentReportUiTest {
         participantD: Participant
     ) {
         with(lsd) {
-            capture((participantA messages participantB) { label("message1") })
+            capture(participantA to participantB message "message1")
             completeScenario("Scenario 1.1")
-            capture((participantB messages participantC) { label("message2") })
+            capture(participantB to participantC message "message2")
             completeScenario("Scenario 1.2")
             completeReport("Report 1")
 
-            capture((participantC messages participantD) { label("message3") })
+            capture(participantC to participantD message "message3")
             completeScenario("Scenario 2.1")
             completeReport("Report 2")
 
-            capture((participantD messages participantA) { label("message4") })
+            capture(participantD to participantA message "message4")
             completeScenario("Scenario 3.1")
             completeReport("Report 3")
         }
