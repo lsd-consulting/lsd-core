@@ -1,6 +1,7 @@
 package com.lsd.core.report.model
 
-import com.lsd.core.builders.messages
+import com.lsd.core.builders.message
+import com.lsd.core.builders.reply
 import com.lsd.core.domain.NoteLeft
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Condition
@@ -26,8 +27,8 @@ class MetricsTest {
             componentDuration = Duration.ZERO,
             events = listOf(
                 NoteLeft(note = "hi"),
-                ("A" messages "B") {},
-                ("B" messages "A") {}
+                "A" to "B" message {},
+                "B" to "A" message {}
             ),
         )
 
@@ -44,15 +45,15 @@ class MetricsTest {
             sequenceDuration = Duration.ZERO,
             componentDuration = Duration.ZERO,
             events = listOf(
-                ("A" messages "B") {},
-                ("B" messages "C") {},
-                ("C" messages "B") { duration(3.seconds) },
-                ("B" messages "C") {},
-                ("C" messages "D") {},
-                ("D" messages "C") { duration(1.seconds) },
-                ("C" messages "B") { duration(1.seconds) },
-                ("B" messages "C") { duration(2.seconds) },
-                ("B" messages "A") { duration(10.seconds) },
+                "A" to "B" message {},
+                "B" to "C" message {},
+                "C" to "B" reply 3.seconds,
+                "B" to "C" message {},
+                "C" to "D" message {},
+                "D" to "C" reply 1.seconds,
+                "C" to "B" message 1.seconds,
+                "B" to "C" reply 2.seconds,
+                "B" to "A" reply 10.seconds,
             ),
         )
 
@@ -97,11 +98,11 @@ class MetricsTest {
             sequenceDuration = Duration.ZERO,
             componentDuration = Duration.ZERO,
             events = listOf(
-                ("A" messages "B") {},
-                ("C" messages "D") {},
-                ("C" messages "B") { duration(3.seconds) },
-                ("B" messages "A") { duration(5.seconds) },
-                ("D" messages "C") { duration(4.seconds) },
+                "A" to "B" message {},
+                "C" to "D" message {},
+                "C" to "B" message 3.seconds,
+                "B" to "A" message 5.seconds,
+                "D" to "C" message 4.seconds,
             ),
         )
 
@@ -137,14 +138,14 @@ class MetricsTest {
             sequenceDuration = Duration.ZERO,
             componentDuration = Duration.ZERO,
             events = listOf(
-                ("A" messages "B") { duration(8.seconds) },
-                ("A" messages "B") { duration(10.seconds) },
-                ("A" messages "C") { duration(11.seconds) },
-                ("A" messages "B") { duration(7.seconds) },
-                ("A" messages "B") { duration(6.seconds) },
-                ("A" messages "B") { duration(5.seconds) },
-                ("A" messages "B") { duration(4.seconds) },
-                ("A" messages "D") {}
+                "A" to "B" message 8.seconds,
+                "A" to "B" message 10.seconds,
+                "A" to "C" message 11.seconds,
+                "A" to "B" message 7.seconds,
+                "A" to "B" message 6.seconds,
+                "A" to "B" message 5.seconds,
+                "A" to "B" message 4.seconds,
+                "A" to "D" message {}
             ),
         )
 

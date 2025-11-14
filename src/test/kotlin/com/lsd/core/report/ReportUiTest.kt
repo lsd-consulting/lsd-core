@@ -2,7 +2,7 @@ package com.lsd.core.report
 
 import com.lsd.core.LsdContext
 import com.lsd.core.ReportOptions
-import com.lsd.core.builders.messages
+import com.lsd.core.builders.message
 import com.microsoft.playwright.Page.GetByRoleOptions
 import com.microsoft.playwright.Playwright
 import com.microsoft.playwright.assertions.LocatorAssertions.IsVisibleOptions
@@ -79,7 +79,7 @@ class ReportUiTest {
     }
 
     private fun givenAScenarioHasCapturedEventsCleared() {
-        lsd.capture(("" messages "B") { label("in") })
+        lsd.capture("" to "B" message "in")
         lsd.clearScenarioEvents()
         lsd.completeScenario("A scenario without events")
     }
@@ -91,7 +91,7 @@ class ReportUiTest {
     private fun givenAScenarioContainingMessage(withText: String, withPopupData: String) {
         messageText = withText
         messagePopupData = withPopupData
-        lsd.capture(("A" messages "B") {
+        lsd.capture("A" to "B" message {
             label(withText)
             data(withPopupData)
         })
@@ -100,10 +100,10 @@ class ReportUiTest {
 
     private fun givenMultipleCapturedMessages() {
         lsd.capture(
-            ("A" messages "B") { label("message1") },
-            ("B" messages "C") { label("message2") },
-            ("C" messages "B") { label("OK"); duration(2.seconds) },
-            ("B" messages "A") { label("OK"); duration(5.seconds) }
+            "A" to "B" message "message1",
+            "B" to "C" message "message2",
+            "C" to "B" message { label("OK"); duration(2.seconds) },
+            "B" to "A" message { label("OK"); duration(5.seconds) }
         )
         lsd.completeScenario("Example scenario")
     }

@@ -56,24 +56,25 @@ class MessageBuilder {
 /**
  * Convenience functions for Kotlin DSL style.
  */
-infix fun Any.messages(target: Any): (MessageBuilder.() -> Unit) -> Message = {
+infix fun Pair<Any, Any>.message(config: MessageBuilder.() -> Unit): Message =
     MessageBuilder()
-        .from(this.toParticipant())
-        .to(target.toParticipant())
-        .apply(it)
+        .from(first.toParticipant())
+        .to(second.toParticipant())
+        .apply(config)
         .build()
+
+infix fun Pair<Any, Any>.message(label: String): Message = message { label(label) }
+infix fun Pair<Any, Any>.message(duration: kotlin.time.Duration): Message = message { duration(duration) }
+infix fun Pair<Any, Any>.reply(config: MessageBuilder.() -> Unit): Message = message {
+    type(SYNCHRONOUS_RESPONSE)
+    apply(config)
 }
 
-infix fun Any.respondsTo(target: Any): (MessageBuilder.() -> Unit) -> Message = {
-    MessageBuilder()
-        .from(this.toParticipant())
-        .to(target.toParticipant())
-        .type(SYNCHRONOUS_RESPONSE)
-        .apply(it)
-        .build()
-}
+infix fun Pair<Any, Any>.reply(label: String): Message = reply { label(label) }
+infix fun Pair<Any, Any>.reply(duration: kotlin.time.Duration): Message = reply { duration(duration) }
 
 private fun Any.toParticipant(): Participant = when (this) {
     is Participant -> this
-    else -> PARTICIPANT.called(this.toString())
+    is String -> PARTICIPANT.called(this)
+    else -> throw UnsupportedOperationException("Only Participant or String types are currently supported.")
 }
