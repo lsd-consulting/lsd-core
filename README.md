@@ -61,10 +61,10 @@ API --> User: 200 OK
 ```kotlin
 // In your test or application code
 lsd.capture(
-    ("User" messages "API") { label("POST /login") },
-    ("API" messages "Database") { label("SELECT * FROM users") },
-    ("Database" respondsTo "API") { label("user data") },
-    ("API" respondsTo "User") { label("200 OK") }
+    "User" to "API" message "POST /login",
+    "API" to "Database" message "SELECT * FROM users",
+    "Database" to "API" reply "user data",
+    "API" to "User" reply "200 OK"
 )
 ```
 
@@ -130,8 +130,8 @@ fun main() {
 
     // Capture message exchanges
     lsd.capture(
-        ("User Service" messages "Auth Service") { label("POST /authenticate") },
-        ("Auth Service" respondsTo "User Service") {
+        "User Service" to "Auth Service" message "POST /authenticate",
+        "Auth Service" to "User Service" reply {
             label("200 OK")
             data("<token>")
         }
@@ -185,18 +185,21 @@ fun `process order with payment`() {
     
     // Customer places order
     lsd.capture(
-        ("Customer" messages "Order Service") { label("POST /orders {items, total}") }
+        "Customer" to "Order Service" message "POST /orders {items, total}"
     )
     
     // Order service validates and requests payment
     lsd.capture(
-        ("Order Service" messages "Payment Service") { label("POST /payments") },
-        ("Payment Service" respondsTo "Order Service") { label("200 OK"); data("<transactionId>") }
+        "Order Service" to "Payment Service" message "POST /payments",
+        "Payment Service" to "Order Service" reply { 
+            label("200 OK")
+            data("<transactionId>") 
+        }
     )
     
     // Order confirmed
     lsd.capture(
-        ("Order Service" respondsTo "Customer") { 
+        "Order Service" to "Customer" reply { 
             label("201 Created")
             data("<orderId>")
         }
@@ -228,7 +231,7 @@ lsd.addParticipants(listOf(frontend, api, userDb, cache, queue))
 
 // Use in messages
 lsd.capture(
-    (frontend messages api) {
+    frontend to api message {
         label("GET /users/123")
         data("data for report diagram popup (may contain json, xml, html)")
     }

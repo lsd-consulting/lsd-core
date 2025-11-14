@@ -1,7 +1,7 @@
 package com.lsd.core.diagram
 
 import com.lsd.core.IdGenerator
-import com.lsd.core.builders.messages
+import com.lsd.core.builders.message
 import com.lsd.core.domain.ParticipantType.*
 import org.approvaltests.Approvals
 import org.assertj.core.api.Assertions.assertThat
@@ -18,7 +18,7 @@ internal class ComponentDiagramGeneratorTest {
             participants = emptySet(),
             events = buildSet {
                 repeat(3) {
-                    add(("A" messages "B") {
+                    add("A" to "B" message {
                         label("$it")
                         data("${Random.nextInt()}")
                     })
@@ -34,9 +34,7 @@ internal class ComponentDiagramGeneratorTest {
         val sampleParticipant = PARTICIPANT.called("SomeService")
         val diagramGenerator = ComponentDiagramGenerator(
             idGenerator = idGenerator,
-            events = setOf(
-                ("A" messages "B") {},
-            ),
+            events = setOf("A" to "B" message {}),
             participants = setOf(sampleParticipant)
         )
 
@@ -49,9 +47,7 @@ internal class ComponentDiagramGeneratorTest {
         val diagramGenerator =
             ComponentDiagramGenerator(
                 idGenerator = idGenerator,
-                events = setOf(
-                    ("A" messages "B") {}
-                ),
+                events = setOf("A" to "B" message "Hi"),
                 participants = setOf(sampleParticipant)
             )
 
@@ -63,7 +59,7 @@ internal class ComponentDiagramGeneratorTest {
         val diagramGenerator = ComponentDiagramGenerator(
             idGenerator = idGenerator,
             events = setOf(
-                ("fixes from" messages "fixes to") {}
+                "fixes from" to "fixes to" message {}
             ),
             participants = emptySet()
         )
@@ -74,10 +70,10 @@ internal class ComponentDiagramGeneratorTest {
     @Test
     fun mapsMessageEventsToParticipants() {
         val messages = setOf(
-            ("A" messages "B") {},
-            ("B" messages "B") {},
-            ("C" messages "B") {},
-            ("D" messages "B") {},
+            "A" to "B" message {},
+            "B" to "B" message {},
+            "C" to "B" message {},
+            "D" to "B" message {},
         )
 
         val participants = listOf(
@@ -102,9 +98,9 @@ internal class ComponentDiagramGeneratorTest {
         val participants = listOf(fred1, fred2)
 
         val messages = setOf(
-            ("Jake" messages fred1) {},
-            ("Fred" messages "Bettie") {},
-            (PARTICIPANT.called("Fred", "Fredster", "red") messages "Bettie") {}
+            "Jake" to fred1 message {},
+            "Fred" to "Bettie" message {},
+            PARTICIPANT.called("Fred", "Fredster", "red") to "Bettie" message {}
         )
 
         assertThat(participants.usedIn(messages))
