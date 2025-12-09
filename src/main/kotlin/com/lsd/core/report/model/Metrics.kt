@@ -13,8 +13,8 @@ class Metrics(
 
     @JvmOverloads
     fun asList(max: Int = 5): List<Metric> {
-        val allMessages = events.filterIsInstance(Message::class.java)
-        return listOf(
+        val allMessages = events.filterIsInstance<Message>()
+        return listOfNotNull(
             Metric("Time to generate sequence diagram", sequenceDuration.pretty()),
             Metric("Time to generate component diagram", componentDuration.pretty()),
             Metric("Events captured", "${events.size}"),
@@ -22,20 +22,23 @@ class Metrics(
             Metric(
                 "Top bottlenecks", allMessages.let(::createTree).asList
                     .drop(1)
+                    .filter { it.isolatedDuration > Duration.ZERO }
                     .sortedBy { it.isolatedDuration }
                     .reversed()
                     .take(max)
-                    .joinToString(separator = "<br>", prefix = "<ol>", postfix = "</ol>") { node ->
-                        """<li>
-                        | <ul>
-                        |  <li>Isolated duration ${node.isolatedDuration.pretty()}</li>
-                        |  ${node.request?.let { "<li>${it.details()} ${it.show()} ${it.open()} </li>" } ?: ""}
-                        |  ${node.response?.let { "<li>${it.details()} ${it.show()} ${it.open()} </li>" } ?: ""}
-                        |  ${if (node.children.isNotEmpty()) "<li>Children ${node.childrenDuration.pretty()}</li>" else ""}
-                        |  <li>Total ${node.duration.pretty()}</li>
-                        | </ul>
-                        |</li>""".trimMargin()
-                    }),
+                    .joinToString(separator = "") { node ->
+                        """
+                        |<details>
+                        |  <summary>${node.request?.to?.componentName?.normalisedName} (isolated duration ${node.isolatedDuration.pretty()})</summary>
+                        |  <ul>
+                        |    ${node.request?.let { "<li>${it.details()} ${it.show()} ${it.open()}</li>" } ?: ""}
+                        |    ${node.response?.let { "<li>${it.details()} ${it.show()} ${it.open()}</li>" } ?: ""}
+                        |    ${if (node.children.isNotEmpty()) "<li>Children ${node.childrenDuration.pretty()}</li>" else ""}
+                        |    <li>Total ${node.duration.pretty()}</li>
+                        |  </ul>
+                        |</details>
+                        |""".trimMargin()
+                    }).takeIf { it.value.isNotEmpty() },
         )
     }
 }
@@ -52,7 +55,7 @@ private fun Message.show() =
     """<a href="javascript:scrollIntoViewFor('$id');"><sub>[show]</sub></a>"""
 
 private fun Message.details() =
-    """[${from.componentName.normalisedName} -> ${to.componentName.normalisedName}] ${duration?.pretty() ?: "0s"}"""
+    """[${from.alias ?: from.componentName.normalisedName} -> ${to.alias ?: to.componentName.normalisedName}] ${duration?.pretty() ?: "0s"}"""
 
 data class Metric(val key: String, val value: String)
 

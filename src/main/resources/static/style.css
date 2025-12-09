@@ -170,13 +170,27 @@ h3 {
 .rowHead {
     display: table-header-group;
     font-weight: bold;
+    background-color: var(--color-3);
+    color: var(--color-6);
     border-bottom: 1px solid var(--color-border);
+}
+
+.rowHead {
+    border-right: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.rowHead:last-child {
+    border-right: none;
 }
 
 .cell, .rowHead {
     display: table-cell;
     padding: 3px 10px;
-    border-bottom: 1px outset var(--color-border);
+    border-bottom: 1px solid rgba(125, 133, 144, 0.3);
+}
+
+.cell:last-child {
+    border-right: none;
 }
 
 a:hover, a:focus

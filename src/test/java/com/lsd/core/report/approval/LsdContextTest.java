@@ -13,6 +13,7 @@ import org.approvaltests.scrubbers.Scrubbers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.Duration;
 import java.util.LinkedHashSet;
 import java.util.List;
 
@@ -100,10 +101,10 @@ class LsdContextTest {
     private void scenarioWithMessages() {
         lsdContext.capture(
                 messageBuilder().id(nextId()).to(arnie).label("in").data("start some job").type(SHORT_INBOUND).build(),
-                messageBuilder().id(nextId()).from(arnie).to(bettie).label("Message 1").data("some data 1").type(BI_DIRECTIONAL).build(),
+                messageBuilder().id(nextId()).from(arnie).to(bettie).label("Message 1").data("some data 1").type(BI_DIRECTIONAL).duration(Duration.ofSeconds(1)).build(),
                 messageBuilder().id(nextId()).from(bettie).label("out").data("some data 1").type(SHORT_OUTBOUND).build(),
                 messageBuilder().id(nextId()).label("An interaction description that is long enough to need abbreviating").from("Beta").to("Gamma").data("β").type(LOST).build(),
-                messageBuilder().id(nextId()).label("A synchronous response").from("Gamma").to("Beta").data("200 OK").type(SYNCHRONOUS_RESPONSE).build()
+                messageBuilder().id(nextId()).label("A synchronous response").from("Gamma").to("Beta").data("200 OK").type(SYNCHRONOUS_RESPONSE).duration(Duration.ofSeconds(2)).build()
         );
         lsdContext.completeScenario("A Success scenario with messages", "Given a first scenario description<br/>When something happens<br/>Then something else happens", SUCCESS);
     }
