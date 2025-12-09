@@ -1,0 +1,17 @@
+{{#if items ~}}
+        <aside class="{{tableClass}}">
+            <div class="table">
+                <h3>{{title}}</h3>
+                <div class="row">
+                    <div class="rowHead">{{headerKey}}</div>
+                    <div class="rowHead">{{headerValue}}</div>
+                </div>
+                {{~#each items ~}}
+                <div class="row">
+                    <div class="cell">{{{key}}}</div>
+                    <div class="cell">{{{value}}}</div>
+                </div>
+                {{~/each}}
+            </div>
+        </aside>
+{{~/if}}

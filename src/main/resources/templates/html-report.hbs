@@ -30,40 +30,8 @@
             {{{ description }}}
         </section>
         {{~/if}}
-        {{#if facts ~}}
-        <aside class="facts">
-            <div class="table">
-                <h3>Key Facts</h3>
-                <div class="row">
-                    <div class="rowHead">Description</div>
-                    <div class="rowHead">Value</div>
-                </div>
-                {{~#each facts ~}}
-                <div class="row">
-                    <div class="cell">{{key}}</div>
-                    <div class="cell">{{value}}</div>
-                </div>
-                {{~/each}}
-            </div>
-        </aside>
-        {{~/if}}
-        {{#if metrics ~}}
-        <aside class="metrics">
-            <div class="table">
-                <h3>Metrics</h3>
-                <div class="row">
-                    <div class="rowHead">Name</div>
-                    <div class="rowHead">Value</div>
-                </div>
-                {{~#each metrics.asList ~}}
-                <div class="row">
-                    <div class="cell">{{{name}}}</div>
-                    <div class="cell">{{{value}}}</div>
-                </div>
-                {{~/each}}
-            </div>
-        </aside>
-        {{~/if}}
+        {{> templates/partials/data-table title="Key Facts" tableClass="facts" headerKey="Description" headerValue="Value" items=facts}}
+        {{> templates/partials/data-table title="Metrics" tableClass="metrics" headerKey="Name" headerValue="Value" items=metrics.asList}}
         {{#if sequenceDiagram ~}}
         <section class="sequence diagram svg {{ status }}">
             <h3 class="{{ status }}">Sequence Diagram</h3>

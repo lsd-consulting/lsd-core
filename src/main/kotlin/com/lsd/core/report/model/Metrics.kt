@@ -54,7 +54,7 @@ private fun Message.show() =
 private fun Message.details() =
     """[${from.componentName.normalisedName} -> ${to.componentName.normalisedName}] ${duration?.pretty() ?: "0s"}"""
 
-data class Metric(val name: String, val value: String)
+data class Metric(val key: String, val value: String)
 
 fun createTree(messages: List<Message>): TreeNode {
     return TreeNode().also { root ->

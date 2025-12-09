@@ -15,8 +15,8 @@ class MetricsTest {
         val metrics = Metrics(events = listOf(), sequenceDuration = Duration.ZERO, componentDuration = Duration.ZERO)
 
         assertThat(metrics.asList()).isNotNull
-            .contains(Metric(name = "Time to generate component diagram", value = "0s"))
-            .contains(Metric(name = "Time to generate sequence diagram", value = "0s"))
+            .contains(Metric(key = "Time to generate component diagram", value = "0s"))
+            .contains(Metric(key = "Time to generate sequence diagram", value = "0s"))
     }
 
     @Test
@@ -186,7 +186,7 @@ class MetricsTest {
 
     private fun anyMetricWithName(expectedName: String) =
         Condition<List<Metric>>(
-            { metric -> metric.any { it.name == expectedName } },
+            { metric -> metric.any { it.key == expectedName } },
             "any metric with expected name: $expectedName"
         )
 
