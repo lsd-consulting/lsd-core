@@ -17,13 +17,35 @@ function addSliderForSvgZoom() {
                     let originalWidth = viewBoxDimensions[2];
                     let originalHeight = viewBoxDimensions[3];
                     let i = ++index
-                    svgParent.insert('input', 'svg:nth-of-type(' + i + ')')
+                    
+                    // Create container for zoom controls
+                    let zoomContainer = svgParent.insert('div', 'svg:nth-of-type(' + i + ')')
+                        .attr("class", "zoom-control");
+                    
+                    // Add magnifying glass icon
+                    zoomContainer.append('span')
+                        .attr("class", "zoom-label")
+                        .html("&#128269;");
+                    
+                    // Add zoom out label (-)
+                    zoomContainer.append('span')
+                        .attr("class", "zoom-icon zoom-out")
+                        .text("-");
+                    
+                    // Add slider
+                    zoomContainer.append('input')
                         .attr("min", 0.0)
                         .attr("type", "range")
                         .attr("max", 1)
                         .attr("step", 0.01)
                         .attr("value", 1)
+                        .attr("title", "Zoom control")
                         .on("input", adjustSvgZoom(originalWidth, originalHeight, svg));
+                    
+                    // Add zoom in label (+)
+                    zoomContainer.append('span')
+                        .attr("class", "zoom-icon zoom-in")
+                        .text("+");
                 })
         });
 }

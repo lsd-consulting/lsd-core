@@ -435,39 +435,108 @@ label.index {
     background-color: #f1f1f1
 }
 
+/* Zoom control container */
+.zoom-control {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px 15px;
+    width: fit-content;
+}
+
+.zoom-label {
+    font-size: 16px;
+    color: var(--color-text-primary);
+    user-select: none;
+    line-height: 1;
+}
+
+.zoom-icon {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-4);
+    user-select: none;
+    font-style: normal;
+    width: 16px;
+    text-align: center;
+}
+
 /* Range slider */
 input[type="range"] {
-    display: block;
-    margin-bottom: 0;
-    margin-left: 35%;
-    margin-top: 30px;
-    height: 6px;
-    width: 30%;
+    margin: 0;
+    height: 8px;
+    width: 200px;
     background: var(--color-border);
     outline: none;
     -webkit-appearance: none;
     border-radius: 30px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+    cursor: pointer;
 }
 
 input[type="range"]:hover {
-    opacity: 1;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.15), 0 0 4px rgba(125, 133, 144, 0.3);
 }
 
 input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 15px;
-    height: 5px;
-    background: var(--color-background-primary);
-    cursor: pointer;
-    border-radius: 30px;
+    width: 18px;
+    height: 18px;
+    background: var(--color-3);
+    cursor: grab;
+    border-radius: 50%;
+    border: 2px solid var(--color-6);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    background: var(--color-2);
+}
+
+input[type="range"]::-webkit-slider-thumb:active {
+    cursor: grabbing;
+    transform: scale(1.0);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
 
 input[type="range"]::-moz-range-thumb {
-    width: 15px;
-    height: 5px;
-    background: var(--color-background-primary);
-    cursor: pointer;
+    width: 18px;
+    height: 18px;
+    background: var(--color-3);
+    cursor: grab;
+    border-radius: 50%;
+    border: 2px solid var(--color-6);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+}
+
+input[type="range"]::-moz-range-thumb:hover {
+    transform: scale(1.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    background: var(--color-2);
+}
+
+input[type="range"]::-moz-range-thumb:active {
+    cursor: grabbing;
+    transform: scale(1.0);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+input[type="range"]::-moz-range-track {
+    height: 8px;
+    background: var(--color-border);
+    border-radius: 30px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 /* Report footer */
@@ -1349,13 +1418,35 @@ function addSliderForSvgZoom() {
                     let originalWidth = viewBoxDimensions[2];
                     let originalHeight = viewBoxDimensions[3];
                     let i = ++index
-                    svgParent.insert('input', 'svg:nth-of-type(' + i + ')')
+                    
+                    // Create container for zoom controls
+                    let zoomContainer = svgParent.insert('div', 'svg:nth-of-type(' + i + ')')
+                        .attr("class", "zoom-control");
+                    
+                    // Add magnifying glass icon
+                    zoomContainer.append('span')
+                        .attr("class", "zoom-label")
+                        .html("&#128269;");
+                    
+                    // Add zoom out label (-)
+                    zoomContainer.append('span')
+                        .attr("class", "zoom-icon zoom-out")
+                        .text("-");
+                    
+                    // Add slider
+                    zoomContainer.append('input')
                         .attr("min", 0.0)
                         .attr("type", "range")
                         .attr("max", 1)
                         .attr("step", 0.01)
                         .attr("value", 1)
+                        .attr("title", "Zoom control")
                         .on("input", adjustSvgZoom(originalWidth, originalHeight, svg));
+                    
+                    // Add zoom in label (+)
+                    zoomContainer.append('span')
+                        .attr("class", "zoom-icon zoom-in")
+                        .text("+");
                 })
         });
 }
