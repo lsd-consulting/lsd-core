@@ -464,3 +464,17 @@ input[type="range"]::-moz-range-thumb {
     background: var(--color-background-primary);
     cursor: pointer;
 }
+
+/* Report footer */
+.report-footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+    border-top: 1px solid var(--color-border);
+    font-size: 0.85em;
+    color: var(--color-text-secondary);
+}
+
+.report-footer a {
+    color: var(--color-5);
+}
