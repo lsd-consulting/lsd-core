@@ -3,7 +3,6 @@ package com.lsd.core.builders
 import com.lsd.core.IdGenerator
 import com.lsd.core.domain.Message
 import com.lsd.core.domain.MessageType
-import com.lsd.core.domain.MessageType.SYNCHRONOUS_RESPONSE
 import com.lsd.core.domain.Participant
 import com.lsd.core.domain.ParticipantType.PARTICIPANT
 import java.time.Duration
@@ -12,7 +11,7 @@ import kotlin.time.toJavaDuration
 
 private val idGenerator = IdGenerator(isDeterministic = false)
 
-class MessageBuilder {
+class MessageBuilder : SequenceEventBuilder {
     private var id: String? = null
     private var from: Participant? = null
     private var to: Participant? = null
@@ -35,7 +34,7 @@ class MessageBuilder {
     fun duration(duration: Duration) = apply { this.duration = duration }
     fun duration(duration: kotlin.time.Duration) = apply { duration(duration.toJavaDuration()) }
     fun created(instant: Instant) = apply { this.created = instant }
-    fun build() = Message(
+    override fun build() = Message(
         id = id ?: idGenerator.next(),
         from = from ?: PARTICIPANT.called(""),
         to = to ?: PARTICIPANT.called(""),
@@ -56,25 +55,15 @@ class MessageBuilder {
 /**
  * Convenience functions for Kotlin DSL style.
  */
-infix fun Pair<Any, Any>.message(config: MessageBuilder.() -> Unit): Message =
-    MessageBuilder()
-        .from(first.toParticipant())
-        .to(second.toParticipant())
-        .apply(config)
-        .build()
+infix fun MessageBuilder.withLabel(label: String): MessageBuilder = label(label)
+infix fun MessageBuilder.withData(label: String): MessageBuilder = data(label)
+infix fun MessageBuilder.withDuration(duration: kotlin.time.Duration): MessageBuilder = duration(duration)
+infix fun MessageBuilder.withType(type: MessageType): MessageBuilder = type(type)
+infix fun MessageBuilder.with(config: MessageBuilder.() -> Unit = {}): MessageBuilder = apply(config)
 
-infix fun Pair<Any, Any>.message(label: String): Message = message { label(label) }
-infix fun Pair<Any, Any>.message(duration: kotlin.time.Duration): Message = message { duration(duration) }
-infix fun Pair<Any, Any>.reply(config: MessageBuilder.() -> Unit): Message = message {
-    type(SYNCHRONOUS_RESPONSE)
-    apply(config)
-}
+infix fun Participant.messages(other: Participant): MessageBuilder = MessageBuilder().from(this).to(other)
+infix fun Participant.messages(other: String): MessageBuilder = this.messages(other.toParticipant())
+infix fun String.messages(other: String): MessageBuilder = this.toParticipant().messages(other.toParticipant())
+infix fun String.messages(other: Participant): MessageBuilder = this.toParticipant().messages(other)
 
-infix fun Pair<Any, Any>.reply(label: String): Message = reply { label(label) }
-infix fun Pair<Any, Any>.reply(duration: kotlin.time.Duration): Message = reply { duration(duration) }
-
-private fun Any.toParticipant(): Participant = when (this) {
-    is Participant -> this
-    is String -> PARTICIPANT.called(this)
-    else -> throw UnsupportedOperationException("Only Participant or String types are currently supported.")
-}
+private fun String.toParticipant(): Participant = PARTICIPANT.called(this)

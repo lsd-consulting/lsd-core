@@ -1,7 +1,10 @@
 package com.lsd.core.diagram
 
 import com.lsd.core.IdGenerator
-import com.lsd.core.builders.message
+import com.lsd.core.builders.SequenceEventBuilder
+import com.lsd.core.builders.messages
+import com.lsd.core.builders.withData
+import com.lsd.core.builders.withLabel
 import com.lsd.core.domain.ParticipantType.*
 import org.approvaltests.Approvals
 import org.assertj.core.api.Assertions.assertThat
@@ -15,13 +18,9 @@ internal class ComponentDiagramGeneratorTest {
     fun removesDuplicateInteractions() {
         val diagramGenerator = ComponentDiagramGenerator(
             idGenerator = idGenerator,
-            participants = emptySet(),
-            events = buildSet {
+            eventBuilders = buildList {
                 repeat(3) {
-                    add("A" to "B" message {
-                        label("$it")
-                        data("${Random.nextInt()}")
-                    })
+                    add("A" messages "B" withLabel "$it" withData "${Random.nextInt()}")
                 }
             },
         )
@@ -34,7 +33,7 @@ internal class ComponentDiagramGeneratorTest {
         val sampleParticipant = PARTICIPANT.called("SomeService")
         val diagramGenerator = ComponentDiagramGenerator(
             idGenerator = idGenerator,
-            events = setOf("A" to "B" message {}),
+            eventBuilders = listOf("A" messages "B"),
             participants = setOf(sampleParticipant)
         )
 
@@ -47,7 +46,7 @@ internal class ComponentDiagramGeneratorTest {
         val diagramGenerator =
             ComponentDiagramGenerator(
                 idGenerator = idGenerator,
-                events = setOf("A" to "B" message "Hi"),
+                eventBuilders = listOf("A" messages "B" withLabel "Hi"),
                 participants = setOf(sampleParticipant)
             )
 
@@ -58,9 +57,7 @@ internal class ComponentDiagramGeneratorTest {
     fun convertsToValidComponentNamesForFromAndTo() {
         val diagramGenerator = ComponentDiagramGenerator(
             idGenerator = idGenerator,
-            events = setOf(
-                "fixes from" to "fixes to" message {}
-            ),
+            eventBuilders = listOf("fixes from" messages "fixes to"),
             participants = emptySet()
         )
 
@@ -69,12 +66,12 @@ internal class ComponentDiagramGeneratorTest {
 
     @Test
     fun mapsMessageEventsToParticipants() {
-        val messages = setOf(
-            "A" to "B" message {},
-            "B" to "B" message {},
-            "C" to "B" message {},
-            "D" to "B" message {},
-        )
+        val messages = listOf(
+            "A" messages "B",
+            "B" messages "B",
+            "C" messages "B",
+            "D" messages "B",
+        ).map(SequenceEventBuilder::build).toSet()
 
         val participants = listOf(
             DATABASE.called("D", "dan", colour = "red"),
@@ -97,11 +94,11 @@ internal class ComponentDiagramGeneratorTest {
         val fred2 = DATABASE.called("Fred", "Freddy", "purple")
         val participants = listOf(fred1, fred2)
 
-        val messages = setOf(
-            "Jake" to fred1 message {},
-            "Fred" to "Bettie" message {},
-            PARTICIPANT.called("Fred", "Fredster", "red") to "Bettie" message {}
-        )
+        val messages = listOf(
+            "Jake" messages fred1,
+            "Fred" messages "Bettie",
+            PARTICIPANT.called("Fred", "Fredster", "red") messages "Bettie"
+        ).map(SequenceEventBuilder::build).toSet()
 
         assertThat(participants.usedIn(messages))
             .containsExactly(

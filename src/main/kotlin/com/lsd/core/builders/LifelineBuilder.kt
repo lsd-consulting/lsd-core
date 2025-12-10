@@ -4,14 +4,14 @@ import com.lsd.core.domain.*
 import com.lsd.core.domain.ParticipantType.*
 import java.time.Instant
 
-class ActivateLifelineBuilder {
+class ActivateLifelineBuilder : SequenceEventBuilder {
     private var lifeline = ActivateLifeline(participant = PARTICIPANT.called(""))
 
     fun of(name: String) = also { lifeline = lifeline.copy(participant = PARTICIPANT.called(name)) }
     fun of(participant: Participant) = also { lifeline = lifeline.copy(participant = participant) }
     fun colour(colour: String) = also { lifeline = lifeline.copy(colour = colour) }
     fun created(instant: Instant) = also { lifeline = lifeline.copy(created = instant) }
-    fun build(): ActivateLifeline = lifeline
+    override fun build(): ActivateLifeline = lifeline
 
     companion object {
         @JvmStatic
@@ -19,13 +19,13 @@ class ActivateLifelineBuilder {
     }
 }
 
-class DeactivateLifelineBuilder {
+class DeactivateLifelineBuilder : SequenceEventBuilder {
     private var lifeline = DeactivateLifeline(participant = PARTICIPANT.called(""))
 
     fun of(name: String) = also { lifeline = lifeline.copy(participant = PARTICIPANT.called(name)) }
     fun of(participant: Participant) = also { lifeline = lifeline.copy(participant = participant) }
     fun created(instant: Instant) = also { lifeline = lifeline.copy(created = instant) }
-    fun build(): DeactivateLifeline = lifeline
+    override fun build(): DeactivateLifeline = lifeline
 
     companion object {
         @JvmStatic

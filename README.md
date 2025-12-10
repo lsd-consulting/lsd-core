@@ -61,10 +61,10 @@ API --> User: 200 OK
 ```kotlin
 // In your test or application code
 lsd.capture(
-    "User" to "API" message "POST /login",
-    "API" to "Database" message "SELECT * FROM users",
-    "Database" to "API" reply "user data",
-    "API" to "User" reply "200 OK"
+    "User" messages "API" withLabel "POST /login",
+    "API" messages "Database" withLabel "SELECT * FROM users",
+    "Database" messages "API" withLabel "user data" withType SYNCHRONOUS_RESPONSE,
+    "API" messages "User" withLabel "200 OK" withType SYNCHRONOUS_RESPONSE
 )
 ```
 
@@ -130,11 +130,8 @@ fun main() {
 
     // Capture message exchanges
     lsd.capture(
-        "User Service" to "Auth Service" message "POST /authenticate",
-        "Auth Service" to "User Service" reply {
-            label("200 OK")
-            data("<token>")
-        }
+        "User Service" messages "Auth Service" withLabel "POST /authenticate",
+        "Auth Service" messages "User Service" withLabel "200 OK" withData "<token>"
     )
 
     // Complete the scenario and generate report
@@ -185,24 +182,18 @@ fun `process order with payment`() {
     
     // Customer places order
     lsd.capture(
-        "Customer" to "Order Service" message "POST /orders {items, total}"
+        "Customer" messages "Order Service" withLabel "POST /orders {items, total}"
     )
     
     // Order service validates and requests payment
     lsd.capture(
-        "Order Service" to "Payment Service" message "POST /payments",
-        "Payment Service" to "Order Service" reply { 
-            label("200 OK")
-            data("<transactionId>") 
-        }
+        "Order Service" messages "Payment Service" withLabel "POST /payments",
+        "Payment Service" messages "Order Service" withLabel "200 OK" withData "<transactionId>" withType SYNCHRONOUS_RESPONSE,
     )
     
     // Order confirmed
     lsd.capture(
-        "Order Service" to "Customer" reply { 
-            label("201 Created")
-            data("<orderId>")
-        }
+        "Order Service" messages "Customer" withLabel "201 Created" withData "<orderId>" withType SYNCHRONOUS_RESPONSE
     )
     
     lsd.completeScenario("Successful Order Processing")
@@ -231,10 +222,7 @@ lsd.addParticipants(listOf(frontend, api, userDb, cache, queue))
 
 // Use in messages
 lsd.capture(
-    frontend to api message {
-        label("GET /users/123")
-        data("data for report diagram popup (may contain json, xml, html)")
-    }
+    frontend messages api withLabel "GET /users/123" withData "data for report diagram popup (may contain json, xml, html)"
 )
 ```
 
