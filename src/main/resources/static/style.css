@@ -283,6 +283,10 @@ h2.error:before, h3.error:before, a.error:before {
 }
 
 /* Logo section - inspired by https://codepen.io/fossheim/pen/PooBwRa */
+.logo-link {
+    text-decoration: none;
+}
+
 h1.logo {
     font-weight: 800;
     font-size: 4em;
