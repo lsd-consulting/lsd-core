@@ -407,8 +407,8 @@ Static files (CSS/JS) are cached on JSDelivr CDN for up to 7 days. To force a ca
 
 1. Use the [JSDelivr Purge tool](https://www.jsdelivr.com/tools/purge)
 2. Purge these files:
-   - `https://cdn.jsdelivr.net/gh/lsd-consulting/lsd-core@5/src/main/resources/static/style.min.css`
-   - `https://cdn.jsdelivr.net/gh/lsd-consulting/lsd-core@5/src/main/resources/static/custom.min.js`
+   - `https://cdn.jsdelivr.net/gh/lsd-consulting/lsd-core@8/src/main/resources/static/style.min.css`
+   - `https://cdn.jsdelivr.net/gh/lsd-consulting/lsd-core@8/src/main/resources/static/custom.min.js`
 3. Clear your browser cache
 
 **Tip:** Use `lsd.core.devMode=true` (default) to avoid CDN issues during development.
