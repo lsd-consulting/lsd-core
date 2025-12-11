@@ -56,16 +56,14 @@ class MessageBuilder : SequenceEventBuilder {
 /**
  * Convenience functions for Kotlin DSL style.
  */
+infix fun Participant.messages(other: String): MessageBuilder = messages(other.toParticipant())
+infix fun Participant.messages(other: Participant): MessageBuilder = MessageBuilder().from(this).to(other)
+infix fun String.messages(other: String): MessageBuilder = toParticipant().messages(other.toParticipant())
+infix fun String.messages(other: Participant): MessageBuilder = toParticipant().messages(other)
 infix fun MessageBuilder.withLabel(label: String): MessageBuilder = label(label)
 infix fun MessageBuilder.withData(data: Any): MessageBuilder = data(data)
 infix fun MessageBuilder.withDuration(duration: kotlin.time.Duration): MessageBuilder = duration(duration)
 infix fun MessageBuilder.withType(type: MessageType): MessageBuilder = type(type)
 infix fun MessageBuilder.withColour(colour: String): MessageBuilder = colour(colour)
-infix fun MessageBuilder.with(config: MessageBuilder.() -> Unit = {}): MessageBuilder = apply(config)
-
-infix fun Participant.messages(other: Participant): MessageBuilder = MessageBuilder().from(this).to(other)
-infix fun Participant.messages(other: String): MessageBuilder = this.messages(other.toParticipant())
-infix fun String.messages(other: String): MessageBuilder = this.toParticipant().messages(other.toParticipant())
-infix fun String.messages(other: Participant): MessageBuilder = this.toParticipant().messages(other)
 
 fun String.toParticipant(): Participant = PARTICIPANT.called(this)

@@ -17,8 +17,7 @@ fun SequenceEvent.toPumlMarkup(): String =
         is PageTitle -> pageTitleMarkup()
         is TimeDelay -> timeDelayMarkup()
         is VerticalSpace -> verticalSpaceMarkup()
-        is ActivateLifeline -> activateMarkup()
-        is DeactivateLifeline -> deactivateMarkup()
+        is Lifeline -> lifelineMarkup()
     }
 
 private fun LogicalDivider.logicalDividerMarkup(): String = "== $label =="
@@ -34,7 +33,7 @@ private fun NoteRight.noteRightMarkup(): String =
     ofParticipant?.let { "note right of ${it.componentName.normalisedName}: $note" } ?: "note right: $note"
 
 private fun NoteOver.noteOverMarkup(): String = "note over ${participant.componentName.normalisedName}: $note"
-    
+
 private fun PageTitle.pageTitleMarkup() =
     "${lineSeparator()}title ${title.ifBlank { "<title missing>" }}${lineSeparator()}"
 
@@ -87,7 +86,8 @@ private fun Message.arrowMarkup(): String {
 fun Participant.toParticipantMarkup(): String =
     "${type.name.lowercase()} ${componentName.normalisedName}${alias?.let { " as \"$alias\"" } ?: ""}${colour?.let { " #$colour" } ?: ""}"
 
-private fun ActivateLifeline.activateMarkup(): String =
-    "activate ${participant.componentName.normalisedName}${this.colour?.let { "#$it" } ?: ""}"
-
-private fun DeactivateLifeline.deactivateMarkup(): String = "deactivate ${participant.componentName.normalisedName}"
+private fun Lifeline.lifelineMarkup(): String =
+    when (action) {
+        LifelineAction.ACTIVATE -> "activate ${participant.componentName.normalisedName}${colour?.let { "#$it" } ?: ""}"
+        LifelineAction.DEACTIVATE -> "deactivate ${participant.componentName.normalisedName}"
+    }

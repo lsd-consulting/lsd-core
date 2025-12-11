@@ -3,8 +3,8 @@ package com.lsd.core.report
 import com.lsd.core.LsdContext
 import com.lsd.core.ReportOptions
 import com.lsd.core.builders.*
-import com.lsd.core.builders.LifelineAction.ACTIVATE
-import com.lsd.core.builders.LifelineAction.DEACTIVATE
+import com.lsd.core.domain.LifelineAction.ACTIVATE
+import com.lsd.core.domain.LifelineAction.DEACTIVATE
 import com.lsd.core.domain.MessageType.SYNCHRONOUS_RESPONSE
 import com.microsoft.playwright.Page.GetByRoleOptions
 import com.microsoft.playwright.Playwright

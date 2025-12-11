@@ -50,15 +50,12 @@ data class TimeDelay
     val label: String? = null, override val created: Instant = now()
 ) : SequenceEvent()
 
-data class ActivateLifeline
+data class Lifeline
 @JvmOverloads constructor(
-    val participant: Participant, var colour: String? = null, override val created: Instant = now()
+    val participant: Participant, var colour: String? = null, override val created: Instant = now(), val action: LifelineAction = LifelineAction.ACTIVATE
 ) : SequenceEvent()
 
-data class DeactivateLifeline
-@JvmOverloads constructor(
-    val participant: Participant, override val created: Instant = now()
-) : SequenceEvent()
+enum class LifelineAction { ACTIVATE, DEACTIVATE }
 
 data class Message
 @JvmOverloads constructor(
