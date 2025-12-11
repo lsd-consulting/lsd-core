@@ -57,7 +57,7 @@ class MessageBuilder : SequenceEventBuilder {
  * Convenience functions for Kotlin DSL style.
  */
 infix fun MessageBuilder.withLabel(label: String): MessageBuilder = label(label)
-infix fun MessageBuilder.withData(data: String): MessageBuilder = data(data)
+infix fun MessageBuilder.withData(data: Any): MessageBuilder = data(data)
 infix fun MessageBuilder.withDuration(duration: kotlin.time.Duration): MessageBuilder = duration(duration)
 infix fun MessageBuilder.withType(type: MessageType): MessageBuilder = type(type)
 infix fun MessageBuilder.withColour(colour: String): MessageBuilder = colour(colour)

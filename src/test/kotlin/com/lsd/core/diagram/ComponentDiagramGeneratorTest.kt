@@ -20,7 +20,7 @@ internal class ComponentDiagramGeneratorTest {
             idGenerator = idGenerator,
             eventBuilders = buildList {
                 repeat(3) {
-                    add("A" messages "B" withLabel "$it" withData "${Random.nextInt()}")
+                    add("A" messages "B" withLabel "$it" withData Random.nextInt())
                 }
             },
         )
