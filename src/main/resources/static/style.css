@@ -535,15 +535,35 @@ input[type="range"]::-moz-range-track {
 }
 
 /* Report footer */
-.report-footer {
-    text-align: center;
-    padding: 20px;
-    margin-top: 40px;
-    border-top: 1px solid var(--color-border);
-    font-size: 0.85em;
-    color: var(--color-text-secondary);
+.report-footer.ribbon {
+    padding: 32px 20px 36px;
+    margin-top: 72px;
+    background: var(--color-background-primary);
 }
 
-.report-footer a {
-    color: var(--color-5);
+.ribbon-bar {
+    height: 4px;
+    width: 120px;
+    margin: 0 auto 14px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #CA4246, #E16541, #F18F43, #8B9862, #476098, #A7489B);
 }
+
+.footer-stack {
+    text-align: center;
+}
+
+.report-footer .footer-text {
+    margin: 0;
+    color: var(--color-text-primary);
+    font-weight: 500;
+}
+
+.footer-brand {
+    font-weight: 800;
+    background: conic-gradient(#CA4246 16.6%, #E16541 33.3%, #F18F43 50%, #8B9862 66.6%, #476098 83.3%, #A7489B 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-decoration: none;
+}
+
