@@ -2,6 +2,7 @@ package com.lsd.core.report
 
 import com.lsd.core.LsdContext
 import com.lsd.core.builders.messages
+import com.lsd.core.builders.withColour
 import com.lsd.core.builders.withLabel
 import com.lsd.core.domain.Participant
 import com.lsd.core.domain.ParticipantType.*
@@ -45,17 +46,17 @@ class CombinedComponentReportUiTest {
         participantD: Participant
     ) {
         with(lsd) {
-            capture(participantA messages participantB withLabel "message1")
+            capture(participantA messages participantB withLabel "message1" withColour "red")
             completeScenario("Scenario 1.1")
-            capture(participantB messages participantC withLabel "message2")
+            capture(participantB messages participantC withLabel "message2" withColour "blue")
             completeScenario("Scenario 1.2")
             completeReport("Report 1")
 
-            capture(participantC messages participantD withLabel "message3")
+            capture(participantC messages participantD withLabel "message3" withColour "green")
             completeScenario("Scenario 2.1")
             completeReport("Report 2")
 
-            capture(participantD messages participantA withLabel "message4")
+            capture(participantD messages participantA withLabel "message4" withColour "yellow")
             completeScenario("Scenario 3.1")
             completeReport("Report 3")
         }

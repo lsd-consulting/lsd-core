@@ -13,14 +13,14 @@ private val idGenerator = IdGenerator(isDeterministic = false)
 
 class MessageBuilder : SequenceEventBuilder {
     private var id: String? = null
-    private var from: Participant? = null
-    private var to: Participant? = null
-    private var label: String? = null
+    private var from: Participant = PARTICIPANT.called("")
+    private var to: Participant = PARTICIPANT.called("")
+    private var label: String = ""
     private var data: Any? = null
-    private var colour: String? = null
+    private var colour: String = ""
     private var duration: Duration? = null
-    private var created: Instant? = null
-    private var type: MessageType? = null
+    private var created: Instant = Instant.now()
+    private var type: MessageType = MessageType.SYNCHRONOUS
 
     fun id(id: String) = apply { this.id = id }
     fun from(from: String) = apply { from(PARTICIPANT.called(from)) }
@@ -34,16 +34,17 @@ class MessageBuilder : SequenceEventBuilder {
     fun duration(duration: Duration) = apply { this.duration = duration }
     fun duration(duration: kotlin.time.Duration) = apply { duration(duration.toJavaDuration()) }
     fun created(instant: Instant) = apply { this.created = instant }
+
     override fun build() = Message(
         id = id ?: idGenerator.next(),
-        from = from ?: PARTICIPANT.called(""),
-        to = to ?: PARTICIPANT.called(""),
-        label = label ?: "",
+        from = from,
+        to = to,
+        label = label,
         data = data,
-        colour = colour ?: "",
+        colour = colour,
         duration = duration,
-        created = created ?: Instant.now(),
-        type = type ?: MessageType.SYNCHRONOUS
+        created = created,
+        type = type
     )
 
     companion object {
@@ -56,9 +57,10 @@ class MessageBuilder : SequenceEventBuilder {
  * Convenience functions for Kotlin DSL style.
  */
 infix fun MessageBuilder.withLabel(label: String): MessageBuilder = label(label)
-infix fun MessageBuilder.withData(label: String): MessageBuilder = data(label)
+infix fun MessageBuilder.withData(data: String): MessageBuilder = data(data)
 infix fun MessageBuilder.withDuration(duration: kotlin.time.Duration): MessageBuilder = duration(duration)
 infix fun MessageBuilder.withType(type: MessageType): MessageBuilder = type(type)
+infix fun MessageBuilder.withColour(colour: String): MessageBuilder = colour(colour)
 infix fun MessageBuilder.with(config: MessageBuilder.() -> Unit = {}): MessageBuilder = apply(config)
 
 infix fun Participant.messages(other: Participant): MessageBuilder = MessageBuilder().from(this).to(other)
@@ -66,4 +68,4 @@ infix fun Participant.messages(other: String): MessageBuilder = this.messages(ot
 infix fun String.messages(other: String): MessageBuilder = this.toParticipant().messages(other.toParticipant())
 infix fun String.messages(other: Participant): MessageBuilder = this.toParticipant().messages(other)
 
-private fun String.toParticipant(): Participant = PARTICIPANT.called(this)
+fun String.toParticipant(): Participant = PARTICIPANT.called(this)

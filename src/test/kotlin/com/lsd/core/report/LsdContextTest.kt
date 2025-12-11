@@ -2,14 +2,12 @@ package com.lsd.core.report
 
 import com.lsd.core.LsdContext
 import com.lsd.core.ReportOptions
-import com.lsd.core.builders.ActivateLifelineBuilder.Companion.activation
-import com.lsd.core.builders.DeactivateLifelineBuilder.Companion.deactivation
-import com.lsd.core.builders.messages
-import com.lsd.core.builders.withLabel
-import com.lsd.core.builders.withType
+import com.lsd.core.builders.*
+import com.lsd.core.builders.LifelineAction.ACTIVATE
+import com.lsd.core.builders.LifelineAction.DEACTIVATE
 import com.lsd.core.domain.MessageType.SYNCHRONOUS_RESPONSE
 import com.lsd.core.domain.Newpage
-import com.lsd.core.domain.PageTitle
+import com.lsd.core.domain.Newpage.Companion.title
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -20,10 +18,12 @@ class LsdContextTest {
     @Test
     fun activationsRemovedWhenDiagramsAreSplitDueToSize() {
         repeat(10) {
-            context.capture("A" messages "B")
-            context.capture(activation().of("A"))
-            context.capture("B" messages "A" withType SYNCHRONOUS_RESPONSE)
-            context.capture(deactivation().of("A"))
+            context.capture(
+                "A" messages "B",
+                ACTIVATE lifeline "A",
+                "B" messages "A" withType SYNCHRONOUS_RESPONSE,
+                DEACTIVATE lifeline "A",
+            )
         }
         context.completeScenario("scenario")
 
@@ -35,10 +35,10 @@ class LsdContextTest {
     @Test
     fun activationsRemovedWhenDiagramsAreSplitDueToNewpage() {
         context.capture("A" messages "B")
-        context.capture(activation().of("A"))
+        context.capture(ACTIVATE lifeline "A" withColour "red")
         context.capture("B" messages "A" withType SYNCHRONOUS_RESPONSE)
-        context.capture(Newpage(PageTitle("New page here")))
-        context.capture(deactivation().of("A").build())
+        context.capture(Newpage title "New page here")
+        context.capture(DEACTIVATE lifeline "A")
         context.completeScenario("scenario")
 
         assertThat(generatedSequenceUml())
@@ -49,10 +49,12 @@ class LsdContextTest {
 
     @Test
     fun activationsKeptWhenDiagramsAreNotSplit() {
-        context.capture("A" messages "B")
-        context.capture(activation().of("A").build())
-        context.capture("B" messages "A" withLabel "OK" withType SYNCHRONOUS_RESPONSE)
-        context.capture(deactivation().of("A").build())
+        context.capture(
+            "A" messages "B",
+            ACTIVATE lifeline "A" withColour "blue",
+            "B" messages "A" withLabel "OK" withType SYNCHRONOUS_RESPONSE,
+            DEACTIVATE lifeline "A"
+        )
         context.completeScenario("scenario")
 
         assertThat(generatedSequenceUml())

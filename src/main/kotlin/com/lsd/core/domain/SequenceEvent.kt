@@ -29,7 +29,11 @@ data class PageTitle
 data class Newpage
 @JvmOverloads constructor(
     val pageTitle: PageTitle, override val created: Instant = now()
-) : SequenceEvent()
+) : SequenceEvent() {
+    companion object {
+        infix fun Companion.title(title: String): Newpage = Newpage(PageTitle(title))
+    }
+}
 
 data class VerticalSpace
 @JvmOverloads constructor(

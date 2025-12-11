@@ -152,15 +152,13 @@ public static void main(String[] args) {
         messageBuilder()
             .from("User Service")
             .to("Auth Service")
-            .label("POST /authenticate")
-            .build(),
+            .label("POST /authenticate"),
         messageBuilder()
             .from("Auth Service")
             .to("User Service")
             .label("200 OK")
             .data("<token>")
             .type(SYNCHRONOUS_RESPONSE)
-            .build()
     );
     
     lsd.completeScenario("User Authentication Flow");
@@ -256,12 +254,12 @@ lsd.capture(NoteRight("Email Service", "Sends welcome email"))
 lsd.capture(TimeDelay("Processing..."))
 
 // Split complex flows into multiple pages
-lsd.capture(Newpage("Payment Processing"))
+lsd.capture(Newpage title "Payment Processing")
 
-// Show active processing (useful for async operations)
-lsd.capture(ActivateLifeline("Payment Processor", "#ff6b6b"))
-// ... processing events ...
-lsd.capture(DeactivateLifeline("Payment Processor"))
+// Show active processing for a component (useful for async operations)
+lsd.capture(ACTIVATE lifeline "Payment Processor" withColour "#ff6b6b")
+// ... capture message events ...
+lsd.capture(DEACTIVATE lifeline "Payment Processor")
 ```
 
 **Available Event Types:**

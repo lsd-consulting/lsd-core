@@ -2,10 +2,10 @@ package com.lsd.core.report
 
 import com.lsd.core.LsdContext
 import com.lsd.core.ReportOptions
-import com.lsd.core.builders.messages
-import com.lsd.core.builders.withData
-import com.lsd.core.builders.withDuration
-import com.lsd.core.builders.withLabel
+import com.lsd.core.builders.*
+import com.lsd.core.builders.LifelineAction.ACTIVATE
+import com.lsd.core.builders.LifelineAction.DEACTIVATE
+import com.lsd.core.domain.MessageType.SYNCHRONOUS_RESPONSE
 import com.microsoft.playwright.Page.GetByRoleOptions
 import com.microsoft.playwright.Playwright
 import com.microsoft.playwright.assertions.LocatorAssertions.IsVisibleOptions
@@ -100,10 +100,12 @@ class ReportUiTest {
 
     private fun givenMultipleCapturedMessages() {
         lsd.capture(
-            "A" messages "B" withLabel "message1",
-            "B" messages "C" withLabel "message2",
-            "C" messages "B" withLabel "OK" withDuration 2.seconds,
-            "B" messages "A" withLabel "OK" withDuration 5.seconds
+            "A" messages "B" withLabel "message 1",
+            ACTIVATE lifeline "B" withColour "blue",
+            "B" messages "C" withLabel "message 2",
+            "C" messages "B" withLabel "OK" withColour "green" withType SYNCHRONOUS_RESPONSE withDuration 2.seconds,
+            "B" messages "A" withLabel "OK" withColour "green" withType SYNCHRONOUS_RESPONSE withDuration 5.seconds,
+            DEACTIVATE lifeline "B",
         )
         lsd.completeScenario("Example scenario")
     }
