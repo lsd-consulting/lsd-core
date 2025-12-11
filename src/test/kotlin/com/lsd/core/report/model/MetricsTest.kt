@@ -1,6 +1,11 @@
 package com.lsd.core.report.model
 
+import com.lsd.core.builders.MessageBuilder
+import com.lsd.core.builders.SequenceEventBuilder
 import com.lsd.core.builders.messages
+import com.lsd.core.builders.withDuration
+import com.lsd.core.builders.withType
+import com.lsd.core.domain.MessageType.SYNCHRONOUS_RESPONSE
 import com.lsd.core.domain.NoteLeft
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Condition
@@ -26,8 +31,8 @@ class MetricsTest {
             componentDuration = Duration.ZERO,
             events = listOf(
                 NoteLeft(note = "hi"),
-                ("A" messages "B") {},
-                ("B" messages "A") {}
+                ("A" messages "B").build(),
+                ("B" messages "A").build()
             ),
         )
 
@@ -44,16 +49,16 @@ class MetricsTest {
             sequenceDuration = Duration.ZERO,
             componentDuration = Duration.ZERO,
             events = listOf(
-                ("A" messages "B") {},
-                ("B" messages "C") {},
-                ("C" messages "B") { duration(3.seconds) },
-                ("B" messages "C") {},
-                ("C" messages "D") {},
-                ("D" messages "C") { duration(1.seconds) },
-                ("C" messages "B") { duration(1.seconds) },
-                ("B" messages "C") { duration(2.seconds) },
-                ("B" messages "A") { duration(10.seconds) },
-            ),
+                "A" messages "B",
+                "B" messages "C",
+                "C" messages "B" withDuration 3.seconds withType SYNCHRONOUS_RESPONSE,
+                "B" messages "C",
+                "C" messages "D",
+                "D" messages "C" withDuration 1.seconds withType SYNCHRONOUS_RESPONSE,
+                "C" messages "B" withDuration 1.seconds,
+                "B" messages "C" withDuration 2.seconds withType SYNCHRONOUS_RESPONSE,
+                "B" messages "A" withDuration 10.seconds withType SYNCHRONOUS_RESPONSE,
+            ).map(SequenceEventBuilder::build),
         )
 
         assertThat(metrics.asList()).isNotNull
@@ -97,12 +102,12 @@ class MetricsTest {
             sequenceDuration = Duration.ZERO,
             componentDuration = Duration.ZERO,
             events = listOf(
-                ("A" messages "B") {},
-                ("C" messages "D") {},
-                ("C" messages "B") { duration(3.seconds) },
-                ("B" messages "A") { duration(5.seconds) },
-                ("D" messages "C") { duration(4.seconds) },
-            ),
+                "A" messages "B",
+                "C" messages "D",
+                "C" messages "B" withDuration 3.seconds,
+                "B" messages "A" withDuration 5.seconds,
+                "D" messages "C" withDuration 4.seconds,
+            ).map(MessageBuilder::build),
         )
 
         assertThat(metrics.asList()).isNotNull
@@ -137,15 +142,15 @@ class MetricsTest {
             sequenceDuration = Duration.ZERO,
             componentDuration = Duration.ZERO,
             events = listOf(
-                ("A" messages "B") { duration(8.seconds) },
-                ("A" messages "B") { duration(10.seconds) },
-                ("A" messages "C") { duration(11.seconds) },
-                ("A" messages "B") { duration(7.seconds) },
-                ("A" messages "B") { duration(6.seconds) },
-                ("A" messages "B") { duration(5.seconds) },
-                ("A" messages "B") { duration(4.seconds) },
-                ("A" messages "D") {}
-            ),
+                "A" messages "B" withDuration 8.seconds,
+                "A" messages "B" withDuration 10.seconds,
+                "A" messages "C" withDuration 11.seconds,
+                "A" messages "B" withDuration 7.seconds,
+                "A" messages "B" withDuration 6.seconds,
+                "A" messages "B" withDuration 5.seconds,
+                "A" messages "B" withDuration 4.seconds,
+                "A" messages "D"
+            ).map(MessageBuilder::build),
         )
 
         assertThat(metrics.asList(max = 2)).isNotNull

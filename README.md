@@ -61,10 +61,10 @@ API --> User: 200 OK
 ```kotlin
 // In your test or application code
 lsd.capture(
-    ("User" messages "API") { label("POST /login") },
-    ("API" messages "Database") { label("SELECT * FROM users") },
-    ("Database" respondsTo "API") { label("user data") },
-    ("API" respondsTo "User") { label("200 OK") }
+    "User" messages "API" withLabel "POST /login",
+    "API" messages "Database" withLabel "SELECT * FROM users",
+    "Database" messages "API" withLabel "user data" withType SYNCHRONOUS_RESPONSE,
+    "API" messages "User" withLabel "200 OK" withType SYNCHRONOUS_RESPONSE
 )
 ```
 
@@ -130,11 +130,8 @@ fun main() {
 
     // Capture message exchanges
     lsd.capture(
-        ("User Service" messages "Auth Service") { label("POST /authenticate") },
-        ("Auth Service" respondsTo "User Service") {
-            label("200 OK")
-            data("<token>")
-        }
+        "User Service" messages "Auth Service" withLabel "POST /authenticate",
+        "Auth Service" messages "User Service" withLabel "200 OK" withData "<token>"
     )
 
     // Complete the scenario and generate report
@@ -155,15 +152,13 @@ public static void main(String[] args) {
         messageBuilder()
             .from("User Service")
             .to("Auth Service")
-            .label("POST /authenticate")
-            .build(),
+            .label("POST /authenticate"),
         messageBuilder()
             .from("Auth Service")
             .to("User Service")
             .label("200 OK")
             .data("<token>")
             .type(SYNCHRONOUS_RESPONSE)
-            .build()
     );
     
     lsd.completeScenario("User Authentication Flow");
@@ -185,21 +180,18 @@ fun `process order with payment`() {
     
     // Customer places order
     lsd.capture(
-        ("Customer" messages "Order Service") { label("POST /orders {items, total}") }
+        "Customer" messages "Order Service" withLabel "POST /orders {items, total}"
     )
     
     // Order service validates and requests payment
     lsd.capture(
-        ("Order Service" messages "Payment Service") { label("POST /payments") },
-        ("Payment Service" respondsTo "Order Service") { label("200 OK"); data("<transactionId>") }
+        "Order Service" messages "Payment Service" withLabel "POST /payments",
+        "Payment Service" messages "Order Service" withLabel "200 OK" withData "<transactionId>" withType SYNCHRONOUS_RESPONSE,
     )
     
     // Order confirmed
     lsd.capture(
-        ("Order Service" respondsTo "Customer") { 
-            label("201 Created")
-            data("<orderId>")
-        }
+        "Order Service" messages "Customer" withLabel "201 Created" withData "<orderId>" withType SYNCHRONOUS_RESPONSE
     )
     
     lsd.completeScenario("Successful Order Processing")
@@ -228,10 +220,7 @@ lsd.addParticipants(listOf(frontend, api, userDb, cache, queue))
 
 // Use in messages
 lsd.capture(
-    (frontend messages api) {
-        label("GET /users/123")
-        data("data for report diagram popup (may contain json, xml, html)")
-    }
+    frontend messages api withLabel "GET /users/123" withData "data for report diagram popup (may contain json, xml, html)"
 )
 ```
 
@@ -265,12 +254,12 @@ lsd.capture(NoteRight("Email Service", "Sends welcome email"))
 lsd.capture(TimeDelay("Processing..."))
 
 // Split complex flows into multiple pages
-lsd.capture(Newpage("Payment Processing"))
+lsd.capture(Newpage title "Payment Processing")
 
-// Show active processing (useful for async operations)
-lsd.capture(ActivateLifeline("Payment Processor", "#ff6b6b"))
-// ... processing events ...
-lsd.capture(DeactivateLifeline("Payment Processor"))
+// Show active processing for a component (useful for async operations)
+lsd.capture(ACTIVATE lifeline "Payment Processor" withColour "#ff6b6b")
+// ... capture message events ...
+lsd.capture(DEACTIVATE lifeline "Payment Processor")
 ```
 
 **Available Event Types:**

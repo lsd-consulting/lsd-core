@@ -3,7 +3,6 @@ package com.lsd.core.builders
 import com.lsd.core.IdGenerator
 import com.lsd.core.domain.Message
 import com.lsd.core.domain.MessageType
-import com.lsd.core.domain.MessageType.SYNCHRONOUS_RESPONSE
 import com.lsd.core.domain.Participant
 import com.lsd.core.domain.ParticipantType.PARTICIPANT
 import java.time.Duration
@@ -12,16 +11,16 @@ import kotlin.time.toJavaDuration
 
 private val idGenerator = IdGenerator(isDeterministic = false)
 
-class MessageBuilder {
+class MessageBuilder : SequenceEventBuilder {
     private var id: String? = null
-    private var from: Participant? = null
-    private var to: Participant? = null
-    private var label: String? = null
+    private var from: Participant = PARTICIPANT.called("")
+    private var to: Participant = PARTICIPANT.called("")
+    private var label: String = ""
     private var data: Any? = null
-    private var colour: String? = null
+    private var colour: String = ""
     private var duration: Duration? = null
-    private var created: Instant? = null
-    private var type: MessageType? = null
+    private var created: Instant = Instant.now()
+    private var type: MessageType = MessageType.SYNCHRONOUS
 
     fun id(id: String) = apply { this.id = id }
     fun from(from: String) = apply { from(PARTICIPANT.called(from)) }
@@ -35,16 +34,17 @@ class MessageBuilder {
     fun duration(duration: Duration) = apply { this.duration = duration }
     fun duration(duration: kotlin.time.Duration) = apply { duration(duration.toJavaDuration()) }
     fun created(instant: Instant) = apply { this.created = instant }
-    fun build() = Message(
+
+    override fun build() = Message(
         id = id ?: idGenerator.next(),
-        from = from ?: PARTICIPANT.called(""),
-        to = to ?: PARTICIPANT.called(""),
-        label = label ?: "",
+        from = from,
+        to = to,
+        label = label,
         data = data,
-        colour = colour ?: "",
+        colour = colour,
         duration = duration,
-        created = created ?: Instant.now(),
-        type = type ?: MessageType.SYNCHRONOUS
+        created = created,
+        type = type
     )
 
     companion object {
@@ -56,24 +56,14 @@ class MessageBuilder {
 /**
  * Convenience functions for Kotlin DSL style.
  */
-infix fun Any.messages(target: Any): (MessageBuilder.() -> Unit) -> Message = {
-    MessageBuilder()
-        .from(this.toParticipant())
-        .to(target.toParticipant())
-        .apply(it)
-        .build()
-}
+infix fun Participant.messages(other: String): MessageBuilder = messages(other.toParticipant())
+infix fun Participant.messages(other: Participant): MessageBuilder = MessageBuilder().from(this).to(other)
+infix fun String.messages(other: String): MessageBuilder = toParticipant().messages(other.toParticipant())
+infix fun String.messages(other: Participant): MessageBuilder = toParticipant().messages(other)
+infix fun MessageBuilder.withLabel(label: String): MessageBuilder = label(label)
+infix fun MessageBuilder.withData(data: Any): MessageBuilder = data(data)
+infix fun MessageBuilder.withDuration(duration: kotlin.time.Duration): MessageBuilder = duration(duration)
+infix fun MessageBuilder.withType(type: MessageType): MessageBuilder = type(type)
+infix fun MessageBuilder.withColour(colour: String): MessageBuilder = colour(colour)
 
-infix fun Any.respondsTo(target: Any): (MessageBuilder.() -> Unit) -> Message = {
-    MessageBuilder()
-        .from(this.toParticipant())
-        .to(target.toParticipant())
-        .type(SYNCHRONOUS_RESPONSE)
-        .apply(it)
-        .build()
-}
-
-private fun Any.toParticipant(): Participant = when (this) {
-    is Participant -> this
-    else -> PARTICIPANT.called(this.toString())
-}
+fun String.toParticipant(): Participant = PARTICIPANT.called(this)

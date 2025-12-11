@@ -38,9 +38,7 @@ data class SequenceDiagramGenerator(
 
     private fun removeLifelineActivationsIfDiagramWillBeSplit(maxEventsPerDiagram: Int) =
         if (events.size > maxEventsPerDiagram || events.any { it is Newpage })
-            events.filterNot {
-                it is ActivateLifeline || it is DeactivateLifeline
-            }
+            events.filterNot { it is Lifeline }
         else events
 
     private fun generateSequenceUml(events: List<SequenceEvent>, isDevMode: Boolean): String {

@@ -17,8 +17,8 @@ import java.time.Duration;
 import java.util.LinkedHashSet;
 import java.util.List;
 
-import static com.lsd.core.builders.ActivateLifelineBuilder.activation;
-import static com.lsd.core.builders.DeactivateLifelineBuilder.deactivation;
+import static com.lsd.core.builders.LifelineBuilder.activation;
+import static com.lsd.core.builders.LifelineBuilder.deactivation;
 import static com.lsd.core.builders.MessageBuilder.messageBuilder;
 import static com.lsd.core.domain.MessageType.*;
 import static com.lsd.core.domain.ParticipantType.*;
@@ -100,24 +100,24 @@ class LsdContextTest {
 
     private void scenarioWithMessages() {
         lsdContext.capture(
-                messageBuilder().id(nextId()).to(arnie).label("in").data("start some job").type(SHORT_INBOUND).build(),
-                messageBuilder().id(nextId()).from(arnie).to(bettie).label("Message 1").data("some data 1").type(BI_DIRECTIONAL).duration(Duration.ofSeconds(1)).build(),
-                messageBuilder().id(nextId()).from(bettie).label("out").data("some data 1").type(SHORT_OUTBOUND).build(),
-                messageBuilder().id(nextId()).label("An interaction description that is long enough to need abbreviating").from("Beta").to("Gamma").data("β").type(LOST).build(),
-                messageBuilder().id(nextId()).label("A synchronous response").from("Gamma").to("Beta").data("200 OK").type(SYNCHRONOUS_RESPONSE).duration(Duration.ofSeconds(2)).build()
+                messageBuilder().id(nextId()).to(arnie).label("in").data("start some job").type(SHORT_INBOUND),
+                messageBuilder().id(nextId()).from(arnie).to(bettie).label("Message 1").data("some data 1").type(BI_DIRECTIONAL).duration(Duration.ofSeconds(1)),
+                messageBuilder().id(nextId()).from(bettie).label("out").data("some data 1").type(SHORT_OUTBOUND),
+                messageBuilder().id(nextId()).label("An interaction description that is long enough to need abbreviating").from("Beta").to("Gamma").data("β").type(LOST),
+                messageBuilder().id(nextId()).label("A synchronous response").from("Gamma").to("Beta").data("200 OK").type(SYNCHRONOUS_RESPONSE).duration(Duration.ofSeconds(2))
         );
         lsdContext.completeScenario("A Success scenario with messages", "Given a first scenario description<br/>When something happens<br/>Then something else happens", SUCCESS);
     }
 
     private void scenarioWithLifelineActivation() {
         lsdContext.capture(
-                messageBuilder().id(nextId()).from(arnie).to(bettie).label("Good day to you!").build(),
-                activation().of(bettie).colour("red").build(),
-                messageBuilder().id(nextId()).from(bettie).to(cat).label("Good day to you!").build(),
-                deactivation().of(bettie).build(),
-                activation().of(cat).colour("blue").build(),
-                messageBuilder().id(nextId()).from(cat).to(arnie).label("Me?").build(),
-                deactivation().of(cat).build()
+                messageBuilder().id(nextId()).from(arnie).to(bettie).label("Good day to you!"),
+                activation().of(bettie).colour("red"),
+                messageBuilder().id(nextId()).from(bettie).to(cat).label("Good day to you!"),
+                deactivation().of(bettie),
+                activation().of(cat).colour("blue"),
+                messageBuilder().id(nextId()).from(cat).to(arnie).label("Me?"),
+                deactivation().of(cat)
         );
         lsdContext.completeScenario("Lifeline activation/deactivation", "Adding lifelines to participants");
     }

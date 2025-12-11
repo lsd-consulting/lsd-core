@@ -29,7 +29,11 @@ data class PageTitle
 data class Newpage
 @JvmOverloads constructor(
     val pageTitle: PageTitle, override val created: Instant = now()
-) : SequenceEvent()
+) : SequenceEvent() {
+    companion object {
+        infix fun Companion.title(title: String): Newpage = Newpage(PageTitle(title))
+    }
+}
 
 data class VerticalSpace
 @JvmOverloads constructor(
@@ -46,15 +50,12 @@ data class TimeDelay
     val label: String? = null, override val created: Instant = now()
 ) : SequenceEvent()
 
-data class ActivateLifeline
+data class Lifeline
 @JvmOverloads constructor(
-    val participant: Participant, var colour: String? = null, override val created: Instant = now()
+    val participant: Participant, var colour: String? = null, override val created: Instant = now(), val action: LifelineAction = LifelineAction.ACTIVATE
 ) : SequenceEvent()
 
-data class DeactivateLifeline
-@JvmOverloads constructor(
-    val participant: Participant, override val created: Instant = now()
-) : SequenceEvent()
+enum class LifelineAction { ACTIVATE, DEACTIVATE }
 
 data class Message
 @JvmOverloads constructor(

@@ -3,6 +3,7 @@ package com.lsd.core
 import com.lsd.core.builders.ScenarioBuilder
 import com.lsd.core.builders.ScenarioModelBuilder.Companion.scenarioModelBuilder
 import com.lsd.core.builders.SequenceDiagramGeneratorBuilder.Companion.sequenceDiagramGeneratorBuilder
+import com.lsd.core.builders.SequenceEventBuilder
 import com.lsd.core.diagram.ComponentDiagramGenerator
 import com.lsd.core.domain.*
 import com.lsd.core.properties.LsdProperties
@@ -46,6 +47,15 @@ open class LsdContext {
     open fun capture(vararg events: SequenceEvent) {
         currentScenario.addAll(events)
         combinedEvents.addAll(events)
+    }
+
+    /**
+     * Convenience function to allow builders to be passed directly before invoking `capture()` with the built events.
+     *
+     * @param events The event builders to be used to create the captured events.
+     */
+    fun capture(vararg events: SequenceEventBuilder) {
+        events.map(SequenceEventBuilder::build).forEach(::capture)
     }
 
     @JvmOverloads
