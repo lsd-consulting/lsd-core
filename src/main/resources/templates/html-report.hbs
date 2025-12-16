@@ -21,19 +21,53 @@
     <a href="https://github.com/lsd-consulting/lsd-core" target="_blank" rel="noopener noreferrer" class="logo-link"><h1 class="logo">LSD</h1></a>
     <h1>{{ report.title }}</h1>
     {{~#each report.scenarios ~}}
-    <article id="{{ id }}">
+    <article id="{{ id }}" class="{{ status }}">
         <span class="articleStart"></span>
         <h2 class="{{ status }}">{{title}}</h2>
-        {{~# if description ~}}
-        <section class="description {{ status }}">
-            <h3 class="{{ status }}">Description</h3>
-            {{{ description }}}
-        </section>
-        {{~/if}}
-        {{> templates/partials/data-table title="Key Facts" tableClass="facts" headerKey="Description" headerValue="Value" items=facts}}
-        {{> templates/partials/data-table title="Metrics" tableClass="metrics" headerKey="Name" headerValue="Value" items=metrics.asList}}
+        <div class="cards-row">
+            {{~# if description ~}}
+            <section class="card description {{ status }}">
+                <h3 class="{{ status }}">Description</h3>
+                {{{ description }}}
+            </section>
+            {{~/if}}
+            {{#if metrics.asList ~}}
+            <section class="card metrics {{ status }}">
+                <h3 class="{{ status }}">Metrics</h3>
+                <div class="table">
+                    <div class="row">
+                        <div class="rowHead">Name</div>
+                        <div class="rowHead">Value</div>
+                    </div>
+                    {{~#each metrics.asList ~}}
+                    <div class="row">
+                        <div class="cell">{{{key}}}</div>
+                        <div class="cell">{{{value}}}</div>
+                    </div>
+                    {{~/each}}
+                </div>
+            </section>
+            {{~/if}}
+            {{#if facts ~}}
+            <section class="card facts {{ status }}">
+                <h3 class="{{ status }}">Key Facts</h3>
+                <div class="table">
+                    <div class="row">
+                        <div class="rowHead">Description</div>
+                        <div class="rowHead">Value</div>
+                    </div>
+                    {{~#each facts ~}}
+                    <div class="row">
+                        <div class="cell">{{{key}}}</div>
+                        <div class="cell">{{{value}}}</div>
+                    </div>
+                    {{~/each}}
+                </div>
+            </section>
+            {{~/if}}
+        </div>
         {{#if sequenceDiagram ~}}
-        <section class="sequence diagram svg {{ status }}">
+        <section class="diagram-row sequence diagram svg {{ status }}">
             <h3 class="{{ status }}">Sequence Diagram</h3>
             <figure>{{{ sequenceDiagram.svg  }}}</figure>
             <div onclick="location.href='#!';" id="{{sequenceDiagram.id}}" class="overlay">

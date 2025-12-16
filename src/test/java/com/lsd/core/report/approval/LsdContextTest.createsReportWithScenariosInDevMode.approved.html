@@ -23,7 +23,10 @@
     --color-text-primary: var(--color-2);
     --color-text-secondary: var(--color-2);
 
-    --box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    --box-shadow: 0px -8px 16px 0px rgba(0,0,0,0.2);
+    --box-shadow-success: 0px -8px 16px 0px rgba(50, 205, 50, 0.3);
+    --box-shadow-warn: 0px -8px 16px 0px rgba(255, 165, 0, 0.3);
+    --box-shadow-error: 0px -8px 16px 0px rgba(255, 0, 0, 0.3);
     --margin-content-left: 20px;
 }
 
@@ -39,6 +42,23 @@ article {
     flex-flow: row wrap;
     justify-content: space-around;
     margin-bottom: 90px;
+    padding: 20px;
+    box-shadow: var(--box-shadow);
+    border-radius: 15px;
+    margin-left: var(--margin-content-left);
+    margin-right: 10px;
+}
+
+article.success {
+    box-shadow: var(--box-shadow-success);
+}
+
+article.warn {
+    box-shadow: var(--box-shadow-warn);
+}
+
+article.error {
+    box-shadow: var(--box-shadow-error);
 }
 
 section {
@@ -58,6 +78,53 @@ aside {
 
 aside.metrics {
     flex: 100%;
+}
+
+/* Cards row layout */
+.cards-row {
+    display: flex;
+    flex: 100%;
+    gap: 15px;
+    margin-top: 12px;
+}
+
+.cards-row section.card {
+    flex: 1;
+    margin: 0;
+    box-shadow: none;
+    border: 1px inset transparent;
+}
+
+.cards-row section.card.success {
+    border-color: rgba(50, 205, 50, 0.3);
+}
+
+.cards-row section.card.warn {
+    border-color: rgba(255, 165, 0, 0.3);
+}
+
+.cards-row section.card.error {
+    border-color: rgba(255, 0, 0, 0.3);
+}
+
+/* Diagram row layout */
+section.diagram-row {
+    flex: 100%;
+    width: 100%;
+    box-shadow: none;
+    border: 1px inset transparent;
+}
+
+section.diagram-row.success {
+    border-color: rgba(50, 205, 50, 0.3);
+}
+
+section.diagram-row.warn {
+    border-color: rgba(255, 165, 0, 0.3);
+}
+
+section.diagram-row.error {
+    border-color: rgba(255, 0, 0, 0.3);
 }
 
 span.back_to_index::after {
@@ -82,10 +149,6 @@ code {
 
 span.copy:active {
     cursor: crosshair;
-}
-
-section.diagram {
-    flex: 100%;
 }
 
 .overlay {
@@ -131,8 +194,12 @@ h1 {
 }
 
 h2 {
-    margin-left: var(--margin-content-left);
+    margin-left: 0;
     color: var(--color-text-primary);
+}
+
+article h2 {
+    margin-left: 0;
 }
 
 h3 {
@@ -214,27 +281,21 @@ a, text {
 
 svg {
     display: block;
+    margin: 0 auto;
 }
 
 section {
     box-shadow: var(--box-shadow);
     border-radius: 15px;
-    padding: 50px;
+    padding: 20px;
     margin-top: 12px;
     margin-right: 10px;
     margin-left: var(--margin-content-left);
 }
 
-section.success:hover {
-    border: thin solid var(--color-success);;
-}
-
-section.warn:hover {
-    border: thin solid var(--color-warn);;
-}
-
-section.error:hover {
-    border: thin solid var(--color-error);;
+article section {
+    margin-left: 0;
+    margin-right: 0;
 }
 
 /* highlight key facts (generated at runtime) */
@@ -596,34 +657,34 @@ input[type="range"]::-moz-range-track {
             </div>
         </div>
     <a href="https://github.com/lsd-consulting/lsd-core" target="_blank" rel="noopener noreferrer" class="logo-link"><h1 class="logo">LSD</h1></a>
-    <h1>Approval Report</h1><article id="18">
+    <h1>Approval Report</h1><article id="18" class="success">
         <span class="articleStart"></span>
-        <h2 class="success">A Success scenario with messages</h2><section class="description success">
-            <h3 class="success">Description</h3>
-            Given a first scenario description<br/>When something happens<br/>Then something else happens
-        </section>
-        
-        <aside class="metrics">
-            <div class="table">
-                <h3>Metrics</h3>
-                <div class="row">
-                    <div class="rowHead">Name</div>
-                    <div class="rowHead">Value</div>
-                </div><div class="row">
-                    <div class="cell">Time to generate sequence diagram</div>
-                    <div class="cell">0.00s</div>
-                </div><div class="row">
-                    <div class="cell">Time to generate component diagram</div>
-                    <div class="cell">0.00s</div>
-                </div><div class="row">
-                    <div class="cell">Events captured</div>
-                    <div class="cell">5</div>
-                </div><div class="row">
-                    <div class="cell">Messages captured</div>
-                    <div class="cell">5</div>
-                </div><div class="row">
-                    <div class="cell">Top bottlenecks</div>
-                    <div class="cell"><details>
+        <h2 class="success">A Success scenario with messages</h2>
+        <div class="cards-row"><section class="card description success">
+                <h3 class="success">Description</h3>
+                Given a first scenario description<br/>When something happens<br/>Then something else happens
+            </section>
+            <section class="card metrics success">
+                <h3 class="success">Metrics</h3>
+                <div class="table">
+                    <div class="row">
+                        <div class="rowHead">Name</div>
+                        <div class="rowHead">Value</div>
+                    </div><div class="row">
+                        <div class="cell">Time to generate sequence diagram</div>
+                        <div class="cell">0.00s</div>
+                    </div><div class="row">
+                        <div class="cell">Time to generate component diagram</div>
+                        <div class="cell">0.00s</div>
+                    </div><div class="row">
+                        <div class="cell">Events captured</div>
+                        <div class="cell">5</div>
+                    </div><div class="row">
+                        <div class="cell">Messages captured</div>
+                        <div class="cell">5</div>
+                    </div><div class="row">
+                        <div class="cell">Top bottlenecks</div>
+                        <div class="cell"><details>
   <summary>Gamma (isolated duration 2s)</summary>
   <ul>
     <li>[Beta -> Gamma] 0s <a href="javascript:scrollIntoViewFor('4');"><sub>[show]</sub></a> <a href="#4"><sub>[open]</sub></a></li>
@@ -642,10 +703,12 @@ input[type="range"]::-moz-range-track {
   </ul>
 </details>
 </div>
+                    </div>
                 </div>
-            </div>
-        </aside>
-        <section class="sequence diagram svg success">
+            </section>
+            
+        </div>
+        <section class="diagram-row sequence diagram svg success">
             <h3 class="success">Sequence Diagram</h3>
             <figure><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="330px" preserveAspectRatio="none" style="width:567px;height:330px;background:#FFFFFF;" version="1.1" viewBox="0 0 567 330" width="567px" zoomAndPan="magnify"><defs/><g><g><title>Arnie</title><rect fill="#000000" fill-opacity="0.00000" height="166.5527" width="8" x="36.8257" y="82.4883"/><line style="stroke:#000000;stroke-width:1;stroke-dasharray:5,5;" x1="39.8643" x2="39.8643" y1="82.4883" y2="249.041"/></g><g><title>Bettie</title><rect fill="#000000" fill-opacity="0.00000" height="166.5527" width="8" x="127.3809" y="82.4883"/><line style="stroke:#000000;stroke-width:1;stroke-dasharray:5,5;" x1="130.8809" x2="130.8809" y1="82.4883" y2="249.041"/></g><g><title>Beta</title><rect fill="#000000" fill-opacity="0.00000" height="166.5527" width="8" x="193.291" y="82.4883"/><line style="stroke:#000000;stroke-width:1;stroke-dasharray:5,5;" x1="196.8809" x2="196.8809" y1="82.4883" y2="249.041"/></g><g><title>Gamma</title><rect fill="#000000" fill-opacity="0.00000" height="166.5527" width="8" x="524.6763" y="82.4883"/><line style="stroke:#000000;stroke-width:1;stroke-dasharray:5,5;" x1="527.8159" x2="527.8159" y1="82.4883" y2="249.041"/></g><g class="participant participant-head" data-participant="A"><text fill="#000000" font-family="Hack" font-size="14" lengthAdjust="spacing" textLength="35.9229" x="19.8643" y="79.5352">Arnie</text><ellipse cx="40.8257" cy="14" fill="#FFFFFF" rx="8" ry="8" style="stroke:#000000;stroke-width:1;"/><path d="M40.8257,22 L40.8257,49 M27.8257,30 L53.8257,30 M40.8257,49 L27.8257,64 M40.8257,49 L53.8257,64" fill="none" style="stroke:#000000;stroke-width:1;"/></g><g class="participant participant-tail" data-participant="A"><text fill="#000000" font-family="Hack" font-size="14" lengthAdjust="spacing" textLength="35.9229" x="19.8643" y="261.5762">Arnie</text><ellipse cx="40.8257" cy="273.5293" fill="#FFFFFF" rx="8" ry="8" style="stroke:#000000;stroke-width:1;"/><path d="M40.8257,281.5293 L40.8257,308.5293 M27.8257,289.5293 L53.8257,289.5293 M40.8257,308.5293 L27.8257,323.5293 M40.8257,308.5293 L53.8257,323.5293" fill="none" style="stroke:#000000;stroke-width:1;"/></g><g class="participant participant-head" data-participant="Bettie"><text fill="#000000" font-family="Hack" font-size="14" lengthAdjust="spacing" textLength="38.1719" x="109.2949" y="79.5352">Bettie</text><path d="M110.8809,38 L110.8809,62 M110.8809,50 L127.8809,50" fill="none" style="stroke:#000000;stroke-width:1;"/><ellipse cx="139.8809" cy="50" fill="#FF0000" rx="12" ry="12" style="stroke:#000000;stroke-width:1;"/></g><g class="participant participant-tail" data-participant="Bettie"><text fill="#000000" font-family="Hack" font-size="14" lengthAdjust="spacing" textLength="38.1719" x="109.2949" y="261.5762">Bettie</text><path d="M110.8809,268.5293 L110.8809,292.5293 M110.8809,280.5293 L127.8809,280.5293" fill="none" style="stroke:#000000;stroke-width:1;"/><ellipse cx="139.8809" cy="280.5293" fill="#FF0000" rx="12" ry="12" style="stroke:#000000;stroke-width:1;"/></g><g class="participant participant-head" data-participant="Beta"><rect fill="#FFFFFF" height="30.4883" rx="2.5" ry="2.5" style="stroke:#000000;stroke-width:1;" width="42.8203" x="175.8809" y="51"/><text fill="#000000" font-family="Hack" font-size="14" lengthAdjust="spacing" textLength="28.8203" x="182.8809" y="71.5352">Beta</text></g><g class="participant participant-tail" data-participant="Beta"><rect fill="#FFFFFF" height="30.4883" rx="2.5" ry="2.5" style="stroke:#000000;stroke-width:1;" width="42.8203" x="175.8809" y="248.041"/><text fill="#000000" font-family="Hack" font-size="14" lengthAdjust="spacing" textLength="28.8203" x="182.8809" y="268.5762">Beta</text></g><g class="participant participant-head" data-participant="Gamma"><rect fill="#FFFFFF" height="30.4883" rx="2.5" ry="2.5" style="stroke:#000000;stroke-width:1;" width="65.7207" x="495.8159" y="51"/><text fill="#000000" font-family="Hack" font-size="14" lengthAdjust="spacing" textLength="51.7207" x="502.8159" y="71.5352">Gamma</text></g><g class="participant participant-tail" data-participant="Gamma"><rect fill="#FFFFFF" height="30.4883" rx="2.5" ry="2.5" style="stroke:#000000;stroke-width:1;" width="65.7207" x="495.8159" y="248.041"/><text fill="#000000" font-family="Hack" font-size="14" lengthAdjust="spacing" textLength="51.7207" x="502.8159" y="268.5762">Gamma</text></g><g class="message" data-participant-1="A" data-participant-2="A"><polygon fill="#000000" points="28.8257,109.7988,38.8257,113.7988,28.8257,117.7988,32.8257,113.7988" style="stroke:#000000;stroke-width:1;"/><line style="stroke:#000000;stroke-width:1;" x1="5" x2="34.8257" y1="113.7988" y2="113.7988"/><a href="#1" target="_self" title="in" xlink:actuate="onRequest" xlink:href="#1" xlink:show="new" xlink:title="in" xlink:type="simple"><text fill="#333333" font-family="Hack" font-size="13" lengthAdjust="spacing" text-decoration="underline" textLength="11.8257" x="12" y="109.0566">in</text></a></g><g class="message" data-participant-1="A" data-participant-2="Bettie"><polygon fill="#000000" points="51.8257,139.1094,41.8257,143.1094,51.8257,147.1094,47.8257,143.1094" style="stroke:#000000;stroke-width:1;"/><polygon fill="#000000" points="119.3809,139.1094,129.3809,143.1094,119.3809,147.1094,123.3809,143.1094" style="stroke:#000000;stroke-width:1;"/><line style="stroke:#000000;stroke-width:1;" x1="45.8257" x2="125.3809" y1="143.1094" y2="143.1094"/><a href="#2" target="_self" title="Message 1" xlink:actuate="onRequest" xlink:href="#2" xlink:show="new" xlink:title="Message 1" xlink:type="simple"><text fill="#333333" font-family="Hack" font-size="13" lengthAdjust="spacing" text-decoration="underline" textLength="66.5552" x="57.8257" y="138.3672">Message 1</text></a></g><g class="message" data-participant-1="Bettie" data-participant-2="Bettie"><polygon fill="#000000" points="164.2964,168.4199,174.2964,172.4199,164.2964,176.4199,168.2964,172.4199" style="stroke:#000000;stroke-width:1;"/><line style="stroke:#000000;stroke-width:1;" x1="131.3809" x2="170.2964" y1="172.4199" y2="172.4199"/><a href="#3" target="_self" title="out" xlink:actuate="onRequest" xlink:href="#3" xlink:show="new" xlink:title="out" xlink:type="simple"><text fill="#333333" font-family="Hack" font-size="13" lengthAdjust="spacing" text-decoration="underline" textLength="20.9155" x="138.3809" y="167.6777">out</text></a></g><g class="message" data-participant-1="Beta" data-participant-2="Gamma"><line style="stroke:#000000;stroke-width:2;" x1="510.6763" x2="520.6763" y1="196.7305" y2="206.7305"/><line style="stroke:#000000;stroke-width:2;" x1="510.6763" x2="520.6763" y1="206.7305" y2="196.7305"/><line style="stroke:#000000;stroke-width:1;" x1="197.291" x2="515.6763" y1="201.7305" y2="201.7305"/><a href="#4" target="_self" title="An interaction description that is long enough to need abbreviating" xlink:actuate="onRequest" xlink:href="#4" xlink:show="new" xlink:title="An interaction description that is long enough to need abbreviating" xlink:type="simple"><text fill="#333333" font-family="Hack" font-size="13" lengthAdjust="spacing" text-decoration="underline" textLength="307.3853" x="204.291" y="196.9883">An interaction description that is long enough ...</text></a></g><g class="message" data-participant-1="Gamma" data-participant-2="Beta"><polygon fill="#000000" points="208.291,227.041,198.291,231.041,208.291,235.041,204.291,231.041" style="stroke:#000000;stroke-width:1;"/><line style="stroke:#000000;stroke-width:1;stroke-dasharray:2,2;" x1="202.291" x2="527.6763" y1="231.041" y2="231.041"/><a href="#5" target="_self" title="A synchronous response" xlink:actuate="onRequest" xlink:href="#5" xlink:show="new" xlink:title="A synchronous response" xlink:type="simple"><text fill="#333333" font-family="Hack" font-size="13" lengthAdjust="spacing" text-decoration="underline" textLength="154.7559" x="214.291" y="226.2988">A synchronous response</text></a></g></g></svg></figure>
             <div onclick="location.href='#!';" id="16" class="overlay">
@@ -764,35 +827,37 @@ remove @unlinked
                 </div>
             </div>
         </div>
-    </article><article id="21">
+    </article><article id="21" class="success">
         <span class="articleStart"></span>
-        <h2 class="success">Lifeline activation/deactivation</h2><section class="description success">
-            <h3 class="success">Description</h3>
-            Adding lifelines to participants
-        </section>
-        
-        <aside class="metrics">
-            <div class="table">
-                <h3>Metrics</h3>
-                <div class="row">
-                    <div class="rowHead">Name</div>
-                    <div class="rowHead">Value</div>
-                </div><div class="row">
-                    <div class="cell">Time to generate sequence diagram</div>
-                    <div class="cell">0.00s</div>
-                </div><div class="row">
-                    <div class="cell">Time to generate component diagram</div>
-                    <div class="cell">0.00s</div>
-                </div><div class="row">
-                    <div class="cell">Events captured</div>
-                    <div class="cell">7</div>
-                </div><div class="row">
-                    <div class="cell">Messages captured</div>
-                    <div class="cell">3</div>
+        <h2 class="success">Lifeline activation/deactivation</h2>
+        <div class="cards-row"><section class="card description success">
+                <h3 class="success">Description</h3>
+                Adding lifelines to participants
+            </section>
+            <section class="card metrics success">
+                <h3 class="success">Metrics</h3>
+                <div class="table">
+                    <div class="row">
+                        <div class="rowHead">Name</div>
+                        <div class="rowHead">Value</div>
+                    </div><div class="row">
+                        <div class="cell">Time to generate sequence diagram</div>
+                        <div class="cell">0.00s</div>
+                    </div><div class="row">
+                        <div class="cell">Time to generate component diagram</div>
+                        <div class="cell">0.00s</div>
+                    </div><div class="row">
+                        <div class="cell">Events captured</div>
+                        <div class="cell">7</div>
+                    </div><div class="row">
+                        <div class="cell">Messages captured</div>
+                        <div class="cell">3</div>
+                    </div>
                 </div>
-            </div>
-        </aside>
-        <section class="sequence diagram svg success">
+            </section>
+            
+        </div>
+        <section class="diagram-row sequence diagram svg success">
             <h3 class="success">Sequence Diagram</h3>
             <figure><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="271px" preserveAspectRatio="none" style="width:318px;height:271px;background:#FFFFFF;" version="1.1" viewBox="0 0 318 271" width="318px" zoomAndPan="magnify"><defs/><g><g><title>Bettie</title><rect fill="#FF0000" height="29.3105" style="stroke:#000000;stroke-width:1;" width="10" x="157.8081" y="113.7988"/></g><g><title>Cat</title><rect fill="#0000FF" height="29.3105" style="stroke:#000000;stroke-width:1;" width="10" x="294.6548" y="143.1094"/></g><g><title>Arnie</title><rect fill="#000000" fill-opacity="0.00000" height="107.9316" width="8" x="26.9614" y="82.4883"/><line style="stroke:#000000;stroke-width:1;stroke-dasharray:5,5;" x1="30" x2="30" y1="82.4883" y2="190.4199"/></g><g><title>Bettie</title><rect fill="#000000" fill-opacity="0.00000" height="107.9316" width="8" x="158.8081" y="82.4883"/><line style="stroke:#000000;stroke-width:1;stroke-dasharray:5,5;" x1="162.3081" x2="162.3081" y1="82.4883" y2="190.4199"/></g><g><title>Cat</title><rect fill="#000000" fill-opacity="0.00000" height="107.9316" width="8" x="295.6548" y="82.4883"/><line style="stroke:#000000;stroke-width:1;stroke-dasharray:5,5;" x1="299.6548" x2="299.6548" y1="82.4883" y2="190.4199"/></g><g class="participant participant-head" data-participant="A"><text fill="#000000" font-family="Hack" font-size="14" lengthAdjust="spacing" textLength="35.9229" x="10" y="79.5352">Arnie</text><ellipse cx="30.9614" cy="14" fill="#FFFFFF" rx="8" ry="8" style="stroke:#000000;stroke-width:1;"/><path d="M30.9614,22 L30.9614,49 M17.9614,30 L43.9614,30 M30.9614,49 L17.9614,64 M30.9614,49 L43.9614,64" fill="none" style="stroke:#000000;stroke-width:1;"/></g><g class="participant participant-tail" data-participant="A"><text fill="#000000" font-family="Hack" font-size="14" lengthAdjust="spacing" textLength="35.9229" x="10" y="202.9551">Arnie</text><ellipse cx="30.9614" cy="214.9082" fill="#FFFFFF" rx="8" ry="8" style="stroke:#000000;stroke-width:1;"/><path d="M30.9614,222.9082 L30.9614,249.9082 M17.9614,230.9082 L43.9614,230.9082 M30.9614,249.9082 L17.9614,264.9082 M30.9614,249.9082 L43.9614,264.9082" fill="none" style="stroke:#000000;stroke-width:1;"/></g><g class="participant participant-head" data-participant="Bettie"><text fill="#000000" font-family="Hack" font-size="14" lengthAdjust="spacing" textLength="38.1719" x="140.7222" y="79.5352">Bettie</text><path d="M142.3081,38 L142.3081,62 M142.3081,50 L159.3081,50" fill="none" style="stroke:#000000;stroke-width:1;"/><ellipse cx="171.3081" cy="50" fill="#FF0000" rx="12" ry="12" style="stroke:#000000;stroke-width:1;"/></g><g class="participant participant-tail" data-participant="Bettie"><text fill="#000000" font-family="Hack" font-size="14" lengthAdjust="spacing" textLength="38.1719" x="140.7222" y="202.9551">Bettie</text><path d="M142.3081,209.9082 L142.3081,233.9082 M142.3081,221.9082 L159.3081,221.9082" fill="none" style="stroke:#000000;stroke-width:1;"/><ellipse cx="171.3081" cy="221.9082" fill="#FF0000" rx="12" ry="12" style="stroke:#000000;stroke-width:1;"/></g><g class="participant participant-head" data-participant="Cat"><text fill="#000000" font-family="Hack" font-size="14" lengthAdjust="spacing" textLength="22.6543" x="285.3276" y="79.5352">Cat</text><ellipse cx="299.6548" cy="50" fill="#FFFFFF" rx="12" ry="12" style="stroke:#000000;stroke-width:1;"/><polygon fill="#000000" points="295.6548,38,301.6548,33,299.6548,38,301.6548,43,295.6548,38" style="stroke:#000000;stroke-width:1;"/></g><g class="participant participant-tail" data-participant="Cat"><text fill="#000000" font-family="Hack" font-size="14" lengthAdjust="spacing" textLength="22.6543" x="285.3276" y="202.9551">Cat</text><ellipse cx="299.6548" cy="221.9082" fill="#FFFFFF" rx="12" ry="12" style="stroke:#000000;stroke-width:1;"/><polygon fill="#000000" points="295.6548,209.9082,301.6548,204.9082,299.6548,209.9082,301.6548,214.9082,295.6548,209.9082" style="stroke:#000000;stroke-width:1;"/></g><g><title>Bettie</title><rect fill="#FF0000" height="29.3105" style="stroke:#000000;stroke-width:1;" width="10" x="157.8081" y="113.7988"/></g><g><title>Cat</title><rect fill="#0000FF" height="29.3105" style="stroke:#000000;stroke-width:1;" width="10" x="294.6548" y="143.1094"/></g><g class="message" data-participant-1="A" data-participant-2="Bettie"><polygon fill="#000000" points="145.8081,109.7988,155.8081,113.7988,145.8081,117.7988,149.8081,113.7988" style="stroke:#000000;stroke-width:1;"/><line style="stroke:#000000;stroke-width:1;" x1="30.9614" x2="151.8081" y1="113.7988" y2="113.7988"/><a href="#6" target="_self" title="Good day to you!" xlink:actuate="onRequest" xlink:href="#6" xlink:show="new" xlink:title="Good day to you!" xlink:type="simple"><text fill="#333333" font-family="Hack" font-size="13" lengthAdjust="spacing" text-decoration="underline" textLength="107.8467" x="37.9614" y="109.0566">Good day to you!</text></a></g><g class="message" data-participant-1="Bettie" data-participant-2="Cat"><polygon fill="#000000" points="282.6548,139.1094,292.6548,143.1094,282.6548,147.1094,286.6548,143.1094" style="stroke:#000000;stroke-width:1;"/><line style="stroke:#000000;stroke-width:1;" x1="162.8081" x2="288.6548" y1="143.1094" y2="143.1094"/><a href="#7" target="_self" title="Good day to you!" xlink:actuate="onRequest" xlink:href="#7" xlink:show="new" xlink:title="Good day to you!" xlink:type="simple"><text fill="#333333" font-family="Hack" font-size="13" lengthAdjust="spacing" text-decoration="underline" textLength="107.8467" x="169.8081" y="138.3672">Good day to you!</text></a></g><g class="message" data-participant-1="Cat" data-participant-2="A"><polygon fill="#000000" points="41.9614,168.4199,31.9614,172.4199,41.9614,176.4199,37.9614,172.4199" style="stroke:#000000;stroke-width:1;"/><line style="stroke:#000000;stroke-width:1;" x1="35.9614" x2="298.6548" y1="172.4199" y2="172.4199"/><a href="#8" target="_self" title="Me?" xlink:actuate="onRequest" xlink:href="#8" xlink:show="new" xlink:title="Me?" xlink:type="simple"><text fill="#333333" font-family="Hack" font-size="13" lengthAdjust="spacing" text-decoration="underline" textLength="23.9243" x="47.9614" y="167.6777">Me?</text></a></g></g></svg></figure>
             <div onclick="location.href='#!';" id="19" class="overlay">
@@ -896,35 +961,37 @@ remove @unlinked
                 </div>
             </div>
         </div>
-    </article><article id="24">
+    </article><article id="24" class="success">
         <span class="articleStart"></span>
-        <h2 class="success">Capturing Notes</h2><section class="description success">
-            <h3 class="success">Description</h3>
-            Notes can be added to participants
-        </section>
-        
-        <aside class="metrics">
-            <div class="table">
-                <h3>Metrics</h3>
-                <div class="row">
-                    <div class="rowHead">Name</div>
-                    <div class="rowHead">Value</div>
-                </div><div class="row">
-                    <div class="cell">Time to generate sequence diagram</div>
-                    <div class="cell">0.00s</div>
-                </div><div class="row">
-                    <div class="cell">Time to generate component diagram</div>
-                    <div class="cell">0.00s</div>
-                </div><div class="row">
-                    <div class="cell">Events captured</div>
-                    <div class="cell">17</div>
-                </div><div class="row">
-                    <div class="cell">Messages captured</div>
-                    <div class="cell">3</div>
+        <h2 class="success">Capturing Notes</h2>
+        <div class="cards-row"><section class="card description success">
+                <h3 class="success">Description</h3>
+                Notes can be added to participants
+            </section>
+            <section class="card metrics success">
+                <h3 class="success">Metrics</h3>
+                <div class="table">
+                    <div class="row">
+                        <div class="rowHead">Name</div>
+                        <div class="rowHead">Value</div>
+                    </div><div class="row">
+                        <div class="cell">Time to generate sequence diagram</div>
+                        <div class="cell">0.00s</div>
+                    </div><div class="row">
+                        <div class="cell">Time to generate component diagram</div>
+                        <div class="cell">0.00s</div>
+                    </div><div class="row">
+                        <div class="cell">Events captured</div>
+                        <div class="cell">17</div>
+                    </div><div class="row">
+                        <div class="cell">Messages captured</div>
+                        <div class="cell">3</div>
+                    </div>
                 </div>
-            </div>
-        </aside>
-        <section class="sequence diagram svg success">
+            </section>
+            
+        </div>
+        <section class="diagram-row sequence diagram svg success">
             <h3 class="success">Sequence Diagram</h3>
             <figure><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="617px" preserveAspectRatio="none" style="width:468px;height:617px;background:#FFFFFF;" version="1.1" viewBox="0 0 468 617" width="468px" zoomAndPan="magnify"><title>Adding notes</title><defs/><g><text fill="#000000" font-family="Hack" font-size="22" font-weight="bold" lengthAdjust="spacing" textLength="151.4648" x="156.7886" y="36.2695">Adding notes</text><g><title>Arnie</title><rect fill="#000000" fill-opacity="0.00000" height="45.3105" width="8" x="87.9614" y="129.3984"/><line style="stroke:#000000;stroke-width:1;stroke-dasharray:5,5;" x1="91" x2="91" y1="129.3984" y2="174.709"/></g><line style="stroke:#000000;stroke-width:1;stroke-dasharray:1,4;" x1="91" x2="91" y1="174.709" y2="215.6641"/><g><title>Arnie</title><rect fill="#000000" fill-opacity="0.00000" height="320.4844" width="8" x="87.9614" y="215.6641"/><line style="stroke:#000000;stroke-width:1;stroke-dasharray:5,5;" x1="91" x2="91" y1="215.6641" y2="536.1484"/></g><g><title>Bettie</title><rect fill="#000000" fill-opacity="0.00000" height="45.3105" width="8" x="219.8081" y="129.3984"/><line style="stroke:#000000;stroke-width:1;stroke-dasharray:5,5;" x1="223.3081" x2="223.3081" y1="129.3984" y2="174.709"/></g><line style="stroke:#000000;stroke-width:1;stroke-dasharray:1,4;" x1="223.3081" x2="223.3081" y1="174.709" y2="215.6641"/><g><title>Bettie</title><rect fill="#000000" fill-opacity="0.00000" height="320.4844" width="8" x="219.8081" y="215.6641"/><line style="stroke:#000000;stroke-width:1;stroke-dasharray:5,5;" x1="223.3081" x2="223.3081" y1="215.6641" y2="536.1484"/></g><g><title>Cat</title><rect fill="#000000" fill-opacity="0.00000" height="45.3105" width="8" x="351.6548" y="129.3984"/><line style="stroke:#000000;stroke-width:1;stroke-dasharray:5,5;" x1="355.6548" x2="355.6548" y1="129.3984" y2="174.709"/></g><line style="stroke:#000000;stroke-width:1;stroke-dasharray:1,4;" x1="355.6548" x2="355.6548" y1="174.709" y2="215.6641"/><g><title>Cat</title><rect fill="#000000" fill-opacity="0.00000" height="320.4844" width="8" x="351.6548" y="215.6641"/><line style="stroke:#000000;stroke-width:1;stroke-dasharray:5,5;" x1="355.6548" x2="355.6548" y1="215.6641" y2="536.1484"/></g><g class="participant participant-head" data-participant="A"><text fill="#000000" font-family="Hack" font-size="14" lengthAdjust="spacing" textLength="35.9229" x="71" y="126.4453">Arnie</text><ellipse cx="91.9614" cy="60.9102" fill="#FFFFFF" rx="8" ry="8" style="stroke:#000000;stroke-width:1;"/><path d="M91.9614,68.9102 L91.9614,95.9102 M78.9614,76.9102 L104.9614,76.9102 M91.9614,95.9102 L78.9614,110.9102 M91.9614,95.9102 L104.9614,110.9102" fill="none" style="stroke:#000000;stroke-width:1;"/></g><g class="participant participant-tail" data-participant="A"><text fill="#000000" font-family="Hack" font-size="14" lengthAdjust="spacing" textLength="35.9229" x="71" y="548.6836">Arnie</text><ellipse cx="91.9614" cy="560.6367" fill="#FFFFFF" rx="8" ry="8" style="stroke:#000000;stroke-width:1;"/><path d="M91.9614,568.6367 L91.9614,595.6367 M78.9614,576.6367 L104.9614,576.6367 M91.9614,595.6367 L78.9614,610.6367 M91.9614,595.6367 L104.9614,610.6367" fill="none" style="stroke:#000000;stroke-width:1;"/></g><g class="participant participant-head" data-participant="Bettie"><text fill="#000000" font-family="Hack" font-size="14" lengthAdjust="spacing" textLength="38.1719" x="201.7222" y="126.4453">Bettie</text><path d="M203.3081,84.9102 L203.3081,108.9102 M203.3081,96.9102 L220.3081,96.9102" fill="none" style="stroke:#000000;stroke-width:1;"/><ellipse cx="232.3081" cy="96.9102" fill="#FF0000" rx="12" ry="12" style="stroke:#000000;stroke-width:1;"/></g><g class="participant participant-tail" data-participant="Bettie"><text fill="#000000" font-family="Hack" font-size="14" lengthAdjust="spacing" textLength="38.1719" x="201.7222" y="548.6836">Bettie</text><path d="M203.3081,555.6367 L203.3081,579.6367 M203.3081,567.6367 L220.3081,567.6367" fill="none" style="stroke:#000000;stroke-width:1;"/><ellipse cx="232.3081" cy="567.6367" fill="#FF0000" rx="12" ry="12" style="stroke:#000000;stroke-width:1;"/></g><g class="participant participant-head" data-participant="Cat"><text fill="#000000" font-family="Hack" font-size="14" lengthAdjust="spacing" textLength="22.6543" x="341.3276" y="126.4453">Cat</text><ellipse cx="355.6548" cy="96.9102" fill="#FFFFFF" rx="12" ry="12" style="stroke:#000000;stroke-width:1;"/><polygon fill="#000000" points="351.6548,84.9102,357.6548,79.9102,355.6548,84.9102,357.6548,89.9102,351.6548,84.9102" style="stroke:#000000;stroke-width:1;"/></g><g class="participant participant-tail" data-participant="Cat"><text fill="#000000" font-family="Hack" font-size="14" lengthAdjust="spacing" textLength="22.6543" x="341.3276" y="548.6836">Cat</text><ellipse cx="355.6548" cy="567.6367" fill="#FFFFFF" rx="12" ry="12" style="stroke:#000000;stroke-width:1;"/><polygon fill="#000000" points="351.6548,555.6367,357.6548,550.6367,355.6548,555.6367,357.6548,560.6367,351.6548,555.6367" style="stroke:#000000;stroke-width:1;"/></g><g class="message" data-participant-1="A" data-participant-2="Bettie"><polygon fill="#000000" points="211.8081,162.709,221.8081,166.709,211.8081,170.709,215.8081,166.709" style="stroke:#000000;stroke-width:1;"/><line style="stroke:#000000;stroke-width:1;" x1="91.9614" x2="217.8081" y1="166.709" y2="166.709"/><a href="#9" target="_self" title="Good day to you!" xlink:actuate="onRequest" xlink:href="#9" xlink:show="new" xlink:title="Good day to you!" xlink:type="simple"><text fill="#333333" font-family="Hack" font-size="13" lengthAdjust="spacing" text-decoration="underline" textLength="107.8467" x="98.9614" y="161.9668">Good day to you!</text></a></g><path d="M10,144.3984 L10,169.3984 L87,169.3984 L87,154.3984 L77,144.3984 L10,144.3984" fill="#FFFFFF" style="stroke:#000000;stroke-width:1;"/><path d="M77,144.3984 L77,154.3984 L87,154.3984 L77,144.3984" fill="#FFFFFF" style="stroke:#000000;stroke-width:1;"/><text fill="#000000" font-family="Hack" font-size="13" lengthAdjust="spacing" textLength="56.0879" x="16" y="161.9668">Left note</text><path d="M228,144.3984 L228,169.3984 L314,169.3984 L314,154.3984 L304,144.3984 L228,144.3984" fill="#FFFFFF" style="stroke:#000000;stroke-width:1;"/><path d="M304,144.3984 L304,154.3984 L314,154.3984 L304,144.3984" fill="#FFFFFF" style="stroke:#000000;stroke-width:1;"/><text fill="#000000" font-family="Hack" font-size="13" lengthAdjust="spacing" textLength="65.2856" x="234" y="161.9668">Right note</text><text fill="#000000" font-family="Hack" font-size="11" lengthAdjust="spacing" textLength="102.647" x="172.4846" y="199.3438">a few seconds later</text><g class="message" data-participant-1="Bettie" data-participant-2="Cat"><polygon fill="#000000" points="343.6548,235.9746,353.6548,239.9746,343.6548,243.9746,347.6548,239.9746" style="stroke:#000000;stroke-width:1;"/><line style="stroke:#000000;stroke-width:1;" x1="223.8081" x2="349.6548" y1="239.9746" y2="239.9746"/><a href="#10" target="_self" title="Good day to you!" xlink:actuate="onRequest" xlink:href="#10" xlink:show="new" xlink:title="Good day to you!" xlink:type="simple"><text fill="#333333" font-family="Hack" font-size="13" lengthAdjust="spacing" text-decoration="underline" textLength="107.8467" x="230.8081" y="235.2324">Good day to you!</text></a></g><path d="M360,220.6641 L360,245.6641 L446,245.6641 L446,230.6641 L436,220.6641 L360,220.6641" fill="#FFFFFF" style="stroke:#000000;stroke-width:1;"/><path d="M436,220.6641 L436,230.6641 L446,230.6641 L436,220.6641" fill="#FFFFFF" style="stroke:#000000;stroke-width:1;"/><text fill="#000000" font-family="Hack" font-size="13" lengthAdjust="spacing" textLength="65.2856" x="366" y="238.2324">Right note</text><path d="M263,255.9746 L263,280.9746 L349,280.9746 L349,265.9746 L339,255.9746 L263,255.9746" fill="#FFFFFF" style="stroke:#000000;stroke-width:1;"/><path d="M339,255.9746 L339,265.9746 L349,265.9746 L339,255.9746" fill="#FFFFFF" style="stroke:#000000;stroke-width:1;"/><text fill="#000000" font-family="Hack" font-size="13" lengthAdjust="spacing" textLength="65.8442" x="269" y="273.543">Left of Cat</text><path d="M360,291.2852 L360,316.2852 L456,316.2852 L456,301.2852 L446,291.2852 L360,291.2852" fill="#FFFFFF" style="stroke:#000000;stroke-width:1;"/><path d="M446,291.2852 L446,301.2852 L456,301.2852 L446,291.2852" fill="#FFFFFF" style="stroke:#000000;stroke-width:1;"/><text fill="#000000" font-family="Hack" font-size="13" lengthAdjust="spacing" textLength="75.042" x="366" y="308.8535">Right of Cat</text><path d="M162,326.5957 L162,351.5957 L283,351.5957 L283,336.5957 L273,326.5957 L162,326.5957" fill="#FFFFFF" style="stroke:#000000;stroke-width:1;"/><path d="M273,326.5957 L273,336.5957 L283,336.5957 L273,326.5957" fill="#FFFFFF" style="stroke:#000000;stroke-width:1;"/><text fill="#000000" font-family="Hack" font-size="13" lengthAdjust="spacing" textLength="100.6421" x="168" y="344.1641">Note over Bettie</text><rect fill="#FFFFFF" height="3" style="stroke:#FFFFFF;stroke-width:1;" width="456.042" x="5" y="377.5615"/><line style="stroke:#000000;stroke-width:0.5;" x1="5" x2="461.042" y1="377.5615" y2="377.5615"/><line style="stroke:#000000;stroke-width:0.5;" x1="5" x2="461.042" y1="380.5615" y2="380.5615"/><rect fill="#FFFFFF" height="23.3105" style="stroke:#000000;stroke-width:1;" width="77.1338" x="194.4541" y="366.9063"/><text fill="#000000" font-family="Hack" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="58.8491" x="200.4541" y="383.4746">a divider</text><g class="message" data-participant-1="Cat" data-participant-2="A"><polygon fill="#000000" points="102.9614,420.5273,92.9614,424.5273,102.9614,428.5273,98.9614,424.5273" style="stroke:#000000;stroke-width:1;"/><line style="stroke:#000000;stroke-width:1;" x1="96.9614" x2="354.6548" y1="424.5273" y2="424.5273"/><a href="#11" target="_self" title="Me?" xlink:actuate="onRequest" xlink:href="#11" xlink:show="new" xlink:title="Me?" xlink:type="simple"><text fill="#333333" font-family="Hack" font-size="13" lengthAdjust="spacing" text-decoration="underline" textLength="23.9243" x="108.9614" y="419.7852">Me?</text></a></g><path d="M360,405.2168 L360,430.2168 L446,430.2168 L446,415.2168 L436,405.2168 L360,405.2168" fill="#FFFFFF" style="stroke:#000000;stroke-width:1;"/><path d="M436,405.2168 L436,415.2168 L446,415.2168 L436,405.2168" fill="#FFFFFF" style="stroke:#000000;stroke-width:1;"/><text fill="#000000" font-family="Hack" font-size="13" lengthAdjust="spacing" textLength="65.2856" x="366" y="422.7852">Right note</text><path d="M117,460.5273 L117,485.5273 L218,485.5273 L218,470.5273 L208,460.5273 L117,460.5273" fill="#FFFFFF" style="stroke:#000000;stroke-width:1;"/><path d="M208,460.5273 L208,470.5273 L218,470.5273 L208,460.5273" fill="#FFFFFF" style="stroke:#000000;stroke-width:1;"/><text fill="#000000" font-family="Hack" font-size="13" lengthAdjust="spacing" textLength="80.2534" x="123" y="478.0957">Left of Bettie</text><path d="M228,495.8379 L228,520.8379 L338,520.8379 L338,505.8379 L328,495.8379 L228,495.8379" fill="#FFFFFF" style="stroke:#000000;stroke-width:1;"/><path d="M328,495.8379 L328,505.8379 L338,505.8379 L328,495.8379" fill="#FFFFFF" style="stroke:#000000;stroke-width:1;"/><text fill="#000000" font-family="Hack" font-size="13" lengthAdjust="spacing" textLength="89.4512" x="234" y="513.4063">Right of Bettie</text></g></svg></figure>
             <div onclick="location.href='#!';" id="22" class="overlay">
@@ -1040,35 +1107,37 @@ remove @unlinked
                 </div>
             </div>
         </div>
-    </article><article id="27">
+    </article><article id="27" class="success">
         <span class="articleStart"></span>
-        <h2 class="success">A Newpage scenario</h2><section class="description success">
-            <h3 class="success">Description</h3>
-            Splitting a diagram into multiple diagrams using Newpage event type
-        </section>
-        
-        <aside class="metrics">
-            <div class="table">
-                <h3>Metrics</h3>
-                <div class="row">
-                    <div class="rowHead">Name</div>
-                    <div class="rowHead">Value</div>
-                </div><div class="row">
-                    <div class="cell">Time to generate sequence diagram</div>
-                    <div class="cell">0.00s</div>
-                </div><div class="row">
-                    <div class="cell">Time to generate component diagram</div>
-                    <div class="cell">0.00s</div>
-                </div><div class="row">
-                    <div class="cell">Events captured</div>
-                    <div class="cell">4</div>
-                </div><div class="row">
-                    <div class="cell">Messages captured</div>
-                    <div class="cell">2</div>
+        <h2 class="success">A Newpage scenario</h2>
+        <div class="cards-row"><section class="card description success">
+                <h3 class="success">Description</h3>
+                Splitting a diagram into multiple diagrams using Newpage event type
+            </section>
+            <section class="card metrics success">
+                <h3 class="success">Metrics</h3>
+                <div class="table">
+                    <div class="row">
+                        <div class="rowHead">Name</div>
+                        <div class="rowHead">Value</div>
+                    </div><div class="row">
+                        <div class="cell">Time to generate sequence diagram</div>
+                        <div class="cell">0.00s</div>
+                    </div><div class="row">
+                        <div class="cell">Time to generate component diagram</div>
+                        <div class="cell">0.00s</div>
+                    </div><div class="row">
+                        <div class="cell">Events captured</div>
+                        <div class="cell">4</div>
+                    </div><div class="row">
+                        <div class="cell">Messages captured</div>
+                        <div class="cell">2</div>
+                    </div>
                 </div>
-            </div>
-        </aside>
-        <section class="sequence diagram svg success">
+            </section>
+            
+        </div>
+        <section class="diagram-row sequence diagram svg success">
             <h3 class="success">Sequence Diagram</h3>
             <figure><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="260px" preserveAspectRatio="none" style="width:409px;height:260px;background:#FFFFFF;" version="1.1" viewBox="0 0 409 260" width="409px" zoomAndPan="magnify"><title>Splitting diagrams with Newpage</title><defs/><g><text fill="#000000" font-family="Hack" font-size="22" font-weight="bold" lengthAdjust="spacing" textLength="376.2344" x="15" y="36.2695">Splitting diagrams with Newpage</text><g><title>Arnie</title><rect fill="#000000" fill-opacity="0.00000" height="49.3105" width="8" x="204.5493" y="129.3984"/><line style="stroke:#000000;stroke-width:1;stroke-dasharray:5,5;" x1="207.5879" x2="207.5879" y1="129.3984" y2="178.709"/></g><g class="participant participant-head" data-participant="A"><text fill="#000000" font-family="Hack" font-size="14" lengthAdjust="spacing" textLength="35.9229" x="187.5879" y="126.4453">Arnie</text><ellipse cx="208.5493" cy="60.9102" fill="#FFFFFF" rx="8" ry="8" style="stroke:#000000;stroke-width:1;"/><path d="M208.5493,68.9102 L208.5493,95.9102 M195.5493,76.9102 L221.5493,76.9102 M208.5493,95.9102 L195.5493,110.9102 M208.5493,95.9102 L221.5493,110.9102" fill="none" style="stroke:#000000;stroke-width:1;"/></g><g class="participant participant-tail" data-participant="A"><text fill="#000000" font-family="Hack" font-size="14" lengthAdjust="spacing" textLength="35.9229" x="187.5879" y="191.2441">Arnie</text><ellipse cx="208.5493" cy="203.1973" fill="#FFFFFF" rx="8" ry="8" style="stroke:#000000;stroke-width:1;"/><path d="M208.5493,211.1973 L208.5493,238.1973 M195.5493,219.1973 L221.5493,219.1973 M208.5493,238.1973 L195.5493,253.1973 M208.5493,238.1973 L221.5493,253.1973" fill="none" style="stroke:#000000;stroke-width:1;"/></g><g class="message" data-participant-1="A" data-participant-2="A"><polygon fill="#000000" points="196.5493,156.709,206.5493,160.709,196.5493,164.709,200.5493,160.709" style="stroke:#000000;stroke-width:1;"/><line style="stroke:#000000;stroke-width:1;" x1="172.7236" x2="202.5493" y1="160.709" y2="160.709"/><a href="#12" target="_self" title="in" xlink:actuate="onRequest" xlink:href="#12" xlink:show="new" xlink:title="in" xlink:type="simple"><text fill="#333333" font-family="Hack" font-size="13" lengthAdjust="spacing" text-decoration="underline" textLength="11.8257" x="179.7236" y="155.9668">in</text></a></g></g></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="200px" preserveAspectRatio="none" style="width:224px;height:200px;background:#FFFFFF;" version="1.1" viewBox="0 0 224 200" width="224px" zoomAndPan="magnify"><title>Another diagram</title><defs/><g><text fill="#000000" font-family="Hack" font-size="22" font-weight="bold" lengthAdjust="spacing" textLength="191.6514" x="15" y="36.2695">Another diagram</text><g><title>Bettie</title><rect fill="#000000" fill-opacity="0.00000" height="49.3105" width="8" x="99.6179" y="100.3984"/><line style="stroke:#000000;stroke-width:1;stroke-dasharray:5,5;" x1="103.1179" x2="103.1179" y1="100.3984" y2="149.709"/></g><g class="participant participant-head" data-participant="Bettie"><text fill="#000000" font-family="Hack" font-size="14" lengthAdjust="spacing" textLength="38.1719" x="81.532" y="97.4453">Bettie</text><path d="M83.1179,55.9102 L83.1179,79.9102 M83.1179,67.9102 L100.1179,67.9102" fill="none" style="stroke:#000000;stroke-width:1;"/><ellipse cx="112.1179" cy="67.9102" fill="#FF0000" rx="12" ry="12" style="stroke:#000000;stroke-width:1;"/></g><g class="participant participant-tail" data-participant="Bettie"><text fill="#000000" font-family="Hack" font-size="14" lengthAdjust="spacing" textLength="38.1719" x="81.532" y="162.2441">Bettie</text><path d="M83.1179,169.1973 L83.1179,193.1973 M83.1179,181.1973 L100.1179,181.1973" fill="none" style="stroke:#000000;stroke-width:1;"/><ellipse cx="112.1179" cy="181.1973" fill="#FF0000" rx="12" ry="12" style="stroke:#000000;stroke-width:1;"/></g><g class="message" data-participant-1="Bettie" data-participant-2="Bettie"><polygon fill="#000000" points="136.5334,127.709,146.5334,131.709,136.5334,135.709,140.5334,131.709" style="stroke:#000000;stroke-width:1;"/><line style="stroke:#000000;stroke-width:1;" x1="103.6179" x2="142.5334" y1="131.709" y2="131.709"/><a href="#13" target="_self" title="out" xlink:actuate="onRequest" xlink:href="#13" xlink:show="new" xlink:title="out" xlink:type="simple"><text fill="#333333" font-family="Hack" font-size="13" lengthAdjust="spacing" text-decoration="underline" textLength="20.9155" x="110.6179" y="126.9668">out</text></a></g></g></svg></figure>
             <div onclick="location.href='#!';" id="25" class="overlay">
@@ -1174,11 +1243,12 @@ remove @unlinked
                 </div>
             </div>
         </div>
-    </article><article id="30">
+    </article><article id="30" class="warn">
         <span class="articleStart"></span>
-        <h2 class="warn">A Warning scenario</h2><section class="description warn">
-            <h3 class="warn">Description</h3>
-            A popup with a long text that needs scrolling:            <a href="#kljasdlfj">click me please!</a>
+        <h2 class="warn">A Warning scenario</h2>
+        <div class="cards-row"><section class="card description warn">
+                <h3 class="warn">Description</h3>
+                A popup with a long text that needs scrolling:            <a href="#kljasdlfj">click me please!</a>
             <div id="kljasdlfj" class="overlay" onclick="location.href='#!';">
                 <div class="popup" onclick="event.stopPropagation();">
                     <h2>I am popup</h2>
@@ -1186,41 +1256,42 @@ remove @unlinked
                     <div class="content">.. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
                 </div>
             </div>
-        </section>
-        <aside class="facts">
-            <div class="table">
-                <h3>Key Facts</h3>
-                <div class="row">
-                    <div class="rowHead">Description</div>
-                    <div class="rowHead">Value</div>
-                </div><div class="row">
-                    <div class="cell">Something to highlight</div>
-                    <div class="cell">Lorem</div>
+            </section>
+            <section class="card metrics warn">
+                <h3 class="warn">Metrics</h3>
+                <div class="table">
+                    <div class="row">
+                        <div class="rowHead">Name</div>
+                        <div class="rowHead">Value</div>
+                    </div><div class="row">
+                        <div class="cell">Time to generate sequence diagram</div>
+                        <div class="cell">0.00s</div>
+                    </div><div class="row">
+                        <div class="cell">Time to generate component diagram</div>
+                        <div class="cell">0.00s</div>
+                    </div><div class="row">
+                        <div class="cell">Events captured</div>
+                        <div class="cell">2</div>
+                    </div><div class="row">
+                        <div class="cell">Messages captured</div>
+                        <div class="cell">1</div>
+                    </div>
                 </div>
-            </div>
-        </aside>
-        <aside class="metrics">
-            <div class="table">
-                <h3>Metrics</h3>
-                <div class="row">
-                    <div class="rowHead">Name</div>
-                    <div class="rowHead">Value</div>
-                </div><div class="row">
-                    <div class="cell">Time to generate sequence diagram</div>
-                    <div class="cell">0.00s</div>
-                </div><div class="row">
-                    <div class="cell">Time to generate component diagram</div>
-                    <div class="cell">0.00s</div>
-                </div><div class="row">
-                    <div class="cell">Events captured</div>
-                    <div class="cell">2</div>
-                </div><div class="row">
-                    <div class="cell">Messages captured</div>
-                    <div class="cell">1</div>
+            </section>
+            <section class="card facts warn">
+                <h3 class="warn">Key Facts</h3>
+                <div class="table">
+                    <div class="row">
+                        <div class="rowHead">Description</div>
+                        <div class="rowHead">Value</div>
+                    </div><div class="row">
+                        <div class="cell">Something to highlight</div>
+                        <div class="cell">Lorem</div>
+                    </div>
                 </div>
-            </div>
-        </aside>
-        <section class="sequence diagram svg warn">
+            </section>
+        </div>
+        <section class="diagram-row sequence diagram svg warn">
             <h3 class="warn">Sequence Diagram</h3>
             <figure><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="241px" preserveAspectRatio="none" style="width:164px;height:241px;background:#FFFFFF;" version="1.1" viewBox="0 0 164 241" width="164px" zoomAndPan="magnify"><defs/><g><g><title>Arnie</title><rect fill="#000000" fill-opacity="0.00000" height="39.3105" width="8" x="26.9614" y="82.4883"/><line style="stroke:#000000;stroke-width:1;stroke-dasharray:5,5;" x1="30" x2="30" y1="82.4883" y2="121.7988"/></g><line style="stroke:#000000;stroke-width:1;stroke-dasharray:1,4;" x1="30" x2="30" y1="121.7988" y2="149.7988"/><g><title>Arnie</title><rect fill="#000000" fill-opacity="0.00000" height="10" width="8" x="26.9614" y="149.7988"/><line style="stroke:#000000;stroke-width:1;stroke-dasharray:5,5;" x1="30" x2="30" y1="149.7988" y2="159.7988"/></g><g><title>Bettie</title><rect fill="#000000" fill-opacity="0.00000" height="39.3105" width="8" x="134.4331" y="82.4883"/><line style="stroke:#000000;stroke-width:1;stroke-dasharray:5,5;" x1="137.9331" x2="137.9331" y1="82.4883" y2="121.7988"/></g><line style="stroke:#000000;stroke-width:1;stroke-dasharray:1,4;" x1="137.9331" x2="137.9331" y1="121.7988" y2="149.7988"/><g><title>Bettie</title><rect fill="#000000" fill-opacity="0.00000" height="10" width="8" x="134.4331" y="149.7988"/><line style="stroke:#000000;stroke-width:1;stroke-dasharray:5,5;" x1="137.9331" x2="137.9331" y1="149.7988" y2="159.7988"/></g><g class="participant participant-head" data-participant="A"><text fill="#000000" font-family="Hack" font-size="14" lengthAdjust="spacing" textLength="35.9229" x="10" y="79.5352">Arnie</text><ellipse cx="30.9614" cy="14" fill="#FFFFFF" rx="8" ry="8" style="stroke:#000000;stroke-width:1;"/><path d="M30.9614,22 L30.9614,49 M17.9614,30 L43.9614,30 M30.9614,49 L17.9614,64 M30.9614,49 L43.9614,64" fill="none" style="stroke:#000000;stroke-width:1;"/></g><g class="participant participant-tail" data-participant="A"><text fill="#000000" font-family="Hack" font-size="14" lengthAdjust="spacing" textLength="35.9229" x="10" y="172.334">Arnie</text><ellipse cx="30.9614" cy="184.2871" fill="#FFFFFF" rx="8" ry="8" style="stroke:#000000;stroke-width:1;"/><path d="M30.9614,192.2871 L30.9614,219.2871 M17.9614,200.2871 L43.9614,200.2871 M30.9614,219.2871 L17.9614,234.2871 M30.9614,219.2871 L43.9614,234.2871" fill="none" style="stroke:#000000;stroke-width:1;"/></g><g class="participant participant-head" data-participant="Bettie"><text fill="#000000" font-family="Hack" font-size="14" lengthAdjust="spacing" textLength="38.1719" x="116.3472" y="79.5352">Bettie</text><path d="M117.9331,38 L117.9331,62 M117.9331,50 L134.9331,50" fill="none" style="stroke:#000000;stroke-width:1;"/><ellipse cx="146.9331" cy="50" fill="#FF0000" rx="12" ry="12" style="stroke:#000000;stroke-width:1;"/></g><g class="participant participant-tail" data-participant="Bettie"><text fill="#000000" font-family="Hack" font-size="14" lengthAdjust="spacing" textLength="38.1719" x="116.3472" y="172.334">Bettie</text><path d="M117.9331,179.2871 L117.9331,203.2871 M117.9331,191.2871 L134.9331,191.2871" fill="none" style="stroke:#000000;stroke-width:1;"/><ellipse cx="146.9331" cy="191.2871" fill="#FF0000" rx="12" ry="12" style="stroke:#000000;stroke-width:1;"/></g><g class="message" data-participant-1="A" data-participant-2="Bettie"><polygon fill="#FFA500" points="126.4331,109.7988,136.4331,113.7988,126.4331,117.7988,130.4331,113.7988" style="stroke:#FFA500;stroke-width:1;"/><line style="stroke:#FFA500;stroke-width:1;" x1="30.9614" x2="132.4331" y1="113.7988" y2="113.7988"/><a href="#14" target="_self" title="Sending food" xlink:actuate="onRequest" xlink:href="#14" xlink:show="new" xlink:title="Sending food" xlink:type="simple"><text fill="orange" font-family="Hack" font-size="13" lengthAdjust="spacing" text-decoration="underline" textLength="83.4717" x="37.9614" y="109.0566">Sending food</text></a></g></g></svg></figure>
             <div onclick="location.href='#!';" id="28" class="overlay">
@@ -1299,46 +1370,48 @@ remove @unlinked
                 </div>
             </div>
         </div>
-    </article><article id="33">
+    </article><article id="33" class="error">
         <span class="articleStart"></span>
-        <h2 class="error">An Error scenario</h2><section class="description error">
-            <h3 class="error">Description</h3>
-            <p>Failure! Expected value to be 123 but was XYZ</p>
-        </section>
-        <aside class="facts">
-            <div class="table">
-                <h3>Key Facts</h3>
-                <div class="row">
-                    <div class="rowHead">Description</div>
-                    <div class="rowHead">Value</div>
-                </div><div class="row">
-                    <div class="cell">some error value</div>
-                    <div class="cell">XYZ</div>
+        <h2 class="error">An Error scenario</h2>
+        <div class="cards-row"><section class="card description error">
+                <h3 class="error">Description</h3>
+                <p>Failure! Expected value to be 123 but was XYZ</p>
+            </section>
+            <section class="card metrics error">
+                <h3 class="error">Metrics</h3>
+                <div class="table">
+                    <div class="row">
+                        <div class="rowHead">Name</div>
+                        <div class="rowHead">Value</div>
+                    </div><div class="row">
+                        <div class="cell">Time to generate sequence diagram</div>
+                        <div class="cell">0.00s</div>
+                    </div><div class="row">
+                        <div class="cell">Time to generate component diagram</div>
+                        <div class="cell">0.00s</div>
+                    </div><div class="row">
+                        <div class="cell">Events captured</div>
+                        <div class="cell">1</div>
+                    </div><div class="row">
+                        <div class="cell">Messages captured</div>
+                        <div class="cell">1</div>
+                    </div>
                 </div>
-            </div>
-        </aside>
-        <aside class="metrics">
-            <div class="table">
-                <h3>Metrics</h3>
-                <div class="row">
-                    <div class="rowHead">Name</div>
-                    <div class="rowHead">Value</div>
-                </div><div class="row">
-                    <div class="cell">Time to generate sequence diagram</div>
-                    <div class="cell">0.00s</div>
-                </div><div class="row">
-                    <div class="cell">Time to generate component diagram</div>
-                    <div class="cell">0.00s</div>
-                </div><div class="row">
-                    <div class="cell">Events captured</div>
-                    <div class="cell">1</div>
-                </div><div class="row">
-                    <div class="cell">Messages captured</div>
-                    <div class="cell">1</div>
+            </section>
+            <section class="card facts error">
+                <h3 class="error">Key Facts</h3>
+                <div class="table">
+                    <div class="row">
+                        <div class="rowHead">Description</div>
+                        <div class="rowHead">Value</div>
+                    </div><div class="row">
+                        <div class="cell">some error value</div>
+                        <div class="cell">XYZ</div>
+                    </div>
                 </div>
-            </div>
-        </aside>
-        <section class="sequence diagram svg error">
+            </section>
+        </div>
+        <section class="diagram-row sequence diagram svg error">
             <h3 class="error">Sequence Diagram</h3>
             <figure><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="213px" preserveAspectRatio="none" style="width:140px;height:213px;background:#FFFFFF;" version="1.1" viewBox="0 0 140 213" width="140px" zoomAndPan="magnify"><defs/><g><g><title>Arnie</title><rect fill="#000000" fill-opacity="0.00000" height="49.3105" width="8" x="26.9614" y="82.4883"/><line style="stroke:#000000;stroke-width:1;stroke-dasharray:5,5;" x1="30" x2="30" y1="82.4883" y2="131.7988"/></g><g><title>Bettie</title><rect fill="#000000" fill-opacity="0.00000" height="49.3105" width="8" x="110.3564" y="82.4883"/><line style="stroke:#000000;stroke-width:1;stroke-dasharray:5,5;" x1="113.8564" x2="113.8564" y1="82.4883" y2="131.7988"/></g><g class="participant participant-head" data-participant="A"><text fill="#000000" font-family="Hack" font-size="14" lengthAdjust="spacing" textLength="35.9229" x="10" y="79.5352">Arnie</text><ellipse cx="30.9614" cy="14" fill="#FFFFFF" rx="8" ry="8" style="stroke:#000000;stroke-width:1;"/><path d="M30.9614,22 L30.9614,49 M17.9614,30 L43.9614,30 M30.9614,49 L17.9614,64 M30.9614,49 L43.9614,64" fill="none" style="stroke:#000000;stroke-width:1;"/></g><g class="participant participant-tail" data-participant="A"><text fill="#000000" font-family="Hack" font-size="14" lengthAdjust="spacing" textLength="35.9229" x="10" y="144.334">Arnie</text><ellipse cx="30.9614" cy="156.2871" fill="#FFFFFF" rx="8" ry="8" style="stroke:#000000;stroke-width:1;"/><path d="M30.9614,164.2871 L30.9614,191.2871 M17.9614,172.2871 L43.9614,172.2871 M30.9614,191.2871 L17.9614,206.2871 M30.9614,191.2871 L43.9614,206.2871" fill="none" style="stroke:#000000;stroke-width:1;"/></g><g class="participant participant-head" data-participant="Bettie"><text fill="#000000" font-family="Hack" font-size="14" lengthAdjust="spacing" textLength="38.1719" x="92.2705" y="79.5352">Bettie</text><path d="M93.8564,38 L93.8564,62 M93.8564,50 L110.8564,50" fill="none" style="stroke:#000000;stroke-width:1;"/><ellipse cx="122.8564" cy="50" fill="#FF0000" rx="12" ry="12" style="stroke:#000000;stroke-width:1;"/></g><g class="participant participant-tail" data-participant="Bettie"><text fill="#000000" font-family="Hack" font-size="14" lengthAdjust="spacing" textLength="38.1719" x="92.2705" y="144.334">Bettie</text><path d="M93.8564,151.2871 L93.8564,175.2871 M93.8564,163.2871 L110.8564,163.2871" fill="none" style="stroke:#000000;stroke-width:1;"/><ellipse cx="122.8564" cy="163.2871" fill="#FF0000" rx="12" ry="12" style="stroke:#000000;stroke-width:1;"/></g><g class="message" data-participant-1="A" data-participant-2="Bettie"><line style="stroke:#FF0000;stroke-width:2;" x1="96.3564" x2="106.3564" y1="108.7988" y2="118.7988"/><line style="stroke:#FF0000;stroke-width:2;" x1="96.3564" x2="106.3564" y1="118.7988" y2="108.7988"/><line style="stroke:#FF0000;stroke-width:1;" x1="30.9614" x2="101.3564" y1="113.7988" y2="113.7988"/><a href="#15" target="_self" title="error XYZ" xlink:actuate="onRequest" xlink:href="#15" xlink:show="new" xlink:title="error XYZ" xlink:type="simple"><text fill="red" font-family="Hack" font-size="13" lengthAdjust="spacing" text-decoration="underline" textLength="59.395" x="37.9614" y="109.0566">error XYZ</text></a></g></g></svg></figure>
             <div onclick="location.href='#!';" id="31" class="overlay">
