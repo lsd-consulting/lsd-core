@@ -128,3 +128,36 @@ function scrollIntoViewFor(id) {
     target.scrollIntoView();
     target.classList.add("highlight");
 }
+
+// Play logo video once forward, then in reverse, then stop
+function playLogoVideo() {
+    const video = document.querySelector('.logo-video');
+    if (!video) return;
+
+    video.currentTime = 0;
+    video.playbackRate = 1.0;
+    video.onended = null;
+    video.play().catch(err => console.warn('Play failed:', err));
+
+    video.onended = function forwardEnded() {
+        video.onended = null; // Prevent re-trigger
+        video.pause();
+
+        let rafId = null;
+        const frameDuration = 1 / 30; // 30 FPS → ~33.33ms per frame
+
+        function reverseStep() {
+            if (video.currentTime <= 0) {
+                video.currentTime = 0;
+                video.pause();
+                cancelAnimationFrame(rafId);
+                return;
+            }
+            // Step back by roughly one frame
+            video.currentTime -= frameDuration;
+            rafId = requestAnimationFrame(reverseStep);
+        }
+        // Start the reverse animation
+        rafId = requestAnimationFrame(reverseStep);
+    };
+}
