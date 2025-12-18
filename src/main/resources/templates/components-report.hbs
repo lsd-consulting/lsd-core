@@ -6,7 +6,11 @@
 </head>
 <body>
 <main role="main">
-    <a href="https://github.com/lsd-consulting/lsd-core" target="_blank" rel="noopener noreferrer" class="logo-link"><h1 class="logo">LSD</h1></a>
+    <a href="https://github.com/lsd-consulting/lsd-core" target="_blank" rel="noopener noreferrer" class="logo-link">
+        <video class="logo-video" muted playsinline>
+            <source src="https://cdn.jsdelivr.net/gh/lsd-consulting/lsd-core@main/src/main/resources/static/lsd_logo_animated.mp4" type="video/mp4">
+        </video>
+    </a>
     <h2>{{model.title}}</h2>
     <div class="contents">
         <section class="sequence diagram svg">
@@ -31,7 +35,10 @@
     <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11/build/styles/dark.min.css">
     {{> templates/partials/javascript }}
-    <script> addSliderForSvgZoom();</script>
+    <script>
+        playLogoVideo();
+        addSliderForSvgZoom();
+    </script>
     <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11/build/highlight.min.js"></script>
     <script>hljs.highlightAll();</script>
     {{> templates/partials/generated-by-footer }}

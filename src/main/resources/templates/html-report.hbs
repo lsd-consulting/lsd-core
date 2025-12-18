@@ -18,7 +18,11 @@
             </div>
         </div>
     {{~/if}}
-    <a href="https://github.com/lsd-consulting/lsd-core" target="_blank" rel="noopener noreferrer" class="logo-link"><h1 class="logo">LSD</h1></a>
+    <a href="https://github.com/lsd-consulting/lsd-core" target="_blank" rel="noopener noreferrer" class="logo-link">
+        <video class="logo-video" muted playsinline>
+            <source src="https://cdn.jsdelivr.net/gh/lsd-consulting/lsd-core@main/src/main/resources/static/lsd_logo_animated.mp4" type="video/mp4">
+        </video>
+    </a>
     <h1>{{ report.title }}</h1>
     {{~#each report.scenarios ~}}
     <article id="{{ id }}" class="{{ status }}">
@@ -127,6 +131,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11/build/styles/dark.min.css">
     {{> templates/partials/javascript }}
     <script>
+        playLogoVideo();
         addSliderForSvgZoom();
         highlightLifelinesWhenClicked();
     </script>

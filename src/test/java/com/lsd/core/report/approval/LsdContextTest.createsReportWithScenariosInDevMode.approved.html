@@ -348,79 +348,22 @@ h2.error:before, h3.error:before, a.error:before {
     background-color: var(--color-error);
 }
 
-/* Logo section - inspired by https://codepen.io/fossheim/pen/PooBwRa */
+/* Logo section */
 .logo-link {
     text-decoration: none;
-}
-
-h1.logo {
-    font-weight: 800;
-    font-size: 4em;
-    width: 2em;
-    line-height: 0.9em;
+    display: block;
+    width: fit-content;
     margin-left: auto;
     margin-right: auto;
-    background: #CA4246;
-    background: conic-gradient(
-            #CA4246 16.666%,
-            #E16541 16.666%,
-            #E16541 33.333%,
-            #F18F43 33.333%,
-            #F18F43 50%,
-            #8B9862 50%,
-            #8B9862 66.666%,
-            #476098 66.666%,
-            #476098 83.333%,
-            #A7489B 83.333%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation-name: logo-animation-rev;
-    animation-duration: 3.5s;
-    animation-direction: normal;
-    animation-timing-function: ease-in-out;
-    animation-iteration-count: 1;
+}
+
+.logo-video {
+    display: block;
+    width: 200px;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
     cursor: pointer;
-    font-family: monospace;
-}
-
-/* Add animation on hover. */
-.logo:hover {
-    animation: logo-animation 0.5s ease forwards;
-}
-
-/* Animation shown when hovering over the text. */
-@keyframes logo-animation {
-    0% {
-        background-size: 57%;
-        background-position: 0 0;
-    }
-    20% {
-        background-size: 57%;
-        background-position: 0 1em;
-    }
-    100% {
-        background-size: 300%;
-        background-position: -9em 1em;
-    }
-}
-
-/* Animation shown when entering the page and after the hover animation. */
-@keyframes logo-animation-rev {
-    0% {
-        background-size: 300%;
-        background-position: -9em 1em;
-    }
-    20% {
-        background-size: 57%;
-        background-position: 0 1em;
-    }
-    50% {
-        letter-spacing: -20px;
-        transform: rotate(4turn);
-    }
-    100% {
-        background-size: 57%;
-    }
 }
 
 
@@ -614,7 +557,7 @@ input[type="range"]::-moz-range-track {
 .ribbon-bar {
     height: 4px;
     width: 120px;
-    margin: 0 auto 14px;
+    margin: 0 auto 4px;
     border-radius: 4px;
     background: linear-gradient(90deg, #CA4246, #E16541, #F18F43, #8B9862, #476098, #A7489B);
 }
@@ -629,12 +572,11 @@ input[type="range"]::-moz-range-track {
     font-weight: 500;
 }
 
-.footer-brand {
-    font-weight: 800;
-    background: conic-gradient(#CA4246 16.6%, #E16541 33.3%, #F18F43 50%, #8B9862 66.6%, #476098 83.3%, #A7489B 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-decoration: none;
+.footer-logo {
+    height: 60px;
+    width: auto;
+    display: block;
+    margin: 8px auto 0;
 }
 
 
@@ -656,7 +598,11 @@ input[type="range"]::-moz-range-track {
                 </div>
             </div>
         </div>
-    <a href="https://github.com/lsd-consulting/lsd-core" target="_blank" rel="noopener noreferrer" class="logo-link"><h1 class="logo">LSD</h1></a>
+    <a href="https://github.com/lsd-consulting/lsd-core" target="_blank" rel="noopener noreferrer" class="logo-link">
+        <video class="logo-video" muted playsinline>
+            <source src="https://cdn.jsdelivr.net/gh/lsd-consulting/lsd-core@main/src/main/resources/static/lsd_logo_animated.mp4" type="video/mp4">
+        </video>
+    </a>
     <h1>Approval Report</h1><article id="18" class="success">
         <span class="articleStart"></span>
         <h2 class="success">A Success scenario with messages</h2>
@@ -1627,9 +1573,43 @@ function scrollIntoViewFor(id) {
     target.classList.add("highlight");
 }
 
+// Play logo video once forward, then in reverse, then stop
+function playLogoVideo() {
+    const video = document.querySelector('.logo-video');
+    if (!video) return;
+
+    video.currentTime = 0;
+    video.playbackRate = 1.0;
+    video.onended = null;
+    video.play().catch(err => console.warn('Play failed:', err));
+
+    video.onended = function forwardEnded() {
+        video.onended = null; // Prevent re-trigger
+        video.pause();
+
+        let rafId = null;
+        const frameDuration = 1 / 30; // 30 FPS → ~33.33ms per frame
+
+        function reverseStep() {
+            if (video.currentTime <= 0) {
+                video.currentTime = 0;
+                video.pause();
+                cancelAnimationFrame(rafId);
+                return;
+            }
+            // Step back by roughly one frame
+            video.currentTime -= frameDuration;
+            rafId = requestAnimationFrame(reverseStep);
+        }
+        // Start the reverse animation
+        rafId = requestAnimationFrame(reverseStep);
+    };
+}
+
 </script>
 
     <script>
+        playLogoVideo();
         addSliderForSvgZoom();
         highlightLifelinesWhenClicked();
     </script>
@@ -1643,7 +1623,11 @@ function scrollIntoViewFor(id) {
     <footer class="report-footer ribbon">
     <div class="ribbon-bar"></div>
     <div class="footer-stack">
-        <p class="footer-text">Generated by <a class="footer-brand" href="https://github.com/lsd-consulting/lsd-core" target="_blank" rel="noopener noreferrer">LSD</a></p>
+        <p class="footer-text">Generated by
+            <a href="https://github.com/lsd-consulting/lsd-core" target="_blank" rel="noopener noreferrer">
+                <img src="https://cdn.jsdelivr.net/gh/lsd-consulting/lsd-core@main/src/main/resources/static/lsd_logo.png" alt="LSD" class="footer-logo">
+            </a>
+        </p>
     </div>
 </footer>
 

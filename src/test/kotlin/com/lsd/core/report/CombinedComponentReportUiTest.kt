@@ -68,7 +68,7 @@ class CombinedComponentReportUiTest {
 
     private fun thenPageContainsParticipantNames(vararg participants: Participant, title: String) {
         assertThat(page).hasTitle(title)
-        assertThat(page.locator("h1.logo")).isVisible()
+        assertThat(page.locator("a.logo-link")).isVisible()
         assertThat(page.locator("section.diagram").first()).isVisible()
         page.capture(name = "combine_components_report")
 

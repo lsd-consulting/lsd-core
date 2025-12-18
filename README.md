@@ -4,9 +4,11 @@
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.lsd-consulting/lsd-core.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.lsd-consulting%22%20AND%20a:%22lsd-core%22)
 [![](https://data.jsdelivr.com/v1/package/gh/lsd-consulting/lsd-core/badge)](https://www.jsdelivr.com/package/gh/lsd-consulting/lsd-core)
 
-# LSD Core
+![LSD](src/main/resources/static/lsd_logo.png)
 
-> Living Sequence Diagrams - Automatically generate interactive sequence diagrams from your code
+# Living Sequence Diagrams 
+
+> Automatically generate interactive sequence diagrams from your code
 
 LSD Core transforms how you document system interactions. Instead of manually maintaining sequence diagrams that quickly become stale, **capture interactions programmatically** and generate living documentation that stays in sync with your code.
 

@@ -6,7 +6,11 @@
 </head>
 <body>
 <main role="main">
-    <a href="https://github.com/lsd-consulting/lsd-core" target="_blank" rel="noopener noreferrer" class="logo-link"><h1 class="logo">LSD</h1></a>
+    <a href="https://github.com/lsd-consulting/lsd-core" target="_blank" rel="noopener noreferrer" class="logo-link">
+        <video class="logo-video" muted playsinline>
+            <source src="https://cdn.jsdelivr.net/gh/lsd-consulting/lsd-core@main/src/main/resources/static/lsd_logo_animated.mp4" type="video/mp4">
+        </video>
+    </a>
     <h2><label class="index">Available Reports</label></h2>
     <div class="index-content">
         {{# each reportFiles~}}
@@ -16,6 +20,10 @@
 </main>
 </body>
 <footer>
+    {{> templates/partials/javascript }}
+    <script>
+        playLogoVideo();
+    </script>
     {{> templates/partials/generated-by-footer }}
 </footer>
 </html>

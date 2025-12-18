@@ -62,7 +62,7 @@ class IndexUiTest {
 
     private fun thenTheIndexPageContainsLinksToAllReports() {
         assertThat(page).hasTitle("Index")
-        assertThat(page.locator("h1.logo")).isVisible()
+        assertThat(page.locator("a.logo-link")).isVisible()
         assertThat(page.locator("label.index")).hasText("Available Reports")
         page.capture(name = "example_index")
 

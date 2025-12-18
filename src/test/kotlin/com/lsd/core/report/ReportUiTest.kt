@@ -138,7 +138,7 @@ class ReportUiTest {
         assertThat(page).hasTitle(title)
         assertThat(page.getByRole(HEADING, GetByRoleOptions().setName("Metrics").setExact(true)))
             .isVisible(IsVisibleOptions().setVisible(metricsVisible))
-        assertThat(page.locator("h1.logo")).isVisible()
+        assertThat(page.locator("a.logo-link")).isVisible()
         assertThat(page.locator("section.diagram")).isVisible()
     }
 }
