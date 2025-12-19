@@ -4,7 +4,6 @@
     --color-2: #656d76;
     --color-3: slategrey;
     --color-4: #7d8590;
-    --color-5: #2f81f7;
     --color-6: #fff;
     --color-success: limegreen;
     --color-warn: orange;
@@ -12,8 +11,6 @@
     --color-highlight: yellow;
 
     --color-background-primary: var(--color-6);
-    --color-background-secondary: var(--color-6);
-    --color-background-transparent: rgba(0, 0, 0, 0.2);
     --color-border: var(--color-4);
     --color-text-primary: var(--color-2);
     --color-text-secondary: var(--color-2);
@@ -128,22 +125,23 @@ article {
 }
 
 section {
+    box-shadow: var(--box-shadow);
+    border-radius: 15px;
+    padding: 20px;
+    margin-top: 12px;
+    margin-right: 10px;
+    margin-left: var(--margin-content-left);
     overflow: auto;
     background: var(--color-background-primary);
 }
 
+article section {
+    margin-left: 0;
+    margin-right: 0;
+}
+
 section.description {
     flex: 50%;
-}
-
-aside {
-    flex: 30%;
-    margin: 10px;
-    padding: 20px;
-}
-
-aside.metrics {
-    flex: 100%;
 }
 
 /* Cards row layout */
@@ -191,11 +189,6 @@ section.diagram-row.warn {
 
 section.diagram-row.error {
     border-color: rgba(255, 0, 0, 0.3);
-}
-
-span.back_to_index::after {
-    content: "\2190";
-    cursor: pointer;
 }
 
 span.copy::after {
@@ -262,10 +255,6 @@ h1 {
 h2 {
     margin-left: 0;
     color: var(--color-text-primary);
-}
-
-article h2 {
-    margin-left: 0;
 }
 
 h3 {
@@ -348,20 +337,6 @@ a, text {
 svg {
     display: block;
     margin: 0 auto;
-}
-
-section {
-    box-shadow: var(--box-shadow);
-    border-radius: 15px;
-    padding: 20px;
-    margin-top: 12px;
-    margin-right: 10px;
-    margin-left: var(--margin-content-left);
-}
-
-article section {
-    margin-left: 0;
-    margin-right: 0;
 }
 
 /* highlight key facts (generated at runtime) */

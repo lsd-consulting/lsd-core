@@ -9,7 +9,6 @@
     --color-2: #656d76;
     --color-3: slategrey;
     --color-4: #7d8590;
-    --color-5: #2f81f7;
     --color-6: #fff;
     --color-success: limegreen;
     --color-warn: orange;
@@ -17,8 +16,6 @@
     --color-highlight: yellow;
 
     --color-background-primary: var(--color-6);
-    --color-background-secondary: var(--color-6);
-    --color-background-transparent: rgba(0, 0, 0, 0.2);
     --color-border: var(--color-4);
     --color-text-primary: var(--color-2);
     --color-text-secondary: var(--color-2);
@@ -133,22 +130,23 @@ article {
 }
 
 section {
+    box-shadow: var(--box-shadow);
+    border-radius: 15px;
+    padding: 20px;
+    margin-top: 12px;
+    margin-right: 10px;
+    margin-left: var(--margin-content-left);
     overflow: auto;
     background: var(--color-background-primary);
 }
 
+article section {
+    margin-left: 0;
+    margin-right: 0;
+}
+
 section.description {
     flex: 50%;
-}
-
-aside {
-    flex: 30%;
-    margin: 10px;
-    padding: 20px;
-}
-
-aside.metrics {
-    flex: 100%;
 }
 
 /* Cards row layout */
@@ -196,11 +194,6 @@ section.diagram-row.warn {
 
 section.diagram-row.error {
     border-color: rgba(255, 0, 0, 0.3);
-}
-
-span.back_to_index::after {
-    content: "\2190";
-    cursor: pointer;
 }
 
 span.copy::after {
@@ -267,10 +260,6 @@ h1 {
 h2 {
     margin-left: 0;
     color: var(--color-text-primary);
-}
-
-article h2 {
-    margin-left: 0;
 }
 
 h3 {
@@ -353,20 +342,6 @@ a, text {
 svg {
     display: block;
     margin: 0 auto;
-}
-
-section {
-    box-shadow: var(--box-shadow);
-    border-radius: 15px;
-    padding: 20px;
-    margin-top: 12px;
-    margin-right: 10px;
-    margin-left: var(--margin-content-left);
-}
-
-article section {
-    margin-left: 0;
-    margin-right: 0;
 }
 
 /* highlight key facts (generated at runtime) */
@@ -676,7 +651,6 @@ input[type="range"]::-moz-range-track {
             <h2 class="success">A Success scenario with messages</h2>
         </summary>
         <article id="18" class="success">
-            <span class="articleStart"></span>
         <div class="cards-row"><section class="card description success">
                 <h3 class="success">Description</h3>
                 Given a first scenario description<br/>When something happens<br/>Then something else happens
@@ -850,7 +824,6 @@ remove @unlinked
             <h2 class="success">Lifeline activation/deactivation</h2>
         </summary>
         <article id="21" class="success">
-            <span class="articleStart"></span>
         <div class="cards-row"><section class="card description success">
                 <h3 class="success">Description</h3>
                 Adding lifelines to participants
@@ -988,7 +961,6 @@ remove @unlinked
             <h2 class="success">Capturing Notes</h2>
         </summary>
         <article id="24" class="success">
-            <span class="articleStart"></span>
         <div class="cards-row"><section class="card description success">
                 <h3 class="success">Description</h3>
                 Notes can be added to participants
@@ -1138,7 +1110,6 @@ remove @unlinked
             <h2 class="success">A Newpage scenario</h2>
         </summary>
         <article id="27" class="success">
-            <span class="articleStart"></span>
         <div class="cards-row"><section class="card description success">
                 <h3 class="success">Description</h3>
                 Splitting a diagram into multiple diagrams using Newpage event type
@@ -1278,7 +1249,6 @@ remove @unlinked
             <h2 class="warn">A Warning scenario</h2>
         </summary>
         <article id="30" class="warn">
-            <span class="articleStart"></span>
         <div class="cards-row"><section class="card description warn">
                 <h3 class="warn">Description</h3>
                 A popup with a long text that needs scrolling:            <a href="#kljasdlfj">click me please!</a>
@@ -1409,7 +1379,6 @@ remove @unlinked
             <h2 class="error">An Error scenario</h2>
         </summary>
         <article id="33" class="error">
-            <span class="articleStart"></span>
         <div class="cards-row"><section class="card description error">
                 <h3 class="error">Description</h3>
                 <p>Failure! Expected value to be 123 but was XYZ</p>
