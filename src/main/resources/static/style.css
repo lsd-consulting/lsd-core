@@ -32,28 +32,99 @@ html {
     background-color: var(--color-background-primary);
 }
 
+details {
+    margin-bottom: 20px;
+    margin-left: var(--margin-content-left);
+    margin-right: 10px;
+    border-radius: 15px;
+}
+
+details[open] {
+    box-shadow: var(--box-shadow);
+}
+
+details[open].success {
+    box-shadow: var(--box-shadow-success);
+}
+
+details[open].warn {
+    box-shadow: var(--box-shadow-warn);
+}
+
+details[open].error {
+    box-shadow: var(--box-shadow-error);
+}
+
+summary {
+    cursor: pointer;
+    padding: 15px 20px;
+    background: var(--color-background-primary);
+    border-radius: 15px;
+    box-shadow: var(--box-shadow);
+    transition: all 0.3s ease;
+    user-select: none;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+summary::-webkit-details-marker {
+    display: none;
+}
+
+summary::before {
+    content: "\2794";
+    display: inline-block;
+    transition: transform 0.3s ease;
+    font-size: 0.6em;
+    color: var(--color-text-primary);
+}
+
+details[open] > summary {
+    border-radius: 15px 15px 0 0;
+    box-shadow: none;
+    margin-bottom: 0;
+}
+
+details[open] > summary::before {
+    transform: rotate(90deg);
+}
+
+summary:hover {
+    box-shadow: 0 -8px 20px 0 rgba(0,0,0,0.3);
+}
+
+details[open] > summary:hover {
+    box-shadow: none;
+}
+
+summary.success {
+    box-shadow: var(--box-shadow-success);
+}
+
+summary.warn {
+    box-shadow: var(--box-shadow-warn);
+}
+
+summary.error {
+    box-shadow: var(--box-shadow-error);
+}
+
+summary h2 {
+    margin: 0;
+    flex: 1;
+}
+
 article {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-around;
-    margin-bottom: 90px;
     padding: 20px;
-    box-shadow: var(--box-shadow);
-    border-radius: 15px;
-    margin-left: var(--margin-content-left);
-    margin-right: 10px;
-}
-
-article.success {
-    box-shadow: var(--box-shadow-success);
-}
-
-article.warn {
-    box-shadow: var(--box-shadow-warn);
-}
-
-article.error {
-    box-shadow: var(--box-shadow-error);
+    box-shadow: none;
+    border-radius: 0 0 15px 15px;
+    margin: 0;
+    border: none;
 }
 
 section {
@@ -444,10 +515,7 @@ label.index {
     align-items: center;
     justify-content: center;
     gap: 10px;
-    margin-top: 20px;
-    margin-bottom: 10px;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 20px auto 10px;
     padding: 10px 15px;
     width: fit-content;
 }

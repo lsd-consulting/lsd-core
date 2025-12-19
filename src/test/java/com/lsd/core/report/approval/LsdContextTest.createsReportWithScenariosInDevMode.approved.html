@@ -37,28 +37,99 @@ html {
     background-color: var(--color-background-primary);
 }
 
+details {
+    margin-bottom: 20px;
+    margin-left: var(--margin-content-left);
+    margin-right: 10px;
+    border-radius: 15px;
+}
+
+details[open] {
+    box-shadow: var(--box-shadow);
+}
+
+details[open].success {
+    box-shadow: var(--box-shadow-success);
+}
+
+details[open].warn {
+    box-shadow: var(--box-shadow-warn);
+}
+
+details[open].error {
+    box-shadow: var(--box-shadow-error);
+}
+
+summary {
+    cursor: pointer;
+    padding: 15px 20px;
+    background: var(--color-background-primary);
+    border-radius: 15px;
+    box-shadow: var(--box-shadow);
+    transition: all 0.3s ease;
+    user-select: none;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+summary::-webkit-details-marker {
+    display: none;
+}
+
+summary::before {
+    content: "\2794";
+    display: inline-block;
+    transition: transform 0.3s ease;
+    font-size: 0.6em;
+    color: var(--color-text-primary);
+}
+
+details[open] > summary {
+    border-radius: 15px 15px 0 0;
+    box-shadow: none;
+    margin-bottom: 0;
+}
+
+details[open] > summary::before {
+    transform: rotate(90deg);
+}
+
+summary:hover {
+    box-shadow: 0 -8px 20px 0 rgba(0,0,0,0.3);
+}
+
+details[open] > summary:hover {
+    box-shadow: none;
+}
+
+summary.success {
+    box-shadow: var(--box-shadow-success);
+}
+
+summary.warn {
+    box-shadow: var(--box-shadow-warn);
+}
+
+summary.error {
+    box-shadow: var(--box-shadow-error);
+}
+
+summary h2 {
+    margin: 0;
+    flex: 1;
+}
+
 article {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-around;
-    margin-bottom: 90px;
     padding: 20px;
-    box-shadow: var(--box-shadow);
-    border-radius: 15px;
-    margin-left: var(--margin-content-left);
-    margin-right: 10px;
-}
-
-article.success {
-    box-shadow: var(--box-shadow-success);
-}
-
-article.warn {
-    box-shadow: var(--box-shadow-warn);
-}
-
-article.error {
-    box-shadow: var(--box-shadow-error);
+    box-shadow: none;
+    border-radius: 0 0 15px 15px;
+    margin: 0;
+    border: none;
 }
 
 section {
@@ -449,10 +520,7 @@ label.index {
     align-items: center;
     justify-content: center;
     gap: 10px;
-    margin-top: 20px;
-    margin-bottom: 10px;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 20px auto 10px;
     padding: 10px 15px;
     width: fit-content;
 }
@@ -603,9 +671,12 @@ input[type="range"]::-moz-range-track {
             <source src="https://cdn.jsdelivr.net/gh/lsd-consulting/lsd-core@main/src/main/resources/static/lsd_logo_animated.mp4" type="video/mp4">
         </video>
     </a>
-    <h1>Approval Report</h1><article id="18" class="success">
-        <span class="articleStart"></span>
-        <h2 class="success">A Success scenario with messages</h2>
+    <h1>Approval Report</h1><details class="success" open>
+        <summary class="success">
+            <h2 class="success">A Success scenario with messages</h2>
+        </summary>
+        <article id="18" class="success">
+            <span class="articleStart"></span>
         <div class="cards-row"><section class="card description success">
                 <h3 class="success">Description</h3>
                 Given a first scenario description<br/>When something happens<br/>Then something else happens
@@ -773,9 +844,13 @@ remove @unlinked
                 </div>
             </div>
         </div>
-    </article><article id="21" class="success">
-        <span class="articleStart"></span>
-        <h2 class="success">Lifeline activation/deactivation</h2>
+        </article>
+    </details><details class="success">
+        <summary class="success">
+            <h2 class="success">Lifeline activation/deactivation</h2>
+        </summary>
+        <article id="21" class="success">
+            <span class="articleStart"></span>
         <div class="cards-row"><section class="card description success">
                 <h3 class="success">Description</h3>
                 Adding lifelines to participants
@@ -907,9 +982,13 @@ remove @unlinked
                 </div>
             </div>
         </div>
-    </article><article id="24" class="success">
-        <span class="articleStart"></span>
-        <h2 class="success">Capturing Notes</h2>
+        </article>
+    </details><details class="success">
+        <summary class="success">
+            <h2 class="success">Capturing Notes</h2>
+        </summary>
+        <article id="24" class="success">
+            <span class="articleStart"></span>
         <div class="cards-row"><section class="card description success">
                 <h3 class="success">Description</h3>
                 Notes can be added to participants
@@ -1053,9 +1132,13 @@ remove @unlinked
                 </div>
             </div>
         </div>
-    </article><article id="27" class="success">
-        <span class="articleStart"></span>
-        <h2 class="success">A Newpage scenario</h2>
+        </article>
+    </details><details class="success">
+        <summary class="success">
+            <h2 class="success">A Newpage scenario</h2>
+        </summary>
+        <article id="27" class="success">
+            <span class="articleStart"></span>
         <div class="cards-row"><section class="card description success">
                 <h3 class="success">Description</h3>
                 Splitting a diagram into multiple diagrams using Newpage event type
@@ -1189,9 +1272,13 @@ remove @unlinked
                 </div>
             </div>
         </div>
-    </article><article id="30" class="warn">
-        <span class="articleStart"></span>
-        <h2 class="warn">A Warning scenario</h2>
+        </article>
+    </details><details class="warn">
+        <summary class="warn">
+            <h2 class="warn">A Warning scenario</h2>
+        </summary>
+        <article id="30" class="warn">
+            <span class="articleStart"></span>
         <div class="cards-row"><section class="card description warn">
                 <h3 class="warn">Description</h3>
                 A popup with a long text that needs scrolling:            <a href="#kljasdlfj">click me please!</a>
@@ -1316,9 +1403,13 @@ remove @unlinked
                 </div>
             </div>
         </div>
-    </article><article id="33" class="error">
-        <span class="articleStart"></span>
-        <h2 class="error">An Error scenario</h2>
+        </article>
+    </details><details class="error">
+        <summary class="error">
+            <h2 class="error">An Error scenario</h2>
+        </summary>
+        <article id="33" class="error">
+            <span class="articleStart"></span>
         <div class="cards-row"><section class="card description error">
                 <h3 class="error">Description</h3>
                 <p>Failure! Expected value to be 123 but was XYZ</p>
@@ -1435,7 +1526,8 @@ remove @unlinked
                 </div>
             </div>
         </div>
-    </article>
+        </article>
+    </details>
 </main>
 </body>
 <footer>

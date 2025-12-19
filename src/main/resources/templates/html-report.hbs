@@ -25,9 +25,12 @@
     </a>
     <h1>{{ report.title }}</h1>
     {{~#each report.scenarios ~}}
-    <article id="{{ id }}" class="{{ status }}">
-        <span class="articleStart"></span>
-        <h2 class="{{ status }}">{{title}}</h2>
+    <details class="{{ status }}"{{#if @first}} open{{/if}}>
+        <summary class="{{ status }}">
+            <h2 class="{{ status }}">{{title}}</h2>
+        </summary>
+        <article id="{{ id }}" class="{{ status }}">
+            <span class="articleStart"></span>
         <div class="cards-row">
             {{~# if description ~}}
             <section class="card description {{ status }}">
@@ -122,7 +125,8 @@
         </div>
         {{~/each}}
         {{~/if}}
-    </article>
+        </article>
+    </details>
     {{~/each}}
 </main>
 </body>
