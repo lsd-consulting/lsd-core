@@ -36,6 +36,10 @@ details {
     border-radius: 15px;
 }
 
+details:not([open]) article {
+    content-visibility: hidden;
+}
+
 details[open] {
     box-shadow: var(--box-shadow);
 }
