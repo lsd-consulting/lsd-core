@@ -391,7 +391,7 @@ LSD automatically splits diagrams when they exceed `lsd.core.diagram.sequence.ma
 
 ### Prerequisites
 
-- Java 17 JDK
+- Java 21 JDK
 
 ### Building
 
