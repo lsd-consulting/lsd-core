@@ -3,6 +3,7 @@ package com.lsd.core.report
 import com.lsd.core.LsdContext
 import com.lsd.core.ReportOptions
 import com.lsd.core.builders.*
+import com.lsd.core.domain.Status
 import com.lsd.core.domain.LifelineAction.ACTIVATE
 import com.lsd.core.domain.LifelineAction.DEACTIVATE
 import com.lsd.core.domain.MessageType.SYNCHRONOUS_RESPONSE
@@ -77,6 +78,17 @@ class ReportUiTest {
         thenPageContains(title = "LSD Report with metrics", metricsVisible = true)
     }
 
+
+    @Test
+    fun hasViewportMetaAndStickyToolbarWhenMultipleScenarios() {
+        givenMultipleScenariosWithDifferentStatuses()
+
+        whenReportIsRendered(isDevMode = true)
+
+        thenViewportMetaIsPresent()
+        thenToolbarCanFilterByStatusAndSearch()
+    }
+
     private fun givenMetricsAreEnabled() {
         options = options.copy(metricsEnabled = true)
     }
@@ -122,6 +134,32 @@ class ReportUiTest {
     private fun whenTheLSdReportIsGenerated(title: String, screenshotName: String? = null) {
         page.navigate("file://${lsd.completeReport(title = title, options = options).absolute()}")
         if (!screenshotName.isNullOrBlank()) page.capture(name = screenshotName)
+    }
+
+
+    private fun givenMultipleScenariosWithDifferentStatuses() {
+        lsd.capture("A" messages "B" withLabel "ok")
+        lsd.completeScenario("Alpha success", status = Status.SUCCESS)
+        lsd.capture("A" messages "B" withLabel "warn")
+        lsd.completeScenario("Beta warning", status = Status.FAILURE)
+        lsd.capture("A" messages "B" withLabel "err")
+        lsd.completeScenario("Gamma error", status = Status.ERROR)
+    }
+
+    private fun thenViewportMetaIsPresent() {
+        assertThat(page.locator("meta[name=viewport]")).hasAttribute("content", "width=device-width, initial-scale=1")
+        assertThat(page.locator(".report-toolbar")).isVisible()
+        assertThat(page.locator(".scenario-search")).isVisible()
+    }
+
+    private fun thenToolbarCanFilterByStatusAndSearch() {
+        assertThat(page.locator("details.scenario")).hasCount(3)
+        page.locator(".filter-chip[data-status=success]").click()
+        assertThat(page.locator("details.scenario:not([hidden])")).hasCount(2)
+        page.locator(".filter-chip[data-status=success]").click()
+        page.locator(".scenario-search").fill("Gamma")
+        assertThat(page.locator("details.scenario:not([hidden])")).hasCount(1)
+        assertThat(page.locator("details.scenario:not([hidden]) summary h2")).hasText("Gamma error")
     }
 
     private fun thenNoDiagramSectionIsVisible() {

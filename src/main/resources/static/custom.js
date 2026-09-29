@@ -161,3 +161,55 @@ function playLogoVideo() {
         rafId = requestAnimationFrame(reverseStep);
     };
 }
+
+// Sticky toolbar: search + status chips for multi-scenario reports
+function initScenarioToolbar() {
+    const toolbar = document.querySelector('.report-toolbar');
+    if (!toolbar) return;
+
+    const search = toolbar.querySelector('.scenario-search');
+    const chips = toolbar.querySelectorAll('.filter-chip');
+    const scenarios = document.querySelectorAll('main details.scenario');
+    const navLinks = toolbar.querySelectorAll('.scenario-nav-link');
+    const activeStatuses = new Set(['success', 'warn', 'error']);
+
+    function applyFilters() {
+        const query = (search && search.value ? search.value : '').trim().toLowerCase();
+        scenarios.forEach(function (details) {
+            const status = details.getAttribute('data-status') || '';
+            const title = (details.getAttribute('data-title') || '').toLowerCase();
+            const statusOk = !status || activeStatuses.has(status);
+            const searchOk = !query || title.indexOf(query) !== -1;
+            details.hidden = !(statusOk && searchOk);
+        });
+        navLinks.forEach(function (link) {
+            const status = link.getAttribute('data-status') || '';
+            const title = (link.getAttribute('data-title') || link.textContent || '').toLowerCase();
+            const statusOk = !status || activeStatuses.has(status);
+            const searchOk = !query || title.indexOf(query) !== -1;
+            link.hidden = !(statusOk && searchOk);
+        });
+    }
+
+    if (search) {
+        search.addEventListener('input', applyFilters);
+    }
+
+    chips.forEach(function (chip) {
+        chip.addEventListener('click', function () {
+            const status = chip.getAttribute('data-status');
+            if (!status) return;
+            const activeClass = 'active-' + status;
+            if (activeStatuses.has(status)) {
+                activeStatuses.delete(status);
+                chip.classList.remove(activeClass);
+                chip.setAttribute('aria-pressed', 'false');
+            } else {
+                activeStatuses.add(status);
+                chip.classList.add(activeClass);
+                chip.setAttribute('aria-pressed', 'true');
+            }
+            applyFilters();
+        });
+    });
+}
