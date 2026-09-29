@@ -1,21 +1,30 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>{{report.title}}</title>
     {{> templates/partials/stylesheet }}
 </head>
 <body>
 <main role="main">
     {{#if report.showContentsMenu ~}}
-        <div class="menu">
-            <div class="dropdown">
-                <label class="dropdown">Scenarios</label>
-                <div class="dropdown-content">
+        <div class="report-toolbar" role="navigation" aria-label="Scenario filters">
+            <span class="toolbar-brand">Scenarios</span>
+            <input type="search" class="scenario-search" placeholder="Search scenarios…" aria-label="Search scenarios"/>
+            <div class="filters" role="group" aria-label="Status filters">
+                <button type="button" class="chip filter-chip active-success" data-status="success" aria-pressed="true">Success</button>
+                <button type="button" class="chip filter-chip active-warn" data-status="warn" aria-pressed="true">Warn</button>
+                <button type="button" class="chip filter-chip active-error" data-status="error" aria-pressed="true">Error</button>
+            </div>
+            <details class="scenario-nav">
+                <summary class="scenario-nav-toggle">Jump to</summary>
+                <div class="scenario-nav-list dropdown-content">
                     {{~#each report.scenarios }}
-                        <a class="{{ status }}" href="#{{ id }}">{{title}}</a>
+                        <a class="{{ status }} scenario-nav-link" href="#{{ id }}" data-status="{{ status }}" data-title="{{title}}">{{title}}</a>
                     {{~/each}}
                 </div>
-            </div>
+            </details>
         </div>
     {{~/if}}
     <a href="https://github.com/lsd-consulting/lsd-core?utm_source=lsd-report&utm_medium=logo&utm_campaign=html-report" target="_blank" rel="noopener noreferrer" class="logo-link">
@@ -25,9 +34,10 @@
     </a>
     <h1>{{ report.title }}</h1>
     {{~#each report.scenarios ~}}
-    <details class="{{ status }}"{{#if @first}} open{{/if}}>
+    <details class="scenario {{ status }}" data-status="{{ status }}" data-title="{{title}}"{{#if @first}} open{{/if}}>
         <summary class="{{ status }}">
             <h2 class="{{ status }}">{{title}}</h2>
+            <span class="badge {{ status }}">{{ status }}</span>
         </summary>
         <article id="{{ id }}" class="{{ status }}">
         <div class="cards-row">
@@ -137,6 +147,7 @@
         playLogoVideo();
         addSliderForSvgZoom();
         highlightLifelinesWhenClicked();
+        initScenarioToolbar();
     </script>
     <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11/build/highlight.min.js"></script>
     <script>hljs.highlightAll();</script>
