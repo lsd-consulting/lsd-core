@@ -36,7 +36,9 @@ class LsdContextTest {
     }
 
     private final Scrubber durationScrubber = new RegExScrubber(">\\d+\\.\\d+s<", ">0.00s<");
-    private final Scrubber scrubber = Scrubbers.scrubAll(durationScrubber);
+    // PlantUML SVG font metrics differ across OS/CI runners; scrub diagram bodies.
+    private final Scrubber svgScrubber = new RegExScrubber("<svg[\\s\\S]*?</svg>", "<svg>SVG_SCRUBBED</svg>");
+    private final Scrubber scrubber = Scrubbers.scrubAll(durationScrubber, svgScrubber);
 
     private final LinkedHashSet<String> additionalIncludes = new LinkedHashSet<>(List.of(
             "tupadr3/font-awesome-5/hamburger",
