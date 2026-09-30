@@ -6,3 +6,7 @@ build
 
 .idea
 out
+
+# Next-gen report UI (Vite/TS package; not yet wired into Gradle)
+report-next/node_modules/
+report-next/dist/

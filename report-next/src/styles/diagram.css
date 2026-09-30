@@ -1,0 +1,97 @@
+.seq-svg {
+  display: block;
+  min-width: 520px;
+  font-family: var(--font);
+}
+
+.lifeline-line {
+  stroke: var(--border-strong);
+  stroke-width: 1.5;
+  stroke-dasharray: 3 5;
+}
+
+.participant-card {
+  fill: var(--surface);
+  stroke: var(--pc, var(--accent));
+  stroke-width: 1.5;
+  filter: drop-shadow(0 2px 6px oklch(0 0 0 / 0.2));
+}
+.participant-icon {
+  fill: var(--pc, var(--accent));
+  font-size: 10px;
+}
+.participant-label {
+  fill: var(--text);
+  font-size: 11px;
+  font-weight: 650;
+}
+
+.activation {
+  fill: color-mix(in oklab, var(--pc, var(--accent)) 55%, var(--surface));
+  stroke: var(--pc, var(--accent));
+  stroke-width: 1;
+  opacity: 0.9;
+}
+
+.message { cursor: default; }
+.message.has-data { cursor: pointer; }
+.message .msg-hit {
+  fill: transparent;
+}
+.message.has-data:hover .msg-path,
+.message.has-data:focus-visible .msg-path {
+  filter: url(#softGlow);
+  stroke-width: 2.6;
+}
+.message.has-data:hover .msg-label,
+.message.has-data:focus-visible .msg-label {
+  fill: var(--accent-strong);
+}
+.message:focus-visible { outline: none; }
+.message:focus-visible .msg-hit {
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  fill: var(--accent-soft);
+}
+
+.msg-label {
+  fill: var(--text-muted);
+  font-size: 11.5px;
+  font-weight: 550;
+}
+.msg-dur {
+  fill: var(--text-faint);
+  font-size: 10px;
+  font-family: var(--mono);
+}
+
+.note-card {
+  fill: var(--warn-soft);
+  stroke: var(--warn);
+  stroke-width: 1;
+}
+.note-text {
+  fill: var(--warn);
+  font-size: 10.5px;
+  font-weight: 600;
+}
+
+.divider-line {
+  stroke: var(--border);
+  stroke-dasharray: 4 4;
+}
+.divider-pill {
+  fill: var(--surface-2);
+  stroke: var(--border);
+}
+.divider-label {
+  fill: var(--text-faint);
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+[data-theme="light"] .participant-card {
+  filter: drop-shadow(0 1px 3px oklch(0.4 0.02 250 / 0.12));
+}

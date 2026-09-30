@@ -1,0 +1,64 @@
+:root,
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: oklch(0.16 0.02 250);
+  --bg-elevated: oklch(0.20 0.025 250);
+  --surface: oklch(0.23 0.028 250);
+  --surface-2: oklch(0.27 0.03 250);
+  --border: oklch(0.35 0.03 250 / 0.7);
+  --border-strong: oklch(0.45 0.04 250);
+  --text: oklch(0.95 0.01 250);
+  --text-muted: oklch(0.72 0.02 250);
+  --text-faint: oklch(0.55 0.02 250);
+  --accent: oklch(0.75 0.14 175);
+  --accent-soft: oklch(0.75 0.14 175 / 0.15);
+  --accent-strong: oklch(0.82 0.16 175);
+  --success: oklch(0.72 0.17 150);
+  --success-soft: oklch(0.72 0.17 150 / 0.16);
+  --warn: oklch(0.82 0.14 85);
+  --warn-soft: oklch(0.82 0.14 85 / 0.16);
+  --error: oklch(0.68 0.2 25);
+  --error-soft: oklch(0.68 0.2 25 / 0.16);
+  --shadow: 0 1px 2px oklch(0 0 0 / 0.35), 0 16px 40px oklch(0 0 0 / 0.35);
+  --shadow-pop: 0 8px 40px oklch(0.5 0.12 175 / 0.25);
+  --radius: 14px;
+  --radius-sm: 10px;
+  --radius-pill: 999px;
+  --font: "Inter", "Geist", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+  --mono: "JetBrains Mono", "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --sidebar-w: 300px;
+  --topbar-h: 56px;
+  --focus: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent);
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+  --bg: oklch(0.97 0.01 250);
+  --bg-elevated: oklch(1 0 0);
+  --surface: oklch(1 0 0);
+  --surface-2: oklch(0.96 0.01 250);
+  --border: oklch(0.88 0.015 250);
+  --border-strong: oklch(0.78 0.02 250);
+  --text: oklch(0.22 0.03 250);
+  --text-muted: oklch(0.42 0.025 250);
+  --text-faint: oklch(0.55 0.02 250);
+  --accent: oklch(0.55 0.12 175);
+  --accent-soft: oklch(0.55 0.12 175 / 0.12);
+  --accent-strong: oklch(0.45 0.12 175);
+  --success: oklch(0.52 0.14 150);
+  --success-soft: oklch(0.52 0.14 150 / 0.12);
+  --warn: oklch(0.62 0.14 80);
+  --warn-soft: oklch(0.62 0.14 80 / 0.14);
+  --error: oklch(0.55 0.2 25);
+  --error-soft: oklch(0.55 0.2 25 / 0.12);
+  --shadow: 0 1px 2px oklch(0.4 0.02 250 / 0.08), 0 12px 32px oklch(0.4 0.02 250 / 0.1);
+  --shadow-pop: 0 8px 32px oklch(0.55 0.12 175 / 0.2);
+  --focus: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
