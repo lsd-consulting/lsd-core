@@ -1,5 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Paused: lsd-core is in maintenance while lsd-mono replaces it. Set enabled back to true to resume updates.",
+  "enabled": false,
   "extends": [
     "config:base",
     ":dependencyDashboard"
@@ -10,21 +12,32 @@
   "vulnerabilityAlerts": {
     "enabled": true
   },
-  "labels": ["dependencies"],
-  "addLabels": ["{{updateType}}"],
+  "labels": [
+    "dependencies"
+  ],
+  "addLabels": [
+    "{{updateType}}"
+  ],
   "rebaseWhen": "behind-base-branch",
   "packageRules": [
     {
-      "matchUpdateTypes": ["patch", "minor"],
+      "matchUpdateTypes": [
+        "patch",
+        "minor"
+      ],
       "automerge": true,
       "automergeType": "pr"
     },
     {
-      "matchUpdateTypes": ["major"],
+      "matchUpdateTypes": [
+        "major"
+      ],
       "automerge": false
     },
     {
-      "matchPackagePatterns": ["org.jetbrains.kotlin"],
+      "matchPackagePatterns": [
+        "org.jetbrains.kotlin"
+      ],
       "groupName": "kotlin dependencies"
     },
     {
@@ -40,7 +53,9 @@
       "commitMessagePrefix": "fix(deps): "
     },
     {
-      "matchManagers": ["github-actions"],
+      "matchManagers": [
+        "github-actions"
+      ],
       "commitMessagePrefix": "ci(deps): "
     }
   ],
