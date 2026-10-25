@@ -422,3 +422,19 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.txt](LICENSE.txt) file for details.
+
+## Releasing
+
+Pushing to main builds but does not release. Maven Central limits the
+io.github.lsd-consulting namespace to 7 releases a month, so each release is
+started on purpose. semantic-release still picks the version from the feat/fix
+commits since the last release, and does nothing if there are none.
+
+Release by hand:
+
+```
+gh workflow run release.yml -R lsd-consulting/lsd-core -f reason="why this release is needed"
+```
+
+To release weekly instead (Tuesday 07:00 UTC), set the repository variable
+`WEEKLY_RELEASE` to `true`. It is off by default.

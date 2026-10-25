@@ -1,4 +1,5 @@
-# This workflow will build a Kotlin project with Gradle then perform an automated release
+# This workflow will build a Kotlin project with Gradle on push and pull requests.
+# It does not release: releases are manual or scheduled, see release.yml.
 # For more information see:
 #  https://github.com/marketplace/actions/action-for-semantic-release
 
@@ -21,10 +22,4 @@ jobs:
         build/reports
         src/test/java/com/lsd/core/report/approval/*.html
         src/test/java/com/lsd/core/report/approval/*.txt
-    secrets: inherit
-  release:
-    needs: build
-    uses: lsd-consulting/shared-workflows/.github/workflows/release.yml@main
-    with:
-      java-version: '21'
     secrets: inherit
